@@ -1,0 +1,67 @@
+# Dependencies
+node_modules/
+packages/
+# Build outputs
+dist/
+build/
+out/
+publish/
+bin/
+obj/
+Debug/
+Release/
+# .NET generated files
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+# Frontend generated files
+.vite/
+.next/
+.nuxt/
+.svelte-kit/
+*.tsbuildinfo
+# Environment and secrets
+.env
+.env.*
+!.env.example
+!.env.template
+appsettings.*.local.json
+secrets.json
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+# Editor and OS files
+.vs/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.orig
+# Local tool/cache folders
+.cache/
+.parcel-cache/
+.eslintcache
+.sass-cache/
