@@ -1,0 +1,24 @@
+@vnmac_elearning.Api_HostAddress = http://localhost:5000
+
+GET {{vnmac_elearning.Api_HostAddress}}/
+Accept: application/json
+
+###
+
+POST {{vnmac_elearning.Api_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "fullName": "Nguyen Van A",
+  "phoneNumber": "0931234567",
+  "province": "Quang Tri",
+  "group": "Nguoi dan",
+  "useOtp": true,
+  "otpCode": "246810",
+  "captchaToken": "demo-pass"
+}
+
+###
+
+GET {{vnmac_elearning.Api_HostAddress}}/api/admin/analytics
+Accept: application/json

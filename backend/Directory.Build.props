@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <ArtifactsBuildRoot Condition="'$(TEMP)' != ''">$(TEMP)\vnmac-build\$(MSBuildProjectName)\</ArtifactsBuildRoot>
+    <ArtifactsBuildRoot Condition="'$(ArtifactsBuildRoot)' == ''">$(MSBuildThisFileDirectory)..\artifacts\build\$(MSBuildProjectName)\</ArtifactsBuildRoot>
+    <MSBuildProjectExtensionsPath>$(ArtifactsBuildRoot)obj\</MSBuildProjectExtensionsPath>
+    <BaseIntermediateOutputPath>$(ArtifactsBuildRoot)obj\</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(ArtifactsBuildRoot)bin\</BaseOutputPath>
+  </PropertyGroup>
+</Project>

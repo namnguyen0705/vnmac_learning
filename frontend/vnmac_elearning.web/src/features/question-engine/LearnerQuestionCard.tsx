@@ -1,0 +1,259 @@
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { AlertTriangle, CheckCircle2, MapPin } from "lucide-react";
+import type {
+  DragDropMatchSubmission,
+  LearnerQuestionPayload,
+  QuestionSubmissionRequest,
+} from "../../shared/types/api";
+import { humanizeEnum } from "../../shared/lib/format";
+
+export interface QuestionDraftAnswer {
+  selectedOptionCodes: string[];
+  selectedHotspotCodes: string[];
+  matches: Record<string, string>;
+}
+
+export function createEmptyAnswer(): QuestionDraftAnswer {
+  return {
+    selectedOptionCodes: [],
+    selectedHotspotCodes: [],
+    matches: {},
+  };
+}
+
+export function toSubmissionRequest(
+  questionId: string,
+  answer: QuestionDraftAnswer | undefined,
+): QuestionSubmissionRequest {
+  const draft = answer ?? createEmptyAnswer();
+  const matches: DragDropMatchSubmission[] = Object.entries(draft.matches)
+    .filter(([, targetCode]) => Boolean(targetCode))
+    .map(([dragItemCode, dragTargetCode]) => ({
+      dragItemCode,
+      dragTargetCode,
+    }));
+
+  return {
+    questionId,
+    selectedOptionCodes: draft.selectedOptionCodes,
+    selectedHotspotCodes: draft.selectedHotspotCodes,
+    matches,
+  };
+}
+
+interface LearnerQuestionCardProps {
+  question: LearnerQuestionPayload;
+  answer?: QuestionDraftAnswer;
+  disabled?: boolean;
+  feedback?: { correct: boolean; explanation: string } | null;
+  onChange: (answer: QuestionDraftAnswer) => void;
+}
+
+function updateSelection(list: string[], code: string, single = false) {
+  if (single) {
+    return [code];
+  }
+
+  return list.includes(code) ? list.filter((item) => item !== code) : [...list, code];
+}
+
+export function LearnerQuestionCard({
+  question,
+  answer,
+  disabled = false,
+  feedback,
+  onChange,
+}: LearnerQuestionCardProps) {
+  const current = answer ?? createEmptyAnswer();
+  const isChoiceQuestion =
+    question.type === "TrueFalse" ||
+    question.type === "MultipleChoice" ||
+    question.type === "Scenario";
+  const isSingleChoice = question.type === "TrueFalse";
+  const choiceCount = question.options.length || question.hotspotTargets.length || question.dragItems.length;
+
+  return (
+    <Card className="border-slate-200 shadow-none">
+      <CardHeader className="gap-4 border-b border-slate-100 bg-white">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="space-y-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge variant="outline">{humanizeEnum(question.type)}</Badge>
+              <Badge variant="secondary">{choiceCount} lựa chọn</Badge>
+            </div>
+            <CardTitle className="text-lg leading-tight">{question.prompt}</CardTitle>
+            {question.statement ? <p className="text-sm leading-6 text-slate-600">{question.statement}</p> : null}
+          </div>
+          <Badge variant="outline">Câu {question.order}</Badge>
+        </div>
+
+        {question.scenarioTitle ? (
+          <div className="border border-slate-200 bg-slate-50 px-4 py-3">
+            <p className="text-sm font-semibold text-slate-900">{question.scenarioTitle}</p>
+            {question.scenarioContext ? (
+              <p className="mt-1 text-sm leading-6 text-slate-600">{question.scenarioContext}</p>
+            ) : null}
+          </div>
+        ) : null}
+      </CardHeader>
+
+      <CardContent className="space-y-4 pt-6">
+        {question.mediaTitle ? (
+          <Alert variant="info">
+            <MapPin className="size-4" />
+            <AlertTitle>Tư liệu tham chiếu</AlertTitle>
+            <AlertDescription>{question.mediaTitle}</AlertDescription>
+          </Alert>
+        ) : null}
+
+        {isChoiceQuestion ? (
+          <div className="grid gap-3 sm:grid-cols-2">
+            {question.options.map((option) => {
+              const selected = current.selectedOptionCodes.includes(option.code);
+              return (
+                <Button
+                  className="h-auto min-h-12 justify-start whitespace-normal rounded-2xl px-4 py-3 text-left"
+                  disabled={disabled}
+                  key={option.code}
+                  type="button"
+                  variant={selected ? "secondary" : "outline"}
+                  onClick={() =>
+                    onChange({
+                      ...current,
+                      selectedOptionCodes: updateSelection(
+                        current.selectedOptionCodes,
+                        option.code,
+                        isSingleChoice,
+                      ),
+                    })
+                  }
+                >
+                  <span className="flex w-full items-start justify-between gap-3">
+                    <span>{option.label}</span>
+                    <Badge variant={selected ? "success" : "outline"}>{option.code}</Badge>
+                  </span>
+                </Button>
+              );
+            })}
+          </div>
+        ) : null}
+
+        {question.type === "Hotspot" ? (
+          <div className="space-y-4">
+            <div className="relative min-h-80 overflow-hidden rounded-3xl border border-slate-200 bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.14),_rgba(255,255,255,1)_55%)]">
+              <div className="absolute inset-0 bg-[linear-gradient(rgba(148,163,184,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.12)_1px,transparent_1px)] bg-[size:32px_32px]" />
+              <div className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500 shadow-sm">
+                Vùng tương tác
+              </div>
+
+              {question.hotspotTargets.map((target) => {
+                const selected = current.selectedHotspotCodes.includes(target.code);
+                return (
+                  <Button
+                    aria-label={target.label}
+                    className="absolute size-10 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow-lg"
+                    disabled={disabled}
+                    key={target.code}
+                    size="icon"
+                    style={{ left: `${target.x}%`, top: `${target.y}%` }}
+                    type="button"
+                    variant={selected ? "default" : "outline"}
+                    onClick={() =>
+                      onChange({
+                        ...current,
+                        selectedHotspotCodes: updateSelection(current.selectedHotspotCodes, target.code),
+                      })
+                    }
+                  >
+                    <span className="text-xs font-bold">{target.order}</span>
+                  </Button>
+                );
+              })}
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              {question.hotspotTargets.map((target) => {
+                const selected = current.selectedHotspotCodes.includes(target.code);
+                return (
+                  <Button
+                    className="h-auto justify-start whitespace-normal rounded-2xl px-4 py-3 text-left"
+                    disabled={disabled}
+                    key={target.code}
+                    type="button"
+                    variant={selected ? "secondary" : "outline"}
+                    onClick={() =>
+                      onChange({
+                        ...current,
+                        selectedHotspotCodes: updateSelection(current.selectedHotspotCodes, target.code),
+                      })
+                    }
+                  >
+                    <span className="flex w-full items-center justify-between gap-3">
+                      <span>{target.label}</span>
+                      <Badge variant={selected ? "success" : "outline"}>{target.code}</Badge>
+                    </span>
+                  </Button>
+                );
+              })}
+            </div>
+          </div>
+        ) : null}
+
+        {question.type === "DragDrop" ? (
+          <div className="grid gap-3 lg:grid-cols-2">
+            {question.dragItems.map((item) => (
+              <Card className="border-slate-200 shadow-none" key={item.code}>
+                <CardContent className="space-y-3 p-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-semibold text-slate-900">{item.label}</p>
+                      <p className="text-xs uppercase tracking-[0.12em] text-slate-500">{item.code}</p>
+                    </div>
+                    <Badge variant="outline">Mục kéo</Badge>
+                  </div>
+
+                  <Select
+                    disabled={disabled}
+                    value={current.matches[item.code] ?? ""}
+                    onValueChange={(value) =>
+                      onChange({
+                        ...current,
+                        matches: {
+                          ...current.matches,
+                          [item.code]: value,
+                        },
+                      })
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Chọn đích ghép" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {question.dragTargets.map((target) => (
+                        <SelectItem key={target.code} value={target.code}>
+                          {target.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        ) : null}
+
+        {feedback ? (
+          <Alert variant={feedback.correct ? "success" : "warning"}>
+            {feedback.correct ? <CheckCircle2 className="size-4" /> : <AlertTriangle className="size-4" />}
+            <AlertTitle>{feedback.correct ? "Trả lời đúng" : "Cần làm lại"}</AlertTitle>
+            <AlertDescription>{feedback.explanation}</AlertDescription>
+          </Alert>
+        ) : null}
+      </CardContent>
+    </Card>
+  );
+}
