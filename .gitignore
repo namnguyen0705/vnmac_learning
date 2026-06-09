@@ -65,3 +65,4 @@ temp/
 .parcel-cache/
 .eslintcache
 .sass-cache/
+docs/
