@@ -1,6 +1,8 @@
 export type UserRole = "Learner" | "Admin" | "ContentManager" | "DataViewer";
 export type CourseStatus = "Draft" | "Published";
 export type CourseEnrollmentStatus = "Enrolled" | "InProgress" | "Completed";
+export type NotificationAudience = "Learner" | "Admin";
+export type NotificationType = "LearnerRegistered" | "CourseEnrolled" | "CourseCompleted";
 export type LessonType = "Video" | "Interactive" | "Scorm";
 export type LessonProgressStatus = "NotStarted" | "InProgress" | "Completed";
 export type QuestionType = "TrueFalse" | "MultipleChoice" | "DragDrop" | "Hotspot" | "Scenario";
@@ -243,6 +245,8 @@ export interface ProgressTracking {
   completionTime?: string | null;
   watchPercent: number;
   watchTimeMinutes: number;
+  lastPositionSeconds: number;
+  lastWatchedAt?: string | null;
   interactionAttempts: number;
 }
 
@@ -306,6 +310,7 @@ export interface LearnerCourseQuizSummary {
 export interface UpdateVideoProgressRequest {
   watchPercent: number;
   watchTimeMinutes: number;
+  lastPositionSeconds: number;
 }
 
 export interface DragDropMatchSubmission {
@@ -436,6 +441,27 @@ export interface CertificateVerificationResponse {
   issuedDate?: string | null;
 }
 
+export interface NotificationListResponse {
+  unreadCount: number;
+  items: NotificationResponse[];
+}
+
+export interface NotificationResponse {
+  id: string;
+  audience: NotificationAudience;
+  type: NotificationType;
+  title: string;
+  message: string;
+  actorUserId?: string | null;
+  actorName?: string | null;
+  courseId?: string | null;
+  courseTitle?: string | null;
+  linkUrl?: string | null;
+  createdAt: string;
+  readAt?: string | null;
+  isRead: boolean;
+}
+
 export interface ScormSco {
   id: string;
   identifier: string;
@@ -515,8 +541,15 @@ export interface AnalyticsItem {
 export interface LearnerAdminRow {
   userId: string;
   username: string;
+  email: string;
   fullName: string;
   phoneNumber: string;
+  createdAt: string;
+  lastLogin: string;
+  isEmailVerified: boolean;
+  emailVerifiedAt?: string | null;
+  createdByAdmin: boolean;
+  isLocked: boolean;
   province: string;
   group: string;
   completionPercent: number;
@@ -538,6 +571,7 @@ export interface AdminUserRow {
   isEmailVerified: boolean;
   emailVerifiedAt?: string | null;
   createdByAdmin: boolean;
+  isLocked: boolean;
   role: UserRole;
   province: string;
   group: string;
@@ -576,6 +610,127 @@ export interface AnalyticsResponse {
   learners: LearnerAdminRow[];
 }
 
+export interface TrackingResponse {
+  overview: TrackingOverview;
+  courses: TrackingCourseOption[];
+  learners: TrackingLearnerRow[];
+  courseSummaries: TrackingCourseSummary[];
+  lessonSummaries: TrackingLessonSummary[];
+  videoSummaries: TrackingVideoSummary[];
+  dropOffLessons: TrackingDropOffItem[];
+  recentEvents: TrackingTimelineEvent[];
+}
+
+export interface TrackingOverview {
+  totalLearners: number;
+  activeLearners: number;
+  stalledLearners: number;
+  completedCourses: number;
+}
+
+export interface TrackingCourseOption {
+  courseId: string;
+  title: string;
+}
+
+export interface TrackingLearnerRow {
+  userId: string;
+  username: string;
+  fullName: string;
+  phoneNumber: string;
+  province: string;
+  group: string;
+  status: string;
+  lastActivityAt?: string | null;
+  courses: TrackingCourseProgress[];
+  timeline: TrackingTimelineEvent[];
+}
+
+export interface TrackingCourseProgress {
+  courseId: string;
+  courseTitle: string;
+  enrolledAt: string;
+  lastAccessedAt?: string | null;
+  overallCompletionPercent: number;
+  contentCompletionPercent: number;
+  quizCompletionPercent: number;
+  currentLessonId?: string | null;
+  currentLessonTitle?: string | null;
+  currentLessonType?: LessonType | null;
+  lastPositionSeconds: number;
+  lessons: TrackingLessonProgress[];
+}
+
+export interface TrackingLessonProgress {
+  lessonId: string;
+  title: string;
+  type: LessonType;
+  status: LessonProgressStatus;
+  watchPercent: number;
+  watchTimeMinutes: number;
+  lastPositionSeconds: number;
+  lastWatchedAt?: string | null;
+  completionTime?: string | null;
+  interactionAttempts: number;
+  quizAttempts: number;
+  quizScore: number;
+  scormAttempts: number;
+  scormTotalTimeSeconds: number;
+  scormLocation: string;
+  scormCompletionStatus?: ScormCompletionStatus | null;
+  scormSuccessStatus?: ScormSuccessStatus | null;
+}
+
+export interface TrackingDropOffItem {
+  lessonId: string;
+  title: string;
+  courseTitle: string;
+  learnerCount: number;
+  averageWatchPercent: number;
+}
+
+export interface TrackingCourseSummary {
+  courseId: string;
+  courseTitle: string;
+  enrolledLearners: number;
+  activeLearners: number;
+  completedLearners: number;
+  averageCompletionPercent: number;
+}
+
+export interface TrackingLessonSummary {
+  lessonId: string;
+  title: string;
+  courseTitle: string;
+  type: LessonType;
+  startedLearners: number;
+  completedLearners: number;
+  dropOffLearners: number;
+  averageProgressPercent: number;
+}
+
+export interface TrackingVideoSummary {
+  lessonId: string;
+  title: string;
+  courseTitle: string;
+  startedLearners: number;
+  completedLearners: number;
+  dropOffLearners: number;
+  averageWatchPercent: number;
+  averageStopPositionSeconds: number;
+}
+
+export interface TrackingTimelineEvent {
+  id: string;
+  userId: string;
+  learnerName: string;
+  courseTitle: string;
+  lessonTitle: string;
+  type: string;
+  detail: string;
+  occurredAt: string;
+}
+
 export interface CreateAdminUserRequest {
   username: string;
   password: string;
@@ -586,6 +741,7 @@ export interface CreateAdminUserRequest {
   province: string;
   group: string;
   markEmailAsVerified: boolean;
+  isLocked: boolean;
 }
 
 export interface UpdateAdminUserRequest {
@@ -598,6 +754,7 @@ export interface UpdateAdminUserRequest {
   province: string;
   group: string;
   isEmailVerified: boolean;
+  isLocked: boolean;
 }
 
 export interface CreateCourseRequest {
@@ -653,6 +810,15 @@ export interface UpsertLessonRequest {
   videoContent?: VideoContent | null;
   assessment?: LessonAssessmentRequest | null;
   scormPackage?: ScormPackageRequest | null;
+}
+
+export interface MediaUploadResponse {
+  fileName: string;
+  originalFileName: string;
+  url: string;
+  contentType: string;
+  sizeBytes: number;
+  mediaType: string;
 }
 
 export interface CreateCourseQuizRequest {

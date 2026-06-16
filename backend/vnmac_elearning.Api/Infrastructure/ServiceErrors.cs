@@ -67,6 +67,11 @@ public static class ServiceErrors
         "Tai khoan chua xac thuc email.",
         StatusCodes.Status403Forbidden);
 
+    public static readonly ServiceError AuthAccountLocked = new(
+        "auth.account_locked",
+        "Tai khoan da bi khoa.",
+        StatusCodes.Status403Forbidden);
+
     public static readonly ServiceError AuthCurrentUserNotFound = new(
         "auth.current_user_not_found",
         "Khong tim thay nguoi dung hien tai.",

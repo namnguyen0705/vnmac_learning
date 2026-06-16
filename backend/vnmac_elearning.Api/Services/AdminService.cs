@@ -432,6 +432,7 @@ public sealed class AdminService(
             IsEmailVerified = request.MarkEmailAsVerified,
             EmailVerifiedAt = request.MarkEmailAsVerified ? now : null,
             CreatedByAdmin = true,
+            IsLocked = request.IsLocked,
             Role = request.Role,
             Province = request.Province.Trim(),
             Group = request.Group.Trim()
@@ -469,6 +470,7 @@ public sealed class AdminService(
         user.Province = request.Province.Trim();
         user.Group = request.Group.Trim();
         user.IsEmailVerified = request.IsEmailVerified;
+        user.IsLocked = request.IsLocked;
         user.EmailVerifiedAt = request.IsEmailVerified
             ? user.EmailVerifiedAt ?? timeProvider.GetUtcNow()
             : null;
@@ -521,8 +523,15 @@ public sealed class AdminService(
                 {
                     UserId = learner.Id,
                     Username = learner.Username,
+                    Email = learner.Email,
                     FullName = learner.FullName,
                     PhoneNumber = learner.PhoneNumber,
+                    CreatedAt = learner.CreatedAt,
+                    LastLogin = learner.LastLogin,
+                    IsEmailVerified = learner.IsEmailVerified,
+                    EmailVerifiedAt = learner.EmailVerifiedAt,
+                    CreatedByAdmin = learner.CreatedByAdmin,
+                    IsLocked = learner.IsLocked,
                     Province = learner.Province,
                     Group = learner.Group,
                     CompletionPercent = completionPercent,
@@ -594,6 +603,228 @@ public sealed class AdminService(
         };
     }
 
+    public TrackingResponse GetTracking(string? courseId, string? province, string? group, string? status)
+    {
+        var courses = CourseGraphQuery()
+            .OrderBy(course => course.Title)
+            .ToArray();
+        var courseMap = courses.ToDictionary(course => course.Id, StringComparer.Ordinal);
+        var lessons = courses.SelectMany(FlattenCourseLessons).ToArray();
+        var lessonMap = lessons.ToDictionary(item => item.Lesson.Id, StringComparer.Ordinal);
+        var progressMap = dbContext.ProgressTrackings
+            .AsEnumerable()
+            .GroupBy(item => (item.UserId, item.LessonId))
+            .ToDictionary(grouping => grouping.Key, grouping => grouping.First());
+        var quizResultMap = dbContext.QuizResults
+            .AsEnumerable()
+            .GroupBy(item => (item.UserId, item.LessonId))
+            .ToDictionary(grouping => grouping.Key, grouping => grouping.First());
+        var quizAttempts = dbContext.QuizAttempts.ToArray();
+        var interactionAttempts = dbContext.InteractionAttempts.ToArray();
+        var scormRegistrations = dbContext.ScormRegistrations.ToArray();
+        var quizAttemptCounts = quizAttempts
+            .GroupBy(item => (item.UserId, item.LessonId))
+            .ToDictionary(grouping => grouping.Key, grouping => grouping.Count());
+        var interactionAttemptCounts = interactionAttempts
+            .GroupBy(item => (item.UserId, item.LessonId))
+            .ToDictionary(grouping => grouping.Key, grouping => grouping.Count());
+        var scormMap = scormRegistrations
+            .GroupBy(item => (item.UserId, item.LessonId))
+            .ToDictionary(grouping => grouping.Key, grouping => grouping.First());
+
+        var learners = GetLearners(province, group)
+            .Select(learner => BuildTrackingLearner(
+                learner,
+                courseId,
+                courseMap,
+                lessonMap,
+                progressMap,
+                quizResultMap,
+                quizAttemptCounts,
+                interactionAttemptCounts,
+                scormMap,
+                quizAttempts,
+                interactionAttempts,
+                scormRegistrations))
+            .Where(item => item.Courses.Count > 0)
+            .Where(item => MatchesTrackingStatus(item, status))
+            .OrderByDescending(item => item.LastActivityAt ?? DateTimeOffset.MinValue)
+            .ThenBy(item => item.FullName)
+            .ToArray();
+
+        var dropOffLessons = learners
+            .SelectMany(item => item.Courses.Select(course => new
+            {
+                course.CourseTitle,
+                course.CurrentLessonId,
+                course.CurrentLessonTitle,
+                course.OverallCompletionPercent,
+                course.LastPositionSeconds,
+                Progress = course.CurrentLessonId is null
+                    ? null
+                    : course.Lessons.FirstOrDefault(lesson => lesson.LessonId == course.CurrentLessonId)
+            }))
+            .Where(item => item.CurrentLessonId is not null && item.OverallCompletionPercent < 100)
+            .GroupBy(item => item.CurrentLessonId!, StringComparer.Ordinal)
+            .Select(grouping => new TrackingDropOffItem
+            {
+                LessonId = grouping.Key,
+                Title = grouping.First().CurrentLessonTitle ?? grouping.Key,
+                CourseTitle = grouping.First().CourseTitle,
+                LearnerCount = grouping.Count(),
+                AverageWatchPercent = grouping.Any(item => item.Progress is not null)
+                    ? (int)Math.Round(grouping.Average(item => item.Progress?.WatchPercent ?? 0))
+                    : 0
+            })
+            .OrderByDescending(item => item.LearnerCount)
+            .ThenBy(item => item.Title)
+            .Take(8)
+            .ToArray();
+
+        var recentEvents = learners
+            .SelectMany(item => item.Timeline)
+            .OrderByDescending(item => item.OccurredAt)
+            .Take(12)
+            .ToArray();
+        var courseSummaries = BuildCourseSummaries(learners);
+        var lessonSummaries = BuildLessonSummaries(learners);
+        var videoSummaries = BuildVideoSummaries(learners);
+
+        return new TrackingResponse
+        {
+            Overview = new TrackingOverview
+            {
+                TotalLearners = learners.Length,
+                ActiveLearners = learners.Count(item => item.Status == "Dang hoc"),
+                StalledLearners = learners.Count(item => item.Status == "Mac ket"),
+                CompletedCourses = learners.Sum(item => item.Courses.Count(course => course.OverallCompletionPercent >= 100))
+            },
+            Courses = courses.Select(course => new TrackingCourseOption
+            {
+                CourseId = course.Id,
+                Title = course.Title
+            }).ToArray(),
+            Learners = learners,
+            CourseSummaries = courseSummaries,
+            LessonSummaries = lessonSummaries,
+            VideoSummaries = videoSummaries,
+            DropOffLessons = dropOffLessons,
+            RecentEvents = recentEvents
+        };
+    }
+
+    public string ExportTrackingCsv(string? courseId, string? province, string? group, string? status)
+    {
+        var tracking = GetTracking(courseId, province, group, status);
+        var builder = new StringBuilder();
+
+        builder.AppendLine("Section,CourseId,CourseTitle,LessonId,LessonTitle,LessonType,LearnerId,LearnerName,Province,Group,Status,EnrolledLearners,StartedLearners,CompletedLearners,DropOffLearners,AverageCompletionPercent,AverageProgressPercent,AverageWatchPercent,AverageStopPositionSeconds,LastActivityAt");
+
+        foreach (var course in tracking.CourseSummaries)
+        {
+            builder.AppendLine(string.Join(",",
+                "Course",
+                EscapeCsv(course.CourseId),
+                EscapeCsv(course.CourseTitle),
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                course.EnrolledLearners,
+                course.ActiveLearners,
+                course.CompletedLearners,
+                string.Empty,
+                course.AverageCompletionPercent,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty));
+        }
+
+        foreach (var lesson in tracking.LessonSummaries)
+        {
+            builder.AppendLine(string.Join(",",
+                "Lesson",
+                string.Empty,
+                EscapeCsv(lesson.CourseTitle),
+                EscapeCsv(lesson.LessonId),
+                EscapeCsv(lesson.Title),
+                lesson.Type,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                lesson.StartedLearners,
+                lesson.CompletedLearners,
+                lesson.DropOffLearners,
+                string.Empty,
+                lesson.AverageProgressPercent,
+                string.Empty,
+                string.Empty,
+                string.Empty));
+        }
+
+        foreach (var video in tracking.VideoSummaries)
+        {
+            builder.AppendLine(string.Join(",",
+                "Video",
+                string.Empty,
+                EscapeCsv(video.CourseTitle),
+                EscapeCsv(video.LessonId),
+                EscapeCsv(video.Title),
+                LessonType.Video,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                video.StartedLearners,
+                video.CompletedLearners,
+                video.DropOffLearners,
+                string.Empty,
+                string.Empty,
+                video.AverageWatchPercent,
+                video.AverageStopPositionSeconds,
+                string.Empty));
+        }
+
+        foreach (var learner in tracking.Learners)
+        {
+            var primaryCourse = learner.Courses.FirstOrDefault(item => item.OverallCompletionPercent > 0 && item.OverallCompletionPercent < 100)
+                ?? learner.Courses.FirstOrDefault();
+            builder.AppendLine(string.Join(",",
+                "Learner",
+                EscapeCsv(primaryCourse?.CourseId ?? string.Empty),
+                EscapeCsv(primaryCourse?.CourseTitle ?? string.Empty),
+                EscapeCsv(primaryCourse?.CurrentLessonId ?? string.Empty),
+                EscapeCsv(primaryCourse?.CurrentLessonTitle ?? string.Empty),
+                primaryCourse?.CurrentLessonType?.ToString() ?? string.Empty,
+                EscapeCsv(learner.UserId),
+                EscapeCsv(learner.FullName),
+                EscapeCsv(learner.Province),
+                EscapeCsv(learner.Group),
+                EscapeCsv(learner.Status),
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                primaryCourse?.OverallCompletionPercent.ToString(System.Globalization.CultureInfo.InvariantCulture) ?? string.Empty,
+                string.Empty,
+                string.Empty,
+                primaryCourse?.LastPositionSeconds.ToString(System.Globalization.CultureInfo.InvariantCulture) ?? string.Empty,
+                learner.LastActivityAt?.ToString("O") ?? string.Empty));
+        }
+
+        return builder.ToString();
+    }
+
     public string ExportLearnersCsv(string? province, string? group)
     {
         var rows = GetLearners(province, group);
@@ -620,6 +851,459 @@ public sealed class AdminService(
         }
 
         return builder.ToString();
+    }
+
+    private TrackingLearnerRow BuildTrackingLearner(
+        LearnerAdminRow learner,
+        string? courseId,
+        IReadOnlyDictionary<string, Course> courseMap,
+        IReadOnlyDictionary<string, (Course Course, Lesson Lesson)> lessonMap,
+        IReadOnlyDictionary<(string UserId, string LessonId), ProgressTracking> progressMap,
+        IReadOnlyDictionary<(string UserId, string LessonId), QuizResult> quizResultMap,
+        IReadOnlyDictionary<(string UserId, string LessonId), int> quizAttemptCounts,
+        IReadOnlyDictionary<(string UserId, string LessonId), int> interactionAttemptCounts,
+        IReadOnlyDictionary<(string UserId, string LessonId), ScormRegistration> scormMap,
+        IReadOnlyCollection<QuizAttempt> quizAttempts,
+        IReadOnlyCollection<InteractionAttempt> interactionAttempts,
+        IReadOnlyCollection<ScormRegistration> scormRegistrations)
+    {
+        var courseProgress = learner.Enrollments
+            .Where(enrollment => string.IsNullOrWhiteSpace(courseId) || enrollment.CourseId == courseId)
+            .Where(enrollment => courseMap.ContainsKey(enrollment.CourseId))
+            .Select(enrollment => BuildTrackingCourseProgress(
+                learner.UserId,
+                enrollment,
+                courseMap[enrollment.CourseId],
+                progressMap,
+                quizResultMap,
+                quizAttemptCounts,
+                interactionAttemptCounts,
+                scormMap))
+            .ToArray();
+
+        var timeline = BuildTrackingTimeline(
+                learner,
+                courseProgress.SelectMany(item => item.Lessons).Select(item => item.LessonId).ToHashSet(StringComparer.Ordinal),
+                lessonMap,
+                progressMap,
+                quizAttempts,
+                interactionAttempts,
+                scormRegistrations)
+            .OrderByDescending(item => item.OccurredAt)
+            .Take(16)
+            .ToArray();
+
+        var lastActivity = MaxDate(courseProgress.Select(item => item.LastAccessedAt)
+            .Concat(timeline.Select(item => (DateTimeOffset?)item.OccurredAt)));
+
+        return new TrackingLearnerRow
+        {
+            UserId = learner.UserId,
+            Username = learner.Username,
+            FullName = learner.FullName,
+            PhoneNumber = learner.PhoneNumber,
+            Province = learner.Province,
+            Group = learner.Group,
+            Status = ResolveTrackingStatus(learner, courseProgress, lastActivity),
+            LastActivityAt = lastActivity,
+            Courses = courseProgress,
+            Timeline = timeline
+        };
+    }
+
+    private static IReadOnlyCollection<TrackingCourseSummary> BuildCourseSummaries(IReadOnlyCollection<TrackingLearnerRow> learners)
+    {
+        return learners
+            .SelectMany(learner => learner.Courses)
+            .GroupBy(course => new { course.CourseId, course.CourseTitle })
+            .Select(grouping => new TrackingCourseSummary
+            {
+                CourseId = grouping.Key.CourseId,
+                CourseTitle = grouping.Key.CourseTitle,
+                EnrolledLearners = grouping.Count(),
+                ActiveLearners = grouping.Count(item => item.OverallCompletionPercent > 0 && item.OverallCompletionPercent < 100),
+                CompletedLearners = grouping.Count(item => item.OverallCompletionPercent >= 100),
+                AverageCompletionPercent = grouping.Any()
+                    ? (int)Math.Round(grouping.Average(item => item.OverallCompletionPercent))
+                    : 0
+            })
+            .OrderByDescending(item => item.EnrolledLearners)
+            .ThenByDescending(item => item.ActiveLearners)
+            .ThenBy(item => item.CourseTitle)
+            .ToArray();
+    }
+
+    private static IReadOnlyCollection<TrackingLessonSummary> BuildLessonSummaries(IReadOnlyCollection<TrackingLearnerRow> learners)
+    {
+        return learners
+            .SelectMany(learner => learner.Courses.SelectMany(course => course.Lessons.Select(lesson => new
+            {
+                course.CourseTitle,
+                Lesson = lesson
+            })))
+            .GroupBy(item => new
+            {
+                item.Lesson.LessonId,
+                item.Lesson.Title,
+                item.CourseTitle,
+                item.Lesson.Type
+            })
+            .Select(grouping => new TrackingLessonSummary
+            {
+                LessonId = grouping.Key.LessonId,
+                Title = grouping.Key.Title,
+                CourseTitle = grouping.Key.CourseTitle,
+                Type = grouping.Key.Type,
+                StartedLearners = grouping.Count(item => IsLessonStarted(item.Lesson)),
+                CompletedLearners = grouping.Count(item => item.Lesson.Status == LessonProgressStatus.Completed),
+                DropOffLearners = grouping.Count(item => IsLessonDropOff(item.Lesson)),
+                AverageProgressPercent = grouping.Any()
+                    ? (int)Math.Round(grouping.Average(item => LessonProgressPercent(item.Lesson)))
+                    : 0
+            })
+            .OrderByDescending(item => item.StartedLearners)
+            .ThenByDescending(item => item.DropOffLearners)
+            .ThenBy(item => item.Title)
+            .ToArray();
+    }
+
+    private static IReadOnlyCollection<TrackingVideoSummary> BuildVideoSummaries(IReadOnlyCollection<TrackingLearnerRow> learners)
+    {
+        return learners
+            .SelectMany(learner => learner.Courses.SelectMany(course => course.Lessons
+                .Where(lesson => lesson.Type == LessonType.Video)
+                .Select(lesson => new
+                {
+                    course.CourseTitle,
+                    Lesson = lesson
+                })))
+            .GroupBy(item => new
+            {
+                item.Lesson.LessonId,
+                item.Lesson.Title,
+                item.CourseTitle
+            })
+            .Select(grouping =>
+            {
+                var started = grouping.Where(item => IsLessonStarted(item.Lesson)).ToArray();
+                return new TrackingVideoSummary
+                {
+                    LessonId = grouping.Key.LessonId,
+                    Title = grouping.Key.Title,
+                    CourseTitle = grouping.Key.CourseTitle,
+                    StartedLearners = started.Length,
+                    CompletedLearners = grouping.Count(item => item.Lesson.Status == LessonProgressStatus.Completed),
+                    DropOffLearners = grouping.Count(item => item.Lesson.WatchPercent > 0 && item.Lesson.WatchPercent < 90),
+                    AverageWatchPercent = started.Length == 0
+                        ? 0
+                        : (int)Math.Round(started.Average(item => item.Lesson.WatchPercent)),
+                    AverageStopPositionSeconds = started.Length == 0
+                        ? 0
+                        : (int)Math.Round(started.Average(item => item.Lesson.LastPositionSeconds))
+                };
+            })
+            .OrderByDescending(item => item.StartedLearners)
+            .ThenByDescending(item => item.DropOffLearners)
+            .ThenBy(item => item.Title)
+            .ToArray();
+    }
+
+    private static bool IsLessonStarted(TrackingLessonProgress lesson)
+    {
+        return lesson.Status != LessonProgressStatus.NotStarted ||
+            lesson.WatchPercent > 0 ||
+            lesson.WatchTimeMinutes > 0 ||
+            lesson.InteractionAttempts > 0 ||
+            lesson.QuizAttempts > 0 ||
+            lesson.ScormAttempts > 0;
+    }
+
+    private static bool IsLessonDropOff(TrackingLessonProgress lesson)
+    {
+        if (lesson.Status == LessonProgressStatus.Completed)
+        {
+            return false;
+        }
+
+        return lesson.Type == LessonType.Video
+            ? lesson.WatchPercent > 0 && lesson.WatchPercent < 90
+            : IsLessonStarted(lesson);
+    }
+
+    private static int LessonProgressPercent(TrackingLessonProgress lesson)
+    {
+        if (lesson.Status == LessonProgressStatus.Completed)
+        {
+            return 100;
+        }
+
+        return lesson.Type == LessonType.Video
+            ? lesson.WatchPercent
+            : IsLessonStarted(lesson) ? 50 : 0;
+    }
+
+    private static TrackingCourseProgress BuildTrackingCourseProgress(
+        string userId,
+        LearnerEnrollmentAdminRow enrollment,
+        Course course,
+        IReadOnlyDictionary<(string UserId, string LessonId), ProgressTracking> progressMap,
+        IReadOnlyDictionary<(string UserId, string LessonId), QuizResult> quizResultMap,
+        IReadOnlyDictionary<(string UserId, string LessonId), int> quizAttemptCounts,
+        IReadOnlyDictionary<(string UserId, string LessonId), int> interactionAttemptCounts,
+        IReadOnlyDictionary<(string UserId, string LessonId), ScormRegistration> scormMap)
+    {
+        var lessons = FlattenCourseLessons(course)
+            .Select(item => BuildTrackingLessonProgress(
+                userId,
+                item.Lesson,
+                progressMap,
+                quizResultMap,
+                quizAttemptCounts,
+                interactionAttemptCounts,
+                scormMap))
+            .ToArray();
+        var currentLesson = !string.IsNullOrWhiteSpace(enrollment.NextLessonId)
+            ? lessons.FirstOrDefault(item => item.LessonId == enrollment.NextLessonId)
+            : lessons.FirstOrDefault(item => item.Status != LessonProgressStatus.Completed);
+
+        return new TrackingCourseProgress
+        {
+            CourseId = course.Id,
+            CourseTitle = course.Title,
+            EnrolledAt = DateTimeOffset.MinValue,
+            LastAccessedAt = MaxDate(lessons.SelectMany(item => new[]
+            {
+                item.LastWatchedAt,
+                item.CompletionTime
+            })),
+            OverallCompletionPercent = enrollment.OverallCompletionPercent,
+            ContentCompletionPercent = enrollment.ContentCompletionPercent,
+            QuizCompletionPercent = enrollment.QuizCompletionPercent,
+            CurrentLessonId = currentLesson?.LessonId,
+            CurrentLessonTitle = currentLesson?.Title,
+            CurrentLessonType = currentLesson?.Type,
+            LastPositionSeconds = currentLesson?.LastPositionSeconds ?? 0,
+            Lessons = lessons
+        };
+    }
+
+    private static TrackingLessonProgress BuildTrackingLessonProgress(
+        string userId,
+        Lesson lesson,
+        IReadOnlyDictionary<(string UserId, string LessonId), ProgressTracking> progressMap,
+        IReadOnlyDictionary<(string UserId, string LessonId), QuizResult> quizResultMap,
+        IReadOnlyDictionary<(string UserId, string LessonId), int> quizAttemptCounts,
+        IReadOnlyDictionary<(string UserId, string LessonId), int> interactionAttemptCounts,
+        IReadOnlyDictionary<(string UserId, string LessonId), ScormRegistration> scormMap)
+    {
+        var key = (userId, lesson.Id);
+        progressMap.TryGetValue(key, out var progress);
+        quizResultMap.TryGetValue(key, out var quizResult);
+        scormMap.TryGetValue(key, out var scorm);
+
+        return new TrackingLessonProgress
+        {
+            LessonId = lesson.Id,
+            Title = lesson.Title,
+            Type = lesson.Type,
+            Status = progress?.Status ?? LessonProgressStatus.NotStarted,
+            WatchPercent = progress?.WatchPercent ?? 0,
+            WatchTimeMinutes = progress?.WatchTimeMinutes ?? 0,
+            LastPositionSeconds = progress?.LastPositionSeconds ?? 0,
+            LastWatchedAt = progress?.LastWatchedAt,
+            CompletionTime = progress?.CompletionTime,
+            InteractionAttempts = interactionAttemptCounts.GetValueOrDefault(key, progress?.InteractionAttempts ?? 0),
+            QuizAttempts = quizAttemptCounts.GetValueOrDefault(key, quizResult?.Attempts ?? 0),
+            QuizScore = quizResult?.Score ?? 0,
+            ScormAttempts = scorm?.AttemptCount ?? 0,
+            ScormTotalTimeSeconds = scorm?.TotalTimeSeconds ?? 0,
+            ScormLocation = scorm?.Location ?? string.Empty,
+            ScormCompletionStatus = scorm?.CompletionStatus,
+            ScormSuccessStatus = scorm?.SuccessStatus
+        };
+    }
+
+    private static IReadOnlyCollection<TrackingTimelineEvent> BuildTrackingTimeline(
+        LearnerAdminRow learner,
+        IReadOnlySet<string> lessonIds,
+        IReadOnlyDictionary<string, (Course Course, Lesson Lesson)> lessonMap,
+        IReadOnlyDictionary<(string UserId, string LessonId), ProgressTracking> progressMap,
+        IReadOnlyCollection<QuizAttempt> quizAttempts,
+        IReadOnlyCollection<InteractionAttempt> interactionAttempts,
+        IReadOnlyCollection<ScormRegistration> scormRegistrations)
+    {
+        var events = new List<TrackingTimelineEvent>();
+
+        foreach (var progress in progressMap.Values.Where(item => item.UserId == learner.UserId && lessonIds.Contains(item.LessonId)))
+        {
+            if (!lessonMap.TryGetValue(progress.LessonId, out var context))
+            {
+                continue;
+            }
+
+            if (progress.LastWatchedAt is not null)
+            {
+                events.Add(new TrackingTimelineEvent
+                {
+                    Id = $"video-{progress.UserId}-{progress.LessonId}",
+                    UserId = learner.UserId,
+                    LearnerName = learner.FullName,
+                    CourseTitle = context.Course.Title,
+                    LessonTitle = context.Lesson.Title,
+                    Type = "Video",
+                    Detail = $"Da xem {progress.WatchPercent}% - dung tai {progress.LastPositionSeconds}s",
+                    OccurredAt = progress.LastWatchedAt.Value
+                });
+            }
+
+            if (progress.CompletionTime is not null)
+            {
+                events.Add(new TrackingTimelineEvent
+                {
+                    Id = $"complete-{progress.UserId}-{progress.LessonId}",
+                    UserId = learner.UserId,
+                    LearnerName = learner.FullName,
+                    CourseTitle = context.Course.Title,
+                    LessonTitle = context.Lesson.Title,
+                    Type = "Hoan thanh",
+                    Detail = "Hoan thanh bai hoc",
+                    OccurredAt = progress.CompletionTime.Value
+                });
+            }
+        }
+
+        foreach (var attempt in quizAttempts.Where(item => item.UserId == learner.UserId && lessonIds.Contains(item.LessonId)))
+        {
+            if (!lessonMap.TryGetValue(attempt.LessonId, out var context))
+            {
+                continue;
+            }
+
+            events.Add(new TrackingTimelineEvent
+            {
+                Id = $"quiz-{attempt.UserId}-{attempt.LessonId}-{attempt.AttemptNumber}",
+                UserId = learner.UserId,
+                LearnerName = learner.FullName,
+                CourseTitle = context.Course.Title,
+                LessonTitle = context.Lesson.Title,
+                Type = "Quiz",
+                Detail = $"Lan {attempt.AttemptNumber} - {attempt.Score} diem",
+                OccurredAt = attempt.AttemptedAt
+            });
+        }
+
+        foreach (var attempt in interactionAttempts.Where(item => item.UserId == learner.UserId && lessonIds.Contains(item.LessonId)))
+        {
+            if (!lessonMap.TryGetValue(attempt.LessonId, out var context))
+            {
+                continue;
+            }
+
+            events.Add(new TrackingTimelineEvent
+            {
+                Id = $"interaction-{attempt.UserId}-{attempt.LessonId}-{attempt.AttemptNumber}",
+                UserId = learner.UserId,
+                LearnerName = learner.FullName,
+                CourseTitle = context.Course.Title,
+                LessonTitle = context.Lesson.Title,
+                Type = "Tuong tac",
+                Detail = attempt.Passed ? "Dat bai tuong tac" : "Chua dat bai tuong tac",
+                OccurredAt = attempt.AttemptedAt
+            });
+        }
+
+        foreach (var registration in scormRegistrations.Where(item => item.UserId == learner.UserId && lessonIds.Contains(item.LessonId)))
+        {
+            if (!lessonMap.TryGetValue(registration.LessonId, out var context))
+            {
+                continue;
+            }
+
+            if (registration.LastLaunchedAt is not null)
+            {
+                events.Add(new TrackingTimelineEvent
+                {
+                    Id = $"scorm-launch-{registration.UserId}-{registration.LessonId}",
+                    UserId = learner.UserId,
+                    LearnerName = learner.FullName,
+                    CourseTitle = context.Course.Title,
+                    LessonTitle = context.Lesson.Title,
+                    Type = "SCORM",
+                    Detail = $"Mo SCORM - {registration.CompletionStatus}",
+                    OccurredAt = registration.LastLaunchedAt.Value
+                });
+            }
+
+            if (registration.LastCommittedAt is not null)
+            {
+                events.Add(new TrackingTimelineEvent
+                {
+                    Id = $"scorm-commit-{registration.UserId}-{registration.LessonId}",
+                    UserId = learner.UserId,
+                    LearnerName = learner.FullName,
+                    CourseTitle = context.Course.Title,
+                    LessonTitle = context.Lesson.Title,
+                    Type = "SCORM",
+                    Detail = $"Luu SCORM - {registration.SuccessStatus}",
+                    OccurredAt = registration.LastCommittedAt.Value
+                });
+            }
+        }
+
+        return events;
+    }
+
+    private static string ResolveTrackingStatus(
+        LearnerAdminRow learner,
+        IReadOnlyCollection<TrackingCourseProgress> courses,
+        DateTimeOffset? lastActivity)
+    {
+        if (courses.Count > 0 && courses.All(item => item.OverallCompletionPercent >= 100))
+        {
+            return "Hoan thanh";
+        }
+
+        if (!string.IsNullOrWhiteSpace(learner.StalledAtLessonId))
+        {
+            return "Mac ket";
+        }
+
+        if (lastActivity is null && courses.All(item => item.OverallCompletionPercent <= 0))
+        {
+            return "Chua bat dau";
+        }
+
+        return "Dang hoc";
+    }
+
+    private static bool MatchesTrackingStatus(TrackingLearnerRow row, string? status)
+    {
+        if (string.IsNullOrWhiteSpace(status) || status.Equals("all", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        return status.Trim().ToLowerInvariant() switch
+        {
+            "active" => row.Status == "Dang hoc",
+            "stalled" => row.Status == "Mac ket",
+            "completed" => row.Status == "Hoan thanh",
+            "not-started" => row.Status == "Chua bat dau",
+            _ => true
+        };
+    }
+
+    private static IEnumerable<(Course Course, Lesson Lesson)> FlattenCourseLessons(Course course)
+    {
+        return course.Sections
+            .OrderBy(section => section.Order)
+            .SelectMany(section => section.Lessons.OrderBy(lesson => lesson.Order).Select(lesson => (course, lesson)));
+    }
+
+    private static DateTimeOffset? MaxDate(IEnumerable<DateTimeOffset?> values)
+    {
+        var concreteValues = values.Where(value => value is not null).Select(value => value!.Value).ToArray();
+        return concreteValues.Length == 0 ? null : concreteValues.Max();
     }
 
     private IQueryable<Course> CourseGraphQuery()
@@ -706,6 +1390,7 @@ public sealed class AdminService(
             IsEmailVerified = user.IsEmailVerified,
             EmailVerifiedAt = user.EmailVerifiedAt,
             CreatedByAdmin = user.CreatedByAdmin,
+            IsLocked = user.IsLocked,
             Role = user.Role,
             Province = user.Province,
             Group = user.Group,

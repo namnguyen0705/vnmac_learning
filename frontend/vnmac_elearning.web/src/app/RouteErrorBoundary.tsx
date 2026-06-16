@@ -13,8 +13,8 @@ export function RouteErrorBoundary() {
     error instanceof Error
       ? error.message
       : isRouteErrorResponse(error)
-        ? error.data?.message ?? "Khong the tai duoc trang hien tai."
-        : "Da co loi khong mong muon xay ra tren frontend.";
+        ? error.data?.message ?? "Không thể tải được trang hiện tại."
+        : "Đã có lỗi không mong muốn xảy ra trên frontend.";
 
   return (
     <div className="page-shell">

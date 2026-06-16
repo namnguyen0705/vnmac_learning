@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -36,6 +37,10 @@ public class Program
             ?? throw new InvalidOperationException("JWT settings were not found.");
 
         builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
+        builder.Services.Configure<FormOptions>(options =>
+        {
+            options.MultipartBodyLengthLimit = 2L * 1024 * 1024 * 1024;
+        });
         builder.Services.AddSingleton(TimeProvider.System);
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(options =>
@@ -67,6 +72,20 @@ public class Program
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+                        if (!string.IsNullOrWhiteSpace(accessToken) &&
+                            context.HttpContext.Request.Path.StartsWithSegments("/api/notifications/stream"))
+                        {
+                            context.Token = accessToken;
+                        }
+
+                        return Task.CompletedTask;
+                    }
+                };
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
@@ -96,7 +115,10 @@ public class Program
         builder.Services.AddDbContext<TrainingDbContext>(options => options.UseSqlServer(connectionString));
         builder.Services.AddScoped<PasswordService>();
         builder.Services.AddScoped<TokenService>();
+        builder.Services.AddSingleton<NotificationRealtimeService>();
+        builder.Services.AddScoped<MediaStorageService>();
         builder.Services.AddScoped<AuthService>();
+        builder.Services.AddScoped<NotificationService>();
         builder.Services.AddScoped<LearningService>();
         builder.Services.AddScoped<AdminService>();
 

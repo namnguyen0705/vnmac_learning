@@ -8,7 +8,7 @@ using vnmac_elearning.Api.Infrastructure;
 
 namespace vnmac_elearning.Api.Services;
 
-public sealed class LearningService(TrainingDbContext dbContext)
+public sealed class LearningService(TrainingDbContext dbContext, NotificationService notificationService)
 {
     public IReadOnlyCollection<Course> GetPublishedCourses()
     {
@@ -105,7 +105,13 @@ public sealed class LearningService(TrainingDbContext dbContext)
             throw new ServiceException(ServiceErrors.CoursesCourseNotFound);
         }
 
+        var learner = GetLearner(userId);
+        var alreadyEnrolled = dbContext.CourseEnrollments.Any(item => item.UserId == userId && item.CourseId == courseId);
         _ = GetOrCreateEnrollmentInternal(userId, course);
+        if (!alreadyEnrolled)
+        {
+            notificationService.NotifyCourseEnrolled(learner, course);
+        }
         SaveChangesIfNeeded();
         return BuildEnrollmentSummary(userId, course);
     }
@@ -166,6 +172,11 @@ public sealed class LearningService(TrainingDbContext dbContext)
             Math.Max(progress.WatchTimeMinutes, request.WatchTimeMinutes),
             0,
             lesson.DurationMinutes);
+        progress.LastPositionSeconds = Math.Clamp(
+            request.LastPositionSeconds,
+            0,
+            Math.Max(0, lesson.DurationMinutes * 60));
+        progress.LastWatchedAt = DateTimeOffset.UtcNow;
         progress.Status = progress.WatchPercent >= 100
             ? LessonProgressStatus.Completed
             : LessonProgressStatus.InProgress;
@@ -1347,6 +1358,7 @@ public sealed class LearningService(TrainingDbContext dbContext)
             IssuedDate = DateTimeOffset.UtcNow,
             QrCode = $"verify:{userId}:{course.Id}:{certificateId}"
         });
+        notificationService.NotifyCourseCompleted(learner, course);
     }
 
     private ScormLaunchResponse BuildScormLaunchResponse(

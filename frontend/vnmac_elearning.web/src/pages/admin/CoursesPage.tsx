@@ -12,6 +12,7 @@ import {
   AdminCourseThumb,
   AdminIconButton,
   AdminModal,
+  AdminPageHeader,
   AdminPagination,
   AdminSection,
   AdminStatusBadge,
@@ -443,6 +444,17 @@ export function CoursesPage() {
 
   return (
     <div className="grid gap-4">
+      <AdminPageHeader
+        breadcrumbs={["Quản trị", "Khóa học"]}
+        title="Quản lý khóa học"
+        actions={
+          <Button className="rounded-2xl" type="button" onClick={openCreateModal}>
+            <Plus className="size-4" />
+            Thêm khóa học
+          </Button>
+        }
+      />
+
       <section className="grid gap-2.5 md:grid-cols-2 xl:grid-cols-5">
         <CompactStat
           accentClassName="bg-blue-50 text-blue-600"

@@ -80,3 +80,16 @@ public enum ScormSuccessStatus
     Passed,
     Failed
 }
+
+public enum NotificationAudience
+{
+    Learner,
+    Admin
+}
+
+public enum NotificationType
+{
+    LearnerRegistered,
+    CourseEnrolled,
+    CourseCompleted
+}

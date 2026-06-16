@@ -62,6 +62,8 @@ public sealed class TrainingDbContext(DbContextOptions<TrainingDbContext> option
 
     public DbSet<EmailVerificationToken> EmailVerificationTokens => Set<EmailVerificationToken>();
 
+    public DbSet<Notification> Notifications => Set<Notification>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>(entity =>
@@ -427,6 +429,32 @@ public sealed class TrainingDbContext(DbContextOptions<TrainingDbContext> option
                 .WithMany()
                 .HasForeignKey(item => item.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Notification>(entity =>
+        {
+            entity.HasKey(item => item.Id);
+            entity.HasIndex(item => new { item.Audience, item.CreatedAt });
+            entity.HasIndex(item => new { item.RecipientUserId, item.CreatedAt });
+            entity.HasIndex(item => item.ReadAt);
+            entity.Property(item => item.Audience).HasConversion<string>();
+            entity.Property(item => item.Type).HasConversion<string>();
+            entity.Property(item => item.Title).HasMaxLength(220);
+            entity.Property(item => item.ActorName).HasMaxLength(220);
+            entity.Property(item => item.CourseTitle).HasMaxLength(320);
+            entity.Property(item => item.LinkUrl).HasMaxLength(500);
+            entity.HasOne<User>()
+                .WithMany()
+                .HasForeignKey(item => item.RecipientUserId)
+                .OnDelete(DeleteBehavior.NoAction);
+            entity.HasOne<User>()
+                .WithMany()
+                .HasForeignKey(item => item.ActorUserId)
+                .OnDelete(DeleteBehavior.NoAction);
+            entity.HasOne<Course>()
+                .WithMany()
+                .HasForeignKey(item => item.CourseId)
+                .OnDelete(DeleteBehavior.NoAction);
         });
     }
 

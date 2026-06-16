@@ -5,13 +5,13 @@ import "./index.css";
 const rootElement = document.getElementById("root");
 
 if (!rootElement) {
-  throw new Error("Khong tim thay root element.");
+  throw new Error("Không tìm thấy root element.");
 }
 
 const root = createRoot(rootElement);
 
 function renderError(cause: unknown) {
-  const message = cause instanceof Error ? cause.message : "Khong khoi tao duoc frontend.";
+  const message = cause instanceof Error ? cause.message : "Không khởi tạo được frontend.";
   const detail = cause instanceof Error ? cause.stack : undefined;
 
   root.render(

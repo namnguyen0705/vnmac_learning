@@ -1,4 +1,5 @@
 import { apiRequest, resolveApiUrl } from "./client";
+import { useAuthStore } from "../stores/auth-store";
 import type {
   AdminQuestion,
   AdminUserRow,
@@ -11,6 +12,8 @@ import type {
   CreateCourseRequest,
   CreateSectionRequest,
   LearnerAdminRow,
+  MediaUploadResponse,
+  TrackingResponse,
   UpdateCourseQuizRequest,
   UpdateAdminUserRequest,
   UpsertLessonQuestionRequest,
@@ -67,6 +70,34 @@ export function createLesson(payload: UpsertLessonRequest) {
     method: "POST",
     body: payload,
   });
+}
+
+export async function uploadAdminMedia(file: File, mediaType: "video" | "poster" | "caption") {
+  const session = useAuthStore.getState().session;
+  const formData = new FormData();
+  formData.set("file", file);
+  formData.set("mediaType", mediaType);
+
+  const headers = new Headers();
+  if (session?.tokens.accessToken) {
+    headers.set("Authorization", `Bearer ${session.tokens.accessToken}`);
+  }
+
+  const response = await fetch(resolveApiUrl("/api/admin/media/upload"), {
+    method: "POST",
+    headers,
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error("Upload file thất bại.");
+  }
+
+  const payload = (await response.json()) as MediaUploadResponse;
+  return {
+    ...payload,
+    url: resolveApiUrl(payload.url),
+  };
 }
 
 export function createQuiz(payload: CreateCourseQuizRequest) {
@@ -194,6 +225,44 @@ export function getAnalytics(filters: { province?: string; group?: string }) {
 
   const query = params.size ? `?${params.toString()}` : "";
   return apiRequest<AnalyticsResponse>(`/api/admin/analytics${query}`);
+}
+
+export function getTracking(filters: { courseId?: string; province?: string; group?: string; status?: string }) {
+  const params = new URLSearchParams();
+  if (filters.courseId) {
+    params.set("courseId", filters.courseId);
+  }
+  if (filters.province) {
+    params.set("province", filters.province);
+  }
+  if (filters.group) {
+    params.set("group", filters.group);
+  }
+  if (filters.status && filters.status !== "all") {
+    params.set("status", filters.status);
+  }
+
+  const query = params.size ? `?${params.toString()}` : "";
+  return apiRequest<TrackingResponse>(`/api/admin/tracking${query}`);
+}
+
+export function getTrackingExportUrl(filters: { courseId?: string; province?: string; group?: string; status?: string }) {
+  const params = new URLSearchParams();
+  if (filters.courseId) {
+    params.set("courseId", filters.courseId);
+  }
+  if (filters.province) {
+    params.set("province", filters.province);
+  }
+  if (filters.group) {
+    params.set("group", filters.group);
+  }
+  if (filters.status && filters.status !== "all") {
+    params.set("status", filters.status);
+  }
+
+  const query = params.size ? `?${params.toString()}` : "";
+  return resolveApiUrl(`/api/admin/tracking/export${query}`);
 }
 
 export function getUserExportUrl(filters: { province?: string; group?: string }) {

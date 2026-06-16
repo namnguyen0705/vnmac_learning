@@ -8,12 +8,30 @@ namespace vnmac_elearning.Api.Controllers;
 
 [ApiController]
 [Route("api/admin")]
-public sealed class AdminController(AdminService adminService) : ControllerBase
+public sealed class AdminController(AdminService adminService, MediaStorageService mediaStorageService) : ControllerBase
 {
     [HttpGet("courses")]
     public ActionResult<object> GetCourses()
     {
         return Ok(adminService.GetCourses().Select(CourseResponseMapper.Map).ToArray());
+    }
+
+    [HttpPost("media/upload")]
+    [RequestSizeLimit(2L * 1024 * 1024 * 1024)]
+    [RequestFormLimits(MultipartBodyLengthLimit = 2L * 1024 * 1024 * 1024)]
+    public async Task<ActionResult<MediaUploadResponse>> UploadMedia(
+        [FromForm] IFormFile file,
+        [FromForm] string mediaType,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            return Ok(await mediaStorageService.SaveAsync(file, mediaType, cancellationToken));
+        }
+        catch (InvalidOperationException exception)
+        {
+            return BadRequest(new { key = "media.upload_invalid", message = exception.Message });
+        }
     }
 
     [HttpPost("courses")]
@@ -157,6 +175,27 @@ public sealed class AdminController(AdminService adminService) : ControllerBase
         [FromQuery] string? group = null)
     {
         return Ok(adminService.GetAnalytics(province, group));
+    }
+
+    [HttpGet("tracking")]
+    public ActionResult<TrackingResponse> GetTracking(
+        [FromQuery] string? courseId = null,
+        [FromQuery] string? province = null,
+        [FromQuery] string? group = null,
+        [FromQuery] string? status = null)
+    {
+        return Ok(adminService.GetTracking(courseId, province, group, status));
+    }
+
+    [HttpGet("tracking/export")]
+    public IActionResult ExportTracking(
+        [FromQuery] string? courseId = null,
+        [FromQuery] string? province = null,
+        [FromQuery] string? group = null,
+        [FromQuery] string? status = null)
+    {
+        var csv = adminService.ExportTrackingCsv(courseId, province, group, status);
+        return File(Encoding.UTF8.GetBytes(csv), "text/csv; charset=utf-8", "tracking-report.csv");
     }
 
     [HttpGet("users/export")]

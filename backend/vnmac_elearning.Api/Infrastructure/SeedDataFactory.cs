@@ -11,13 +11,157 @@ public static class SeedDataFactory
     {
         return new SeedSnapshot(
             BuildUsers(),
-            [BuildCourse()],
+            [BuildCourse(), .. BuildCatalogCourses()],
             BuildCourseEnrollments(),
             BuildProgressTrackings(),
             BuildQuizResults(),
             BuildQuizAttempts(),
             BuildInteractionAttempts(),
             BuildCertificates());
+    }
+
+    private static List<Course> BuildCatalogCourses()
+    {
+        return
+        [
+            BuildCatalogCourse(
+                "course-community-safety",
+                "An toàn bom mìn cho cộng đồng",
+                "Khóa học nền tảng giúp học viên nhận biết nguy cơ, cảnh báo người xung quanh và xử lý tình huống thường gặp tại cộng đồng.",
+                "Nhận biết vật thể nghi ngờ",
+                "Báo tin an toàn cho lực lượng chức năng",
+                1),
+            BuildCatalogCourse(
+                "course-school-awareness",
+                "Giáo dục phòng tránh tai nạn bom mìn trong trường học",
+                "Nội dung dành cho giáo viên, phụ huynh và học sinh nhằm xây dựng hành vi an toàn trong môi trường học đường.",
+                "Tổ chức tiết học an toàn",
+                "Hướng dẫn học sinh ghi nhớ quy tắc 3 không",
+                2),
+            BuildCatalogCourse(
+                "course-first-response",
+                "Sơ cứu và phản ứng ban đầu khi xảy ra tai nạn",
+                "Trang bị kiến thức phản ứng ban đầu, bảo vệ hiện trường và phối hợp với lực lượng y tế, cứu hộ.",
+                "Đảm bảo an toàn hiện trường",
+                "Gọi hỗ trợ và sơ cứu cơ bản",
+                3),
+            BuildCatalogCourse(
+                "course-risk-communication",
+                "Truyền thông nguy cơ bom mìn tại địa phương",
+                "Hướng dẫn cán bộ cơ sở xây dựng thông điệp, tổ chức buổi truyền thông và theo dõi phản hồi cộng đồng.",
+                "Xây dựng thông điệp rõ ràng",
+                "Tổ chức truyền thông nhóm nhỏ",
+                4),
+            BuildCatalogCourse(
+                "course-child-safety",
+                "Bảo vệ trẻ em trước nguy cơ vật nổ",
+                "Khóa học tập trung vào nhận diện hành vi rủi ro của trẻ em và cách người lớn hướng dẫn trẻ tránh xa vật nổ.",
+                "Nhận diện hành vi tò mò nguy hiểm",
+                "Hướng dẫn trẻ báo người lớn",
+                5),
+            BuildCatalogCourse(
+                "course-farmer-safety",
+                "An toàn bom mìn trong lao động sản xuất",
+                "Nội dung dành cho người dân làm nông nghiệp, lâm nghiệp và xây dựng tại khu vực có nguy cơ còn sót vật nổ.",
+                "Kiểm tra dấu hiệu cảnh báo tại khu vực làm việc",
+                "Dừng hoạt động và báo cáo khi nghi ngờ",
+                6),
+            BuildCatalogCourse(
+                "course-volunteer-training",
+                "Tập huấn tình nguyện viên tuyên truyền an toàn",
+                "Khóa học giúp tình nguyện viên nắm quy trình truyền thông, tư vấn và ghi nhận thông tin phản ánh từ cộng đồng.",
+                "Chuẩn bị buổi tuyên truyền",
+                "Ghi nhận và chuyển thông tin phản ánh",
+                7),
+            BuildCatalogCourse(
+                "course-local-officer",
+                "Nghiệp vụ theo dõi nguy cơ cho cán bộ xã phường",
+                "Hướng dẫn cán bộ địa phương tổng hợp thông tin nguy cơ, phối hợp xử lý và cập nhật báo cáo an toàn.",
+                "Tiếp nhận thông tin từ người dân",
+                "Phối hợp khoanh vùng và báo cáo",
+                8),
+            BuildCatalogCourse(
+                "course-safe-travel",
+                "An toàn khi di chuyển qua khu vực có cảnh báo",
+                "Giúp học viên chuẩn bị trước khi đi lại, nhận biết biển báo, giữ khoảng cách và xử lý khi phát hiện vật thể lạ.",
+                "Đọc biển báo và mốc cảnh báo",
+                "Lập kế hoạch di chuyển an toàn",
+                9)
+        ];
+    }
+
+    private static Course BuildCatalogCourse(
+        string courseId,
+        string title,
+        string description,
+        string firstLessonTitle,
+        string secondLessonTitle,
+        int order)
+    {
+        var sectionId = $"{courseId}-section";
+        return new Course
+        {
+            Id = courseId,
+            Title = title,
+            Description = description,
+            Status = CourseStatus.Published,
+            Sections =
+            [
+                new CourseSection
+                {
+                    Id = sectionId,
+                    CourseId = courseId,
+                    Title = "Nội dung chính",
+                    Description = "Các bài học ngắn giúp học viên nắm kiến thức và áp dụng ngay trong thực tế.",
+                    Order = 1,
+                    Lessons =
+                    [
+                        BuildCatalogVideoLesson(courseId, sectionId, $"{courseId}-video-1", firstLessonTitle, 1, 8 + order % 4),
+                        BuildCatalogVideoLesson(courseId, sectionId, $"{courseId}-video-2", secondLessonTitle, 2, 9 + order % 5)
+                    ]
+                }
+            ]
+        };
+    }
+
+    private static Lesson BuildCatalogVideoLesson(
+        string courseId,
+        string sectionId,
+        string lessonId,
+        string title,
+        int order,
+        int durationMinutes)
+    {
+        return new Lesson
+        {
+            Id = lessonId,
+            CourseId = courseId,
+            SectionId = sectionId,
+            Title = title,
+            Type = LessonType.Video,
+            Order = order,
+            DurationMinutes = durationMinutes,
+            StatusLabel = "Xem hết video để hoàn thành bài học",
+            VideoContent = new VideoContent
+            {
+                Intro = "Bài học video ngắn, tập trung vào tình huống thực tế và hành vi an toàn cần ghi nhớ.",
+                VideoUrl = "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+                PosterUrl = $"https://picsum.photos/seed/{Uri.EscapeDataString(lessonId)}/960/540",
+                Objectives =
+                [
+                    "Nhận biết tình huống nguy cơ",
+                    "Ghi nhớ hành vi an toàn cần thực hiện",
+                    "Biết cách báo tin cho người có trách nhiệm"
+                ],
+                Checkpoints =
+                [
+                    "Không chạm vào vật thể nghi ngờ",
+                    "Giữ khoảng cách an toàn",
+                    "Báo ngay cho lực lượng chức năng hoặc người phụ trách"
+                ],
+                TranscriptHighlight = "Khi gặp dấu hiệu nguy hiểm, ưu tiên đầu tiên là giữ an toàn cho bản thân và cảnh báo người xung quanh."
+            }
+        };
     }
 
     private static Course BuildCourse()
@@ -53,6 +197,7 @@ public static class SeedDataFactory
                             {
                                 Intro = "Tổng quan về các dấu hiệu thường gặp của bom mìn, vật nổ trong cộng đồng.",
                                 VideoUrl = "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+                                PosterUrl = "https://picsum.photos/seed/vnmac-awareness-video/960/540",
                                 Objectives =
                                 [
                                     "Nhận biết vật thể nghi ngờ trong sinh hoạt hằng ngày",
@@ -278,6 +423,7 @@ public static class SeedDataFactory
                             {
                                 Intro = "Hướng dẫn cán bộ địa phương và tổ truyền thông cách báo tin, cảnh báo và giữ an toàn cho cộng đồng.",
                                 VideoUrl = "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+                                PosterUrl = "https://picsum.photos/seed/vnmac-reporting-video/960/540",
                                 Objectives =
                                 [
                                     "Thực hiện đúng quy trình báo cáo",

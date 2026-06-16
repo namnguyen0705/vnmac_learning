@@ -3,7 +3,7 @@ import { AdminPageHeader, AdminSection } from "@/shared/ui/admin-kit";
 
 interface AdminPlaceholderPageProps {
   title: string;
-  subtitle: string;
+  subtitle?: string;
   primaryActionLabel?: string;
 }
 
@@ -16,6 +16,7 @@ export function AdminPlaceholderPage({
     <div className="grid gap-6">
       <AdminPageHeader
         actions={<Button className="rounded-2xl">{primaryActionLabel}</Button>}
+        breadcrumbs={["Quản trị", title]}
         subtitle={subtitle}
         title={title}
       />

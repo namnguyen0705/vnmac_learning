@@ -134,7 +134,7 @@ export function LessonPage() {
   };
 
   const videoMutation = useMutation({
-    mutationFn: (payload: { watchPercent: number; watchTimeMinutes: number }) =>
+    mutationFn: (payload: { watchPercent: number; watchTimeMinutes: number; lastPositionSeconds: number }) =>
       updateVideoProgress(userId, lessonId, payload),
     onSuccess: refreshProgress,
   });
@@ -167,6 +167,7 @@ export function LessonPage() {
     videoMutation.mutate({
       watchPercent: nextPercent,
       watchTimeMinutes: Math.round(element.currentTime / 60),
+      lastPositionSeconds: Math.round(element.currentTime),
     });
   };
 
@@ -240,6 +241,12 @@ export function LessonPage() {
                     ref={videoRef}
                     src={lesson.videoContent?.videoUrl}
                     onEnded={() => persistVideoProgress(true)}
+                    onLoadedMetadata={(event) => {
+                      const snapshot = progressMap.get(lessonId);
+                      if (snapshot?.lastPositionSeconds && snapshot.lastPositionSeconds < event.currentTarget.duration) {
+                        event.currentTarget.currentTime = snapshot.lastPositionSeconds;
+                      }
+                    }}
                     onPause={() => persistVideoProgress(true)}
                     onTimeUpdate={(event) => {
                       const element = event.currentTarget;

@@ -4,11 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useShellStore } from "@/shared/stores/shell-store";
+import { NotificationBell } from "@/shared/ui/NotificationBell";
 import {
   Activity,
   BadgeCheck,
   BarChart3,
-  Bell,
   BookOpen,
   ChevronDown,
   CircleHelp,
@@ -34,7 +34,7 @@ const adminNavItems = [
   { label: "Quiz", to: "/admin/quizzes", icon: ClipboardCheck, match: "/admin/quizzes" },
   { label: "Câu hỏi", to: "/admin/questions", icon: CircleHelp, match: "/admin/questions" },
   { label: "Học viên", to: "/admin/users", icon: Users, match: "/admin/users" },
-  { label: "Chứng nhận", to: "/admin/certificates", icon: BadgeCheck, match: "/admin/certificates" },
+  { label: "Chứng chỉ", to: "/admin/certificates", icon: BadgeCheck, match: "/admin/certificates" },
   { label: "Báo cáo", to: "/admin/reports", icon: BarChart3, match: "/admin/reports" },
   { label: "Tracking", to: "/admin/tracking", icon: Activity, match: "/admin/tracking" },
   { label: "Cài đặt", to: "/admin/settings", icon: Settings, match: "/admin/settings" },
@@ -214,12 +214,7 @@ export function AdminLayout() {
                   />
                 </div>
 
-                <Button className="relative h-8 w-8 rounded-xl text-slate-600" size="icon" type="button" variant="ghost">
-                  <Bell className="size-4" />
-                  <span className="absolute right-0.5 top-0.5 grid size-4 place-items-center rounded-full bg-rose-500 text-[9px] font-semibold text-white">
-                    8
-                  </span>
-                </Button>
+                <NotificationBell compact />
 
                 <div className="relative" ref={userMenuRef}>
                   <button

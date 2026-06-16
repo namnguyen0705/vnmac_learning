@@ -8,5 +8,7 @@ public sealed class ProgressTracking
     public DateTimeOffset? CompletionTime { get; set; }
     public int WatchPercent { get; set; }
     public int WatchTimeMinutes { get; set; }
+    public int LastPositionSeconds { get; set; }
+    public DateTimeOffset? LastWatchedAt { get; set; }
     public int InteractionAttempts { get; set; }
 }

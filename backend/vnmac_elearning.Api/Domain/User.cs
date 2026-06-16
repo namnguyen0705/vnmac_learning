@@ -14,6 +14,7 @@ public sealed class User
     public bool IsEmailVerified { get; set; }
     public DateTimeOffset? EmailVerifiedAt { get; set; }
     public bool CreatedByAdmin { get; set; }
+    public bool IsLocked { get; set; }
     public UserRole Role { get; set; }
     public string Province { get; set; } = string.Empty;
     public string Group { get; set; } = string.Empty;

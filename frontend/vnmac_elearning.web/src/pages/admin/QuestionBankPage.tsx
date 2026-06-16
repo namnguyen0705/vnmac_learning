@@ -13,6 +13,7 @@ import {
   AdminIconButton,
   AdminMetricCard,
   AdminModal,
+  AdminPageHeader,
   AdminPagination,
   AdminSection,
 } from "@/shared/ui/admin-kit";
@@ -574,6 +575,17 @@ export function QuestionBankPage() {
 
   return (
     <div className="grid gap-6">
+      <AdminPageHeader
+        breadcrumbs={["Quản trị", "Nội dung", "Ngân hàng câu hỏi"]}
+        title="Ngân hàng câu hỏi"
+        actions={
+          <Button className="rounded-2xl" type="button" onClick={openCreateModal}>
+            <Plus className="size-4" />
+            Thêm câu hỏi
+          </Button>
+        }
+      />
+
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-6">
         <AdminMetricCard accent="blue" icon={<CircleHelp className="size-8" />} label="Tổng câu hỏi" value={formatNumber(totalQuestions)} />
         <AdminMetricCard accent="green" icon={<ShieldCheck className="size-8" />} label="Đúng / Sai" value={formatNumber(trueFalseCount)} />

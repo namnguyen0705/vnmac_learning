@@ -114,6 +114,7 @@ public sealed class UpdateVideoProgressRequest
 {
     public int WatchPercent { get; init; }
     public int WatchTimeMinutes { get; init; }
+    public int LastPositionSeconds { get; init; }
 }
 
 public sealed class InteractiveAttemptRequest

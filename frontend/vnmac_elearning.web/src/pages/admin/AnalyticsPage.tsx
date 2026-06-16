@@ -43,17 +43,17 @@ export function AnalyticsPage() {
   return (
     <div className="grid gap-6">
       <AdminPageHeader
+        breadcrumbs={["Quản trị", "Báo cáo"]}
         actions={
           <Button className="rounded-2xl" variant="outline">
             <Download className="size-4" />
             Xuất báo cáo
           </Button>
         }
-        subtitle="Tổng hợp tiến độ hoàn thành, tỷ lệ đạt, tỷ lệ bỏ bài và các điểm nghẽn học tập."
-        title="Báo cáo và Phân tích"
+        title="Báo cáo và phân tích"
       />
 
-      <AdminSection title="Bộ lọc báo cáo">
+      <AdminSection title="">
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_160px]">
           <div className="relative">
             <Search className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-slate-400" />

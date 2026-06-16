@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   AdminIconButton,
   AdminPagination,
+  AdminPageHeader,
   AdminSection,
   AdminStatusBadge,
   AdminModal,
@@ -315,6 +316,17 @@ export function QuizzesPage() {
 
   return (
     <div className="grid gap-4">
+      <AdminPageHeader
+        breadcrumbs={["Quản trị", "Nội dung", "Quiz"]}
+        title="Quản lý quiz"
+        actions={
+          <Button className="rounded-2xl" type="button" onClick={openCreateModal}>
+            <Plus className="size-4" />
+            Thêm quiz
+          </Button>
+        }
+      />
+
       <section className="grid gap-2.5 md:grid-cols-2 xl:grid-cols-5">
         <CompactStat
           accentClassName="bg-blue-50 text-blue-600"

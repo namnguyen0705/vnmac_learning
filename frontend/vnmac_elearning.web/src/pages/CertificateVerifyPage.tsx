@@ -18,7 +18,7 @@ export function CertificateVerifyPage() {
   });
 
   if (query.isLoading) {
-    return <LoadingBlock label="Dang xac thuc chung nhan..." />;
+    return <LoadingBlock label="Đang xác thực chứng nhận..." />;
   }
 
   if (query.isError) {
@@ -26,7 +26,7 @@ export function CertificateVerifyPage() {
       <div className="grid min-h-screen place-items-center bg-slate-50 px-6 py-10">
         <Card className="mx-auto max-w-3xl border-slate-200">
           <CardContent className="space-y-4 p-6">
-            <MessageBanner tone="error">Khong the xac thuc chung nhan nay.</MessageBanner>
+            <MessageBanner tone="error">Không thể xác thực chứng nhận này.</MessageBanner>
             <Button asChild variant="outline">
               <Link to="/login">Quay ve dang nhap</Link>
             </Button>
@@ -47,11 +47,11 @@ export function CertificateVerifyPage() {
         <CardHeader className="flex flex-col gap-4 border-b border-slate-100 sm:flex-row sm:items-start sm:justify-between">
           <div className="space-y-2">
             <Badge variant="secondary" className="w-fit">Certificate Verify</Badge>
-            <CardTitle>{data.isValid ? "Chung nhan hop le" : "Chung nhan khong hop le"}</CardTitle>
+            <CardTitle>{data.isValid ? "Chứng nhận hợp lệ" : "Chứng nhận không hợp lệ"}</CardTitle>
             <CardDescription>{data.message}</CardDescription>
           </div>
           <Badge variant={data.isValid ? "success" : "danger"}>
-            {data.isValid ? "Hop le" : "Khong hop le"}
+            {data.isValid ? "Hợp lệ" : "Không hợp lệ"}
           </Badge>
         </CardHeader>
 
@@ -59,8 +59,8 @@ export function CertificateVerifyPage() {
           <div className="grid gap-3 md:grid-cols-3">
             <Card className="border-slate-200 shadow-none">
               <CardContent className="space-y-1 p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Hoc vien</p>
-                <p className="font-semibold text-slate-950">{data.learnerName ?? "Khong ro"}</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Học viên</p>
+                <p className="font-semibold text-slate-950">{data.learnerName ?? "Không rõ"}</p>
               </CardContent>
             </Card>
             <Card className="border-slate-200 shadow-none">

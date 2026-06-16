@@ -30,6 +30,8 @@ public static class DatabaseInitializer
 
         BaselineLegacySchemaIfNeeded(dbContext);
         dbContext.Database.Migrate();
+        EnsureUserLockStatusSchema(dbContext);
+        EnsureNotificationsSchema(dbContext);
         SeedIfEmpty(dbContext);
         EnsureCourseEnrollments(dbContext);
         EnsureCertificateCourseLinks(dbContext);
@@ -119,6 +121,63 @@ public static class DatabaseInitializer
             END;
             """;
         return Convert.ToInt32(command.ExecuteScalar()) == 1;
+    }
+
+    private static void EnsureNotificationsSchema(TrainingDbContext dbContext)
+    {
+        dbContext.Database.ExecuteSqlRaw("""
+            IF OBJECT_ID(N'[Notifications]', N'U') IS NULL
+            BEGIN
+                CREATE TABLE [Notifications]
+                (
+                    [Id] nvarchar(450) NOT NULL,
+                    [Audience] nvarchar(450) NOT NULL,
+                    [RecipientUserId] nvarchar(450) NULL,
+                    [Type] nvarchar(max) NOT NULL,
+                    [Title] nvarchar(220) NOT NULL,
+                    [Message] nvarchar(max) NOT NULL,
+                    [ActorUserId] nvarchar(450) NULL,
+                    [ActorName] nvarchar(220) NULL,
+                    [CourseId] nvarchar(450) NULL,
+                    [CourseTitle] nvarchar(320) NULL,
+                    [LinkUrl] nvarchar(500) NULL,
+                    [CreatedAt] datetimeoffset NOT NULL,
+                    [ReadAt] datetimeoffset NULL,
+                    CONSTRAINT [PK_Notifications] PRIMARY KEY ([Id]),
+                    CONSTRAINT [FK_Notifications_Courses_CourseId] FOREIGN KEY ([CourseId]) REFERENCES [Courses] ([Id]),
+                    CONSTRAINT [FK_Notifications_Users_ActorUserId] FOREIGN KEY ([ActorUserId]) REFERENCES [Users] ([Id]),
+                    CONSTRAINT [FK_Notifications_Users_RecipientUserId] FOREIGN KEY ([RecipientUserId]) REFERENCES [Users] ([Id])
+                );
+            END;
+
+            IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = N'IX_Notifications_ActorUserId' AND object_id = OBJECT_ID(N'[Notifications]'))
+                CREATE INDEX [IX_Notifications_ActorUserId] ON [Notifications] ([ActorUserId]);
+
+            IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = N'IX_Notifications_Audience_CreatedAt' AND object_id = OBJECT_ID(N'[Notifications]'))
+                CREATE INDEX [IX_Notifications_Audience_CreatedAt] ON [Notifications] ([Audience], [CreatedAt]);
+
+            IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = N'IX_Notifications_CourseId' AND object_id = OBJECT_ID(N'[Notifications]'))
+                CREATE INDEX [IX_Notifications_CourseId] ON [Notifications] ([CourseId]);
+
+            IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = N'IX_Notifications_ReadAt' AND object_id = OBJECT_ID(N'[Notifications]'))
+                CREATE INDEX [IX_Notifications_ReadAt] ON [Notifications] ([ReadAt]);
+
+            IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = N'IX_Notifications_RecipientUserId_CreatedAt' AND object_id = OBJECT_ID(N'[Notifications]'))
+                CREATE INDEX [IX_Notifications_RecipientUserId_CreatedAt] ON [Notifications] ([RecipientUserId], [CreatedAt]);
+            """);
+    }
+
+    private static void EnsureUserLockStatusSchema(TrainingDbContext dbContext)
+    {
+        dbContext.Database.ExecuteSqlRaw("""
+            IF OBJECT_ID(N'[Users]', N'U') IS NOT NULL
+               AND COL_LENGTH(N'[Users]', N'IsLocked') IS NULL
+            BEGIN
+                ALTER TABLE [Users]
+                ADD [IsLocked] bit NOT NULL
+                    CONSTRAINT [DF_Users_IsLocked] DEFAULT CAST(0 AS bit);
+            END;
+            """);
     }
 
     private static bool LegacySchemaExists(System.Data.Common.DbConnection connection)
@@ -395,6 +454,20 @@ public static class DatabaseInitializer
 
         var seededCourses = seed.Courses.ToDictionary(item => item.Id, StringComparer.Ordinal);
         var seededCourseIds = seededCourses.Keys.ToArray();
+        var existingSeededCourseIds = dbContext.Courses
+            .Where(item => seededCourseIds.Contains(item.Id))
+            .Select(item => item.Id)
+            .ToHashSet(StringComparer.Ordinal);
+        var missingSeededCourses = seed.Courses
+            .Where(item => !existingSeededCourseIds.Contains(item.Id))
+            .ToArray();
+
+        if (missingSeededCourses.Length > 0)
+        {
+            dbContext.Courses.AddRange(missingSeededCourses);
+            changed = true;
+        }
+
         var existingCourses = dbContext.Courses
             .Where(item => seededCourseIds.Contains(item.Id))
             .Include(item => item.Sections)

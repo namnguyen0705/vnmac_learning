@@ -12,11 +12,12 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   AdminIconButton,
   AdminModal,
+  AdminPageHeader,
   AdminPagination,
   AdminSection,
   AdminStatusBadge,
 } from "@/shared/ui/admin-kit";
-import { createLesson, deleteLesson, getAdminCourses, getQuestions, updateLesson } from "../../shared/api/admin";
+import { createLesson, deleteLesson, getAdminCourses, getQuestions, updateLesson, uploadAdminMedia } from "../../shared/api/admin";
 import { flattenLessons } from "../../shared/lib/course";
 import { humanizeEnum, splitMultiline, toMultiline } from "../../shared/lib/format";
 import { LoadingBlock } from "../../shared/ui/LoadingBlock";
@@ -311,6 +312,40 @@ function Field({
   );
 }
 
+function UploadBox({
+  label,
+  description,
+  accept,
+  disabled,
+  onUpload,
+}: {
+  label: string;
+  description: string;
+  accept: string;
+  disabled: boolean;
+  onUpload: (file: File) => void;
+}) {
+  return (
+    <label className="grid cursor-pointer gap-2 rounded-[24px] border border-dashed border-slate-300 bg-slate-50 px-4 py-4 transition hover:border-[#163b7b]/50 hover:bg-[#f5f9ff]">
+      <span className="font-semibold text-slate-950">{label}</span>
+      <span className="text-sm leading-5 text-slate-500">{description}</span>
+      <Input
+        accept={accept}
+        className="mt-2 rounded-2xl bg-white"
+        disabled={disabled}
+        type="file"
+        onChange={(event) => {
+          const file = event.target.files?.[0];
+          if (file) {
+            onUpload(file);
+          }
+          event.target.value = "";
+        }}
+      />
+    </label>
+  );
+}
+
 function getQuestionPreviewSummary(question: AdminQuestion) {
   if (question.type === "DragDrop") {
     return `${question.dragItems.length} mục kéo • ${question.dragTargets.length} đích thả`;
@@ -459,6 +494,22 @@ export function LessonsPage() {
     },
   });
 
+  const uploadMediaMutation = useMutation({
+    mutationFn: ({ file, mediaType }: { file: File; mediaType: "video" | "poster" | "caption" }) =>
+      uploadAdminMedia(file, mediaType),
+    onSuccess: (response) => {
+      setForm((current) => {
+        if (response.mediaType === "video") {
+          return { ...current, videoUrl: response.url };
+        }
+        if (response.mediaType === "poster") {
+          return { ...current, videoPosterUrl: response.url };
+        }
+        return { ...current, videoCaptionsUrl: response.url };
+      });
+    },
+  });
+
   const totalLessons = filteredLessons.length;
   const totalQuestions = filteredLessons.reduce((total, lesson) => total + lesson.questionCount, 0);
   const videoCount = filteredLessons.filter((lesson) => lesson.type === "Video").length;
@@ -507,6 +558,17 @@ export function LessonsPage() {
 
   return (
     <div className="grid gap-4">
+      <AdminPageHeader
+        breadcrumbs={["Quản trị", "Nội dung", "Bài học"]}
+        title="Quản lý bài học"
+        actions={
+          <Button className="rounded-2xl" type="button" onClick={openCreateModal}>
+            <Plus className="size-4" />
+            Thêm bài học
+          </Button>
+        }
+      />
+
       <section className="grid gap-2.5 md:grid-cols-2 xl:grid-cols-5">
         <CompactStat
           accentClassName="bg-blue-50 text-blue-600"
@@ -1006,11 +1068,51 @@ export function LessonsPage() {
 
           {form.type === "Video" ? (
             <AdminSection subtitle="Tài nguyên và siêu dữ liệu cho bài học video." title="Nội dung video">
-              <div className="grid gap-4 md:grid-cols-2">
+              <div className="grid gap-4">
+                <div className="grid gap-4 md:grid-cols-3">
+                  <UploadBox
+                    accept="video/mp4,video/webm,video/quicktime,.mp4,.webm,.mov,.m4v"
+                    description="MP4/WebM/MOV, lưu trực tiếp trên server."
+                    disabled={uploadMediaMutation.isPending}
+                    label="Upload video"
+                    onUpload={(file) => uploadMediaMutation.mutate({ file, mediaType: "video" })}
+                  />
+                  <UploadBox
+                    accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
+                    description="Ảnh thumbnail hiển thị ngoài khóa học."
+                    disabled={uploadMediaMutation.isPending}
+                    label="Upload poster"
+                    onUpload={(file) => uploadMediaMutation.mutate({ file, mediaType: "poster" })}
+                  />
+                  <UploadBox
+                    accept=".vtt,.srt,text/vtt"
+                    description="Phụ đề WebVTT/SRT nếu có."
+                    disabled={uploadMediaMutation.isPending}
+                    label="Upload phụ đề"
+                    onUpload={(file) => uploadMediaMutation.mutate({ file, mediaType: "caption" })}
+                  />
+                </div>
+
+                {uploadMediaMutation.isPending ? (
+                  <MessageBanner tone="info">Đang upload file lên server...</MessageBanner>
+                ) : null}
+                {uploadMediaMutation.isError ? (
+                  <MessageBanner tone="error">Upload file thất bại. Vui lòng kiểm tra định dạng hoặc dung lượng file.</MessageBanner>
+                ) : null}
+
+                {form.videoUrl ? (
+                  <div className="overflow-hidden rounded-[24px] border border-slate-200 bg-slate-950">
+                    <video className="aspect-video w-full bg-black" controls poster={form.videoPosterUrl || undefined} src={form.videoUrl}>
+                      {form.videoCaptionsUrl ? <track default kind="captions" src={form.videoCaptionsUrl} srcLang="vi" /> : null}
+                    </video>
+                  </div>
+                ) : null}
+
+                <div className="grid gap-4 md:grid-cols-2">
                 <Field label="Video URL">
                   <Input
                     className="rounded-2xl"
-                    placeholder="https://.../lesson.mp4"
+                    placeholder="/uploads/videos/lesson.mp4"
                     value={form.videoUrl}
                     onChange={(event) => setForm((current) => ({ ...current, videoUrl: event.target.value }))}
                   />
@@ -1018,7 +1120,7 @@ export function LessonsPage() {
                 <Field label="Poster URL">
                   <Input
                     className="rounded-2xl"
-                    placeholder="https://.../poster.jpg"
+                    placeholder="/uploads/posters/poster.jpg"
                     value={form.videoPosterUrl}
                     onChange={(event) => setForm((current) => ({ ...current, videoPosterUrl: event.target.value }))}
                   />
@@ -1026,7 +1128,7 @@ export function LessonsPage() {
                 <Field label="Captions URL">
                   <Input
                     className="rounded-2xl"
-                    placeholder="https://.../captions.vtt"
+                    placeholder="/uploads/captions/captions.vtt"
                     value={form.videoCaptionsUrl}
                     onChange={(event) => setForm((current) => ({ ...current, videoCaptionsUrl: event.target.value }))}
                   />
@@ -1061,6 +1163,7 @@ export function LessonsPage() {
                     onChange={(event) => setForm((current) => ({ ...current, videoCheckpoints: event.target.value }))}
                   />
                 </Field>
+                </div>
               </div>
             </AdminSection>
           ) : null}

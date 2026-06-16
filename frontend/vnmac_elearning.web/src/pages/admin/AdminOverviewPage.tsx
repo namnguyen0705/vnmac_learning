@@ -131,6 +131,7 @@ export function AdminOverviewPage() {
   return (
     <div className="grid gap-6">
       <AdminPageHeader
+        breadcrumbs={["Quản trị", "Tổng quan"]}
         actions={
           <>
             <Button asChild className="rounded-2xl" variant="outline">
@@ -141,7 +142,6 @@ export function AdminOverviewPage() {
             </Button>
           </>
         }
-        subtitle="Tổng hợp KPI học tập, hành trình người học và trạng thái khóa học trên toàn hệ thống."
         title="Tổng quan hệ thống"
       />
 

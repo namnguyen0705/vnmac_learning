@@ -13,14 +13,17 @@ import { CoursesPage } from "../pages/admin/CoursesPage";
 import { LessonsPage } from "../pages/admin/LessonsPage";
 import { QuestionBankPage } from "../pages/admin/QuestionBankPage";
 import { QuizzesPage } from "../pages/admin/QuizzesPage";
+import { TrackingPage } from "../pages/admin/TrackingPage";
 import { UsersPage } from "../pages/admin/UsersPage";
 import { CertificatePage } from "../pages/learner/CertificatePage";
 import { CourseCatalogPage } from "../pages/learner/CourseCatalogPage";
 import { CoursePage } from "../pages/learner/CoursePage";
 import { DashboardPage } from "../pages/learner/DashboardPage";
 import { LessonPage } from "../pages/learner/LessonPage";
+import { ProfilePage } from "../pages/learner/ProfilePage";
 import { QuizPage } from "../pages/learner/QuizPage";
 import { ScormPlayerPage } from "../pages/learner/ScormPlayerPage";
+import { SupportPage } from "../pages/learner/SupportPage";
 import { LoadingBlock } from "../shared/ui/LoadingBlock";
 
 const learnerRoles = ["Learner"] as const;
@@ -139,6 +142,14 @@ const router = createBrowserRouter([
             path: "/app/certificate",
             element: <CertificatePage />,
           },
+          {
+            path: "/app/support",
+            element: <SupportPage />,
+          },
+          {
+            path: "/app/profile",
+            element: <ProfilePage />,
+          },
         ],
       },
     ],
@@ -167,19 +178,21 @@ const router = createBrowserRouter([
             element: <Navigate replace to="/admin/reports" />,
           },
           {
+            path: "/admin/tracking",
+            element: <TrackingPage />,
+          },
+          {
             path: "/admin/certificates",
             element: (
               <AdminPlaceholderPage
-                subtitle="Khu quản lý template, cấp phát và xác thực chứng nhận."
                 title="Chứng nhận"
               />
             ),
           },
           {
-            path: "/admin/tracking",
+            path: "/admin/tracking-placeholder",
             element: (
               <AdminPlaceholderPage
-                subtitle="Khu theo dõi hành vi học tập, điểm dừng và dữ liệu theo thời gian."
                 title="Tracking"
               />
             ),
@@ -188,7 +201,6 @@ const router = createBrowserRouter([
             path: "/admin/settings",
             element: (
               <AdminPlaceholderPage
-                subtitle="Khu cấu hình hệ thống, vai trò, quyền hạn và các tham số vận hành."
                 title="Cài đặt"
               />
             ),

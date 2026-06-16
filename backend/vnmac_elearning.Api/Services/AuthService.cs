@@ -11,7 +11,8 @@ public sealed class AuthService(
     TrainingDbContext dbContext,
     TokenService tokenService,
     PasswordService passwordService,
-    TimeProvider timeProvider)
+    TimeProvider timeProvider,
+    NotificationService notificationService)
 {
     private static readonly TimeSpan VerificationLifetime = TimeSpan.FromHours(24);
 
@@ -69,6 +70,7 @@ public sealed class AuthService(
 
         user.PasswordHash = passwordService.HashPassword(user, request.Password);
         dbContext.Users.Add(user);
+        notificationService.NotifyLearnerRegistered(user);
 
         var verificationToken = CreateEmailVerificationToken(user);
         dbContext.EmailVerificationTokens.Add(verificationToken.Record);
@@ -160,6 +162,11 @@ public sealed class AuthService(
             throw new ServiceException(ServiceErrors.AuthEmailNotVerified);
         }
 
+        if (user.IsLocked)
+        {
+            throw new ServiceException(ServiceErrors.AuthAccountLocked);
+        }
+
         user.LastLogin = timeProvider.GetUtcNow();
 
         var tokens = IssueTokens(user);
@@ -201,6 +208,11 @@ public sealed class AuthService(
         if (!user.IsEmailVerified)
         {
             throw new ServiceException(ServiceErrors.AuthEmailNotVerified);
+        }
+
+        if (user.IsLocked)
+        {
+            throw new ServiceException(ServiceErrors.AuthAccountLocked);
         }
 
         var tokens = IssueTokens(user, refreshToken);
