@@ -147,6 +147,72 @@ public sealed class TrackingTimelineEvent
     public DateTimeOffset OccurredAt { get; init; }
 }
 
+public sealed class SystemSettingsResponse
+{
+    public string SiteTitle { get; init; } = string.Empty;
+    public string HeaderTitle { get; init; } = string.Empty;
+    public string HeaderSubtitle { get; init; } = string.Empty;
+    public string ProjectLogoUrl { get; init; } = string.Empty;
+    public string LoginLogoUrl { get; init; } = string.Empty;
+    public string VnmacLogoUrl { get; init; } = string.Empty;
+    public string VietnamFlagUrl { get; init; } = string.Empty;
+    public string UsFlagUrl { get; init; } = string.Empty;
+    public string CrsLogoUrl { get; init; } = string.Empty;
+    public string HeaderBackgroundColor { get; init; } = string.Empty;
+    public string HeaderBackgroundImageUrl { get; init; } = string.Empty;
+    public string LoginBackgroundImageUrl { get; init; } = string.Empty;
+    public string CertificateTemplateUrl { get; init; } = string.Empty;
+    public string CertificateTitle { get; init; } = string.Empty;
+    public string CertificateCourseTitle { get; init; } = string.Empty;
+    public DateTimeOffset UpdatedAt { get; init; }
+    public string UpdatedByUserId { get; init; } = string.Empty;
+}
+
+public sealed class UpdateSystemSettingsRequest
+{
+    public string SiteTitle { get; init; } = string.Empty;
+    public string HeaderTitle { get; init; } = string.Empty;
+    public string HeaderSubtitle { get; init; } = string.Empty;
+    public string ProjectLogoUrl { get; init; } = string.Empty;
+    public string LoginLogoUrl { get; init; } = string.Empty;
+    public string VnmacLogoUrl { get; init; } = string.Empty;
+    public string VietnamFlagUrl { get; init; } = string.Empty;
+    public string UsFlagUrl { get; init; } = string.Empty;
+    public string CrsLogoUrl { get; init; } = string.Empty;
+    public string HeaderBackgroundColor { get; init; } = string.Empty;
+    public string HeaderBackgroundImageUrl { get; init; } = string.Empty;
+    public string LoginBackgroundImageUrl { get; init; } = string.Empty;
+    public string CertificateTemplateUrl { get; init; } = string.Empty;
+    public string CertificateTitle { get; init; } = string.Empty;
+    public string CertificateCourseTitle { get; init; } = string.Empty;
+}
+
+public sealed class SystemAuditLogResponse
+{
+    public int Page { get; init; }
+    public int PageSize { get; init; }
+    public int TotalItems { get; init; }
+    public required IReadOnlyCollection<string> Modules { get; init; }
+    public required IReadOnlyCollection<string> Actions { get; init; }
+    public required IReadOnlyCollection<SystemAuditLogRow> Items { get; init; }
+}
+
+public sealed class SystemAuditLogRow
+{
+    public string Id { get; init; } = string.Empty;
+    public DateTimeOffset OccurredAt { get; init; }
+    public string ActorUserId { get; init; } = string.Empty;
+    public string ActorName { get; init; } = string.Empty;
+    public UserRole? ActorRole { get; init; }
+    public string Module { get; init; } = string.Empty;
+    public string Action { get; init; } = string.Empty;
+    public string EntityType { get; init; } = string.Empty;
+    public string EntityId { get; init; } = string.Empty;
+    public string Summary { get; init; } = string.Empty;
+    public string DetailJson { get; init; } = string.Empty;
+    public string IpAddress { get; init; } = string.Empty;
+}
+
 public sealed class AdminUserRow
 {
     public string UserId { get; init; } = string.Empty;
@@ -155,12 +221,14 @@ public sealed class AdminUserRow
     public string FullName { get; init; } = string.Empty;
     public string PhoneNumber { get; init; } = string.Empty;
     public DateTimeOffset CreatedAt { get; init; }
-    public DateTimeOffset LastLogin { get; init; }
+    public DateTimeOffset? LastLogin { get; init; }
     public bool IsEmailVerified { get; init; }
     public DateTimeOffset? EmailVerifiedAt { get; init; }
     public bool CreatedByAdmin { get; init; }
     public bool IsLocked { get; init; }
     public UserRole Role { get; init; }
+    public string RoleId { get; init; } = string.Empty;
+    public string RoleName { get; init; } = string.Empty;
     public string Province { get; init; } = string.Empty;
     public string Group { get; init; } = string.Empty;
     public int CompletionPercent { get; init; }
@@ -186,7 +254,7 @@ public sealed class LearnerAdminRow
     public string PhoneNumber { get; init; } = string.Empty;
     public string Email { get; init; } = string.Empty;
     public DateTimeOffset CreatedAt { get; init; }
-    public DateTimeOffset LastLogin { get; init; }
+    public DateTimeOffset? LastLogin { get; init; }
     public bool IsEmailVerified { get; init; }
     public DateTimeOffset? EmailVerifiedAt { get; init; }
     public bool CreatedByAdmin { get; init; }
@@ -225,6 +293,7 @@ public sealed class CreateAdminUserRequest
     public string FullName { get; init; } = string.Empty;
     public string PhoneNumber { get; init; } = string.Empty;
     public UserRole Role { get; init; } = UserRole.Learner;
+    public string? RoleId { get; init; }
     public string Province { get; init; } = string.Empty;
     public string Group { get; init; } = string.Empty;
     public bool MarkEmailAsVerified { get; init; } = true;
@@ -239,6 +308,7 @@ public sealed class UpdateAdminUserRequest
     public string FullName { get; init; } = string.Empty;
     public string PhoneNumber { get; init; } = string.Empty;
     public UserRole Role { get; init; } = UserRole.Learner;
+    public string? RoleId { get; init; }
     public string Province { get; init; } = string.Empty;
     public string Group { get; init; } = string.Empty;
     public bool IsEmailVerified { get; init; }
@@ -266,6 +336,13 @@ public sealed class CreateSectionRequest
     public int Order { get; init; }
 }
 
+public sealed class UpdateSectionRequest
+{
+    public string Title { get; init; } = string.Empty;
+    public string Description { get; init; } = string.Empty;
+    public int Order { get; init; }
+}
+
 public sealed class UpsertLessonRequest
 {
     public string CourseId { get; init; } = string.Empty;
@@ -275,9 +352,64 @@ public sealed class UpsertLessonRequest
     public int Order { get; init; }
     public int DurationMinutes { get; init; }
     public string StatusLabel { get; init; } = string.Empty;
+    public string Topic { get; init; } = string.Empty;
+    public LessonDifficulty Difficulty { get; init; } = LessonDifficulty.Basic;
+    public LessonPublicationStatus PublicationStatus { get; init; } = LessonPublicationStatus.Published;
+    public string ThumbnailUrl { get; init; } = string.Empty;
+    public LessonContent? Content { get; init; }
     public VideoContent? VideoContent { get; init; }
     public LessonAssessmentRequest? Assessment { get; init; }
     public ScormPackageRequest? ScormPackage { get; init; }
+}
+
+public sealed class UpdateLessonMetadataRequest
+{
+    public string CourseId { get; init; } = string.Empty;
+    public string SectionId { get; init; } = string.Empty;
+    public string Title { get; init; } = string.Empty;
+    public int Order { get; init; }
+    public int DurationMinutes { get; init; }
+    public string StatusLabel { get; init; } = string.Empty;
+    public string Topic { get; init; } = string.Empty;
+    public LessonDifficulty Difficulty { get; init; } = LessonDifficulty.Basic;
+    public LessonPublicationStatus PublicationStatus { get; init; } = LessonPublicationStatus.Published;
+}
+
+public sealed class AdminLessonCatalogResponse
+{
+    public int TotalLessons { get; init; }
+    public int PublishedLessons { get; init; }
+    public int DraftLessons { get; init; }
+    public int ArchivedLessons { get; init; }
+    public int NewLessonsThisWeek { get; init; }
+    public int Page { get; init; }
+    public int PageSize { get; init; }
+    public int TotalItems { get; init; }
+    public required IReadOnlyCollection<string> Topics { get; init; }
+    public required IReadOnlyCollection<AdminLessonCatalogRow> Items { get; init; }
+}
+
+public sealed class AdminLessonCatalogRow
+{
+    public string LessonId { get; init; } = string.Empty;
+    public string CourseId { get; init; } = string.Empty;
+    public string SectionId { get; init; } = string.Empty;
+    public string CourseTitle { get; init; } = string.Empty;
+    public string SectionTitle { get; init; } = string.Empty;
+    public string Title { get; init; } = string.Empty;
+    public string Description { get; init; } = string.Empty;
+    public LessonType Type { get; init; }
+    public int Order { get; init; }
+    public string StatusLabel { get; init; } = string.Empty;
+    public string Topic { get; init; } = string.Empty;
+    public LessonDifficulty Difficulty { get; init; }
+    public LessonPublicationStatus PublicationStatus { get; init; }
+    public int LearnerCount { get; init; }
+    public int QuestionCount { get; init; }
+    public int DurationMinutes { get; init; }
+    public string ThumbnailUrl { get; init; } = string.Empty;
+    public DateTimeOffset CreatedAt { get; init; }
+    public DateTimeOffset UpdatedAt { get; init; }
 }
 
 public sealed class CreateCourseQuizRequest
@@ -305,6 +437,7 @@ public sealed class LessonAssessmentRequest
     public string Intro { get; init; } = string.Empty;
     public string RetryHint { get; init; } = string.Empty;
     public int PassScore { get; init; } = 100;
+    public int? QuestionLimit { get; init; }
     public bool RandomizeQuestionOrder { get; init; }
     public bool RandomizeOptionOrder { get; init; }
 }
@@ -319,6 +452,7 @@ public sealed class UpsertLessonQuestionRequest
     public string Explanation { get; init; } = string.Empty;
     public string? Statement { get; init; }
     public string? MediaTitle { get; init; }
+    public string? MediaUrl { get; init; }
     public string? ScenarioTitle { get; init; }
     public string? ScenarioContext { get; init; }
     public List<QuestionOptionRequest> Options { get; init; } = [];

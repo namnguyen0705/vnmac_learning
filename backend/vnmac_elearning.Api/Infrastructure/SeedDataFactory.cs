@@ -11,7 +11,7 @@ public static class SeedDataFactory
     {
         return new SeedSnapshot(
             BuildUsers(),
-            [BuildCourse(), .. BuildCatalogCourses()],
+            [BuildCourse()],
             BuildCourseEnrollments(),
             BuildProgressTrackings(),
             BuildQuizResults(),
@@ -20,152 +20,11 @@ public static class SeedDataFactory
             BuildCertificates());
     }
 
-    private static List<Course> BuildCatalogCourses()
-    {
-        return
-        [
-            BuildCatalogCourse(
-                "course-community-safety",
-                "An toàn bom mìn cho cộng đồng",
-                "Khóa học nền tảng giúp học viên nhận biết nguy cơ, cảnh báo người xung quanh và xử lý tình huống thường gặp tại cộng đồng.",
-                "Nhận biết vật thể nghi ngờ",
-                "Báo tin an toàn cho lực lượng chức năng",
-                1),
-            BuildCatalogCourse(
-                "course-school-awareness",
-                "Giáo dục phòng tránh tai nạn bom mìn trong trường học",
-                "Nội dung dành cho giáo viên, phụ huynh và học sinh nhằm xây dựng hành vi an toàn trong môi trường học đường.",
-                "Tổ chức tiết học an toàn",
-                "Hướng dẫn học sinh ghi nhớ quy tắc 3 không",
-                2),
-            BuildCatalogCourse(
-                "course-first-response",
-                "Sơ cứu và phản ứng ban đầu khi xảy ra tai nạn",
-                "Trang bị kiến thức phản ứng ban đầu, bảo vệ hiện trường và phối hợp với lực lượng y tế, cứu hộ.",
-                "Đảm bảo an toàn hiện trường",
-                "Gọi hỗ trợ và sơ cứu cơ bản",
-                3),
-            BuildCatalogCourse(
-                "course-risk-communication",
-                "Truyền thông nguy cơ bom mìn tại địa phương",
-                "Hướng dẫn cán bộ cơ sở xây dựng thông điệp, tổ chức buổi truyền thông và theo dõi phản hồi cộng đồng.",
-                "Xây dựng thông điệp rõ ràng",
-                "Tổ chức truyền thông nhóm nhỏ",
-                4),
-            BuildCatalogCourse(
-                "course-child-safety",
-                "Bảo vệ trẻ em trước nguy cơ vật nổ",
-                "Khóa học tập trung vào nhận diện hành vi rủi ro của trẻ em và cách người lớn hướng dẫn trẻ tránh xa vật nổ.",
-                "Nhận diện hành vi tò mò nguy hiểm",
-                "Hướng dẫn trẻ báo người lớn",
-                5),
-            BuildCatalogCourse(
-                "course-farmer-safety",
-                "An toàn bom mìn trong lao động sản xuất",
-                "Nội dung dành cho người dân làm nông nghiệp, lâm nghiệp và xây dựng tại khu vực có nguy cơ còn sót vật nổ.",
-                "Kiểm tra dấu hiệu cảnh báo tại khu vực làm việc",
-                "Dừng hoạt động và báo cáo khi nghi ngờ",
-                6),
-            BuildCatalogCourse(
-                "course-volunteer-training",
-                "Tập huấn tình nguyện viên tuyên truyền an toàn",
-                "Khóa học giúp tình nguyện viên nắm quy trình truyền thông, tư vấn và ghi nhận thông tin phản ánh từ cộng đồng.",
-                "Chuẩn bị buổi tuyên truyền",
-                "Ghi nhận và chuyển thông tin phản ánh",
-                7),
-            BuildCatalogCourse(
-                "course-local-officer",
-                "Nghiệp vụ theo dõi nguy cơ cho cán bộ xã phường",
-                "Hướng dẫn cán bộ địa phương tổng hợp thông tin nguy cơ, phối hợp xử lý và cập nhật báo cáo an toàn.",
-                "Tiếp nhận thông tin từ người dân",
-                "Phối hợp khoanh vùng và báo cáo",
-                8),
-            BuildCatalogCourse(
-                "course-safe-travel",
-                "An toàn khi di chuyển qua khu vực có cảnh báo",
-                "Giúp học viên chuẩn bị trước khi đi lại, nhận biết biển báo, giữ khoảng cách và xử lý khi phát hiện vật thể lạ.",
-                "Đọc biển báo và mốc cảnh báo",
-                "Lập kế hoạch di chuyển an toàn",
-                9)
-        ];
-    }
-
-    private static Course BuildCatalogCourse(
-        string courseId,
-        string title,
-        string description,
-        string firstLessonTitle,
-        string secondLessonTitle,
-        int order)
-    {
-        var sectionId = $"{courseId}-section";
-        return new Course
-        {
-            Id = courseId,
-            Title = title,
-            Description = description,
-            Status = CourseStatus.Published,
-            Sections =
-            [
-                new CourseSection
-                {
-                    Id = sectionId,
-                    CourseId = courseId,
-                    Title = "Nội dung chính",
-                    Description = "Các bài học ngắn giúp học viên nắm kiến thức và áp dụng ngay trong thực tế.",
-                    Order = 1,
-                    Lessons =
-                    [
-                        BuildCatalogVideoLesson(courseId, sectionId, $"{courseId}-video-1", firstLessonTitle, 1, 8 + order % 4),
-                        BuildCatalogVideoLesson(courseId, sectionId, $"{courseId}-video-2", secondLessonTitle, 2, 9 + order % 5)
-                    ]
-                }
-            ]
-        };
-    }
-
-    private static Lesson BuildCatalogVideoLesson(
-        string courseId,
-        string sectionId,
-        string lessonId,
-        string title,
-        int order,
-        int durationMinutes)
-    {
-        return new Lesson
-        {
-            Id = lessonId,
-            CourseId = courseId,
-            SectionId = sectionId,
-            Title = title,
-            Type = LessonType.Video,
-            Order = order,
-            DurationMinutes = durationMinutes,
-            StatusLabel = "Xem hết video để hoàn thành bài học",
-            VideoContent = new VideoContent
-            {
-                Intro = "Bài học video ngắn, tập trung vào tình huống thực tế và hành vi an toàn cần ghi nhớ.",
-                VideoUrl = "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-                PosterUrl = $"https://picsum.photos/seed/{Uri.EscapeDataString(lessonId)}/960/540",
-                Objectives =
-                [
-                    "Nhận biết tình huống nguy cơ",
-                    "Ghi nhớ hành vi an toàn cần thực hiện",
-                    "Biết cách báo tin cho người có trách nhiệm"
-                ],
-                Checkpoints =
-                [
-                    "Không chạm vào vật thể nghi ngờ",
-                    "Giữ khoảng cách an toàn",
-                    "Báo ngay cho lực lượng chức năng hoặc người phụ trách"
-                ],
-                TranscriptHighlight = "Khi gặp dấu hiệu nguy hiểm, ưu tiên đầu tiên là giữ an toàn cho bản thân và cảnh báo người xung quanh."
-            }
-        };
-    }
-
     private static Course BuildCourse()
     {
+        return OfficialCourseFactory.Build(CourseId);
+
+#if false
         return new Course
         {
             Id = CourseId,
@@ -581,6 +440,7 @@ public static class SeedDataFactory
                 }
             ]
         };
+#endif
     }
 
     private static List<User> BuildUsers()
@@ -602,38 +462,6 @@ public static class SeedDataFactory
                 Role = UserRole.Admin,
                 Province = "Quảng Trị",
                 Group = "Quản trị hệ thống"
-            },
-            new User
-            {
-                Id = "content-1",
-                Username = "content",
-                Email = "content@vnmac.local",
-                FullName = "Lê Minh Thảo",
-                PhoneNumber = "0912345678",
-                CreatedAt = SeedTime.AddDays(-18),
-                LastLogin = SeedTime.AddHours(-3),
-                IsEmailVerified = true,
-                EmailVerifiedAt = SeedTime.AddDays(-18),
-                CreatedByAdmin = true,
-                Role = UserRole.ContentManager,
-                Province = "Quảng Bình",
-                Group = "Quản lý nội dung"
-            },
-            new User
-            {
-                Id = "viewer-1",
-                Username = "viewer",
-                Email = "viewer@vnmac.local",
-                FullName = "Trần Văn Hân",
-                PhoneNumber = "0923456789",
-                CreatedAt = SeedTime.AddDays(-17),
-                LastLogin = SeedTime.AddDays(-1),
-                IsEmailVerified = true,
-                EmailVerifiedAt = SeedTime.AddDays(-17),
-                CreatedByAdmin = true,
-                Role = UserRole.DataViewer,
-                Province = "Huế",
-                Group = "Theo dõi dữ liệu"
             },
             new User
             {
@@ -698,6 +526,22 @@ public static class SeedDataFactory
                 Role = UserRole.Learner,
                 Province = "Hà Tĩnh",
                 Group = "Cán bộ xã/phường"
+            },
+            new User
+            {
+                Id = "learner-05",
+                Username = "learner05",
+                Email = "learner05@vnmac.local",
+                FullName = "Lê Thị Mai",
+                PhoneNumber = "0930000005",
+                CreatedAt = SeedTime.AddDays(-6),
+                LastLogin = default,
+                IsEmailVerified = true,
+                EmailVerifiedAt = SeedTime.AddDays(-6),
+                CreatedByAdmin = false,
+                Role = UserRole.Learner,
+                Province = "Quảng Trị",
+                Group = "Người dân"
             }
         ];
     }
@@ -711,31 +555,7 @@ public static class SeedDataFactory
         rows.AddRange(BuildDefaultProgress("learner-02", lessonIds));
         rows.AddRange(BuildDefaultProgress("learner-03", lessonIds));
         rows.AddRange(BuildDefaultProgress("learner-04", lessonIds));
-
-        ApplyCompletedLesson(rows, "learner-01", "lesson-video-1", 100, 6);
-        ApplyInteractiveProgress(rows, "learner-01", "lesson-interactive-1", LessonProgressStatus.Completed, 2);
-        ApplyCompletedLesson(rows, "learner-01", "lesson-quiz-1");
-        ApplyCompletedLesson(rows, "learner-01", "lesson-video-2", 100, 7);
-        ApplyInteractiveProgress(rows, "learner-01", "lesson-interactive-2", LessonProgressStatus.Completed, 1);
-        ApplyCompletedLesson(rows, "learner-01", "lesson-quiz-2");
-
-        ApplyCompletedLesson(rows, "learner-02", "lesson-video-1", 100, 6);
-        ApplyInteractiveProgress(rows, "learner-02", "lesson-interactive-1", LessonProgressStatus.Completed, 1);
-        ApplyCompletedLesson(rows, "learner-02", "lesson-quiz-1");
-        ApplyCompletedLesson(rows, "learner-02", "lesson-video-2", 100, 7);
-        ApplyInteractiveProgress(rows, "learner-02", "lesson-interactive-2", LessonProgressStatus.InProgress, 2);
-
-        ApplyCompletedLesson(rows, "learner-03", "lesson-video-1", 100, 6);
-        ApplyInteractiveProgress(rows, "learner-03", "lesson-interactive-1", LessonProgressStatus.Completed, 2);
-        ApplyCompletedLesson(rows, "learner-03", "lesson-quiz-1");
-        ApplyVideoInProgress(rows, "learner-03", "lesson-video-2", 40, 3);
-
-        ApplyCompletedLesson(rows, "learner-04", "lesson-video-1", 100, 6);
-        ApplyInteractiveProgress(rows, "learner-04", "lesson-interactive-1", LessonProgressStatus.Completed, 1);
-        ApplyCompletedLesson(rows, "learner-04", "lesson-quiz-1");
-        ApplyCompletedLesson(rows, "learner-04", "lesson-video-2", 100, 7);
-        ApplyInteractiveProgress(rows, "learner-04", "lesson-interactive-2", LessonProgressStatus.Completed, 1);
-        ApplyCompletedLesson(rows, "learner-04", "lesson-quiz-2");
+        rows.AddRange(BuildDefaultProgress("learner-05", lessonIds));
 
         return rows;
     }
@@ -744,70 +564,27 @@ public static class SeedDataFactory
     {
         return
         [
-            new QuizResult { UserId = "learner-01", LessonId = "lesson-quiz-1", Score = 100, Attempts = 2, LastAttemptAt = SeedTime.AddDays(-2) },
-            new QuizResult { UserId = "learner-01", LessonId = "lesson-quiz-2", Score = 100, Attempts = 1, LastAttemptAt = SeedTime.AddDays(-1) },
-            new QuizResult { UserId = "learner-02", LessonId = "lesson-quiz-1", Score = 100, Attempts = 1, LastAttemptAt = SeedTime.AddDays(-3) },
-            new QuizResult { UserId = "learner-02", LessonId = "lesson-quiz-2", Score = 0, Attempts = 0, LastAttemptAt = null },
-            new QuizResult { UserId = "learner-03", LessonId = "lesson-quiz-1", Score = 100, Attempts = 2, LastAttemptAt = SeedTime.AddDays(-2) },
-            new QuizResult { UserId = "learner-03", LessonId = "lesson-quiz-2", Score = 0, Attempts = 0, LastAttemptAt = null },
-            new QuizResult { UserId = "learner-04", LessonId = "lesson-quiz-1", Score = 100, Attempts = 1, LastAttemptAt = SeedTime.AddDays(-1) },
-            new QuizResult { UserId = "learner-04", LessonId = "lesson-quiz-2", Score = 100, Attempts = 1, LastAttemptAt = SeedTime.AddDays(-1) }
+            new QuizResult { UserId = "learner-01", LessonId = "lesson-final-quiz", Score = 0, Attempts = 0, LastAttemptAt = null },
+            new QuizResult { UserId = "learner-02", LessonId = "lesson-final-quiz", Score = 0, Attempts = 0, LastAttemptAt = null },
+            new QuizResult { UserId = "learner-03", LessonId = "lesson-final-quiz", Score = 0, Attempts = 0, LastAttemptAt = null },
+            new QuizResult { UserId = "learner-04", LessonId = "lesson-final-quiz", Score = 0, Attempts = 0, LastAttemptAt = null },
+            new QuizResult { UserId = "learner-05", LessonId = "lesson-final-quiz", Score = 0, Attempts = 0, LastAttemptAt = null }
         ];
     }
 
     private static List<QuizAttempt> BuildQuizAttempts()
     {
-        return
-        [
-            BuildQuizAttempt("learner-01", "lesson-quiz-1", 1, 67, ["q2"], SeedTime.AddDays(-4)),
-            BuildQuizAttempt("learner-01", "lesson-quiz-1", 2, 100, [], SeedTime.AddDays(-2)),
-            BuildQuizAttempt("learner-01", "lesson-quiz-2", 1, 100, [], SeedTime.AddDays(-1)),
-            BuildQuizAttempt("learner-02", "lesson-quiz-1", 1, 100, [], SeedTime.AddDays(-3)),
-            BuildQuizAttempt("learner-03", "lesson-quiz-1", 1, 67, ["q3"], SeedTime.AddDays(-4)),
-            BuildQuizAttempt("learner-03", "lesson-quiz-1", 2, 100, [], SeedTime.AddDays(-2)),
-            BuildQuizAttempt("learner-04", "lesson-quiz-1", 1, 100, [], SeedTime.AddDays(-2)),
-            BuildQuizAttempt("learner-04", "lesson-quiz-2", 1, 100, [], SeedTime.AddDays(-1))
-        ];
+        return [];
     }
 
     private static List<InteractionAttempt> BuildInteractionAttempts()
     {
-        return
-        [
-            BuildInteractionAttempt("learner-01", "lesson-interactive-1", 1, false, [("itf-1", false), ("ihs-1", false), ("idd-1", true)]),
-            BuildInteractionAttempt("learner-01", "lesson-interactive-1", 2, true, [("itf-1", true), ("ihs-1", true), ("idd-1", true)]),
-            BuildInteractionAttempt("learner-01", "lesson-interactive-2", 1, true, [("itf-3", true), ("isc-1", true), ("itf-4", true)]),
-            BuildInteractionAttempt("learner-02", "lesson-interactive-1", 1, true, [("itf-1", true), ("ihs-1", true), ("idd-1", true)]),
-            BuildInteractionAttempt("learner-02", "lesson-interactive-2", 1, false, [("itf-3", true), ("isc-1", false), ("itf-4", false)]),
-            BuildInteractionAttempt("learner-02", "lesson-interactive-2", 2, false, [("itf-3", true), ("isc-1", false), ("itf-4", false)]),
-            BuildInteractionAttempt("learner-03", "lesson-interactive-1", 1, false, [("itf-1", true), ("ihs-1", false), ("idd-1", false)]),
-            BuildInteractionAttempt("learner-03", "lesson-interactive-1", 2, true, [("itf-1", true), ("ihs-1", true), ("idd-1", true)]),
-            BuildInteractionAttempt("learner-04", "lesson-interactive-1", 1, true, [("itf-1", true), ("ihs-1", true), ("idd-1", true)]),
-            BuildInteractionAttempt("learner-04", "lesson-interactive-2", 1, true, [("itf-3", true), ("isc-1", true), ("itf-4", true)])
-        ];
+        return [];
     }
 
     private static List<Certificate> BuildCertificates()
     {
-        return
-        [
-            new Certificate
-            {
-                UserId = "learner-01",
-                CourseId = CourseId,
-                CertificateId = "CERT-0001-20260412",
-                IssuedDate = SeedTime.AddDays(-1),
-                QrCode = "verify:learner-01:CERT-0001-20260412"
-            },
-            new Certificate
-            {
-                UserId = "learner-04",
-                CourseId = CourseId,
-                CertificateId = "CERT-0004-20260412",
-                IssuedDate = SeedTime.AddDays(-1),
-                QrCode = "verify:learner-04:CERT-0004-20260412"
-            }
-        ];
+        return [];
     }
 
     private static List<CourseEnrollment> BuildCourseEnrollments()
@@ -819,40 +596,50 @@ public static class SeedDataFactory
                 UserId = "learner-01",
                 CourseId = CourseId,
                 EnrolledAt = SeedTime.AddDays(-10),
-                StartedAt = SeedTime.AddDays(-10),
-                CompletedAt = SeedTime.AddDays(-1),
-                LastAccessedAt = SeedTime.AddHours(-6),
-                Status = CourseEnrollmentStatus.Completed
+                StartedAt = null,
+                CompletedAt = null,
+                LastAccessedAt = null,
+                Status = CourseEnrollmentStatus.Enrolled
             },
             new CourseEnrollment
             {
                 UserId = "learner-02",
                 CourseId = CourseId,
                 EnrolledAt = SeedTime.AddDays(-9),
-                StartedAt = SeedTime.AddDays(-9),
+                StartedAt = null,
                 CompletedAt = null,
-                LastAccessedAt = SeedTime.AddHours(-4),
-                Status = CourseEnrollmentStatus.InProgress
+                LastAccessedAt = null,
+                Status = CourseEnrollmentStatus.Enrolled
             },
             new CourseEnrollment
             {
                 UserId = "learner-03",
                 CourseId = CourseId,
                 EnrolledAt = SeedTime.AddDays(-8),
-                StartedAt = SeedTime.AddDays(-8),
+                StartedAt = null,
                 CompletedAt = null,
-                LastAccessedAt = SeedTime.AddHours(-8),
-                Status = CourseEnrollmentStatus.InProgress
+                LastAccessedAt = null,
+                Status = CourseEnrollmentStatus.Enrolled
             },
             new CourseEnrollment
             {
                 UserId = "learner-04",
                 CourseId = CourseId,
                 EnrolledAt = SeedTime.AddDays(-7),
-                StartedAt = SeedTime.AddDays(-7),
-                CompletedAt = SeedTime.AddDays(-1),
-                LastAccessedAt = SeedTime.AddHours(-2),
-                Status = CourseEnrollmentStatus.Completed
+                StartedAt = null,
+                CompletedAt = null,
+                LastAccessedAt = null,
+                Status = CourseEnrollmentStatus.Enrolled
+            },
+            new CourseEnrollment
+            {
+                UserId = "learner-05",
+                CourseId = CourseId,
+                EnrolledAt = SeedTime.AddDays(-6),
+                StartedAt = null,
+                CompletedAt = null,
+                LastAccessedAt = null,
+                Status = CourseEnrollmentStatus.Enrolled
             }
         ];
     }
@@ -867,6 +654,8 @@ public static class SeedDataFactory
                 LessonId = lessonId,
                 Status = LessonProgressStatus.NotStarted,
                 CompletionTime = null,
+                CurrentStep = "intro",
+                LastAccessedAt = null,
                 WatchPercent = 0,
                 WatchTimeMinutes = 0,
                 InteractionAttempts = 0
@@ -879,6 +668,8 @@ public static class SeedDataFactory
         var row = rows.Single(item => item.UserId == userId && item.LessonId == lessonId);
         row.Status = LessonProgressStatus.Completed;
         row.CompletionTime = SeedTime.AddHours(-12);
+        row.CurrentStep = "complete";
+        row.LastAccessedAt = row.CompletionTime;
         row.WatchPercent = watchPercent;
         row.WatchTimeMinutes = watchTimeMinutes;
     }
@@ -887,6 +678,8 @@ public static class SeedDataFactory
     {
         var row = rows.Single(item => item.UserId == userId && item.LessonId == lessonId);
         row.Status = LessonProgressStatus.InProgress;
+        row.CurrentStep = "video";
+        row.LastAccessedAt = SeedTime.AddHours(-4);
         row.WatchPercent = watchPercent;
         row.WatchTimeMinutes = watchTimeMinutes;
     }
@@ -895,20 +688,36 @@ public static class SeedDataFactory
     {
         var row = rows.Single(item => item.UserId == userId && item.LessonId == lessonId);
         row.Status = status;
+        row.CurrentStep = status == LessonProgressStatus.Completed ? "complete" : "check";
+        row.LastAccessedAt = SeedTime.AddHours(-3);
         row.InteractionAttempts = attempts;
         row.CompletionTime = status == LessonProgressStatus.Completed ? SeedTime.AddHours(-10) : null;
+    }
+
+    private static void CompleteAllOfficialLessons(List<ProgressTracking> rows, string userId)
+    {
+        ApplyCompletedLesson(rows, userId, "lesson-1-1", 100, 5);
+        ApplyInteractiveProgress(rows, userId, "lesson-1-2", LessonProgressStatus.Completed, 1);
+        ApplyInteractiveProgress(rows, userId, "lesson-1-3", LessonProgressStatus.Completed, 1);
+        ApplyInteractiveProgress(rows, userId, "lesson-1-4", LessonProgressStatus.Completed, 1);
+        ApplyInteractiveProgress(rows, userId, "lesson-2-1", LessonProgressStatus.Completed, 1);
+        ApplyInteractiveProgress(rows, userId, "lesson-2-2", LessonProgressStatus.Completed, 1);
+        ApplyInteractiveProgress(rows, userId, "lesson-2-3", LessonProgressStatus.Completed, 1);
+        ApplyCompletedLesson(rows, userId, "lesson-final-quiz");
     }
 
     private static List<string> OrderedLessonIds()
     {
         return
         [
-            "lesson-video-1",
-            "lesson-interactive-1",
-            "lesson-quiz-1",
-            "lesson-video-2",
-            "lesson-interactive-2",
-            "lesson-quiz-2"
+            "lesson-1-1",
+            "lesson-1-2",
+            "lesson-1-3",
+            "lesson-1-4",
+            "lesson-2-1",
+            "lesson-2-2",
+            "lesson-2-3",
+            "lesson-final-quiz"
         ];
     }
 

@@ -27,10 +27,13 @@ public sealed class RegisterResponse
     public string Username { get; init; } = string.Empty;
     public string Email { get; init; } = string.Empty;
     public bool RequiresEmailVerification { get; init; }
-    public string VerificationToken { get; init; } = string.Empty;
-    public string VerificationPath { get; init; } = string.Empty;
     public DateTimeOffset VerificationExpiresAt { get; init; }
     public string Message { get; init; } = string.Empty;
+}
+
+public sealed class ResendVerificationEmailRequest
+{
+    public string Email { get; init; } = string.Empty;
 }
 
 public sealed class VerifyEmailRequest
@@ -63,6 +66,21 @@ public sealed class RefreshTokenRequest
 public sealed class LogoutRequest
 {
     public string? RefreshToken { get; init; }
+}
+
+public sealed class UpdateProfileRequest
+{
+    public string FullName { get; init; } = string.Empty;
+    public string PhoneNumber { get; init; } = string.Empty;
+    public string Province { get; init; } = string.Empty;
+    public string Group { get; init; } = string.Empty;
+    public string? AvatarUrl { get; init; }
+}
+
+public sealed class ChangePasswordRequest
+{
+    public string CurrentPassword { get; init; } = string.Empty;
+    public string NewPassword { get; init; } = string.Empty;
 }
 
 public sealed class AuthTokenResponse

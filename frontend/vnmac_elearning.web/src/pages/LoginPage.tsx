@@ -1,16 +1,28 @@
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, type ReactNode } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Navigate, useNavigate } from "react-router-dom";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { ChartColumn, GraduationCap, MailCheck, ShieldCheck } from "lucide-react";
+import { cn } from "@/lib/utils";
+import {
+  AtSign,
+  Check,
+  Eye,
+  EyeOff,
+  GraduationCap,
+  LockKeyhole,
+  Mail,
+  MapPin,
+  Phone,
+  ShieldCheck,
+  User,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
 import { useAuth } from "../app/auth";
-import { registerRequest } from "../shared/api/auth";
+import { getProvinceOptions, registerRequest } from "../shared/api/auth";
 import { ApiError } from "../shared/api/client";
 import { LoadingBlock } from "../shared/ui/LoadingBlock";
 import { MessageBanner } from "../shared/ui/MessageBanner";
+import { resolveBrandAsset, useBrandingSettings } from "../shared/ui/branding";
 
 type PageMode = "login" | "register";
 
@@ -36,27 +48,34 @@ const defaultRegisterForm: RegisterFormState = {
 
 export function LoginPage() {
   const { isInitializing, session, login } = useAuth();
+  const branding = useBrandingSettings();
   const navigate = useNavigate();
   const [mode, setMode] = useState<PageMode>("login");
-  const [username, setUsername] = useState("learner01");
-  const [password, setPassword] = useState("Vnmac@123");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [registerForm, setRegisterForm] = useState<RegisterFormState>(defaultRegisterForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [registerMessage, setRegisterMessage] = useState<string | null>(null);
-  const [verificationPath, setVerificationPath] = useState<string | null>(null);
+  const provinceQuery = useQuery({
+    queryKey: ["public", "provinces"],
+    queryFn: getProvinceOptions,
+  });
 
   if (isInitializing) {
     return (
-      <div className="grid min-h-screen place-items-center bg-[linear-gradient(180deg,#f8fafc_0%,#ecfdf5_100%)] px-6 py-10">
+      <div className="auth-page-root">
         <LoadingBlock label="Đang phục hồi phiên đăng nhập..." />
       </div>
     );
   }
 
   if (session) {
-    return <Navigate to={session.user.role === "Learner" ? "/app/dashboard" : "/admin"} replace />;
+    return <Navigate to={session.user.hasAdminAccess ? "/admin" : "/app/dashboard"} replace />;
   }
+
+  const loginLogo = resolveBrandAsset(branding.loginLogoUrl || branding.projectLogoUrl);
 
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -71,7 +90,7 @@ export function LoginPage() {
         captchaToken: "demo-pass",
       });
 
-      navigate(response.user.role === "Learner" ? "/app/dashboard" : "/admin", {
+      navigate(response.user.hasAdminAccess ? "/admin" : "/app/dashboard", {
         replace: true,
       });
     } catch (cause) {
@@ -85,7 +104,6 @@ export function LoginPage() {
     event.preventDefault();
     setError(null);
     setRegisterMessage(null);
-    setVerificationPath(null);
     setIsSubmitting(true);
 
     try {
@@ -102,7 +120,6 @@ export function LoginPage() {
       });
 
       setRegisterMessage(response.message);
-      setVerificationPath(response.verificationPath);
       setMode("register");
       setRegisterForm(defaultRegisterForm);
     } catch (cause) {
@@ -120,251 +137,283 @@ export function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#f8fafc_0%,#ecfdf5_100%)] px-6 py-10">
-      <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[minmax(0,1.1fr)_440px]">
-        <Card className="overflow-hidden border-0 bg-gradient-to-br from-emerald-50 via-white to-slate-50">
-          <CardContent className="space-y-6 p-8">
-            <div className="space-y-3">
-              <Badge variant="secondary" className="w-fit">
-                VNMAC eLearning
-              </Badge>
-              <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-slate-950">
-                Hệ thống đào tạo trực tuyến kết hợp LMS và SCORM
-              </h1>
-              <p className="max-w-3xl text-sm leading-6 text-slate-600">
-                Người học có thể tự đăng ký tài khoản bằng email và xác thực trước khi đăng nhập.
-                Tài khoản do quản trị viên cấp từ nội bộ có thể được kích hoạt dùng ngay.
+    <main
+      className="auth-page-root auth-official-shell"
+      style={{
+        backgroundImage: branding.loginBackgroundImageUrl
+          ? `url(${resolveBrandAsset(branding.loginBackgroundImageUrl)})`
+          : undefined,
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+      }}
+    >
+      <div className="auth-login-stage">
+        <ProjectPanel />
+
+        <section className="auth-main-area" aria-label="Đăng nhập học viên">
+          <div className="auth-mobile-project-brand" aria-hidden="true">
+            {loginLogo ? <img alt={branding.headerTitle} className="auth-mobile-project-logo-image" src={loginLogo} /> : null}
+            <div className={cn("auth-mobile-project-mark", loginLogo && "hidden")}>
+              <span />
+              <i />
+              <i />
+              <i />
+            </div>
+            <p>
+              <strong>{branding.headerTitle}</strong>
+              <span>{branding.headerSubtitle}</span>
+              <span>Dự án giáo dục nguy cơ bom mìn vật nổ</span>
+            </p>
+          </div>
+          <PartnerLogoRow />
+
+          <div className="auth-card">
+            <div className="auth-mobile-illustration" aria-hidden="true">
+              <div className="auth-mobile-plant" />
+              <div className="auth-mobile-laptop">
+                <div className="auth-mobile-screen">
+                  <GraduationCap size={46} />
+                  <span />
+                  <span />
+                  <span />
+                </div>
+              </div>
+              <div className="auth-mobile-shield">
+                <Check size={34} />
+              </div>
+            </div>
+            <div className="auth-card-copy">
+              <p className="auth-card-title">
+                {mode === "login" ? "Chào mừng bạn quay trở lại" : "Đăng ký tài khoản"}
+              </p>
+              <p className="auth-card-subtitle">
+                {mode === "login" ? "Hãy đăng nhập để bắt đầu tiến trình học tập" : "Điền thông tin để tạo tài khoản học viên"}
               </p>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Card className="border-slate-200 shadow-none">
-                <CardContent className="space-y-1 p-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Nền tảng</p>
-                  <p className="text-xl font-semibold text-slate-950">LMS</p>
-                  <p className="text-sm leading-6 text-slate-600">
-                    Dashboard, tiến độ, quiz, chứng chỉ và analytics.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card className="border-slate-200 shadow-none">
-                <CardContent className="space-y-1 p-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Nội dung</p>
-                  <p className="text-xl font-semibold text-slate-950">SCORM</p>
-                  <p className="text-sm leading-6 text-slate-600">
-                    Launch session, runtime tracking và player wrapper.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card className="border-slate-200 shadow-none">
-                <CardContent className="space-y-1 p-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Tài khoản</p>
-                  <p className="text-xl font-semibold text-slate-950">Xác thực email</p>
-                  <p className="text-sm leading-6 text-slate-600">
-                    Người dùng ngoài phải xác thực email trước khi vào hệ thống.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card className="border-slate-200 shadow-none">
-                <CardContent className="space-y-1 p-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Bảo mật</p>
-                  <p className="text-xl font-semibold text-slate-950">JWT</p>
-                  <p className="text-sm leading-6 text-slate-600">
-                    Username, password, access token và refresh token.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
+            {error ? <MessageBanner tone="error">{error}</MessageBanner> : null}
+            {registerMessage ? <MessageBanner tone="success">{registerMessage}</MessageBanner> : null}
 
-            <div className="flex flex-wrap gap-3">
-              <Badge className="gap-1" variant="secondary">
-                <ShieldCheck className="size-3.5" />
-                JWT + Refresh Token
-              </Badge>
-              <Badge className="gap-1" variant="secondary">
-                <MailCheck className="size-3.5" />
-                Email Verification
-              </Badge>
-              <Badge className="gap-1" variant="secondary">
-                <GraduationCap className="size-3.5" />
-                LMS + SCORM
-              </Badge>
-              <Badge className="gap-1" variant="secondary">
-                <ChartColumn className="size-3.5" />
-                Analytics
-              </Badge>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-slate-200">
-          <CardHeader className="space-y-4 pb-4">
-            <div className="flex items-center gap-2">
-              <Button
-                type="button"
-                variant={mode === "login" ? "default" : "outline"}
-                onClick={() => {
-                  setMode("login");
-                  setError(null);
-                }}
-              >
-                Đăng nhập
-              </Button>
-              <Button
-                type="button"
-                variant={mode === "register" ? "default" : "outline"}
-                onClick={() => {
-                  setMode("register");
-                  setError(null);
-                }}
-              >
-                Đăng ký
-              </Button>
-            </div>
-            <div>
-              <CardTitle>{mode === "login" ? "Vào hệ thống" : "Tạo tài khoản học viên"}</CardTitle>
-              <CardDescription>
-                {mode === "login"
-                  ? "Đăng nhập bằng tài khoản đã được cấp hoặc đã xác thực email."
-                  : "Tài khoản ngoài hệ thống sẽ cần xác thực email trước khi đăng nhập."}
-              </CardDescription>
-            </div>
-          </CardHeader>
-
-          {error ? <MessageBanner tone="error">{error}</MessageBanner> : null}
-          {registerMessage ? <MessageBanner tone="success">{registerMessage}</MessageBanner> : null}
-
-          <CardContent className="space-y-6 pt-0">
             {mode === "login" ? (
-              <form className="space-y-4" onSubmit={handleLogin}>
-                <div className="space-y-2">
-                  <Label htmlFor="username">Username</Label>
-                  <Input
-                    id="username"
-                    autoComplete="username"
-                    value={username}
-                    onChange={(event) => setUsername(event.target.value)}
-                  />
-                </div>
+              <form className="auth-form-official" onSubmit={handleLogin}>
+                <AuthInput
+                  autoComplete="username"
+                  icon={User}
+                  placeholder="Số điện thoại / Email"
+                  value={username}
+                  onChange={setUsername}
+                />
 
-                <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
-                  <Input
-                    id="password"
-                    autoComplete="current-password"
-                    type="password"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                  />
-                </div>
+                <AuthInput
+                  autoComplete="current-password"
+                  icon={LockKeyhole}
+                  placeholder="Mật khẩu"
+                  rightSlot={
+                    <button
+                      className="auth-input-action"
+                      type="button"
+                      aria-label={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
+                      onClick={() => setShowPassword((value) => !value)}
+                    >
+                      {showPassword ? <EyeOff /> : <Eye />}
+                    </button>
+                  }
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={setPassword}
+                />
 
-                <Button className="w-full" disabled={isSubmitting} type="submit">
+                <button className="auth-forgot-link" type="button">
+                  Quên mật khẩu?
+                </button>
+
+                <button className="auth-submit-button" disabled={isSubmitting} type="submit">
+                  <LockKeyhole />
                   {isSubmitting ? "Đang đăng nhập..." : "Đăng nhập"}
-                </Button>
+                </button>
               </form>
             ) : (
-              <form className="space-y-4" onSubmit={handleRegister}>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="space-y-2 sm:col-span-2">
-                    <Label htmlFor="register-full-name">Họ và tên</Label>
-                    <Input
-                      id="register-full-name"
-                      value={registerForm.fullName}
-                      onChange={(event) => updateRegisterForm("fullName", event.target.value)}
-                    />
-                  </div>
+              <form className="auth-form-official auth-register-form" onSubmit={handleRegister}>
+                <AuthInput icon={User} placeholder="Họ và tên" value={registerForm.fullName} onChange={(value) => updateRegisterForm("fullName", value)} />
+                <AuthInput icon={Mail} placeholder="Email" type="email" value={registerForm.email} onChange={(value) => updateRegisterForm("email", value)} />
+                <AuthInput icon={Phone} placeholder="Số điện thoại" value={registerForm.phoneNumber} onChange={(value) => updateRegisterForm("phoneNumber", value)} />
+                <AuthSelect
+                  icon={MapPin}
+                  placeholder="Tỉnh/Thành phố"
+                  options={provinceQuery.data ?? []}
+                  value={registerForm.province}
+                  onChange={(value) => updateRegisterForm("province", value)}
+                />
+                <AuthInput icon={Users} placeholder="Đối tượng (ví dụ: Cán bộ xã/phường)" value={registerForm.group} onChange={(value) => updateRegisterForm("group", value)} />
+                <AuthInput icon={AtSign} placeholder="Tên đăng nhập" autoComplete="username" value={registerForm.username} onChange={(value) => updateRegisterForm("username", value)} />
+                <AuthInput icon={LockKeyhole} placeholder="Mật khẩu" autoComplete="new-password" type="password" value={registerForm.password} onChange={(value) => updateRegisterForm("password", value)} />
 
-                  <div className="space-y-2">
-                    <Label htmlFor="register-email">Email</Label>
-                    <Input
-                      id="register-email"
-                      type="email"
-                      value={registerForm.email}
-                      onChange={(event) => updateRegisterForm("email", event.target.value)}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="register-phone">Số điện thoại</Label>
-                    <Input
-                      id="register-phone"
-                      value={registerForm.phoneNumber}
-                      onChange={(event) => updateRegisterForm("phoneNumber", event.target.value)}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="register-province">Tỉnh / thành</Label>
-                    <Input
-                      id="register-province"
-                      value={registerForm.province}
-                      onChange={(event) => updateRegisterForm("province", event.target.value)}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="register-group">Nhóm đối tượng</Label>
-                    <Input
-                      id="register-group"
-                      value={registerForm.group}
-                      onChange={(event) => updateRegisterForm("group", event.target.value)}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="register-username">Username</Label>
-                    <Input
-                      id="register-username"
-                      autoComplete="username"
-                      value={registerForm.username}
-                      onChange={(event) => updateRegisterForm("username", event.target.value)}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="register-password">Password</Label>
-                    <Input
-                      id="register-password"
-                      autoComplete="new-password"
-                      type="password"
-                      value={registerForm.password}
-                      onChange={(event) => updateRegisterForm("password", event.target.value)}
-                    />
-                  </div>
-                </div>
-
-                <Button className="w-full" disabled={isSubmitting} type="submit">
+                <button className="auth-submit-button" disabled={isSubmitting} type="submit">
                   {isSubmitting ? "Đang tạo tài khoản..." : "Đăng ký tài khoản"}
-                </Button>
+                </button>
               </form>
             )}
 
-            {verificationPath ? (
-              <Card className="border-emerald-200 bg-emerald-50 shadow-none">
-                <CardContent className="space-y-3 p-4 text-sm leading-6 text-emerald-950">
-                  <p>
-                    Bản demo hiện trả về liên kết xác thực trực tiếp để mô phỏng email gửi đến người dùng.
-                  </p>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => navigate(verificationPath)}
-                  >
-                    Mở liên kết xác thực email
-                  </Button>
-                </CardContent>
-              </Card>
-            ) : null}
+            <p className="auth-register-copy">
+              {mode === "login" ? "Chưa có tài khoản?" : "Đã có tài khoản?"}
+              <button
+                type="button"
+                onClick={() => {
+                  setMode(mode === "login" ? "register" : "login");
+                  setError(null);
+                  setRegisterMessage(null);
+                }}
+              >
+                {mode === "login" ? "Đăng ký ngay" : "Đăng nhập"}
+              </button>
+            </p>
+          </div>
+        </section>
+      </div>
 
-            <Card className="border-slate-200 bg-slate-50 shadow-none">
-              <CardContent className="p-4 text-sm leading-6 text-slate-700">
-                Tài khoản seed để demo: <code>admin</code>, <code>content</code>, <code>viewer</code>,{" "}
-                <code>learner01</code> - password: <code>Vnmac@123</code>
-              </CardContent>
-            </Card>
-          </CardContent>
-        </Card>
+      <p className="auth-copyright">© 2024 RAPPOT Project. All rights reserved.</p>
+    </main>
+  );
+}
+
+function ProjectPanel() {
+  const settings = useBrandingSettings();
+  const loginLogo = resolveBrandAsset(settings.loginLogoUrl || settings.projectLogoUrl);
+
+  return (
+    <aside className="auth-project-panel" aria-label="RAPPOT Project">
+      <div className="auth-project-pattern" />
+      {loginLogo ? <img alt={settings.headerTitle} className="auth-project-logo-image" src={loginLogo} /> : null}
+      <div className={cn("auth-project-logo", loginLogo && "hidden")} aria-hidden="true">
+        <div className="auth-house-roof" />
+        <div className="auth-house-people">
+          <span />
+          <span />
+          <span />
+        </div>
+      </div>
+
+      <div className="auth-project-name">
+        <strong>{settings.headerTitle}</strong>
+        <span>{settings.headerSubtitle}</span>
+        <span>Dự án giáo dục nguy cơ bom mìn vật nổ và thay đổi hành vi xã hội cho công tác viện cộng đồng</span>
+      </div>
+
+      <div className="auth-illustration" aria-hidden="true">
+        <div className="auth-plant">
+          <span />
+          <span />
+          <span />
+        </div>
+        <div className="auth-laptop">
+          <div className="auth-laptop-screen">
+            <GraduationCap />
+            <span />
+            <span />
+          </div>
+          <div className="auth-laptop-base" />
+        </div>
+        <div className="auth-shield">
+          <ShieldCheck />
+        </div>
+      </div>
+
+      <div className="auth-project-slogan">
+        <p>Học an toàn - Hành động đúng</p>
+        <strong>Để bảo vệ mình và cộng đồng</strong>
+      </div>
+    </aside>
+  );
+}
+
+function PartnerLogoRow() {
+  const settings = useBrandingSettings();
+  const vnmacLogo = resolveBrandAsset(settings.vnmacLogoUrl);
+  const vietnamFlag = resolveBrandAsset(settings.vietnamFlagUrl);
+  const usFlag = resolveBrandAsset(settings.usFlagUrl);
+  const crsLogo = resolveBrandAsset(settings.crsLogoUrl);
+
+  return (
+    <div className="auth-partner-row" aria-label="Đối tác dự án">
+      {vnmacLogo ? <img alt="VNMAC" className="auth-partner-image" src={vnmacLogo} /> : null}
+      <div className={cn("auth-vnmac-logo", vnmacLogo && "hidden")}>
+        <strong>VNMAC</strong>
+        <span>Vietnam National<br />Mine Action Centre</span>
+      </div>
+      {vietnamFlag ? <img alt="Viet Nam" className="auth-flag-image" src={vietnamFlag} /> : null}
+      <div className={cn("auth-flag auth-flag-vn", vietnamFlag && "hidden")} aria-label="Việt Nam">
+        <span>★</span>
+      </div>
+      {usFlag ? <img alt="United States" className="auth-flag-image" src={usFlag} /> : null}
+      <div className={cn("auth-flag auth-flag-us", usFlag && "hidden")} aria-label="United States">
+        <span />
+      </div>
+      {crsLogo ? <img alt="CRS" className="auth-partner-image" src={crsLogo} /> : null}
+      <div className={cn("auth-crs-logo", crsLogo && "hidden")}>
+        <span>CRS</span>
+        <small>Catholic Relief Services</small>
       </div>
     </div>
+  );
+}
+
+function AuthInput({
+  autoComplete,
+  icon: Icon,
+  placeholder,
+  rightSlot,
+  type = "text",
+  value,
+  onChange,
+}: {
+  autoComplete?: string;
+  icon: LucideIcon;
+  placeholder: string;
+  rightSlot?: ReactNode;
+  type?: string;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <label className="auth-input-shell">
+      <Icon className="auth-input-icon" />
+      <input
+        autoComplete={autoComplete}
+        placeholder={placeholder}
+        type={type}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+      />
+      {rightSlot}
+    </label>
+  );
+}
+
+function AuthSelect({
+  icon: Icon,
+  placeholder,
+  options,
+  value,
+  onChange,
+}: {
+  icon: LucideIcon;
+  placeholder: string;
+  options: string[];
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <label className="auth-input-shell">
+      <Icon className="auth-input-icon" />
+      <select
+        className="min-w-0 flex-1 appearance-none bg-transparent text-slate-700 outline-none"
+        required
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+      >
+        <option value="">{placeholder}</option>
+        {options.map((option) => <option key={option} value={option}>{option}</option>)}
+      </select>
+    </label>
   );
 }

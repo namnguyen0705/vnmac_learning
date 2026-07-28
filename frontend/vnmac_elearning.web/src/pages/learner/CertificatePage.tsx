@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Award, CalendarDays, Download, ExternalLink, QrCode, Share2, ShieldCheck } from "lucide-react";
+import { Award, CalendarDays, Download, ExternalLink, Share2, ShieldCheck } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useAuth } from "../../app/auth";
 import { getLearnerCertificates } from "../../shared/api/learner";
 import { formatDateTime } from "../../shared/lib/format";
 import { LoadingBlock } from "../../shared/ui/LoadingBlock";
-import { LearnerPanel, LearnerStatusBadge } from "../../shared/ui/learner-ui";
+import { resolveBrandAsset, useBrandingSettings } from "../../shared/ui/branding";
+import { LearnerPageHeader, LearnerPanel, LearnerStatusBadge, OfficialLogo, OfficialPartnerMarks } from "../../shared/ui/learner-ui";
 import { MessageBanner } from "../../shared/ui/MessageBanner";
 
 export function CertificatePage() {
@@ -53,7 +54,7 @@ export function CertificatePage() {
               <p className="mt-3 text-sm leading-7 text-slate-600">
                 Hoàn thành khóa học và đạt yêu cầu bài kiểm tra để chứng chỉ xuất hiện tại đây.
               </p>
-              <Button asChild className="mt-6 rounded-2xl bg-[#163b7b] hover:bg-[#0f2e63]">
+              <Button asChild className="mt-6 rounded-2xl bg-[#163b7b] text-white hover:bg-[#0f2e63] hover:text-white">
                 <Link to="/app/courses">Xem khóa học</Link>
               </Button>
             </div>
@@ -66,13 +67,19 @@ export function CertificatePage() {
   return (
     <div className="grid gap-6">
       <section className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
-        <LearnerPanel className="overflow-hidden bg-[#fffaf0]">
+        <LearnerPanel className="overflow-hidden bg-[#f4f8ff]">
+          <LearnerPageHeader
+            eyebrow="Chứng nhận hoàn thành khóa học"
+            title="Chứng chỉ của học viên"
+            description="Mẫu chứng nhận theo giao diện chính thức, có mã chứng chỉ và thông tin xác thực."
+          />
           <div className="p-5 sm:p-8">
             <CertificatePreview
               certificateId={certificate.certificateId}
               courseTitle={selectedItem.courseTitle}
               issuedDate={certificate.issuedDate}
               learnerName={session?.user.fullName ?? ""}
+              learnerMeta={[session?.user.group, session?.user.province].filter(Boolean).join(", ")}
             />
           </div>
         </LearnerPanel>
@@ -94,7 +101,7 @@ export function CertificatePage() {
             </div>
 
             <div className="mt-6 grid gap-3">
-              <Button asChild className="rounded-2xl bg-[#163b7b] hover:bg-[#0f2e63]">
+              <Button asChild className="rounded-2xl bg-[#163b7b] text-white hover:bg-[#0f2e63] hover:text-white">
                 <Link to={`/verify-certificate/${certificate.certificateId}`}>
                   <ExternalLink className="size-4" />
                   Xác thực chứng chỉ
@@ -161,36 +168,79 @@ function CertificatePreview({
   courseTitle,
   issuedDate,
   learnerName,
+  learnerMeta,
 }: {
   certificateId: string;
   courseTitle: string;
   issuedDate: string;
   learnerName: string;
+  learnerMeta: string;
 }) {
-  return (
-    <div className="mx-auto max-w-5xl rounded-2xl border border-[#e6c98f] bg-[#fffdf7] p-7 text-center shadow-[0_22px_60px_rgba(126,87,30,0.12)] sm:p-10">
-      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">
-        Trung tâm Hành động Bom mìn Quốc gia Việt Nam
-      </p>
-      <h2 className="mt-8 text-[2.4rem] font-semibold tracking-[0.08em] text-[#163b7b] sm:text-[3rem]">CHỨNG CHỈ</h2>
-      <p className="mt-3 text-sm text-slate-600">Hoàn thành khóa học</p>
-      <p className="mx-auto mt-8 max-w-2xl text-xl font-semibold leading-relaxed text-slate-950">{courseTitle}</p>
-      <p className="mt-6 text-sm text-slate-600">Cấp cho học viên</p>
-      <p className="mt-2 text-[1.85rem] font-semibold text-slate-950">{learnerName}</p>
-      <p className="mt-6 text-sm text-slate-600">Đã hoàn thành khóa học với kết quả đạt yêu cầu.</p>
+  const settings = useBrandingSettings();
+  const templateUrl = resolveBrandAsset(settings.certificateTemplateUrl);
+  const resolvedCourseTitle = settings.certificateCourseTitle || courseTitle;
 
-      <div className="mt-9 grid items-end gap-6 sm:grid-cols-[1fr_auto]">
-        <div className="text-left text-sm text-slate-500">
-          <p>Ngày cấp: {formatDateTime(issuedDate)}</p>
-          <p className="mt-2">Mã chứng chỉ: {certificateId}</p>
-          <p className="mt-8">Giám đốc Trung tâm</p>
-          <div className="mt-8 h-px w-44 bg-slate-300" />
+  return (
+    <div
+      className={`official-certificate-frame mx-auto ${templateUrl ? "has-template" : ""}`}
+      style={{
+        backgroundImage: templateUrl ? `url(${templateUrl})` : undefined,
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+      }}
+    >
+      <div className="official-certificate-line-art" aria-hidden="true" />
+      <span className="official-certificate-corner top-left" aria-hidden="true" />
+      <span className="official-certificate-corner top-right" aria-hidden="true" />
+      <span className="official-certificate-corner bottom-left" aria-hidden="true" />
+      <span className="official-certificate-corner bottom-right" aria-hidden="true" />
+
+      <div className="official-certificate-header">
+        <OfficialLogo />
+        <OfficialPartnerMarks />
+      </div>
+
+      <div className="official-certificate-body">
+        <p className="official-certificate-project">
+          DỰ ÁN GIÁO DỤC NGUY CƠ BOM MÌN VẬT NỔ
+          <br />
+          VÀ THAY ĐỔI HÀNH VI XÃ HỘI CHO CỘNG TÁC VIÊN CỘNG ĐỒNG
+        </p>
+
+        <div className="official-certificate-title">
+          <span />
+          <strong>{settings.certificateTitle || "CHUNG NHAN"}</strong>
+          <span />
         </div>
-        <div className="grid place-items-center gap-2 rounded-2xl border border-slate-200 bg-white p-4">
-          <QrCode className="size-20 text-slate-800" />
-          <span className="text-xs text-slate-500">Quét mã để xác thực</span>
+
+        <h2>Học viên {learnerName}</h2>
+        {learnerMeta ? <p className="official-certificate-meta">{learnerMeta}</p> : null}
+        <p className="official-certificate-completed">Đã hoàn thành khóa học trực tuyến</p>
+        <h3>{resolvedCourseTitle}</h3>
+      </div>
+
+      <div className="official-certificate-footer">
+        <div className="official-certificate-fact">
+          <CalendarDays className="size-5" />
+          <div>
+            <span>Ngày hoàn thành</span>
+            <strong>{formatDateTime(issuedDate)}</strong>
+          </div>
+        </div>
+        <div className="official-certificate-shield" aria-hidden="true">
+          <ShieldCheck className="size-16" />
+        </div>
+        <div className="official-certificate-fact">
+          <Award className="size-5" />
+          <div>
+            <span>Số chứng nhận</span>
+            <strong>{certificateId}</strong>
+          </div>
         </div>
       </div>
+
+      <div className="official-certificate-seal" aria-hidden="true" />
+      <div className="official-certificate-wave" aria-hidden="true" />
     </div>
   );
 }

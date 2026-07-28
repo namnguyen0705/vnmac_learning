@@ -57,6 +57,34 @@ public sealed class LearnerEnrollmentSummary
     public int PassedQuizzes { get; init; }
 }
 
+public sealed class LearningResultsResponse
+{
+    public string UserId { get; init; } = string.Empty;
+    public string CourseId { get; init; } = string.Empty;
+    public string CourseTitle { get; init; } = string.Empty;
+    public CourseEnrollmentStatus EnrollmentStatus { get; init; }
+    public int ContentCompletionPercent { get; init; }
+    public int QuizCompletionPercent { get; init; }
+    public int OverallCompletionPercent { get; init; }
+    public int TotalLessons { get; init; }
+    public int CompletedLessons { get; init; }
+    public int InProgressLessons { get; init; }
+    public int LockedLessons { get; init; }
+    public int TotalQuizzes { get; init; }
+    public int PassedQuizzes { get; init; }
+    public int StudyTimeMinutes { get; init; }
+    public string? CurrentLessonId { get; init; }
+    public string? CurrentLessonTitle { get; init; }
+    public string CurrentStep { get; init; } = "intro";
+    public string? NextLessonId { get; init; }
+    public string? NextLessonTitle { get; init; }
+    public string? NextQuizId { get; init; }
+    public string? NextQuizTitle { get; init; }
+    public int LatestQuizScore { get; init; }
+    public int LatestQuizAttempts { get; init; }
+    public bool CertificateIssued { get; init; }
+}
+
 public sealed class LearnerLessonSummary
 {
     public string CourseId { get; init; } = string.Empty;
@@ -66,6 +94,8 @@ public sealed class LearnerLessonSummary
     public LessonType Type { get; init; }
     public LessonProgressStatus Status { get; init; }
     public bool IsUnlocked { get; init; }
+    public string CurrentStep { get; init; } = "intro";
+    public DateTimeOffset? LastAccessedAt { get; init; }
     public int WatchPercent { get; init; }
     public int WatchTimeMinutes { get; init; }
     public int InteractionAttempts { get; init; }
@@ -117,6 +147,12 @@ public sealed class UpdateVideoProgressRequest
     public int LastPositionSeconds { get; init; }
 }
 
+public sealed class LessonStudyStateRequest
+{
+    public string CurrentStep { get; init; } = "intro";
+    public int ActiveSeconds { get; init; }
+}
+
 public sealed class InteractiveAttemptRequest
 {
     public List<QuestionSubmissionRequest> Answers { get; init; } = [];
@@ -127,7 +163,14 @@ public sealed class QuestionSubmissionRequest
     public string QuestionId { get; init; } = string.Empty;
     public List<string> SelectedOptionCodes { get; init; } = [];
     public List<string> SelectedHotspotCodes { get; init; } = [];
+    public List<HotspotClickSubmission> HotspotClicks { get; init; } = [];
     public List<DragDropMatchSubmission> Matches { get; init; } = [];
+}
+
+public sealed class HotspotClickSubmission
+{
+    public double X { get; init; }
+    public double Y { get; init; }
 }
 
 public sealed class DragDropMatchSubmission
@@ -156,14 +199,16 @@ public sealed class QuizSessionResponse
 
 public sealed class LearnerQuestionPayload
 {
-    public string QuestionId { get; init; } = string.Empty;
+    public string Id { get; init; } = string.Empty;
     public QuestionType Type { get; init; }
     public int Order { get; init; }
     public string Prompt { get; init; } = string.Empty;
     public string? Statement { get; init; }
     public string? MediaTitle { get; init; }
+    public string? MediaUrl { get; init; }
     public string? ScenarioTitle { get; init; }
     public string? ScenarioContext { get; init; }
+    public bool AllowMultipleAnswers { get; init; }
     public required IReadOnlyCollection<LearnerQuestionOptionPayload> Options { get; init; }
     public required IReadOnlyCollection<LearnerHotspotTargetPayload> HotspotTargets { get; init; }
     public required IReadOnlyCollection<LearnerDragItemPayload> DragItems { get; init; }

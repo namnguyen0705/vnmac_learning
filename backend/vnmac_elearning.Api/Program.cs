@@ -37,6 +37,7 @@ public class Program
             ?? throw new InvalidOperationException("JWT settings were not found.");
 
         builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
+        builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection(EmailOptions.SectionName));
         builder.Services.Configure<FormOptions>(options =>
         {
             options.MultipartBodyLengthLimit = 2L * 1024 * 1024 * 1024;
@@ -118,13 +119,21 @@ public class Program
         builder.Services.AddSingleton<NotificationRealtimeService>();
         builder.Services.AddScoped<MediaStorageService>();
         builder.Services.AddScoped<AuthService>();
+        builder.Services.AddScoped<EmailSender>();
+        builder.Services.AddScoped<RoleService>();
         builder.Services.AddScoped<NotificationService>();
+        builder.Services.AddScoped<AuditLogService>();
+        builder.Services.AddScoped<SystemSettingsService>();
         builder.Services.AddScoped<LearningService>();
         builder.Services.AddScoped<AdminService>();
 
         var app = builder.Build();
 
         DatabaseInitializer.Initialize(app.Services);
+        using (var roleScope = app.Services.CreateScope())
+        {
+            roleScope.ServiceProvider.GetRequiredService<RoleService>().InitializeDefaults();
+        }
 
         app.UseExceptionHandler(errorApp =>
         {
@@ -169,6 +178,7 @@ public class Program
         app.UseStaticFiles();
         app.UseRateLimiter();
         app.UseAuthentication();
+        app.UseMiddleware<AdminPermissionMiddleware>();
         app.UseAuthorization();
 
         app.MapGet("/", () => Results.Ok(new

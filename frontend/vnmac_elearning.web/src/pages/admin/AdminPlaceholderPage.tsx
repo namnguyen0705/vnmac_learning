@@ -28,7 +28,7 @@ export function AdminPlaceholderPage({
         >
           <div className="space-y-4 text-sm leading-7 text-slate-600">
             <p>
-              Khu vực này đã được đưa vào hệ thống admin mới để giữ giao diện nhất quán với các màn tổng quan, khóa học,
+              Khu vực này đã được đưa vào hệ thống admin mới để giữ giao diện nhất quán với các màn tổng quan, chủ đề,
               bài học và học viên.
             </p>
             <p>

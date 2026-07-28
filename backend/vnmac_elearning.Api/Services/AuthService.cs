@@ -1,6 +1,7 @@
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using vnmac_elearning.Api.Contracts;
 using vnmac_elearning.Api.Domain;
 using vnmac_elearning.Api.Infrastructure;
@@ -12,7 +13,10 @@ public sealed class AuthService(
     TokenService tokenService,
     PasswordService passwordService,
     TimeProvider timeProvider,
-    NotificationService notificationService)
+    NotificationService notificationService,
+    AuditLogService auditLogService,
+    EmailSender emailSender,
+    RoleService roleService)
 {
     private static readonly TimeSpan VerificationLifetime = TimeSpan.FromHours(24);
 
@@ -29,11 +33,67 @@ public sealed class AuthService(
             throw new ServiceException(ServiceErrors.AuthCurrentUserNotFound);
         }
 
+        roleService.PopulateAccess(user);
         return user;
     }
 
-    public RegisterResponse Register(RegisterRequest request)
+    public User UpdateProfile(string? userId, UpdateProfileRequest request)
     {
+        EnsureValidProvince(request.Province);
+        var user = GetCurrentUser(userId);
+        ValidateFullName(request.FullName);
+        ValidatePhoneNumber(request.PhoneNumber);
+
+        var normalizedPhone = NormalizePhoneNumber(request.PhoneNumber);
+        var phoneInUse = dbContext.Users.Any(item => item.Id != user.Id && item.PhoneNumber == normalizedPhone);
+        if (phoneInUse)
+        {
+            throw new ServiceException(ServiceErrors.AuthPhoneNumberAlreadyExists);
+        }
+
+        if (request.AvatarUrl is not null)
+        {
+            var avatar = request.AvatarUrl.Trim();
+            var isValidAvatar = avatar.Length == 0 ||
+                (avatar.Length <= 2_800_000 &&
+                 (avatar.StartsWith("data:image/jpeg;base64,", StringComparison.OrdinalIgnoreCase) ||
+                  avatar.StartsWith("data:image/png;base64,", StringComparison.OrdinalIgnoreCase) ||
+                  avatar.StartsWith("data:image/webp;base64,", StringComparison.OrdinalIgnoreCase)));
+            if (!isValidAvatar)
+            {
+                throw new ServiceException(ServiceErrors.AuthAvatarInvalid);
+            }
+
+            user.AvatarUrl = avatar;
+        }
+
+        user.FullName = request.FullName.Trim();
+        user.PhoneNumber = normalizedPhone;
+        user.Province = request.Province.Trim();
+        user.Group = request.Group.Trim();
+        auditLogService.Track(user.Id, "auth", "update-profile", nameof(User), user.Id, "Cap nhat ho so ca nhan");
+        dbContext.SaveChanges();
+        return user;
+    }
+
+    public void ChangePassword(string? userId, ChangePasswordRequest request)
+    {
+        var user = GetCurrentUser(userId);
+        if (string.IsNullOrWhiteSpace(request.CurrentPassword) ||
+            !passwordService.VerifyPassword(user, request.CurrentPassword))
+        {
+            throw new ServiceException(ServiceErrors.AuthCurrentPasswordIncorrect);
+        }
+
+        ValidatePassword(request.NewPassword);
+        user.PasswordHash = passwordService.HashPassword(user, request.NewPassword.Trim());
+        auditLogService.Track(user.Id, "auth", "change-password", nameof(User), user.Id, "Doi mat khau");
+        dbContext.SaveChanges();
+    }
+
+    public async Task<RegisterResponse> RegisterAsync(RegisterRequest request)
+    {
+        EnsureValidProvince(request.Province);
         ValidateFullName(request.FullName);
         ValidatePhoneNumber(request.PhoneNumber);
         ValidateEmail(request.Email);
@@ -64,17 +124,32 @@ public sealed class AuthService(
             EmailVerifiedAt = null,
             CreatedByAdmin = false,
             Role = UserRole.Learner,
+            RoleId = "role-learner",
             Province = request.Province.Trim(),
             Group = request.Group.Trim()
         };
 
         user.PasswordHash = passwordService.HashPassword(user, request.Password);
+        await using var transaction = await dbContext.Database.BeginTransactionAsync();
         dbContext.Users.Add(user);
         notificationService.NotifyLearnerRegistered(user);
+        auditLogService.Track(
+            user.Id,
+            "auth",
+            "register",
+            nameof(User),
+            user.Id,
+            $"Dang ky tai khoan {user.Username}",
+            new { user.Username, user.Role, user.Province, user.Group });
 
         var verificationToken = CreateEmailVerificationToken(user);
         dbContext.EmailVerificationTokens.Add(verificationToken.Record);
         dbContext.SaveChanges();
+        await emailSender.SendAccountActivationAsync(
+            user,
+            verificationToken.RawToken,
+            verificationToken.Record.ExpiresAt);
+        await transaction.CommitAsync();
 
         return new RegisterResponse
         {
@@ -82,11 +157,40 @@ public sealed class AuthService(
             Username = user.Username,
             Email = user.Email,
             RequiresEmailVerification = true,
-            VerificationToken = verificationToken.RawToken,
-            VerificationPath = $"/verify-email?token={Uri.EscapeDataString(verificationToken.RawToken)}",
             VerificationExpiresAt = verificationToken.Record.ExpiresAt,
-            Message = "Tài khoản đã được tạo. Vui lòng xác thực email trước khi đăng nhập."
+            Message = "Tài khoản đã được tạo. Vui lòng kiểm tra email và bấm liên kết kích hoạt trước khi đăng nhập."
         };
+    }
+
+    public async Task ResendVerificationEmailAsync(ResendVerificationEmailRequest request)
+    {
+        ValidateEmail(request.Email);
+        var email = NormalizeEmail(request.Email);
+        var user = dbContext.Users.SingleOrDefault(item => item.Email == email);
+
+        // Không tiết lộ email có tồn tại hay không.
+        if (user is null || user.IsEmailVerified)
+        {
+            return;
+        }
+
+        var now = timeProvider.GetUtcNow();
+        var recentToken = dbContext.EmailVerificationTokens
+            .Where(item => item.UserId == user.Id && !item.ConsumedAt.HasValue)
+            .OrderByDescending(item => item.CreatedAt)
+            .FirstOrDefault();
+        if (recentToken is not null && recentToken.CreatedAt > now.AddMinutes(-2))
+        {
+            return;
+        }
+
+        var verificationToken = CreateEmailVerificationToken(user);
+        dbContext.EmailVerificationTokens.Add(verificationToken.Record);
+        dbContext.SaveChanges();
+        await emailSender.SendAccountActivationAsync(
+            user,
+            verificationToken.RawToken,
+            verificationToken.Record.ExpiresAt);
     }
 
     public VerifyEmailResponse VerifyEmail(VerifyEmailRequest request)
@@ -125,6 +229,7 @@ public sealed class AuthService(
         user.EmailVerifiedAt = timeProvider.GetUtcNow();
         verificationToken.ConsumedAt = timeProvider.GetUtcNow();
         dbContext.SaveChanges();
+        roleService.PopulateAccess(user);
 
         return new VerifyEmailResponse
         {
@@ -150,8 +255,19 @@ public sealed class AuthService(
             throw new ServiceException(ServiceErrors.AuthInvalidCaptchaToken);
         }
 
-        var normalizedUsername = NormalizeUsername(request.Username);
-        var user = dbContext.Users.SingleOrDefault(item => item.Username == normalizedUsername);
+        var identifier = request.Username.Trim();
+        var normalizedIdentifier = identifier.ToLowerInvariant();
+        var user = dbContext.Users.SingleOrDefault(item =>
+            item.Username == normalizedIdentifier ||
+            item.Email == normalizedIdentifier);
+
+        if (user is null)
+        {
+            var normalizedPhone = NormalizePhoneNumber(identifier);
+            user = dbContext.Users
+                .AsEnumerable()
+                .SingleOrDefault(item => NormalizePhoneNumber(item.PhoneNumber) == normalizedPhone);
+        }
         if (user is null || string.IsNullOrWhiteSpace(user.PasswordHash) || !passwordService.VerifyPassword(user, request.Password))
         {
             throw new ServiceException(ServiceErrors.AuthInvalidCredentials);
@@ -168,8 +284,17 @@ public sealed class AuthService(
         }
 
         user.LastLogin = timeProvider.GetUtcNow();
+        roleService.PopulateAccess(user);
 
         var tokens = IssueTokens(user);
+        auditLogService.Track(
+            user.Id,
+            "auth",
+            "login",
+            nameof(User),
+            user.Id,
+            $"Dang nhap {user.Username}",
+            new { user.Role, user.Province, user.Group });
         dbContext.SaveChanges();
 
         return BuildResponse(user, tokens);
@@ -215,6 +340,7 @@ public sealed class AuthService(
             throw new ServiceException(ServiceErrors.AuthAccountLocked);
         }
 
+        roleService.PopulateAccess(user);
         var tokens = IssueTokens(user, refreshToken);
         dbContext.SaveChanges();
         return tokens;
@@ -243,6 +369,14 @@ public sealed class AuthService(
 
         if (tokens.Length > 0)
         {
+            auditLogService.Track(
+                user.Id,
+                "auth",
+                "logout",
+                nameof(User),
+                user.Id,
+                $"Dang xuat {user.Username}",
+                new { revokedTokens = tokens.Length });
             dbContext.SaveChanges();
         }
     }
@@ -401,6 +535,15 @@ public sealed class AuthService(
         if (string.IsNullOrWhiteSpace(fullName) || fullName.Trim().Length < 4)
         {
             throw new ServiceException(ServiceErrors.AuthInvalidFullName);
+        }
+    }
+
+    private void EnsureValidProvince(string province)
+    {
+        var normalized = province.Trim();
+        if (normalized.Length == 0 || !dbContext.Provinces.Any(item => item.IsActive && item.Name == normalized))
+        {
+            throw new ServiceException(ServiceErrors.InvalidProvince);
         }
     }
 }

@@ -10,6 +10,7 @@ public sealed class LessonQuestion
     public string Explanation { get; set; } = string.Empty;
     public string? Statement { get; set; }
     public string? MediaTitle { get; set; }
+    public string? MediaUrl { get; set; }
     public string? ScenarioTitle { get; set; }
     public string? ScenarioContext { get; set; }
     public List<LessonQuestionOption> Options { get; set; } = [];

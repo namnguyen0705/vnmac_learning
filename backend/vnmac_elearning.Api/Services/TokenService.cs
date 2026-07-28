@@ -46,8 +46,11 @@ public sealed class TokenService(IOptions<JwtOptions> jwtOptions, TimeProvider t
             new(ClaimTypes.NameIdentifier, user.Id),
             new(ClaimTypes.Name, user.FullName),
             new(ClaimTypes.MobilePhone, user.PhoneNumber),
-            new(ClaimTypes.Role, user.Role.ToString())
+            new(ClaimTypes.Role, user.Role.ToString()),
+            new("role_id", user.RoleId ?? string.Empty),
+            new("admin_access", user.HasAdminAccess.ToString().ToLowerInvariant())
         };
+        claims.AddRange(user.Permissions.Select(permission => new Claim("permission", permission)));
 
         var credentials = new SigningCredentials(
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.SigningKey)),

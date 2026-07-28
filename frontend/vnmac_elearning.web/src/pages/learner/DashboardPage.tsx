@@ -1,51 +1,68 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link, useNavigate } from "react-router-dom";
+import { useMemo, type ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
+  AlertCircle,
+  ArrowRight,
   Award,
-  BookOpenCheck,
-  Clock3,
-  GraduationCap,
-  LifeBuoy,
-  MapPin,
-  Phone,
-  PlayCircle,
+  BookOpen,
+  CheckCircle2,
+  ClipboardCheck,
+  FileQuestion,
+  Lock,
+  Play,
   ShieldCheck,
-  Sparkles,
-  UserRound,
+  Target,
+  Trophy,
+  UsersRound,
   type LucideIcon,
 } from "lucide-react";
-import { useMemo } from "react";
 import { useAuth } from "../../app/auth";
-import { getLearnerCourseCatalog, getLearnerDashboard, getPublishedCourses } from "../../shared/api/learner";
-import { formatMinutes } from "../../shared/lib/format";
-import { getCourseCoverAsset } from "../../shared/lib/course";
+import {
+  getLearnerCourseCatalog,
+  getLearnerCourseProgress,
+  getLearnerDashboard,
+  getPublishedCourses,
+} from "../../shared/api/learner";
+import {
+  flattenLessons,
+  flattenQuizzes,
+  sortLessons,
+  sortQuizzes,
+  sortSections,
+  toLessonSummaryMap,
+  toQuizSummaryMap,
+} from "../../shared/lib/course";
 import { LoadingBlock } from "../../shared/ui/LoadingBlock";
-import { LearnerMetaChip, LearnerPanel, LearnerProgressBar, LearnerStatusBadge } from "../../shared/ui/learner-ui";
+import { LearnerPanel, LearnerProgressBar } from "../../shared/ui/learner-ui";
 import { MessageBanner } from "../../shared/ui/MessageBanner";
-import type { LearnerCourseCatalogItem, LearnerEnrollmentSummary } from "../../shared/types/api";
+import type {
+  CourseLesson,
+  CourseQuiz,
+  CourseSection,
+  CourseTreeResponse,
+  ProgressSnapshotResponse,
+} from "../../shared/types/api";
 
-type CourseCover = {
-  posterUrl: string | null;
-  lessonTitle: string | null;
+const OFFICIAL_COURSE_ID = "course-vnmac-elearning";
+
+type RoadmapStatus = "done" | "active" | "ready" | "locked";
+
+type RoadmapItem = {
+  id: string;
+  number: string;
+  title: string;
+  href: string;
+  status: RoadmapStatus;
+  type: "lesson" | "quiz";
 };
 
-const fallbackImages = [
-  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80",
-];
-
-function getCurrentCourse(courses: LearnerEnrollmentSummary[]) {
-  return (
-    courses.find((course) => !course.certificateIssued && course.overallCompletionPercent > 0) ??
-    courses.find((course) => !course.certificateIssued) ??
-    courses[0] ??
-    null
-  );
-}
+type RoadmapSection = {
+  id: string;
+  label: string;
+  items: RoadmapItem[];
+};
 
 export function DashboardPage() {
   const { session } = useAuth();
@@ -65,326 +82,398 @@ export function DashboardPage() {
   });
 
   const publishedCoursesQuery = useQuery({
-    queryKey: ["courses", "published", "covers"],
+    queryKey: ["courses", "published", "official-dashboard"],
     queryFn: getPublishedCourses,
   });
 
-  const coverMap = useMemo(() => {
-    return new Map(
-      (publishedCoursesQuery.data ?? []).map((course) => [course.id, getCourseCoverAsset(course)]),
-    );
+  const officialCourse = useMemo(() => {
+    const courses = publishedCoursesQuery.data ?? [];
+    return courses.find((course) => course.id === OFFICIAL_COURSE_ID) ?? courses[0] ?? null;
   }, [publishedCoursesQuery.data]);
 
-  if (dashboardQuery.isLoading || catalogQuery.isLoading) {
-    return <LoadingBlock label="Đang tải trang chủ học viên..." />;
+  const catalogItem = officialCourse
+    ? catalogQuery.data?.courses.find((course) => course.courseId === officialCourse.id)
+    : undefined;
+
+  const progressQuery = useQuery({
+    queryKey: ["learner", userId, "course-progress", officialCourse?.id],
+    queryFn: () => getLearnerCourseProgress(userId, officialCourse?.id ?? ""),
+    enabled: Boolean(userId && officialCourse?.id && catalogItem?.isEnrolled),
+  });
+
+  if (
+    dashboardQuery.isLoading ||
+    catalogQuery.isLoading ||
+    publishedCoursesQuery.isLoading ||
+    (catalogItem?.isEnrolled && progressQuery.isLoading)
+  ) {
+    return <LoadingBlock label="Đang tải màn hình học viên..." />;
   }
 
-  if (dashboardQuery.isError || catalogQuery.isError || !dashboardQuery.data || !catalogQuery.data) {
+  if (
+    dashboardQuery.isError ||
+    catalogQuery.isError ||
+    publishedCoursesQuery.isError ||
+    !dashboardQuery.data ||
+    !catalogQuery.data
+  ) {
     return <MessageBanner tone="error">Không tải được dữ liệu học viên.</MessageBanner>;
   }
 
-  const dashboard = dashboardQuery.data;
-  const catalog = catalogQuery.data;
-  const currentCourse = getCurrentCourse(dashboard.courses);
-  const currentCover = currentCourse ? coverMap.get(currentCourse.courseId) : null;
-  const inProgressCourses = dashboard.courses.filter((course) => !course.certificateIssued);
-  const completedCourses = dashboard.courses.filter((course) => course.certificateIssued);
-  const newCourses = catalog.courses.filter((course) => !course.isEnrolled).slice(0, 4);
-  const heroImage = currentCover?.posterUrl ?? getFallbackImage(currentCourse?.courseId ?? "dashboard");
+  if (!officialCourse) {
+    return <MessageBanner tone="warning">Chưa có khóa học chính thức đang xuất bản.</MessageBanner>;
+  }
+
+  const progress = progressQuery.data;
+  const contentLessons = flattenLessons(officialCourse).filter((lesson) => lesson.type !== "Quiz");
+  const quizzes = flattenQuizzes(officialCourse);
+  const progressPercent = progress?.overallCompletionPercent ?? catalogItem?.enrollment?.overallCompletionPercent ?? 0;
+  const roadmapSections = buildRoadmapSections(officialCourse, progress);
 
   return (
-    <div className="grid gap-7">
-      <section className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_420px]">
-        <LearnerPanel className="overflow-hidden">
-          <div className="relative min-h-[500px]">
-            <img className="absolute inset-0 h-full w-full object-cover" src={heroImage} alt="Trang chủ học tập" />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,250,252,0.98)_0%,rgba(248,250,252,0.92)_48%,rgba(15,46,99,0.34)_100%)]" />
-            <div className="relative z-10 grid min-h-[500px] content-between gap-8 p-7 sm:p-10">
-              <div>
-                <div className="inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#163b7b] shadow-sm">
-                  <Sparkles className="size-3.5" />
-                  Hồ sơ học viên
-                </div>
-                <h1 className="mt-5 max-w-3xl text-[2.35rem] font-semibold leading-tight text-slate-950 sm:text-[3rem]">
-                  Xin chào, {dashboard.user.fullName}
-                </h1>
-                <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-700">
-                  Theo dõi khóa đang học, khóa mới nên bắt đầu, chứng chỉ đã nhận và thông tin hỗ trợ trên cùng một màn hình.
-                </p>
-                <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                  <Button asChild className="h-12 rounded-2xl bg-[#163b7b] px-6 hover:bg-[#0f2e63]">
-                    <Link to="/app/courses">Khám phá khóa học</Link>
-                  </Button>
-                  <Button asChild className="h-12 rounded-2xl bg-white/90 px-6" variant="outline">
-                    <Link to="/app/certificate">Xem chứng chỉ</Link>
-                  </Button>
-                </div>
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                <Metric label="Khóa đã đăng ký" value={dashboard.totalEnrolledCourses} icon={GraduationCap} />
-                <Metric label="Khóa hoàn thành" value={dashboard.totalCompletedCourses} icon={BookOpenCheck} />
-                <Metric label="Chứng chỉ" value={dashboard.totalCertificates} icon={Award} />
-                <Metric label="Thời gian học" value={formatMinutes(dashboard.totalStudyTimeMinutes)} icon={Clock3} />
-              </div>
-            </div>
+    <div className="official-learner-home grid gap-4">
+      <section className="official-welcome-hero">
+        <div className="official-welcome-copy">
+          <h1>Chào mừng bạn!</h1>
+          <p>
+            Khóa học giúp bạn nhận biết nguy cơ bom mìn, thực hành hành vi an toàn và truyền thông hiệu quả
+            trong cộng đồng.
+          </p>
+          <div className="official-hero-badges">
+            <HeroBadge icon={ShieldCheck} title="Học dễ hiểu" subtitle="Áp dụng thực tế" />
+            <HeroBadge icon={Target} title="Thực hành tương tác" subtitle="Phản hồi tức thì" />
+            <HeroBadge icon={Trophy} title="Đạt 100%" subtitle="Nhận chứng chỉ" />
           </div>
-        </LearnerPanel>
+        </div>
 
-        <LearnerPanel className="overflow-hidden">
-          <div className="relative aspect-video bg-slate-100">
-            <img className="h-full w-full object-cover" src={heroImage} alt={currentCourse?.title ?? "Khóa đang học"} />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,23,42,0.08)_0%,rgba(15,23,42,0.78)_100%)]" />
-            <div className="absolute bottom-5 left-5 right-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-white/80">Khóa đang học</p>
-              <h2 className="mt-2 line-clamp-2 text-xl font-semibold text-white">
-                {currentCourse?.title ?? "Bạn chưa đăng ký khóa học"}
-              </h2>
-            </div>
-            <span className="absolute right-5 top-5 grid size-12 place-items-center rounded-full bg-white text-[#163b7b] shadow-lg">
-              <PlayCircle className="size-6" />
-            </span>
-          </div>
-
-          <div className="grid gap-4 p-6">
-            {currentCourse ? (
-              <>
-                <div className="flex items-start justify-between gap-3">
-                  <p className="text-sm leading-6 text-slate-600">{currentCourse.description}</p>
-                  <LearnerStatusBadge tone={currentCourse.certificateIssued ? "success" : "brand"}>
-                    {currentCourse.certificateIssued ? "Hoàn thành" : "Đang học"}
-                  </LearnerStatusBadge>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <LearnerMetaChip>{currentCourse.completedLessons}/{currentCourse.totalLessons} bài học</LearnerMetaChip>
-                  <LearnerMetaChip>{currentCourse.passedQuizzes}/{currentCourse.totalQuizzes} bài kiểm tra</LearnerMetaChip>
-                </div>
-                <div className="grid gap-3">
-                  <LearnerProgressBar label="Nội dung" tone="navy" value={currentCourse.contentCompletionPercent} />
-                  <LearnerProgressBar label="Bài kiểm tra" tone="green" value={currentCourse.quizCompletionPercent} />
-                  <LearnerProgressBar label="Toàn khóa" tone="amber" value={currentCourse.overallCompletionPercent} />
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  <Button
-                    className="rounded-2xl bg-[#163b7b] hover:bg-[#0f2e63]"
-                    type="button"
-                    onClick={() => openNextLearningStep(currentCourse, navigate)}
-                  >
-                    <PlayCircle className="size-4" />
-                    Tiếp tục học
-                  </Button>
-                  <Button asChild className="rounded-2xl" variant="outline">
-                    <Link to={`/app/courses/${currentCourse.courseId}`}>Chi tiết khóa</Link>
-                  </Button>
-                </div>
-              </>
-            ) : (
-              <MessageBanner tone="info">Bạn chưa đăng ký khóa học nào.</MessageBanner>
-            )}
-          </div>
-        </LearnerPanel>
+        <SafetyHeroIllustration />
       </section>
 
-      <section className="grid gap-6 xl:grid-cols-3">
-        <LearnerPanel className="p-6 xl:col-span-2">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <h2 className="text-[1.25rem] font-semibold text-slate-950">Khóa học mới nên bắt đầu</h2>
-              <p className="mt-2 text-sm text-slate-600">Các khóa mới có thumbnail video để bạn nhận diện nhanh nội dung.</p>
-            </div>
-            <Button asChild className="rounded-2xl" variant="outline">
-              <Link to="/app/courses">Xem tất cả</Link>
-            </Button>
+      <section className="official-summary-grid">
+        <InfoCard icon={BookOpen} tone="blue" title="Tổng quan khóa học">
+          <ChecklistItem>{contentLessons.length} bài học + {quizzes.length} bài kiểm tra cuối khóa</ChecklistItem>
+          <ChecklistItem>Học theo trình tự, không bỏ qua bài</ChecklistItem>
+          <ChecklistItem>Phải đạt 100% để hoàn thành khóa học</ChecklistItem>
+          <div className="pt-2">
+            <LearnerProgressBar label="Tiến độ của bạn" value={progressPercent} />
           </div>
-          <div className="mt-5 grid gap-5 md:grid-cols-2">
-            {newCourses.length ? (
-              newCourses.map((course) => (
-                <CompactCourseCard course={course} cover={coverMap.get(course.courseId)} key={course.courseId} />
-              ))
-            ) : (
-              <MessageBanner tone="info">Bạn đã đăng ký tất cả khóa học hiện có.</MessageBanner>
-            )}
-          </div>
-        </LearnerPanel>
+        </InfoCard>
 
-        <LearnerPanel className="p-6">
-          <div className="flex items-center gap-3">
-            <div className="grid size-12 place-items-center rounded-2xl bg-[#163b7b] text-white">
-              <UserRound className="size-5" />
-            </div>
-            <div>
-              <h2 className="font-semibold text-slate-950">{dashboard.user.fullName}</h2>
-              <p className="text-sm text-slate-500">{dashboard.user.group}</p>
-            </div>
+        <InfoCard icon={Target} tone="red" title="Mục đích khóa học">
+          <ChecklistItem>Nhận diện các loại vật nổ nguy hiểm</ChecklistItem>
+          <ChecklistItem>Tránh các hành vi sai, nguy hiểm</ChecklistItem>
+          <ChecklistItem>Thực hiện đúng hành vi an toàn</ChecklistItem>
+          <ChecklistItem>Truyền thông thay đổi hành vi hiệu quả</ChecklistItem>
+          <ChecklistItem>Góp phần bảo vệ bản thân và cộng đồng</ChecklistItem>
+        </InfoCard>
+
+        <InfoCard icon={ClipboardCheck} tone="blue" title="Nhiệm vụ của bạn">
+          <TaskItem title="Học bài" description="Xem video, đọc nội dung, ghi nhớ kiến thức" />
+          <TaskItem title="Thực hành" description="Tham gia hoạt động tương tác trong bài" />
+          <TaskItem title="Làm quiz" description="Trả lời câu hỏi cuối bài để kiểm tra" />
+          <TaskItem title="Đạt 100%" description="Hoàn thành 100% mỗi bài tiếp theo" />
+          <div className="official-warning-note">
+            <AlertCircle className="size-4" />
+            <span>Bạn cần hoàn thành từng bước để đảm bảo an toàn.</span>
           </div>
-          <div className="mt-5 grid gap-3 text-sm text-slate-600">
-            <ProfileRow icon={Phone} label="Số điện thoại" value={dashboard.user.phoneNumber} />
-            <ProfileRow icon={MapPin} label="Tỉnh/thành" value={dashboard.user.province} />
-            <ProfileRow icon={ShieldCheck} label="Tài khoản" value={dashboard.user.isEmailVerified ? "Đã xác thực email" : "Chưa xác thực email"} />
+        </InfoCard>
+
+        <InfoCard icon={Award} tone="green" title="Sau khi học xong">
+          <SuccessItem>Hiểu rõ nguy cơ từ bom mìn, vật nổ</SuccessItem>
+          <SuccessItem>Biết cách xử lý an toàn khi gặp vật lạ</SuccessItem>
+          <SuccessItem>Truyền đạt thông điệp đúng, dễ hiểu</SuccessItem>
+          <SuccessItem>Tự tin hỗ trợ và bảo vệ cộng đồng</SuccessItem>
+          <SuccessItem>Nhận chứng chỉ hoàn thành khóa học</SuccessItem>
+          <div className="official-certificate-mini">
+            <span>Chứng chỉ</span>
+            <strong>Hoàn thành</strong>
           </div>
-          <div className="mt-5 rounded-2xl bg-slate-50 p-4">
-            <h3 className="font-semibold text-slate-950">Hỗ trợ nhanh</h3>
-            <p className="mt-2 text-sm leading-6 text-slate-600">Liên hệ khi cần hỗ trợ tài khoản, nội dung học hoặc chứng chỉ.</p>
-            <Button asChild className="mt-4 w-full rounded-2xl bg-[#163b7b] hover:bg-[#0f2e63]">
-              <Link to="/app/support">
-                <LifeBuoy className="size-4" />
-                Mở trang hỗ trợ
-              </Link>
-            </Button>
-          </div>
-        </LearnerPanel>
+        </InfoCard>
       </section>
 
-      <section className="grid gap-6 xl:grid-cols-2">
-        <LearnerPanel className="p-6">
-          <h2 className="text-[1.25rem] font-semibold text-slate-950">Khóa đang học</h2>
-          <div className="mt-5 grid gap-3">
-            {inProgressCourses.length ? (
-              inProgressCourses.map((course) => (
-                <CourseProgressRow course={course} cover={coverMap.get(course.courseId)} key={course.courseId} />
-              ))
-            ) : (
-              <MessageBanner tone="info">Không có khóa đang học.</MessageBanner>
-            )}
+      <LearnerPanel className="official-start-strip">
+        <div className="official-start-brand">
+          <div className="official-start-shield">
+            <ShieldCheck className="size-9" />
           </div>
-        </LearnerPanel>
+          <div>
+            <p>Học an toàn</p>
+            <p>Hành động đúng</p>
+            <strong>Để bảo vệ mình và cộng đồng</strong>
+          </div>
+        </div>
+        <Button
+          className="official-start-button"
+          type="button"
+          onClick={() => navigate(catalogItem?.isEnrolled ? "/app/courses" : `/app/courses/${officialCourse.id}`)}
+        >
+          <Play className="size-5 fill-current" />
+          Bắt đầu khóa học
+          <ArrowRight className="size-5" />
+        </Button>
+      </LearnerPanel>
 
-        <LearnerPanel className="p-6">
-          <h2 className="text-[1.25rem] font-semibold text-slate-950">Khóa đã hoàn thành</h2>
-          <div className="mt-5 grid gap-3">
-            {completedCourses.length ? (
-              completedCourses.map((course) => (
-                <Link
-                  className="group grid grid-cols-[92px_minmax(0,1fr)] gap-4 rounded-2xl border border-emerald-200 bg-emerald-50/60 p-3 transition duration-300 hover:-translate-y-0.5 hover:shadow-md"
-                  key={course.courseId}
-                  to={`/app/courses/${course.courseId}`}
+      <LearnerPanel className="official-roadmap-panel">
+        <div className="official-roadmap-header">
+          <h2>Lộ trình học</h2>
+          <p>Cấu trúc khóa học gồm Phần học và Bài học, mở theo thứ tự hoàn thành.</p>
+        </div>
+        <LearningRoadmap sections={roadmapSections} onNavigate={(href) => navigate(href)} />
+      </LearnerPanel>
+    </div>
+  );
+}
+
+function buildRoadmapSections(course: CourseTreeResponse, progress?: ProgressSnapshotResponse): RoadmapSection[] {
+  const lessonSummaryMap = progress ? toLessonSummaryMap(progress.lessons) : new Map();
+  const quizSummaryMap = progress ? toQuizSummaryMap(progress.quizzes) : new Map();
+  const quizzes = flattenQuizzes(course);
+  const quizByAssessmentLessonId = new Map(quizzes.map((quiz) => [quiz.assessmentLessonId, quiz]));
+  const usedQuizIds = new Set<string>();
+
+  return sortSections(course.sections).map((section, index) => {
+    const items = sortLessons(section.lessons).map((lesson) => {
+      if (lesson.type === "Quiz") {
+        const quiz = quizByAssessmentLessonId.get(lesson.id);
+        if (quiz) {
+          usedQuizIds.add(quiz.id);
+        }
+        return buildQuizRoadmapItem(course.id, lesson, quiz, progress, quizSummaryMap, `${index + 1}.${lesson.order}`);
+      }
+
+      const summary = lessonSummaryMap.get(lesson.id);
+      const status: RoadmapStatus =
+        summary?.status === "Completed"
+          ? "done"
+          : progress?.nextLessonId === lesson.id
+            ? "active"
+            : summary?.isUnlocked
+              ? "ready"
+              : "locked";
+
+      return {
+        id: lesson.id,
+        number: getLessonNumber(lesson, index),
+        title: trimLessonTitle(lesson.title),
+        href: `/app/courses/${course.id}/lessons/${lesson.id}`,
+        status,
+        type: "lesson" as const,
+      };
+    });
+
+    if (isFinalSection(section)) {
+      sortQuizzes(course.quizzes)
+        .filter((quiz) => !usedQuizIds.has(quiz.id))
+        .forEach((quiz) => {
+          usedQuizIds.add(quiz.id);
+          items.push(buildQuizRoadmapItem(course.id, null, quiz, progress, quizSummaryMap, `${index + 1}.${items.length + 1}`));
+        });
+    }
+
+    return {
+      id: section.id,
+      label: getSectionLabel(section, index),
+      items,
+    };
+  });
+}
+
+function buildQuizRoadmapItem(
+  courseId: string,
+  lesson: CourseLesson | null,
+  quiz: CourseQuiz | undefined,
+  progress: ProgressSnapshotResponse | undefined,
+  quizSummaryMap: ReadonlyMap<string, { passed: boolean; isUnlocked: boolean }>,
+  fallbackNumber: string,
+): RoadmapItem {
+  const summary = quiz ? quizSummaryMap.get(quiz.id) : undefined;
+  const status: RoadmapStatus = summary?.passed
+    ? "done"
+    : quiz && progress?.nextQuizId === quiz.id
+      ? "active"
+      : summary?.isUnlocked
+        ? "ready"
+        : "locked";
+
+  return {
+    id: quiz?.id ?? lesson?.id ?? fallbackNumber,
+    number: lesson ? getLessonNumber(lesson, 2) : fallbackNumber,
+    title: trimLessonTitle(quiz?.title ?? lesson?.title ?? "Bài kiểm tra cuối khóa"),
+    href: quiz ? `/app/courses/${courseId}/quizzes/${quiz.id}` : `/app/courses/${courseId}`,
+    status,
+    type: "quiz",
+  };
+}
+
+function getLessonNumber(lesson: CourseLesson, sectionIndex: number) {
+  const match = lesson.title.match(/Bài\s+(\d+(?:\.\d+)?)/i);
+  return match?.[1] ?? `${sectionIndex + 1}.${lesson.order}`;
+}
+
+function trimLessonTitle(title: string) {
+  return title.replace(/^Bài\s+\d+(?:\.\d+)?\s*-\s*/i, "").trim();
+}
+
+function getSectionLabel(section: CourseSection, index: number) {
+  const title = section.title.toLowerCase();
+  if (section.id.includes("eore") || title.includes("eore")) {
+    return "PHẦN 1 - EORE";
+  }
+  if (section.id.includes("sbc") || title.includes("sbc")) {
+    return "PHẦN 2 - SBC";
+  }
+  return `PHẦN ${index + 1}`;
+}
+
+function isFinalSection(section: CourseSection) {
+  const title = section.title.toLowerCase();
+  return section.id.includes("final") || title.includes("cuối khóa") || title.includes("kiểm tra");
+}
+
+function LearningRoadmap({
+  sections,
+  onNavigate,
+}: {
+  sections: RoadmapSection[];
+  onNavigate: (href: string) => void;
+}) {
+  return (
+    <div className="official-roadmap-scroll">
+      <div className="official-roadmap-track">
+        {sections.map((section) => (
+          <div className="official-roadmap-section" key={section.id}>
+            <div className="official-roadmap-section-title">{section.label}</div>
+            <div className="official-roadmap-items">
+              {section.items.map((item) => (
+                <button
+                  className={`official-roadmap-item ${item.status}`}
+                  disabled={item.status === "locked"}
+                  key={item.id}
+                  type="button"
+                  onClick={() => onNavigate(item.href)}
                 >
-                  <CourseThumb courseId={course.courseId} cover={coverMap.get(course.courseId)} title={course.title} />
-                  <div className="min-w-0">
-                    <p className="line-clamp-2 font-semibold text-slate-950">{course.title}</p>
-                    <p className="mt-1 text-sm text-slate-600">Đã đủ điều kiện nhận chứng chỉ.</p>
-                    <div className="mt-2">
-                      <LearnerStatusBadge tone="success">Hoàn thành</LearnerStatusBadge>
-                    </div>
-                  </div>
-                </Link>
-              ))
-            ) : (
-              <MessageBanner tone="info">Chưa có khóa học hoàn thành.</MessageBanner>
-            )}
+                  <span className="official-roadmap-dot">
+                    {item.status === "done" ? (
+                      <CheckCircle2 className="size-4" />
+                    ) : item.status === "locked" ? (
+                      <Lock className="size-4" />
+                    ) : item.type === "quiz" ? (
+                      <FileQuestion className="size-4" />
+                    ) : (
+                      <span />
+                    )}
+                  </span>
+                  <span className="official-roadmap-number">{item.number}</span>
+                  <span className="official-roadmap-name">{item.title}</span>
+                </button>
+              ))}
+            </div>
           </div>
-        </LearnerPanel>
-      </section>
+        ))}
+      </div>
     </div>
   );
 }
 
-function openNextLearningStep(course: LearnerEnrollmentSummary, navigate: ReturnType<typeof useNavigate>) {
-  if (course.nextLessonId) {
-    navigate(`/app/courses/${course.courseId}/lessons/${course.nextLessonId}`);
-    return;
-  }
-
-  if (course.nextQuizId) {
-    navigate(`/app/courses/${course.courseId}/quizzes/${course.nextQuizId}`);
-    return;
-  }
-
-  navigate(`/app/courses/${course.courseId}`);
-}
-
-function Metric({ label, value, icon: Icon }: { label: string; value: number | string; icon: LucideIcon }) {
+function HeroBadge({
+  icon: Icon,
+  title,
+  subtitle,
+}: {
+  icon: LucideIcon;
+  title: string;
+  subtitle: string;
+}) {
   return (
-    <div className="rounded-2xl border border-white/70 bg-white/90 p-4 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:shadow-md">
-      <Icon className="size-5 text-[#163b7b]" />
-      <p className="mt-3 text-2xl font-semibold text-slate-950">{value}</p>
-      <p className="mt-1 text-xs uppercase tracking-[0.08em] text-slate-500">{label}</p>
-    </div>
-  );
-}
-
-function ProfileRow({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) {
-  return (
-    <div className="flex items-start gap-3 rounded-2xl bg-slate-50 px-4 py-3">
-      <Icon className="mt-0.5 size-4 text-[#163b7b]" />
+    <div className="official-hero-badge">
+      <span>
+        <Icon className="size-5" />
+      </span>
       <div>
-        <p className="text-xs uppercase tracking-[0.08em] text-slate-500">{label}</p>
-        <p className="font-medium text-slate-800">{value}</p>
+        <strong>{title}</strong>
+        <small>{subtitle}</small>
       </div>
     </div>
   );
 }
 
-function CompactCourseCard({ course, cover }: { course: LearnerCourseCatalogItem; cover?: CourseCover | null }) {
+function InfoCard({
+  icon: Icon,
+  tone,
+  title,
+  children,
+}: {
+  icon: LucideIcon;
+  tone: "blue" | "red" | "green";
+  title: string;
+  children: ReactNode;
+}) {
   return (
-    <Link
-      className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#163b7b]/40 hover:shadow-[0_18px_45px_rgba(15,46,99,0.12)]"
-      to={`/app/courses/${course.courseId}`}
-    >
-      <div className="relative aspect-video overflow-hidden">
-        <img className="h-full w-full object-cover transition duration-500 group-hover:scale-105" src={cover?.posterUrl ?? getFallbackImage(course.courseId)} alt={course.title} loading="lazy" />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,23,42,0.06)_0%,rgba(15,23,42,0.7)_100%)]" />
-        <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3">
-          <p className="line-clamp-1 text-sm font-semibold text-white">{cover?.lessonTitle ?? "Video giới thiệu"}</p>
-          <span className="grid size-10 shrink-0 place-items-center rounded-full bg-white text-[#163b7b]">
-            <PlayCircle className="size-5" />
-          </span>
-        </div>
+    <LearnerPanel className={`official-info-card ${tone}`}>
+      <div className="official-info-card-title">
+        <span>
+          <Icon className="size-6" />
+        </span>
+        <h2>{title}</h2>
       </div>
-      <div className="p-4">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <p className="line-clamp-2 font-semibold text-slate-950">{course.title}</p>
-            <p className="mt-2 line-clamp-2 text-sm leading-6 text-slate-600">{course.description}</p>
-          </div>
-          <LearnerStatusBadge tone="brand">Mới</LearnerStatusBadge>
-        </div>
-        <div className="mt-4 flex flex-wrap gap-2">
-          <LearnerMetaChip>{course.totalLessons} bài học</LearnerMetaChip>
-          <LearnerMetaChip>{formatMinutes(course.estimatedStudyTimeMinutes)}</LearnerMetaChip>
-        </div>
-      </div>
-    </Link>
+      <div className="official-info-card-body">{children}</div>
+    </LearnerPanel>
   );
 }
 
-function CourseProgressRow({ course, cover }: { course: LearnerEnrollmentSummary; cover?: CourseCover | null }) {
+function ChecklistItem({ children }: { children: ReactNode }) {
   return (
-    <Link
-      className="group grid grid-cols-[92px_minmax(0,1fr)] gap-4 rounded-2xl border border-slate-200 bg-white p-3 transition duration-300 hover:-translate-y-0.5 hover:border-[#163b7b]/40 hover:shadow-md"
-      to={`/app/courses/${course.courseId}`}
-    >
-      <CourseThumb courseId={course.courseId} cover={cover} title={course.title} />
-      <div className="min-w-0">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <p className="line-clamp-2 font-semibold text-slate-950">{course.title}</p>
-            <p className="mt-1 text-sm text-slate-500">
-              {course.completedLessons}/{course.totalLessons} bài học - {course.passedQuizzes}/{course.totalQuizzes} bài kiểm tra
-            </p>
-          </div>
-          <span className="text-sm font-semibold text-[#163b7b]">{course.overallCompletionPercent}%</span>
-        </div>
-        <div className="mt-3 h-2 rounded-full bg-slate-100">
-          <div className="h-2 rounded-full bg-[#163b7b]" style={{ width: `${Math.max(0, Math.min(100, course.overallCompletionPercent))}%` }} />
-        </div>
-      </div>
-    </Link>
+    <div className="official-check-row">
+      <CheckCircle2 className="size-4" />
+      <span>{children}</span>
+    </div>
   );
 }
 
-function CourseThumb({ courseId, cover, title }: { courseId: string; cover?: CourseCover | null; title: string }) {
+function SuccessItem({ children }: { children: ReactNode }) {
   return (
-    <div className="relative aspect-video overflow-hidden rounded-xl bg-slate-100">
-      <img className="h-full w-full object-cover transition duration-300 group-hover:scale-105" src={cover?.posterUrl ?? getFallbackImage(courseId)} alt={title} loading="lazy" />
-      <div className="absolute inset-0 grid place-items-center bg-slate-950/22 text-white">
-        <PlayCircle className="size-6" />
+    <div className="official-success-row">
+      <CheckCircle2 className="size-4" />
+      <span>{children}</span>
+    </div>
+  );
+}
+
+function TaskItem({ title, description }: { title: string; description: string }) {
+  return (
+    <div className="official-task-row">
+      <UsersRound className="size-4" />
+      <div>
+        <strong>{title}</strong>
+        <span>{description}</span>
       </div>
     </div>
   );
 }
 
-function getFallbackImage(seed: string) {
-  const hash = [...seed].reduce((sum, char) => sum + char.charCodeAt(0), 0);
-  return fallbackImages[hash % fallbackImages.length];
+function SafetyHeroIllustration() {
+  return (
+    <div className="safety-hero-illustration" aria-hidden="true">
+      <div className="safety-sky">
+        <span className="cloud cloud-one" />
+        <span className="cloud cloud-two" />
+        <span className="sun" />
+      </div>
+      <div className="mountain mountain-back" />
+      <div className="mountain mountain-front" />
+      <div className="field field-one" />
+      <div className="field field-two" />
+      <div className="warning-sign">
+        <span className="skull">☠</span>
+        <strong>KHU VỰC</strong>
+        <strong>NGUY HIỂM</strong>
+      </div>
+      <div className="barrier barrier-left" />
+      <div className="barrier barrier-right" />
+      <span className="mine mine-one" />
+      <span className="mine mine-two" />
+      <span className="shell shell-one" />
+      <span className="shell shell-two" />
+    </div>
+  );
 }

@@ -307,22 +307,22 @@ export function QuizzesPage() {
   }
 
   if (coursesQuery.isLoading) {
-    return <LoadingBlock label="Đang tải danh sách quiz..." />;
+    return <LoadingBlock label="Đang tải danh sách bài kiểm tra..." />;
   }
 
   if (coursesQuery.isError || !coursesQuery.data) {
-    return <MessageBanner tone="error">Không tải được danh sách quiz.</MessageBanner>;
+    return <MessageBanner tone="error">Không tải được danh sách bài kiểm tra.</MessageBanner>;
   }
 
   return (
     <div className="grid gap-4">
       <AdminPageHeader
-        breadcrumbs={["Quản trị", "Nội dung", "Quiz"]}
-        title="Quản lý quiz"
+        breadcrumbs={["Quản trị", "Nội dung", "Bài kiểm tra"]}
+        title="Quản lý bài kiểm tra"
         actions={
           <Button className="rounded-2xl" type="button" onClick={openCreateModal}>
             <Plus className="size-4" />
-            Thêm quiz
+            Thêm bài kiểm tra
           </Button>
         }
       />
@@ -330,35 +330,35 @@ export function QuizzesPage() {
       <section className="grid gap-2.5 md:grid-cols-2 xl:grid-cols-5">
         <CompactStat
           accentClassName="bg-blue-50 text-blue-600"
-          helper="Tổng số quiz theo bộ lọc hiện tại."
+          helper="Tổng số bài kiểm tra theo bộ lọc hiện tại."
           icon={<ClipboardCheck className="size-5" />}
-          label="Quiz"
+          label="Bài kiểm tra"
           value={formatNumber(totalQuizzes)}
         />
         <CompactStat
           accentClassName="bg-emerald-50 text-emerald-600"
-          helper="Quiz chỉ mở sau khi hoàn thành xong phần học tương ứng."
+          helper="Bài kiểm tra chỉ mở sau khi hoàn thành phần học tương ứng."
           icon={<ShieldCheck className="size-5" />}
-          label="Quiz phần học"
+          label="Kiểm tra phần học"
           value={formatNumber(sectionQuizCount)}
         />
         <CompactStat
           accentClassName="bg-violet-50 text-violet-600"
-          helper="Quiz chỉ mở sau khi học viên hoàn thành toàn bộ khóa học."
+          helper="Bài kiểm tra chỉ mở sau khi học viên hoàn thành toàn bộ chủ đề."
           icon={<Target className="size-5" />}
-          label="Quiz khóa học"
+          label="Kiểm tra chủ đề"
           value={formatNumber(courseQuizCount)}
         />
         <CompactStat
           accentClassName="bg-amber-50 text-amber-600"
-          helper="Tổng câu hỏi đang gắn trong các quiz."
+          helper="Tổng câu hỏi đang gắn trong các bài kiểm tra."
           icon={<CircleHelp className="size-5" />}
           label="Câu hỏi"
           value={formatNumber(totalQuestions)}
         />
         <CompactStat
           accentClassName="bg-rose-50 text-rose-600"
-          helper="Quiz chưa có câu hỏi cần được hoàn thiện trước khi publish."
+          helper="Bài kiểm tra chưa có câu hỏi cần được hoàn thiện trước khi xuất bản."
           icon={<Search className="size-5" />}
           label="Chưa có câu hỏi"
           value={formatNumber(emptyQuizCount)}
@@ -367,15 +367,9 @@ export function QuizzesPage() {
 
       <AdminSection
         action={
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="secondary">{filteredQuizzes.length} quiz</Badge>
-            <Button className="h-8 px-3 text-xs" type="button" onClick={openCreateModal}>
-              <Plus className="size-3.5" />
-              Thêm quiz
-            </Button>
-          </div>
+          <Badge variant="secondary">{filteredQuizzes.length} bài kiểm tra</Badge>
         }
-        title="Danh sách quiz"
+        title="Danh sách bài kiểm tra"
       >
         <div className="space-y-4">
           <div className="grid gap-3 xl:grid-cols-[minmax(0,1.4fr)_220px_180px_180px]">
@@ -383,17 +377,17 @@ export function QuizzesPage() {
               <Search className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
               <Input
                 className="h-10 rounded-2xl border-slate-200 pl-11"
-                placeholder="Tìm quiz, khóa học, phần học..."
+                placeholder="Tìm bài kiểm tra, chủ đề, phần học..."
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
               />
             </div>
             <Select value={courseFilter} onValueChange={setCourseFilter}>
               <SelectTrigger className="h-10 rounded-2xl">
-                <SelectValue placeholder="Tất cả khóa học" />
+                <SelectValue placeholder="Tất cả chủ đề" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Tất cả khóa học</SelectItem>
+                <SelectItem value="all">Tất cả chủ đề</SelectItem>
                 {allCourses.map((course) => (
                   <SelectItem key={course.id} value={course.id}>
                     {course.title}
@@ -403,17 +397,17 @@ export function QuizzesPage() {
             </Select>
             <Select value={scopeFilter} onValueChange={(value) => setScopeFilter(value as QuizScope | "all")}>
               <SelectTrigger className="h-10 rounded-2xl">
-                <SelectValue placeholder="Phạm vi quiz" />
+                <SelectValue placeholder="Phạm vi bài kiểm tra" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Tất cả phạm vi</SelectItem>
-                <SelectItem value="Section">Quiz phần học</SelectItem>
-                <SelectItem value="Course">Quiz khóa học</SelectItem>
+                <SelectItem value="Section">Kiểm tra phần học</SelectItem>
+                <SelectItem value="Course">Kiểm tra chủ đề</SelectItem>
               </SelectContent>
             </Select>
             <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as "all" | "Published" | "Draft")}>
               <SelectTrigger className="h-10 rounded-2xl">
-                <SelectValue placeholder="Trạng thái khóa học" />
+                <SelectValue placeholder="Trạng thái chủ đề" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Tất cả trạng thái</SelectItem>
@@ -427,7 +421,7 @@ export function QuizzesPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Quiz</TableHead>
+                  <TableHead>Bài kiểm tra</TableHead>
                   <TableHead>Phạm vi</TableHead>
                   <TableHead>Điều kiện mở</TableHead>
                   <TableHead>Cấu hình</TableHead>
@@ -448,7 +442,7 @@ export function QuizzesPage() {
                             <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                               <div className="flex flex-wrap items-center gap-2 text-sm text-slate-700">
                                 <Badge className="px-2 py-0.5 text-[11px]" variant="secondary">
-                                  Khóa học
+                                  Chủ đề
                                 </Badge>
                                 <span className="font-semibold text-slate-950">{quiz.courseTitle}</span>
                                 {quiz.sectionTitle ? (
@@ -463,13 +457,13 @@ export function QuizzesPage() {
                                   <>
                                     <span className="text-slate-300">/</span>
                                     <span className="text-xs font-medium uppercase tracking-[0.14em] text-slate-500">
-                                      Quiz toàn khóa
+                                      Kiểm tra toàn chủ đề
                                     </span>
                                   </>
                                 )}
                               </div>
                               <p className="text-xs text-slate-500">
-                                {quiz.sectionTitle ? "Nhóm quiz theo phần học." : "Nhóm quiz áp dụng cho toàn bộ khóa học."}
+                                {quiz.sectionTitle ? "Nhóm bài kiểm tra theo phần học." : "Nhóm bài kiểm tra áp dụng cho toàn bộ chủ đề."}
                               </p>
                             </div>
                           </TableCell>
@@ -498,7 +492,7 @@ export function QuizzesPage() {
                         </TableCell>
                         <TableCell>
                           <div className="space-y-2">
-                            <Badge variant="outline">{quiz.sectionTitle ? "Quiz phần học" : "Quiz khóa học"}</Badge>
+                            <Badge variant="outline">{quiz.sectionTitle ? "Kiểm tra phần học" : "Kiểm tra chủ đề"}</Badge>
                             <AdminStatusBadge status={quiz.courseStatus === "Published" ? "Đăng mở" : "Bản nháp"} />
                           </div>
                         </TableCell>
@@ -506,10 +500,10 @@ export function QuizzesPage() {
                           <p className="text-sm font-medium text-slate-900">
                             {quiz.sectionTitle
                               ? "Hoàn thành 100% nội dung của phần học"
-                              : "Hoàn thành 100% toàn bộ nội dung khóa học"}
+                              : "Hoàn thành 100% toàn bộ nội dung chủ đề"}
                           </p>
                           <p className="mt-1 text-xs text-slate-500">
-                            Học viên chỉ được mở quiz khi đủ điều kiện học xong nội dung tương ứng.
+                            Học viên chỉ được mở bài kiểm tra khi đã học xong nội dung tương ứng.
                           </p>
                         </TableCell>
                         <TableCell>
@@ -533,7 +527,7 @@ export function QuizzesPage() {
                           <div className="flex justify-end gap-2">
                             <AdminIconButton
                               icon={<Eye className="size-4" />}
-                              label={`Xem câu hỏi của quiz ${quiz.title}`}
+                              label={`Xem câu hỏi của bài kiểm tra ${quiz.title}`}
                               variant="outline"
                               onClick={() => {
                                 window.location.assign(`/admin/questions?quizId=${quiz.id}`);
@@ -541,16 +535,16 @@ export function QuizzesPage() {
                             />
                             <AdminIconButton
                               icon={<Pencil className="size-4" />}
-                              label={`Sửa quiz ${quiz.title}`}
+                              label={`Sửa bài kiểm tra ${quiz.title}`}
                               variant="ghost"
                               onClick={() => openEditModal(quiz)}
                             />
                             <AdminIconButton
                               icon={<Trash2 className="size-4" />}
-                              label={`Xóa quiz ${quiz.title}`}
+                              label={`Xóa bài kiểm tra ${quiz.title}`}
                               variant="destructive"
                               onClick={() => {
-                                if (window.confirm(`Xóa quiz "${quiz.title}"?`)) {
+                                if (window.confirm(`Xóa bài kiểm tra "${quiz.title}"?`)) {
                                   deleteMutation.mutate(quiz.id);
                                 }
                               }}
@@ -575,18 +569,18 @@ export function QuizzesPage() {
               Đóng
             </Button>
             <Button className="rounded-2xl" disabled={upsertMutation.isPending} type="button" onClick={() => upsertMutation.mutate()}>
-              {upsertMutation.isPending ? "Đang lưu..." : editingQuiz ? "Cập nhật quiz" : "Thêm quiz"}
+              {upsertMutation.isPending ? "Đang lưu..." : editingQuiz ? "Cập nhật bài kiểm tra" : "Thêm bài kiểm tra"}
             </Button>
           </>
         }
         className="max-w-4xl"
         onClose={closeModal}
         open={isModalOpen}
-        title={editingQuiz ? "Cập nhật quiz" : "Thêm quiz"}
+        title={editingQuiz ? "Cập nhật bài kiểm tra" : "Thêm bài kiểm tra"}
       >
         <div className="grid gap-6">
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            <Field label="Khóa học">
+            <Field label="Chủ đề">
               <Select
                 value={form.courseId}
                 onValueChange={(value) => {
@@ -600,7 +594,7 @@ export function QuizzesPage() {
                 }}
               >
                 <SelectTrigger className="rounded-2xl">
-                  <SelectValue placeholder="Chọn khóa học" />
+                  <SelectValue placeholder="Chọn chủ đề" />
                 </SelectTrigger>
                 <SelectContent>
                   {allCourses.map((course) => (
@@ -612,7 +606,7 @@ export function QuizzesPage() {
               </Select>
             </Field>
 
-            <Field label="Phạm vi quiz">
+            <Field label="Phạm vi bài kiểm tra">
               <Select
                 value={form.scope}
                 onValueChange={(value) =>
@@ -627,14 +621,14 @@ export function QuizzesPage() {
                   <SelectValue placeholder="Chọn phạm vi" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Section">Quiz phần học</SelectItem>
-                  <SelectItem value="Course">Quiz khóa học</SelectItem>
+                  <SelectItem value="Section">Kiểm tra phần học</SelectItem>
+                  <SelectItem value="Course">Kiểm tra chủ đề</SelectItem>
                 </SelectContent>
               </Select>
             </Field>
 
             <Field
-              description={form.scope === "Course" ? "Không cần chọn phần học cho quiz toàn khóa." : undefined}
+              description={form.scope === "Course" ? "Không cần chọn phần học cho bài kiểm tra toàn chủ đề." : undefined}
               label="Phần học"
             >
               {form.scope === "Section" ? (
@@ -654,12 +648,12 @@ export function QuizzesPage() {
                   </SelectContent>
                 </Select>
               ) : (
-                <Input className="rounded-2xl" disabled value="Quiz toàn khóa học" />
+                <Input className="rounded-2xl" disabled value="Kiểm tra toàn chủ đề" />
               )}
             </Field>
 
             <div className="md:col-span-2 xl:col-span-2">
-              <Field label="Tiêu đề quiz">
+              <Field label="Tiêu đề bài kiểm tra">
                 <Input
                   className="rounded-2xl"
                   value={form.title}
@@ -689,7 +683,7 @@ export function QuizzesPage() {
             </div>
 
             <div className="md:col-span-2 xl:col-span-3">
-              <Field label="Giới thiệu trước quiz">
+              <Field label="Giới thiệu trước bài kiểm tra">
                 <Textarea
                   className="min-h-20 rounded-2xl"
                   value={form.intro}

@@ -17,7 +17,7 @@ import {
   AdminPagination,
   AdminSection,
 } from "@/shared/ui/admin-kit";
-import { createQuestion, deleteQuestion, getAdminCourses, getQuestions, updateQuestion } from "../../shared/api/admin";
+import { createQuestion, deleteQuestion, getAdminCourses, getQuestions, updateQuestion, uploadAdminMedia } from "../../shared/api/admin";
 import { humanizeEnum } from "../../shared/lib/format";
 import { LoadingBlock } from "../../shared/ui/LoadingBlock";
 import { MessageBanner } from "../../shared/ui/MessageBanner";
@@ -32,7 +32,7 @@ import type {
   QuestionType,
   UpsertLessonQuestionRequest,
 } from "../../shared/types/api";
-import { CircleHelp, ListChecks, Pencil, Plus, Search, ShieldCheck, Target, Trash2 } from "lucide-react";
+import { CircleHelp, ImageUp, ListChecks, Loader2, Pencil, Plus, Search, ShieldCheck, Target, Trash2, X } from "lucide-react";
 
 interface QuestionFormState {
   lessonId: string;
@@ -43,6 +43,7 @@ interface QuestionFormState {
   explanation: string;
   statement: string;
   mediaTitle: string;
+  mediaUrl: string;
   scenarioTitle: string;
   scenarioContext: string;
   options: QuestionOptionRequest[];
@@ -105,6 +106,7 @@ function createEmptyQuestionForm(
     explanation: "",
     statement: "",
     mediaTitle: "",
+    mediaUrl: "",
     scenarioTitle: "",
     scenarioContext: "",
     options:
@@ -114,20 +116,7 @@ function createEmptyQuestionForm(
             { code: "A", label: "", order: 1, isCorrect: false },
             { code: "B", label: "", order: 2, isCorrect: false },
           ],
-    hotspotTargets: [
-      {
-        code: "target-1",
-        label: "",
-        order: 1,
-        shape: "Rectangle",
-        x: 20,
-        y: 20,
-        width: 14,
-        height: 14,
-        radius: 8,
-        isCorrect: true,
-      },
-    ],
+    hotspotTargets: [],
     dragItems: [{ code: "item-1", label: "", order: 1 }],
     dragTargets: [{ code: "target-1", label: "", order: 1 }],
     correctPairs: [{ dragItemCode: "item-1", dragTargetCode: "target-1" }],
@@ -144,6 +133,7 @@ function mapQuestionToForm(question: AdminQuestion): QuestionFormState {
     explanation: question.explanation,
     statement: question.statement ?? "",
     mediaTitle: question.mediaTitle ?? "",
+    mediaUrl: question.mediaUrl ?? "",
     scenarioTitle: question.scenarioTitle ?? "",
     scenarioContext: question.scenarioContext ?? "",
     options: question.options,
@@ -178,6 +168,7 @@ export function QuestionBankPage() {
   const [searchParams] = useSearchParams();
   const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
+  const [isUploadingHotspotImage, setIsUploadingHotspotImage] = useState(false);
   const [courseFilter, setCourseFilter] = useState("all");
   const [ownerFilter, setOwnerFilter] = useState(() => {
     const quizId = searchParams.get("quizId");
@@ -212,24 +203,6 @@ export function QuestionBankPage() {
     () =>
       coursesQuery.data?.flatMap((course) => [
         ...course.sections.flatMap((section) =>
-          section.lessons
-            .filter((lesson) => lesson.type === "Interactive")
-            .map((lesson) => ({
-              key: `lesson:${lesson.id}`,
-              ownerType: "Interactive" as const,
-              ownerId: lesson.id,
-              assessmentLessonId: lesson.id,
-              lessonId: lesson.id,
-              quizId: undefined,
-              courseId: course.id,
-              sectionId: section.id,
-              title: lesson.title,
-              typeLabel: "Bài tương tác",
-              courseTitle: course.title,
-              sectionTitle: section.title,
-            })),
-        ),
-        ...course.sections.flatMap((section) =>
           (section.quizzes ?? []).map((quiz) => ({
             key: `quiz:${quiz.id}`,
             ownerType: "Quiz" as const,
@@ -240,7 +213,7 @@ export function QuestionBankPage() {
             courseId: course.id,
             sectionId: section.id,
             title: quiz.title,
-            typeLabel: "Quiz phần học",
+            typeLabel: "Kiểm tra phần học",
             courseTitle: course.title,
             sectionTitle: section.title,
           })),
@@ -255,7 +228,7 @@ export function QuestionBankPage() {
           courseId: course.id,
           sectionId: null,
           title: quiz.title,
-          typeLabel: "Quiz khóa học",
+          typeLabel: "Kiểm tra chủ đề",
           courseTitle: course.title,
           sectionTitle: null,
         })),
@@ -370,6 +343,7 @@ export function QuestionBankPage() {
         explanation: form.explanation,
         statement: form.statement || null,
         mediaTitle: form.mediaTitle || null,
+        mediaUrl: form.mediaUrl || null,
         scenarioTitle: form.scenarioTitle || null,
         scenarioContext: form.scenarioContext || null,
         options: form.options,
@@ -437,17 +411,17 @@ export function QuestionBankPage() {
                 <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                   <div className="flex flex-wrap items-center gap-2 text-sm text-slate-700">
                     <Badge className="px-2 py-0.5 text-[11px]" variant="secondary">
-                      Khóa học
+                      Chủ đề
                     </Badge>
                     <span className="font-semibold text-slate-950">{owner.courseTitle}</span>
                     <span className="text-slate-300">/</span>
                     <Badge className="px-2 py-0.5 text-[11px]" variant="outline">
-                      {owner.ownerType === "Quiz" ? "Quiz" : "Bài học"}
+                      {owner.ownerType === "Quiz" ? "Bài kiểm tra" : "Bài học"}
                     </Badge>
                     <span className="font-medium text-slate-700">{owner.title}</span>
                   </div>
                   <p className="text-xs text-slate-500">
-                    {owner.sectionTitle ? `Phần học: ${owner.sectionTitle}` : "Quiz toàn khóa"}
+                    {owner.sectionTitle ? `Phần học: ${owner.sectionTitle}` : "Kiểm tra toàn chủ đề"}
                   </p>
                 </div>
               ) : (
@@ -475,7 +449,7 @@ export function QuestionBankPage() {
               <div className="space-y-2">
                 <div className="flex flex-wrap items-center gap-2">
                   <Badge className="px-2 py-0.5 text-[11px]" variant="secondary">
-                    {owner.ownerType === "Quiz" ? "Quiz" : "Bài học"}
+                    {owner.ownerType === "Quiz" ? "Bài kiểm tra" : "Bài học"}
                   </Badge>
                   {owner.ownerType === "Quiz" ? (
                     <Button asChild className="h-auto p-0 text-left" variant="link">
@@ -492,7 +466,7 @@ export function QuestionBankPage() {
                     Phạm vi
                   </Badge>
                   <p className="text-sm font-medium text-slate-700">
-                    {owner.sectionTitle ? owner.sectionTitle : "Toàn khóa học"}
+                    {owner.sectionTitle ? owner.sectionTitle : "Toàn chủ đề"}
                   </p>
                 </div>
               </div>
@@ -570,7 +544,7 @@ export function QuestionBankPage() {
   }
 
   if (!eligibleOwners.length) {
-    return <MessageBanner tone="warning">Chưa có bài tương tác hoặc quiz để gắn câu hỏi.</MessageBanner>;
+    return <MessageBanner tone="warning">Chưa có bài tương tác hoặc bài kiểm tra để gắn câu hỏi.</MessageBanner>;
   }
 
   return (
@@ -608,10 +582,10 @@ export function QuestionBankPage() {
           </div>
           <Select value={courseFilter} onValueChange={setCourseFilter}>
             <SelectTrigger className="h-11 rounded-2xl">
-              <SelectValue placeholder="Tất cả khóa học" />
+              <SelectValue placeholder="Tất cả chủ đề" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Tất cả khóa học</SelectItem>
+              <SelectItem value="all">Tất cả chủ đề</SelectItem>
               {coursesQuery.data?.map((course) => (
                 <SelectItem key={course.id} value={course.id}>
                   {course.title}
@@ -627,7 +601,7 @@ export function QuestionBankPage() {
               <SelectItem value="all">Tất cả mô-đun</SelectItem>
               {ownersForCourse.map((owner) => (
                 <SelectItem key={owner.key} value={owner.key}>
-                  {owner.ownerType === "Quiz" ? `[Quiz] ${owner.title}` : `[Tương tác] ${owner.title}`}
+                  {owner.ownerType === "Quiz" ? `[Bài kiểm tra] ${owner.title}` : `[Tương tác] ${owner.title}`}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -649,15 +623,7 @@ export function QuestionBankPage() {
       </AdminSection>
 
       <AdminSection
-        action={
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="secondary">{filteredQuestions.length} câu hỏi</Badge>
-            <Button className="h-8 px-3 text-xs" type="button" onClick={openCreateModal}>
-              <Plus className="size-3.5" />
-              Thêm câu hỏi
-            </Button>
-          </div>
-        }
+        action={<Badge variant="secondary">{filteredQuestions.length} câu hỏi</Badge>}
         title="Danh sách câu hỏi"
       >
         <div className="overflow-hidden rounded-[28px] border border-slate-200">
@@ -715,13 +681,13 @@ export function QuestionBankPage() {
                   }}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Chọn bài tương tác hoặc quiz" />
+                    <SelectValue placeholder="Chọn bài tương tác hoặc bài kiểm tra" />
                   </SelectTrigger>
                   <SelectContent>
                     {eligibleOwners.map((owner) => (
                       <SelectItem key={owner.key} value={owner.key}>
                         {owner.ownerType === "Quiz"
-                          ? `${owner.title} • ${owner.sectionTitle ? `Quiz phần học: ${owner.sectionTitle}` : "Quiz toàn khóa"}`
+                          ? `${owner.title} • ${owner.sectionTitle ? `Kiểm tra phần học: ${owner.sectionTitle}` : "Kiểm tra toàn chủ đề"}`
                           : `${owner.title} • Bài tương tác`}
                       </SelectItem>
                     ))}
@@ -897,12 +863,194 @@ export function QuestionBankPage() {
           {form.type === "Hotspot" ? (
             <AdminSection contentClassName="space-y-4" title="Điểm chạm">
               <div className="space-y-4">
-                <Field label="Tiêu đề hình tham chiếu">
-                  <Input
-                    value={form.mediaTitle}
-                    onChange={(event) => setForm((current) => ({ ...current, mediaTitle: event.target.value }))}
-                  />
-                </Field>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <Field label="Mô tả ảnh">
+                    <Input
+                      value={form.mediaTitle}
+                      onChange={(event) => setForm((current) => ({ ...current, mediaTitle: event.target.value }))}
+                    />
+                  </Field>
+                  <Field label="Ảnh nền câu hỏi" description="Upload ảnh, sau đó bấm trực tiếp lên ảnh để tạo vùng trả lời.">
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder="/uploads/images/..."
+                        value={form.mediaUrl}
+                        onChange={(event) => setForm((current) => ({ ...current, mediaUrl: event.target.value }))}
+                      />
+                      <Button className="relative shrink-0 gap-2" disabled={isUploadingHotspotImage} type="button" variant="outline">
+                        {isUploadingHotspotImage ? <Loader2 className="size-4 animate-spin" /> : <ImageUp className="size-4" />}
+                        Upload
+                        <input
+                          accept="image/*"
+                          className="absolute inset-0 cursor-pointer opacity-0"
+                          disabled={isUploadingHotspotImage}
+                          type="file"
+                          onChange={async (event) => {
+                            const file = event.target.files?.[0];
+                            if (!file) return;
+                            setIsUploadingHotspotImage(true);
+                            try {
+                              const media = await uploadAdminMedia(file, "image");
+                              setForm((current) => ({
+                                ...current,
+                                mediaUrl: media.url,
+                                mediaTitle: current.mediaTitle || file.name,
+                              }));
+                            } finally {
+                              setIsUploadingHotspotImage(false);
+                              event.target.value = "";
+                            }
+                          }}
+                        />
+                      </Button>
+                    </div>
+                  </Field>
+                </div>
+
+                {form.mediaUrl ? (
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-slate-700">
+                      Bấm khoảng trống để thêm vùng mới. Giữ và kéo vùng đã có để di chuyển.
+                    </p>
+                    <div
+                      className="relative cursor-crosshair overflow-hidden rounded-2xl border border-slate-200 bg-slate-100"
+                      role="button"
+                      tabIndex={0}
+                      onClick={(event) => {
+                        const bounds = event.currentTarget.getBoundingClientRect();
+                        const x = Math.round(((event.clientX - bounds.left) / bounds.width) * 1000) / 10;
+                        const y = Math.round(((event.clientY - bounds.top) / bounds.height) * 1000) / 10;
+                        setForm((current) => {
+                          const nextOrder = current.hotspotTargets.length + 1;
+                          return {
+                            ...current,
+                            hotspotTargets: [
+                              ...current.hotspotTargets,
+                              {
+                                code: `target-${nextOrder}`,
+                                label: `Vùng ${nextOrder}`,
+                                order: nextOrder,
+                                shape: "Circle",
+                                x,
+                                y,
+                                width: 12,
+                                height: 12,
+                                radius: 6,
+                                isCorrect: current.hotspotTargets.length === 0,
+                              },
+                            ],
+                          };
+                        });
+                      }}
+                    >
+                      <img
+                        alt={form.mediaTitle || "Ảnh nền câu hỏi điểm chạm"}
+                        className="block h-auto w-full select-none"
+                        draggable={false}
+                        src={form.mediaUrl}
+                      />
+                      {form.hotspotTargets.map((target, index) => (
+                        <span
+                          aria-label={`Di chuyển ${target.label || `vùng ${index + 1}`}`}
+                          className="absolute flex min-h-9 min-w-9 touch-none -translate-x-1/2 -translate-y-1/2 cursor-move select-none items-center justify-center border-2 border-white bg-blue-600/75 text-xs font-bold text-white shadow-lg ring-offset-2 hover:bg-blue-700/80 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          key={`${target.code}-preview-${index}`}
+                          role="button"
+                          tabIndex={0}
+                          style={{
+                            left: `${target.x}%`,
+                            top: `${target.y}%`,
+                            width: `${target.shape === "Circle" ? Math.max(5, target.radius * 2) : Math.max(5, target.width)}%`,
+                            height: `${target.shape === "Circle" ? Math.max(5, target.radius * 2) : Math.max(5, target.height)}%`,
+                            borderRadius: target.shape === "Circle" ? "9999px" : "10px",
+                          }}
+                          onClick={(event) => event.stopPropagation()}
+                          onPointerDown={(event) => {
+                            event.stopPropagation();
+                            event.currentTarget.setPointerCapture(event.pointerId);
+                          }}
+                          onPointerMove={(event) => {
+                            if (!event.currentTarget.hasPointerCapture(event.pointerId)) return;
+                            const canvas = event.currentTarget.parentElement;
+                            if (!canvas) return;
+                            const bounds = canvas.getBoundingClientRect();
+                            const x = Math.max(0, Math.min(100, ((event.clientX - bounds.left) / bounds.width) * 100));
+                            const y = Math.max(0, Math.min(100, ((event.clientY - bounds.top) / bounds.height) * 100));
+                            setForm((current) => ({
+                              ...current,
+                              hotspotTargets: current.hotspotTargets.map((item, itemIndex) =>
+                                itemIndex === index
+                                  ? {
+                                      ...item,
+                                      x: Math.round(x * 10) / 10,
+                                      y: Math.round(y * 10) / 10,
+                                    }
+                                  : item,
+                              ),
+                            }));
+                          }}
+                          onPointerUp={(event) => {
+                            if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+                              event.currentTarget.releasePointerCapture(event.pointerId);
+                            }
+                          }}
+                        >
+                          {index + 1}
+                          <span
+                            aria-label={`Đổi kích thước ${target.label || `vùng ${index + 1}`}`}
+                            className="absolute -bottom-2 -right-2 size-5 touch-none cursor-nwse-resize rounded-full border-2 border-blue-700 bg-white shadow-md"
+                            role="button"
+                            tabIndex={0}
+                            onClick={(event) => event.stopPropagation()}
+                            onPointerDown={(event) => {
+                              event.stopPropagation();
+                              event.currentTarget.setPointerCapture(event.pointerId);
+                            }}
+                            onPointerMove={(event) => {
+                              event.stopPropagation();
+                              if (!event.currentTarget.hasPointerCapture(event.pointerId)) return;
+                              const canvas = event.currentTarget.parentElement?.parentElement;
+                              if (!canvas) return;
+                              const bounds = canvas.getBoundingClientRect();
+                              const pointerX = Math.max(0, Math.min(100, ((event.clientX - bounds.left) / bounds.width) * 100));
+                              const pointerY = Math.max(0, Math.min(100, ((event.clientY - bounds.top) / bounds.height) * 100));
+                              setForm((current) => ({
+                                ...current,
+                                hotspotTargets: current.hotspotTargets.map((item, itemIndex) => {
+                                  if (itemIndex !== index) return item;
+                                  const horizontalDistance = Math.abs(pointerX - item.x);
+                                  const verticalDistance = Math.abs(pointerY - item.y);
+                                  if (item.shape === "Circle") {
+                                    const radius = Math.max(
+                                      2,
+                                      Math.min(40, Math.sqrt(horizontalDistance ** 2 + verticalDistance ** 2)),
+                                    );
+                                    return { ...item, radius: Math.round(radius * 10) / 10 };
+                                  }
+
+                                  return {
+                                    ...item,
+                                    width: Math.round(Math.max(4, Math.min(100, horizontalDistance * 2)) * 10) / 10,
+                                    height: Math.round(Math.max(4, Math.min(100, verticalDistance * 2)) * 10) / 10,
+                                  };
+                                }),
+                              }));
+                            }}
+                            onPointerUp={(event) => {
+                              event.stopPropagation();
+                              if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+                                event.currentTarget.releasePointerCapture(event.pointerId);
+                              }
+                            }}
+                          />
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-6 py-10 text-center text-sm text-slate-500">
+                    Hãy upload ảnh nền trước khi tạo các vùng tương tác.
+                  </div>
+                )}
 
                 {form.hotspotTargets.map((target, index) => (
                   <div
@@ -956,36 +1104,12 @@ export function QuestionBankPage() {
                         </SelectContent>
                       </Select>
                     </Field>
-                    <Field label="X">
-                      <Input
-                        type="number"
-                        value={target.x}
-                        onChange={(event) =>
-                          setForm((current) => ({
-                            ...current,
-                            hotspotTargets: current.hotspotTargets.map((item, itemIndex) =>
-                              itemIndex === index ? { ...item, x: Number(event.target.value) } : item,
-                            ),
-                          }))
-                        }
-                      />
-                    </Field>
-                    <Field label="Y">
-                      <Input
-                        type="number"
-                        value={target.y}
-                        onChange={(event) =>
-                          setForm((current) => ({
-                            ...current,
-                            hotspotTargets: current.hotspotTargets.map((item, itemIndex) =>
-                              itemIndex === index ? { ...item, y: Number(event.target.value) } : item,
-                            ),
-                          }))
-                        }
-                      />
-                    </Field>
+                    <div className="flex h-11 items-center rounded-md border border-dashed border-blue-200 bg-blue-50 px-4 text-sm text-blue-800">
+                      Kéo vùng trên ảnh để di chuyển; kéo chấm trắng ở góc để đổi kích thước.
+                    </div>
                     <div className="flex items-end">
-                      <label className="flex h-11 w-full items-center justify-center gap-3 border border-slate-200 bg-white px-4 text-sm text-slate-700">
+                      <div className="flex w-full gap-2">
+                      <label className="flex h-11 flex-1 items-center justify-center gap-3 border border-slate-200 bg-white px-4 text-sm text-slate-700">
                         <Checkbox
                           checked={target.isCorrect}
                           onCheckedChange={(value) =>
@@ -997,8 +1121,23 @@ export function QuestionBankPage() {
                             }))
                           }
                         />
-                        Vùng đúng
+                        Đáp án đúng
                       </label>
+                      <Button
+                        aria-label="Xóa vùng"
+                        className="h-11 px-3"
+                        type="button"
+                        variant="outline"
+                        onClick={() =>
+                          setForm((current) => ({
+                            ...current,
+                            hotspotTargets: current.hotspotTargets.filter((_, itemIndex) => itemIndex !== index),
+                          }))
+                        }
+                      >
+                        <X className="size-4" />
+                      </Button>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -1198,4 +1337,3 @@ export function QuestionBankPage() {
     </div>
   );
 }
-

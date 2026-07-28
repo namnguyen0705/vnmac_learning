@@ -62,7 +62,7 @@ export function ScormPlayerPage() {
                 </Link>
               </Button>
               <Button
-                className="rounded-2xl bg-[#163b7b] hover:bg-[#0f2e63]"
+                className="rounded-2xl bg-[#163b7b] text-white hover:bg-[#0f2e63] hover:text-white"
                 type="button"
                 onClick={() => {
                   setLaunch(null);

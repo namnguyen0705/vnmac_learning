@@ -12,13 +12,24 @@ public static class DatabaseInitializer
     private static readonly IReadOnlyDictionary<string, string> SeedUsernames = new Dictionary<string, string>(StringComparer.Ordinal)
     {
         ["admin-1"] = "admin",
-        ["content-1"] = "content",
-        ["viewer-1"] = "viewer",
         ["learner-01"] = "learner01",
         ["learner-02"] = "learner02",
         ["learner-03"] = "learner03",
-        ["learner-04"] = "learner04"
+        ["learner-04"] = "learner04",
+        ["learner-05"] = "learner05"
     };
+    private static readonly string[] LegacyCatalogCourseIds =
+    [
+        "course-community-safety",
+        "course-school-awareness",
+        "course-first-response",
+        "course-risk-communication",
+        "course-child-safety",
+        "course-farmer-safety",
+        "course-volunteer-training",
+        "course-local-officer",
+        "course-safe-travel"
+    ];
 
     public const string SeedDefaultPassword = "Vnmac@123";
 
@@ -30,16 +41,58 @@ public static class DatabaseInitializer
 
         BaselineLegacySchemaIfNeeded(dbContext);
         dbContext.Database.Migrate();
+        EnsureProvinceCatalog(dbContext);
         EnsureUserLockStatusSchema(dbContext);
         EnsureNotificationsSchema(dbContext);
+        EnsureSystemSettingsSchema(dbContext);
+        EnsureSystemAuditLogSchema(dbContext);
+        EnsureDefaultSystemSettings(dbContext);
         SeedIfEmpty(dbContext);
+        PurgeLegacyCatalogCourses(dbContext);
+        EnsureSeedUsers(dbContext);
+        EnsureOfficialCourseGraph(dbContext);
         EnsureCourseEnrollments(dbContext);
         EnsureCertificateCourseLinks(dbContext);
+        EnsureBeginnerLearnerDemoState(dbContext);
         EnsureCourseQuizzesFromLegacyLessons(dbContext);
         EnsureVideoAssets(dbContext);
         EnsureAssessmentData(dbContext);
         EnsureSeedDataLocalized(dbContext);
         EnsureUserCredentials(dbContext, passwordService);
+    }
+
+    private static void EnsureProvinceCatalog(TrainingDbContext dbContext)
+    {
+        var cities = new HashSet<string>(StringComparer.Ordinal)
+        {
+            "Hà Nội", "Hải Phòng", "Huế", "Đà Nẵng", "Cần Thơ", "Thành phố Hồ Chí Minh"
+        };
+        string[] names =
+        [
+            "Hà Nội", "Cao Bằng", "Tuyên Quang", "Điện Biên", "Lai Châu", "Sơn La", "Lào Cai",
+            "Thái Nguyên", "Lạng Sơn", "Quảng Ninh", "Bắc Ninh", "Phú Thọ", "Hải Phòng", "Hưng Yên",
+            "Ninh Bình", "Thanh Hóa", "Nghệ An", "Hà Tĩnh", "Quảng Trị", "Huế", "Đà Nẵng",
+            "Quảng Ngãi", "Gia Lai", "Đắk Lắk", "Khánh Hòa", "Lâm Đồng", "Đồng Nai",
+            "Thành phố Hồ Chí Minh", "Tây Ninh", "Đồng Tháp", "Vĩnh Long", "An Giang", "Cần Thơ", "Cà Mau"
+        ];
+
+        var existing = dbContext.Provinces.Select(item => item.Name).ToHashSet(StringComparer.Ordinal);
+        dbContext.Provinces.AddRange(names
+            .Select((name, index) => new Province
+            {
+                Code = $"VN-{index + 1:00}",
+                Name = name,
+                Type = cities.Contains(name) ? "Thành phố" : "Tỉnh",
+                SortOrder = index + 1,
+                IsActive = true
+            })
+            .Where(item => !existing.Contains(item.Name)));
+
+        foreach (var user in dbContext.Users.Where(item => item.Province == "Quảng Bình"))
+        {
+            user.Province = "Quảng Trị";
+        }
+        dbContext.SaveChanges();
     }
 
     private static void BaselineLegacySchemaIfNeeded(TrainingDbContext dbContext)
@@ -180,6 +233,97 @@ public static class DatabaseInitializer
             """);
     }
 
+    private static void EnsureSystemSettingsSchema(TrainingDbContext dbContext)
+    {
+        dbContext.Database.ExecuteSqlRaw("""
+            IF OBJECT_ID(N'[SystemSettings]', N'U') IS NULL
+            BEGIN
+                CREATE TABLE [SystemSettings]
+                (
+                    [Id] nvarchar(64) NOT NULL,
+                    [SiteTitle] nvarchar(220) NOT NULL,
+                    [HeaderTitle] nvarchar(220) NOT NULL,
+                    [HeaderSubtitle] nvarchar(500) NOT NULL,
+                    [ProjectLogoUrl] nvarchar(1024) NOT NULL,
+                    [LoginLogoUrl] nvarchar(1024) NOT NULL,
+                    [VnmacLogoUrl] nvarchar(1024) NOT NULL,
+                    [VietnamFlagUrl] nvarchar(1024) NOT NULL,
+                    [UsFlagUrl] nvarchar(1024) NOT NULL,
+                    [CrsLogoUrl] nvarchar(1024) NOT NULL,
+                    [HeaderBackgroundColor] nvarchar(32) NOT NULL,
+                    [HeaderBackgroundImageUrl] nvarchar(1024) NOT NULL,
+                    [LoginBackgroundImageUrl] nvarchar(1024) NOT NULL,
+                    [CertificateTemplateUrl] nvarchar(1024) NOT NULL,
+                    [CertificateTitle] nvarchar(220) NOT NULL,
+                    [CertificateCourseTitle] nvarchar(500) NOT NULL,
+                    [UpdatedAt] datetimeoffset NOT NULL,
+                    [UpdatedByUserId] nvarchar(450) NOT NULL,
+                    CONSTRAINT [PK_SystemSettings] PRIMARY KEY ([Id])
+                );
+            END;
+
+            IF COL_LENGTH(N'[SystemSettings]', N'CertificateTemplateUrl') IS NULL
+                ALTER TABLE [SystemSettings] ADD [CertificateTemplateUrl] nvarchar(1024) NOT NULL CONSTRAINT [DF_SystemSettings_CertificateTemplateUrl] DEFAULT N'';
+
+            IF COL_LENGTH(N'[SystemSettings]', N'LoginBackgroundImageUrl') IS NULL
+                ALTER TABLE [SystemSettings] ADD [LoginBackgroundImageUrl] nvarchar(1024) NOT NULL CONSTRAINT [DF_SystemSettings_LoginBackgroundImageUrl] DEFAULT N'';
+            """);
+    }
+
+    private static void EnsureSystemAuditLogSchema(TrainingDbContext dbContext)
+    {
+        dbContext.Database.ExecuteSqlRaw("""
+            IF OBJECT_ID(N'[SystemAuditLogs]', N'U') IS NULL
+            BEGIN
+                CREATE TABLE [SystemAuditLogs]
+                (
+                    [Id] nvarchar(450) NOT NULL,
+                    [OccurredAt] datetimeoffset NOT NULL,
+                    [ActorUserId] nvarchar(450) NOT NULL,
+                    [ActorName] nvarchar(220) NOT NULL,
+                    [ActorRole] nvarchar(32) NULL,
+                    [Module] nvarchar(80) NOT NULL,
+                    [Action] nvarchar(80) NOT NULL,
+                    [EntityType] nvarchar(120) NOT NULL,
+                    [EntityId] nvarchar(450) NOT NULL,
+                    [Summary] nvarchar(1000) NOT NULL,
+                    [DetailJson] nvarchar(max) NOT NULL,
+                    [IpAddress] nvarchar(80) NOT NULL,
+                    [UserAgent] nvarchar(500) NOT NULL,
+                    CONSTRAINT [PK_SystemAuditLogs] PRIMARY KEY ([Id])
+                );
+            END;
+
+            IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = N'IX_SystemAuditLogs_OccurredAt' AND object_id = OBJECT_ID(N'[SystemAuditLogs]'))
+                CREATE INDEX [IX_SystemAuditLogs_OccurredAt] ON [SystemAuditLogs] ([OccurredAt]);
+
+            IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = N'IX_SystemAuditLogs_ActorUserId' AND object_id = OBJECT_ID(N'[SystemAuditLogs]'))
+                CREATE INDEX [IX_SystemAuditLogs_ActorUserId] ON [SystemAuditLogs] ([ActorUserId]);
+
+            IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = N'IX_SystemAuditLogs_Module' AND object_id = OBJECT_ID(N'[SystemAuditLogs]'))
+                CREATE INDEX [IX_SystemAuditLogs_Module] ON [SystemAuditLogs] ([Module]);
+
+            IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = N'IX_SystemAuditLogs_Action' AND object_id = OBJECT_ID(N'[SystemAuditLogs]'))
+                CREATE INDEX [IX_SystemAuditLogs_Action] ON [SystemAuditLogs] ([Action]);
+            """);
+    }
+
+    private static void EnsureDefaultSystemSettings(TrainingDbContext dbContext)
+    {
+        if (dbContext.SystemSettings.Any(item => item.Id == "default"))
+        {
+            return;
+        }
+
+        dbContext.SystemSettings.Add(new SystemSettings
+        {
+            Id = "default",
+            UpdatedAt = DateTimeOffset.UtcNow,
+            UpdatedByUserId = "system"
+        });
+        dbContext.SaveChanges();
+    }
+
     private static bool LegacySchemaExists(System.Data.Common.DbConnection connection)
     {
         using var command = connection.CreateCommand();
@@ -212,6 +356,51 @@ public static class DatabaseInitializer
         dbContext.QuizAttempts.AddRange(seed.QuizAttempts);
         dbContext.InteractionAttempts.AddRange(seed.InteractionAttempts);
         dbContext.Certificates.AddRange(seed.Certificates);
+        dbContext.SaveChanges();
+    }
+
+    private static void PurgeLegacyCatalogCourses(TrainingDbContext dbContext)
+    {
+        var courseIds = dbContext.Courses
+            .Where(item => LegacyCatalogCourseIds.Contains(item.Id))
+            .Select(item => item.Id)
+            .ToArray();
+
+        if (courseIds.Length == 0)
+        {
+            return;
+        }
+
+        var lessonIds = dbContext.Lessons
+            .Where(item => courseIds.Contains(item.CourseId))
+            .Select(item => item.Id)
+            .ToArray();
+
+        RemoveLessonRuntimeRows(dbContext, lessonIds);
+        dbContext.CourseQuizzes.RemoveRange(dbContext.CourseQuizzes.Where(item => courseIds.Contains(item.CourseId)));
+        dbContext.CourseEnrollments.RemoveRange(dbContext.CourseEnrollments.Where(item => courseIds.Contains(item.CourseId)));
+        dbContext.Certificates.RemoveRange(dbContext.Certificates.Where(item => courseIds.Contains(item.CourseId)));
+        dbContext.Courses.RemoveRange(dbContext.Courses.Where(item => courseIds.Contains(item.Id)));
+        dbContext.SaveChanges();
+    }
+
+    private static void EnsureSeedUsers(TrainingDbContext dbContext)
+    {
+        var seed = SeedDataFactory.Create();
+        var existingUserIds = dbContext.Users
+            .Select(item => item.Id)
+            .ToHashSet(StringComparer.Ordinal);
+        var missingUsers = seed.Users
+            .Where(item => !existingUserIds.Contains(item.Id))
+            .Select(CloneUser)
+            .ToArray();
+
+        if (missingUsers.Length == 0)
+        {
+            return;
+        }
+
+        dbContext.Users.AddRange(missingUsers);
         dbContext.SaveChanges();
     }
 
@@ -263,6 +452,542 @@ public static class DatabaseInitializer
         {
             dbContext.SaveChanges();
         }
+    }
+
+    private static void EnsureOfficialCourseGraph(TrainingDbContext dbContext)
+    {
+        var seed = SeedDataFactory.Create();
+        var seededCourse = seed.Courses.SingleOrDefault(item => item.Id == "course-vnmac-elearning");
+        if (seededCourse is null)
+        {
+            return;
+        }
+
+        var course = dbContext.Courses
+            .Include(item => item.Sections)
+                .ThenInclude(item => item.Lessons)
+                    .ThenInclude(item => item.Assessment)
+                        .ThenInclude(item => item!.Questions)
+                            .ThenInclude(item => item.Options)
+            .Include(item => item.Sections)
+                .ThenInclude(item => item.Lessons)
+                    .ThenInclude(item => item.Assessment)
+                        .ThenInclude(item => item!.Questions)
+                            .ThenInclude(item => item.HotspotTargets)
+            .Include(item => item.Sections)
+                .ThenInclude(item => item.Lessons)
+                    .ThenInclude(item => item.Assessment)
+                        .ThenInclude(item => item!.Questions)
+                            .ThenInclude(item => item.DragItems)
+            .Include(item => item.Sections)
+                .ThenInclude(item => item.Lessons)
+                    .ThenInclude(item => item.Assessment)
+                        .ThenInclude(item => item!.Questions)
+                            .ThenInclude(item => item.DragTargets)
+            .Include(item => item.Sections)
+                .ThenInclude(item => item.Lessons)
+                    .ThenInclude(item => item.Assessment)
+                        .ThenInclude(item => item!.Questions)
+                            .ThenInclude(item => item.CorrectPairs)
+            .Include(item => item.Quizzes)
+            .SingleOrDefault(item => item.Id == seededCourse.Id);
+
+        if (course is null)
+        {
+            dbContext.Courses.Add(CloneCourse(seed.Courses.Single(item => item.Id == seededCourse.Id)));
+            dbContext.SaveChanges();
+            AddOfficialSeedProgress(dbContext, seed, seededCourse);
+            return;
+        }
+
+        var existingSectionIds = course.Sections.Select(item => item.Id).ToHashSet(StringComparer.Ordinal);
+        var seededSectionIds = seededCourse.Sections.Select(item => item.Id).ToHashSet(StringComparer.Ordinal);
+        var existingLessonIds = course.Sections.SelectMany(item => item.Lessons).Select(item => item.Id).ToHashSet(StringComparer.Ordinal);
+        var seededLessonIds = seededCourse.Sections.SelectMany(item => item.Lessons).Select(item => item.Id).ToHashSet(StringComparer.Ordinal);
+        var existingQuizIds = course.Quizzes.Select(item => item.Id).ToHashSet(StringComparer.Ordinal);
+        var seededQuizIds = seededCourse.Quizzes.Select(item => item.Id).ToHashSet(StringComparer.Ordinal);
+
+        if (existingSectionIds.SetEquals(seededSectionIds) &&
+            existingLessonIds.SetEquals(seededLessonIds) &&
+            existingQuizIds.SetEquals(seededQuizIds))
+        {
+            if (SyncOfficialCourseMetadata(dbContext, course, seededCourse))
+            {
+                dbContext.SaveChanges();
+            }
+
+            AddOfficialSeedProgress(dbContext, seed, seededCourse);
+            return;
+        }
+
+        RemoveLessonRuntimeRows(dbContext, existingLessonIds);
+        dbContext.CourseQuizzes.RemoveRange(dbContext.CourseQuizzes.Where(item => item.CourseId == course.Id));
+        dbContext.CourseSections.RemoveRange(dbContext.CourseSections.Where(item => item.CourseId == course.Id));
+        dbContext.SaveChanges();
+
+        course.Title = seededCourse.Title;
+        course.Description = seededCourse.Description;
+        course.Status = seededCourse.Status;
+        course.Sections = seededCourse.Sections.Select(CloneSection).ToList();
+        course.Quizzes = seededCourse.Quizzes.Select(CloneCourseQuiz).ToList();
+        dbContext.SaveChanges();
+
+        AddOfficialSeedProgress(dbContext, seed, seededCourse);
+    }
+
+    private static bool SyncOfficialCourseMetadata(TrainingDbContext dbContext, Course course, Course seededCourse)
+    {
+        var changed = false;
+
+        if (course.Title != seededCourse.Title)
+        {
+            course.Title = seededCourse.Title;
+            changed = true;
+        }
+
+        if (course.Description != seededCourse.Description)
+        {
+            course.Description = seededCourse.Description;
+            changed = true;
+        }
+
+        if (course.Status != seededCourse.Status)
+        {
+            course.Status = seededCourse.Status;
+            changed = true;
+        }
+
+        var sectionsById = course.Sections.ToDictionary(item => item.Id, StringComparer.Ordinal);
+        foreach (var seededSection in seededCourse.Sections)
+        {
+            if (!sectionsById.TryGetValue(seededSection.Id, out var section))
+            {
+                continue;
+            }
+
+            if (section.Title != seededSection.Title)
+            {
+                section.Title = seededSection.Title;
+                changed = true;
+            }
+
+            if (section.Description != seededSection.Description)
+            {
+                section.Description = seededSection.Description;
+                changed = true;
+            }
+
+            if (section.Order != seededSection.Order)
+            {
+                section.Order = seededSection.Order;
+                changed = true;
+            }
+
+            var lessonsById = section.Lessons.ToDictionary(item => item.Id, StringComparer.Ordinal);
+            foreach (var seededLesson in seededSection.Lessons)
+            {
+                if (lessonsById.TryGetValue(seededLesson.Id, out var lesson))
+                {
+                    changed |= SyncOfficialLessonMetadata(lesson, seededLesson);
+                    changed |= SyncOfficialLessonAssessment(dbContext, lesson, seededLesson);
+                }
+            }
+        }
+
+        var quizzesById = course.Quizzes.ToDictionary(item => item.Id, StringComparer.Ordinal);
+        foreach (var seededQuiz in seededCourse.Quizzes)
+        {
+            if (!quizzesById.TryGetValue(seededQuiz.Id, out var quiz))
+            {
+                continue;
+            }
+
+            if (quiz.Title != seededQuiz.Title)
+            {
+                quiz.Title = seededQuiz.Title;
+                changed = true;
+            }
+
+            if (quiz.Description != seededQuiz.Description)
+            {
+                quiz.Description = seededQuiz.Description;
+                changed = true;
+            }
+
+            if (quiz.Order != seededQuiz.Order)
+            {
+                quiz.Order = seededQuiz.Order;
+                changed = true;
+            }
+        }
+
+        return changed;
+    }
+
+    private static bool SyncOfficialLessonMetadata(Lesson lesson, Lesson seededLesson)
+    {
+        var changed = false;
+
+        if (lesson.Title != seededLesson.Title)
+        {
+            lesson.Title = seededLesson.Title;
+            changed = true;
+        }
+
+        if (lesson.Type != seededLesson.Type)
+        {
+            lesson.Type = seededLesson.Type;
+            changed = true;
+        }
+
+        if (lesson.Order != seededLesson.Order)
+        {
+            lesson.Order = seededLesson.Order;
+            changed = true;
+        }
+
+        if (lesson.DurationMinutes != seededLesson.DurationMinutes)
+        {
+            lesson.DurationMinutes = seededLesson.DurationMinutes;
+            changed = true;
+        }
+
+        if (lesson.Topic != seededLesson.Topic)
+        {
+            lesson.Topic = seededLesson.Topic;
+            changed = true;
+        }
+
+        if (lesson.Difficulty != seededLesson.Difficulty)
+        {
+            lesson.Difficulty = seededLesson.Difficulty;
+            changed = true;
+        }
+
+        if (lesson.ThumbnailUrl != seededLesson.ThumbnailUrl)
+        {
+            lesson.ThumbnailUrl = seededLesson.ThumbnailUrl;
+            changed = true;
+        }
+
+        if (lesson.CreatedAt == default || lesson.CreatedAt != seededLesson.CreatedAt)
+        {
+            lesson.CreatedAt = seededLesson.CreatedAt;
+            changed = true;
+        }
+
+        if (lesson.UpdatedAt == default)
+        {
+            lesson.UpdatedAt = seededLesson.UpdatedAt;
+            changed = true;
+        }
+
+        if (seededLesson.Content is not null && ShouldSyncOfficialLessonContent(lesson.Content, seededLesson.Content))
+        {
+            lesson.Content = JsonStorage.Clone(seededLesson.Content);
+            changed = true;
+        }
+        else if (seededLesson.Content is not null)
+        {
+            changed |= SyncOfficialLessonCheckQuestions(lesson.Content, seededLesson.Content);
+        }
+
+        return changed;
+    }
+
+    private static bool SyncOfficialLessonCheckQuestions(LessonContent? existingContent, LessonContent seededContent)
+    {
+        if (existingContent is null)
+        {
+            return false;
+        }
+
+        var existingCheckStep = existingContent.Steps.FirstOrDefault(step =>
+            string.Equals(step.Key, "check", StringComparison.OrdinalIgnoreCase));
+        var seededCheckStep = seededContent.Steps.FirstOrDefault(step =>
+            string.Equals(step.Key, "check", StringComparison.OrdinalIgnoreCase));
+
+        if (existingCheckStep is null || seededCheckStep is null || seededCheckStep.Questions.Count == 0)
+        {
+            return false;
+        }
+
+        var seededQuestions = JsonStorage.Clone(seededCheckStep.Questions.OrderBy(question => question.Order).ToList()) ?? [];
+        if (existingCheckStep.Questions.Count >= seededQuestions.Count)
+        {
+            return false;
+        }
+
+        var mergedQuestions = existingCheckStep.Questions.OrderBy(question => question.Order).ToList();
+        mergedQuestions.AddRange(seededQuestions.Skip(mergedQuestions.Count).Take(seededQuestions.Count - mergedQuestions.Count));
+
+        for (var index = 0; index < mergedQuestions.Count; index++)
+        {
+            mergedQuestions[index].Order = index + 1;
+        }
+
+        existingCheckStep.Questions = mergedQuestions;
+        return true;
+    }
+
+    private static bool ShouldSyncOfficialLessonContent(LessonContent? existingContent, LessonContent seededContent)
+    {
+        if (existingContent is null)
+        {
+            return true;
+        }
+
+        if (existingContent.Steps.Count == 0 && seededContent.Steps.Count > 0)
+        {
+            return true;
+        }
+
+        var activityStep = existingContent.Steps.FirstOrDefault(step =>
+            string.Equals(step.Key, "activity", StringComparison.OrdinalIgnoreCase));
+        return string.Equals(activityStep?.Title?.Trim(), "Phân loại", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool SyncOfficialLessonAssessment(TrainingDbContext dbContext, Lesson lesson, Lesson seededLesson)
+    {
+        if (seededLesson.Assessment is not null || lesson.Assessment is null)
+        {
+            return false;
+        }
+
+        var questionIds = lesson.Assessment.Questions
+            .Select(item => item.Id)
+            .ToArray();
+        RemoveQuestionRuntimeRows(dbContext, questionIds);
+        dbContext.LessonAssessments.Remove(lesson.Assessment);
+        lesson.Assessment = null;
+        return true;
+    }
+
+    private static void RemoveLessonRuntimeRows(TrainingDbContext dbContext, IReadOnlyCollection<string> lessonIds)
+    {
+        if (lessonIds.Count == 0)
+        {
+            return;
+        }
+
+        var questionIds = dbContext.LessonQuestions
+            .Where(item => lessonIds.Contains(item.LessonId))
+            .Select(item => item.Id)
+            .ToArray();
+        var sessionIds = dbContext.ScormRuntimeSessions
+            .Where(item => lessonIds.Contains(item.LessonId))
+            .Select(item => item.Id)
+            .ToArray();
+
+        if (questionIds.Length > 0)
+        {
+            dbContext.QuizAttemptWrongQuestions.RemoveRange(dbContext.QuizAttemptWrongQuestions.Where(item => questionIds.Contains(item.QuestionId)));
+            dbContext.InteractionAttemptResults.RemoveRange(dbContext.InteractionAttemptResults.Where(item => questionIds.Contains(item.QuestionId)));
+        }
+
+        if (sessionIds.Length > 0)
+        {
+            dbContext.ScormRuntimeEvents.RemoveRange(dbContext.ScormRuntimeEvents.Where(item => sessionIds.Contains(item.SessionId)));
+        }
+
+        dbContext.InteractionAttemptResults.RemoveRange(dbContext.InteractionAttemptResults.Where(item => lessonIds.Contains(item.LessonId)));
+        dbContext.InteractionAttempts.RemoveRange(dbContext.InteractionAttempts.Where(item => lessonIds.Contains(item.LessonId)));
+        dbContext.QuizAttempts.RemoveRange(dbContext.QuizAttempts.Where(item => lessonIds.Contains(item.LessonId)));
+        dbContext.QuizResults.RemoveRange(dbContext.QuizResults.Where(item => lessonIds.Contains(item.LessonId)));
+        dbContext.ProgressTrackings.RemoveRange(dbContext.ProgressTrackings.Where(item => lessonIds.Contains(item.LessonId)));
+        dbContext.ScormRuntimeValues.RemoveRange(dbContext.ScormRuntimeValues.Where(item => lessonIds.Contains(item.LessonId)));
+        dbContext.ScormRuntimeSessions.RemoveRange(dbContext.ScormRuntimeSessions.Where(item => lessonIds.Contains(item.LessonId)));
+        dbContext.ScormRegistrations.RemoveRange(dbContext.ScormRegistrations.Where(item => lessonIds.Contains(item.LessonId)));
+    }
+
+    private static void RemoveQuestionRuntimeRows(TrainingDbContext dbContext, IReadOnlyCollection<string> questionIds)
+    {
+        if (questionIds.Count == 0)
+        {
+            return;
+        }
+
+        dbContext.QuizAttemptWrongQuestions.RemoveRange(dbContext.QuizAttemptWrongQuestions.Where(item => questionIds.Contains(item.QuestionId)));
+        dbContext.InteractionAttemptResults.RemoveRange(dbContext.InteractionAttemptResults.Where(item => questionIds.Contains(item.QuestionId)));
+    }
+
+    private static void AddOfficialSeedProgress(TrainingDbContext dbContext, SeedSnapshot seed, Course seededCourse)
+    {
+        var officialLessonIds = seededCourse.Sections
+            .SelectMany(item => item.Lessons)
+            .Select(item => item.Id)
+            .ToHashSet(StringComparer.Ordinal);
+
+        var existingProgressKeys = dbContext.ProgressTrackings
+            .Where(item => officialLessonIds.Contains(item.LessonId))
+            .Select(item => new { item.UserId, item.LessonId })
+            .ToHashSet();
+        var missingProgress = seed.ProgressTrackings
+            .Where(item => officialLessonIds.Contains(item.LessonId))
+            .Where(item => !existingProgressKeys.Contains(new { item.UserId, item.LessonId }))
+            .Select(CloneProgress)
+            .ToArray();
+
+        var existingQuizResultKeys = dbContext.QuizResults
+            .Where(item => officialLessonIds.Contains(item.LessonId))
+            .Select(item => new { item.UserId, item.LessonId })
+            .ToHashSet();
+        var missingQuizResults = seed.QuizResults
+            .Where(item => officialLessonIds.Contains(item.LessonId))
+            .Where(item => !existingQuizResultKeys.Contains(new { item.UserId, item.LessonId }))
+            .Select(CloneQuizResult)
+            .ToArray();
+
+        var existingQuizAttemptKeys = dbContext.QuizAttempts
+            .Where(item => officialLessonIds.Contains(item.LessonId))
+            .Select(item => new { item.UserId, item.LessonId, item.AttemptNumber })
+            .ToHashSet();
+        var missingQuizAttempts = seed.QuizAttempts
+            .Where(item => officialLessonIds.Contains(item.LessonId))
+            .Where(item => !existingQuizAttemptKeys.Contains(new { item.UserId, item.LessonId, item.AttemptNumber }))
+            .Select(CloneQuizAttempt)
+            .ToArray();
+
+        var existingInteractionAttemptKeys = dbContext.InteractionAttempts
+            .Where(item => officialLessonIds.Contains(item.LessonId))
+            .Select(item => new { item.UserId, item.LessonId, item.AttemptNumber })
+            .ToHashSet();
+        var missingInteractionAttempts = seed.InteractionAttempts
+            .Where(item => officialLessonIds.Contains(item.LessonId))
+            .Where(item => !existingInteractionAttemptKeys.Contains(new { item.UserId, item.LessonId, item.AttemptNumber }))
+            .Select(CloneInteractionAttempt)
+            .ToArray();
+
+        if (missingProgress.Length == 0 &&
+            missingQuizResults.Length == 0 &&
+            missingQuizAttempts.Length == 0 &&
+            missingInteractionAttempts.Length == 0)
+        {
+            return;
+        }
+
+        dbContext.ProgressTrackings.AddRange(missingProgress);
+        dbContext.QuizResults.AddRange(missingQuizResults);
+        dbContext.QuizAttempts.AddRange(missingQuizAttempts);
+        dbContext.InteractionAttempts.AddRange(missingInteractionAttempts);
+        dbContext.SaveChanges();
+    }
+
+    private static void EnsureBeginnerLearnerDemoState(TrainingDbContext dbContext)
+    {
+        const string userId = "learner-01";
+        const string courseId = "course-vnmac-elearning";
+
+        var lessonIds = dbContext.Lessons
+            .Where(item => item.CourseId == courseId)
+            .Select(item => item.Id)
+            .ToArray();
+        if (lessonIds.Length == 0)
+        {
+            return;
+        }
+
+        var learner = dbContext.Users.SingleOrDefault(item => item.Id == userId);
+        if (learner is null)
+        {
+            return;
+        }
+
+        var enrollment = dbContext.CourseEnrollments.SingleOrDefault(item =>
+            item.UserId == userId &&
+            item.CourseId == courseId);
+        if (enrollment is null)
+        {
+            enrollment = new CourseEnrollment
+            {
+                UserId = userId,
+                CourseId = courseId,
+                EnrolledAt = learner.CreatedAt,
+                StartedAt = null,
+                CompletedAt = null,
+                LastAccessedAt = null,
+                Status = CourseEnrollmentStatus.Enrolled
+            };
+            dbContext.CourseEnrollments.Add(enrollment);
+        }
+        else
+        {
+            enrollment.StartedAt = null;
+            enrollment.CompletedAt = null;
+            enrollment.LastAccessedAt = null;
+            enrollment.Status = CourseEnrollmentStatus.Enrolled;
+        }
+
+        var progressByLessonId = dbContext.ProgressTrackings
+            .Where(item => item.UserId == userId && lessonIds.Contains(item.LessonId))
+            .ToDictionary(item => item.LessonId, StringComparer.Ordinal);
+        foreach (var lessonId in lessonIds)
+        {
+            if (!progressByLessonId.TryGetValue(lessonId, out var progress))
+            {
+                progress = new ProgressTracking
+                {
+                    UserId = userId,
+                    LessonId = lessonId
+                };
+                dbContext.ProgressTrackings.Add(progress);
+            }
+
+            progress.Status = LessonProgressStatus.NotStarted;
+            progress.CompletionTime = null;
+            progress.CurrentStep = "intro";
+            progress.LastAccessedAt = null;
+            progress.WatchPercent = 0;
+            progress.WatchTimeMinutes = 0;
+            progress.LastPositionSeconds = 0;
+            progress.LastWatchedAt = null;
+            progress.InteractionAttempts = 0;
+        }
+
+        var quizAttempts = dbContext.QuizAttempts
+            .Include(item => item.WrongQuestions)
+            .Where(item => item.UserId == userId && lessonIds.Contains(item.LessonId))
+            .ToArray();
+        dbContext.QuizAttempts.RemoveRange(quizAttempts);
+
+        var interactionAttempts = dbContext.InteractionAttempts
+            .Include(item => item.QuestionResults)
+            .Where(item => item.UserId == userId && lessonIds.Contains(item.LessonId))
+            .ToArray();
+        dbContext.InteractionAttempts.RemoveRange(interactionAttempts);
+
+        var quizLessonIds = dbContext.CourseQuizzes
+            .Where(item => item.CourseId == courseId)
+            .Select(item => item.AssessmentLessonId)
+            .ToArray();
+        foreach (var quizLessonId in quizLessonIds)
+        {
+            var quizResult = dbContext.QuizResults.SingleOrDefault(item =>
+                item.UserId == userId &&
+                item.LessonId == quizLessonId);
+            if (quizResult is null)
+            {
+                dbContext.QuizResults.Add(new QuizResult
+                {
+                    UserId = userId,
+                    LessonId = quizLessonId,
+                    Score = 0,
+                    Attempts = 0,
+                    LastAttemptAt = null
+                });
+                continue;
+            }
+
+            quizResult.Score = 0;
+            quizResult.Attempts = 0;
+            quizResult.LastAttemptAt = null;
+        }
+
+        dbContext.Certificates.RemoveRange(dbContext.Certificates.Where(item =>
+            item.UserId == userId &&
+            item.CourseId == courseId));
+
+        dbContext.SaveChanges();
     }
 
     private static void EnsureCertificateCourseLinks(TrainingDbContext dbContext)
@@ -622,94 +1347,31 @@ public static class DatabaseInitializer
                         changed = true;
                     }
 
-                    var seededQuestions = seededLesson.Assessment.Questions.ToDictionary(item => item.Id, StringComparer.Ordinal);
-                    foreach (var question in lesson.Assessment.Questions)
+                    if (lesson.Assessment.PassScore != seededLesson.Assessment.PassScore)
                     {
-                        if (!seededQuestions.TryGetValue(question.Id, out var seededQuestion))
-                        {
-                            continue;
-                        }
-
-                        if (!StringComparer.Ordinal.Equals(question.Prompt, seededQuestion.Prompt))
-                        {
-                            question.Prompt = seededQuestion.Prompt;
-                            changed = true;
-                        }
-
-                        if (!StringComparer.Ordinal.Equals(question.Explanation, seededQuestion.Explanation))
-                        {
-                            question.Explanation = seededQuestion.Explanation;
-                            changed = true;
-                        }
-
-                        if (!StringComparer.Ordinal.Equals(question.Statement, seededQuestion.Statement))
-                        {
-                            question.Statement = seededQuestion.Statement;
-                            changed = true;
-                        }
-
-                        if (!StringComparer.Ordinal.Equals(question.MediaTitle, seededQuestion.MediaTitle))
-                        {
-                            question.MediaTitle = seededQuestion.MediaTitle;
-                            changed = true;
-                        }
-
-                        if (!StringComparer.Ordinal.Equals(question.ScenarioTitle, seededQuestion.ScenarioTitle))
-                        {
-                            question.ScenarioTitle = seededQuestion.ScenarioTitle;
-                            changed = true;
-                        }
-
-                        if (!StringComparer.Ordinal.Equals(question.ScenarioContext, seededQuestion.ScenarioContext))
-                        {
-                            question.ScenarioContext = seededQuestion.ScenarioContext;
-                            changed = true;
-                        }
-
-                        var seededOptions = seededQuestion.Options.ToDictionary(item => item.Code, StringComparer.Ordinal);
-                        foreach (var option in question.Options)
-                        {
-                            if (seededOptions.TryGetValue(option.Code, out var seededOption) &&
-                                !StringComparer.Ordinal.Equals(option.Label, seededOption.Label))
-                            {
-                                option.Label = seededOption.Label;
-                                changed = true;
-                            }
-                        }
-
-                        var seededTargets = seededQuestion.HotspotTargets.ToDictionary(item => item.Code, StringComparer.Ordinal);
-                        foreach (var target in question.HotspotTargets)
-                        {
-                            if (seededTargets.TryGetValue(target.Code, out var seededTarget) &&
-                                !StringComparer.Ordinal.Equals(target.Label, seededTarget.Label))
-                            {
-                                target.Label = seededTarget.Label;
-                                changed = true;
-                            }
-                        }
-
-                        var seededDragItems = seededQuestion.DragItems.ToDictionary(item => item.Code, StringComparer.Ordinal);
-                        foreach (var dragItem in question.DragItems)
-                        {
-                            if (seededDragItems.TryGetValue(dragItem.Code, out var seededDragItem) &&
-                                !StringComparer.Ordinal.Equals(dragItem.Label, seededDragItem.Label))
-                            {
-                                dragItem.Label = seededDragItem.Label;
-                                changed = true;
-                            }
-                        }
-
-                        var seededDragTargets = seededQuestion.DragTargets.ToDictionary(item => item.Code, StringComparer.Ordinal);
-                        foreach (var dragTarget in question.DragTargets)
-                        {
-                            if (seededDragTargets.TryGetValue(dragTarget.Code, out var seededDragTarget) &&
-                                !StringComparer.Ordinal.Equals(dragTarget.Label, seededDragTarget.Label))
-                            {
-                                dragTarget.Label = seededDragTarget.Label;
-                                changed = true;
-                            }
-                        }
+                        lesson.Assessment.PassScore = seededLesson.Assessment.PassScore;
+                        changed = true;
                     }
+
+                    if (lesson.Assessment.QuestionLimit != seededLesson.Assessment.QuestionLimit)
+                    {
+                        lesson.Assessment.QuestionLimit = seededLesson.Assessment.QuestionLimit;
+                        changed = true;
+                    }
+
+                    if (lesson.Assessment.RandomizeQuestionOrder != seededLesson.Assessment.RandomizeQuestionOrder)
+                    {
+                        lesson.Assessment.RandomizeQuestionOrder = seededLesson.Assessment.RandomizeQuestionOrder;
+                        changed = true;
+                    }
+
+                    if (lesson.Assessment.RandomizeOptionOrder != seededLesson.Assessment.RandomizeOptionOrder)
+                    {
+                        lesson.Assessment.RandomizeOptionOrder = seededLesson.Assessment.RandomizeOptionOrder;
+                        changed = true;
+                    }
+
+                    changed |= SyncAssessmentQuestions(dbContext, lesson.Assessment, seededLesson.Assessment);
                 }
             }
         }
@@ -875,6 +1537,163 @@ public static class DatabaseInitializer
             .ToArray());
     }
 
+    private static User CloneUser(User source)
+    {
+        return new User
+        {
+            Id = source.Id,
+            Username = source.Username,
+            Email = source.Email,
+            FullName = source.FullName,
+            PhoneNumber = source.PhoneNumber,
+            CreatedAt = source.CreatedAt,
+            LastLogin = source.LastLogin,
+            IsEmailVerified = source.IsEmailVerified,
+            EmailVerifiedAt = source.EmailVerifiedAt,
+            CreatedByAdmin = source.CreatedByAdmin,
+            IsLocked = source.IsLocked,
+            PasswordHash = source.PasswordHash,
+            Role = source.Role,
+            Province = source.Province,
+            Group = source.Group
+        };
+    }
+
+    private static Course CloneCourse(Course source)
+    {
+        return new Course
+        {
+            Id = source.Id,
+            Title = source.Title,
+            Description = source.Description,
+            Status = source.Status,
+            Sections = source.Sections.Select(CloneSection).ToList(),
+            Quizzes = source.Quizzes.Select(CloneCourseQuiz).ToList()
+        };
+    }
+
+    private static CourseSection CloneSection(CourseSection source)
+    {
+        return new CourseSection
+        {
+            Id = source.Id,
+            CourseId = source.CourseId,
+            Title = source.Title,
+            Description = source.Description,
+            Order = source.Order,
+            Lessons = source.Lessons.Select(CloneLesson).ToList()
+        };
+    }
+
+    private static Lesson CloneLesson(Lesson source)
+    {
+        return new Lesson
+        {
+            Id = source.Id,
+            CourseId = source.CourseId,
+            SectionId = source.SectionId,
+            Title = source.Title,
+            Type = source.Type,
+            Order = source.Order,
+            DurationMinutes = source.DurationMinutes,
+            StatusLabel = source.StatusLabel,
+            Topic = source.Topic,
+            Difficulty = source.Difficulty,
+            PublicationStatus = source.PublicationStatus,
+            ThumbnailUrl = source.ThumbnailUrl,
+            CreatedAt = source.CreatedAt,
+            UpdatedAt = source.UpdatedAt,
+            Content = source.Content is null ? null : JsonStorage.Clone(source.Content),
+            VideoContent = source.VideoContent is null ? null : CloneVideoContent(source.VideoContent),
+            Assessment = source.Assessment is null ? null : CloneAssessment(source.Assessment),
+            ScormPackage = source.ScormPackage
+        };
+    }
+
+    private static CourseQuiz CloneCourseQuiz(CourseQuiz source)
+    {
+        return new CourseQuiz
+        {
+            Id = source.Id,
+            CourseId = source.CourseId,
+            SectionId = source.SectionId,
+            AssessmentLessonId = source.AssessmentLessonId,
+            Title = source.Title,
+            Description = source.Description,
+            Order = source.Order
+        };
+    }
+
+    private static ProgressTracking CloneProgress(ProgressTracking source)
+    {
+        return new ProgressTracking
+        {
+            UserId = source.UserId,
+            LessonId = source.LessonId,
+            Status = source.Status,
+            CompletionTime = source.CompletionTime,
+            CurrentStep = source.CurrentStep,
+            LastAccessedAt = source.LastAccessedAt,
+            WatchPercent = source.WatchPercent,
+            WatchTimeMinutes = source.WatchTimeMinutes,
+            LastPositionSeconds = source.LastPositionSeconds,
+            LastWatchedAt = source.LastWatchedAt,
+            InteractionAttempts = source.InteractionAttempts
+        };
+    }
+
+    private static QuizResult CloneQuizResult(QuizResult source)
+    {
+        return new QuizResult
+        {
+            UserId = source.UserId,
+            LessonId = source.LessonId,
+            Score = source.Score,
+            Attempts = source.Attempts,
+            LastAttemptAt = source.LastAttemptAt
+        };
+    }
+
+    private static QuizAttempt CloneQuizAttempt(QuizAttempt source)
+    {
+        return new QuizAttempt
+        {
+            UserId = source.UserId,
+            LessonId = source.LessonId,
+            AttemptNumber = source.AttemptNumber,
+            Score = source.Score,
+            AttemptedAt = source.AttemptedAt,
+            WrongQuestions = source.WrongQuestions.Select(item => new QuizAttemptWrongQuestion
+            {
+                UserId = item.UserId,
+                LessonId = item.LessonId,
+                AttemptNumber = item.AttemptNumber,
+                QuestionId = item.QuestionId
+            }).ToList()
+        };
+    }
+
+    private static InteractionAttempt CloneInteractionAttempt(InteractionAttempt source)
+    {
+        return new InteractionAttempt
+        {
+            UserId = source.UserId,
+            LessonId = source.LessonId,
+            AttemptNumber = source.AttemptNumber,
+            AttemptedAt = source.AttemptedAt,
+            Passed = source.Passed,
+            QuestionResults = source.QuestionResults.Select(item => new InteractionAttemptResult
+            {
+                UserId = item.UserId,
+                LessonId = item.LessonId,
+                AttemptNumber = item.AttemptNumber,
+                QuestionId = item.QuestionId,
+                Correct = item.Correct,
+                Explanation = item.Explanation
+            }).ToList()
+        };
+    }
+
     private static LessonAssessment CloneAssessment(LessonAssessment source)
     {
         return new LessonAssessment
@@ -883,6 +1702,7 @@ public static class DatabaseInitializer
             Intro = source.Intro,
             RetryHint = source.RetryHint,
             PassScore = source.PassScore,
+            QuestionLimit = source.QuestionLimit,
             RandomizeQuestionOrder = source.RandomizeQuestionOrder,
             RandomizeOptionOrder = source.RandomizeOptionOrder,
             Questions = source.Questions.Select(CloneQuestion).ToList()
@@ -913,6 +1733,342 @@ public static class DatabaseInitializer
         return title.Replace("Bài kiểm tra", "Quiz", StringComparison.OrdinalIgnoreCase).Trim();
     }
 
+    private static bool SyncAssessmentQuestions(TrainingDbContext dbContext, LessonAssessment assessment, LessonAssessment seededAssessment)
+    {
+        var changed = false;
+        var seededQuestions = seededAssessment.Questions.ToDictionary(item => item.Id, StringComparer.Ordinal);
+        var staleQuestions = assessment.Questions
+            .Where(item => !seededQuestions.ContainsKey(item.Id))
+            .ToArray();
+
+        if (staleQuestions.Length > 0)
+        {
+            var staleQuestionIds = staleQuestions.Select(item => item.Id).ToArray();
+            RemoveQuestionRuntimeRows(dbContext, staleQuestionIds);
+            dbContext.LessonQuestions.RemoveRange(staleQuestions);
+            foreach (var question in staleQuestions)
+            {
+                assessment.Questions.Remove(question);
+            }
+
+            dbContext.SaveChanges();
+            changed = true;
+        }
+
+        var existingQuestions = assessment.Questions.ToDictionary(item => item.Id, StringComparer.Ordinal);
+        foreach (var seededQuestion in seededAssessment.Questions.OrderBy(item => item.Order))
+        {
+            if (!existingQuestions.TryGetValue(seededQuestion.Id, out var question))
+            {
+                assessment.Questions.Add(CloneQuestion(seededQuestion));
+                changed = true;
+                continue;
+            }
+
+            changed |= SyncQuestion(question, seededQuestion);
+        }
+
+        return changed;
+    }
+
+    private static bool SyncQuestion(LessonQuestion question, LessonQuestion seededQuestion)
+    {
+        var changed = false;
+
+        if (question.Type != seededQuestion.Type)
+        {
+            question.Type = seededQuestion.Type;
+            changed = true;
+        }
+
+        if (question.Order != seededQuestion.Order)
+        {
+            question.Order = seededQuestion.Order;
+            changed = true;
+        }
+
+        if (!StringComparer.Ordinal.Equals(question.Prompt, seededQuestion.Prompt))
+        {
+            question.Prompt = seededQuestion.Prompt;
+            changed = true;
+        }
+
+        if (!StringComparer.Ordinal.Equals(question.Explanation, seededQuestion.Explanation))
+        {
+            question.Explanation = seededQuestion.Explanation;
+            changed = true;
+        }
+
+        if (!StringComparer.Ordinal.Equals(question.Statement, seededQuestion.Statement))
+        {
+            question.Statement = seededQuestion.Statement;
+            changed = true;
+        }
+
+        if (!StringComparer.Ordinal.Equals(question.MediaTitle, seededQuestion.MediaTitle))
+        {
+            question.MediaTitle = seededQuestion.MediaTitle;
+            changed = true;
+        }
+
+        if (!StringComparer.Ordinal.Equals(question.MediaUrl, seededQuestion.MediaUrl))
+        {
+            question.MediaUrl = seededQuestion.MediaUrl;
+            changed = true;
+        }
+
+        if (!StringComparer.Ordinal.Equals(question.ScenarioTitle, seededQuestion.ScenarioTitle))
+        {
+            question.ScenarioTitle = seededQuestion.ScenarioTitle;
+            changed = true;
+        }
+
+        if (!StringComparer.Ordinal.Equals(question.ScenarioContext, seededQuestion.ScenarioContext))
+        {
+            question.ScenarioContext = seededQuestion.ScenarioContext;
+            changed = true;
+        }
+
+        changed |= SyncQuestionOptions(question.Options, seededQuestion.Options, question.Id);
+        changed |= SyncHotspotTargets(question.HotspotTargets, seededQuestion.HotspotTargets, question.Id);
+        changed |= SyncDragPairs(question.CorrectPairs, seededQuestion.CorrectPairs, question.Id);
+        changed |= SyncDragItems(question.DragItems, seededQuestion.DragItems, question.Id);
+        changed |= SyncDragTargets(question.DragTargets, seededQuestion.DragTargets, question.Id);
+
+        return changed;
+    }
+
+    private static bool SyncQuestionOptions(List<LessonQuestionOption> options, IReadOnlyCollection<LessonQuestionOption> seededOptions, string questionId)
+    {
+        var changed = false;
+        var seededOptionsByCode = seededOptions.ToDictionary(item => item.Code, StringComparer.Ordinal);
+        foreach (var option in options.Where(item => !seededOptionsByCode.ContainsKey(item.Code)).ToArray())
+        {
+            options.Remove(option);
+            changed = true;
+        }
+
+        var optionsByCode = options.ToDictionary(item => item.Code, StringComparer.Ordinal);
+        foreach (var seededOption in seededOptions.OrderBy(item => item.Order))
+        {
+            if (!optionsByCode.TryGetValue(seededOption.Code, out var option))
+            {
+                options.Add(new LessonQuestionOption
+                {
+                    QuestionId = questionId,
+                    Code = seededOption.Code,
+                    Label = seededOption.Label,
+                    Order = seededOption.Order,
+                    IsCorrect = seededOption.IsCorrect
+                });
+                changed = true;
+                continue;
+            }
+
+            if (!StringComparer.Ordinal.Equals(option.Label, seededOption.Label))
+            {
+                option.Label = seededOption.Label;
+                changed = true;
+            }
+
+            if (option.Order != seededOption.Order)
+            {
+                option.Order = seededOption.Order;
+                changed = true;
+            }
+
+            if (option.IsCorrect != seededOption.IsCorrect)
+            {
+                option.IsCorrect = seededOption.IsCorrect;
+                changed = true;
+            }
+        }
+
+        return changed;
+    }
+
+    private static bool SyncHotspotTargets(List<LessonQuestionHotspotTarget> targets, IReadOnlyCollection<LessonQuestionHotspotTarget> seededTargets, string questionId)
+    {
+        var changed = false;
+        var seededTargetsByCode = seededTargets.ToDictionary(item => item.Code, StringComparer.Ordinal);
+        foreach (var target in targets.Where(item => !seededTargetsByCode.ContainsKey(item.Code)).ToArray())
+        {
+            targets.Remove(target);
+            changed = true;
+        }
+
+        var targetsByCode = targets.ToDictionary(item => item.Code, StringComparer.Ordinal);
+        foreach (var seededTarget in seededTargets.OrderBy(item => item.Order))
+        {
+            if (!targetsByCode.TryGetValue(seededTarget.Code, out var target))
+            {
+                targets.Add(new LessonQuestionHotspotTarget
+                {
+                    QuestionId = questionId,
+                    Code = seededTarget.Code,
+                    Label = seededTarget.Label,
+                    Order = seededTarget.Order,
+                    Shape = seededTarget.Shape,
+                    X = seededTarget.X,
+                    Y = seededTarget.Y,
+                    Width = seededTarget.Width,
+                    Height = seededTarget.Height,
+                    Radius = seededTarget.Radius,
+                    IsCorrect = seededTarget.IsCorrect
+                });
+                changed = true;
+                continue;
+            }
+
+            if (!StringComparer.Ordinal.Equals(target.Label, seededTarget.Label))
+            {
+                target.Label = seededTarget.Label;
+                changed = true;
+            }
+
+            if (target.Order != seededTarget.Order ||
+                target.Shape != seededTarget.Shape ||
+                target.X != seededTarget.X ||
+                target.Y != seededTarget.Y ||
+                target.Width != seededTarget.Width ||
+                target.Height != seededTarget.Height ||
+                target.Radius != seededTarget.Radius ||
+                target.IsCorrect != seededTarget.IsCorrect)
+            {
+                target.Order = seededTarget.Order;
+                target.Shape = seededTarget.Shape;
+                target.X = seededTarget.X;
+                target.Y = seededTarget.Y;
+                target.Width = seededTarget.Width;
+                target.Height = seededTarget.Height;
+                target.Radius = seededTarget.Radius;
+                target.IsCorrect = seededTarget.IsCorrect;
+                changed = true;
+            }
+        }
+
+        return changed;
+    }
+
+    private static bool SyncDragItems(List<LessonQuestionDragItem> dragItems, IReadOnlyCollection<LessonQuestionDragItem> seededDragItems, string questionId)
+    {
+        var changed = false;
+        var seededItemsByCode = seededDragItems.ToDictionary(item => item.Code, StringComparer.Ordinal);
+        foreach (var dragItem in dragItems.Where(item => !seededItemsByCode.ContainsKey(item.Code)).ToArray())
+        {
+            dragItems.Remove(dragItem);
+            changed = true;
+        }
+
+        var dragItemsByCode = dragItems.ToDictionary(item => item.Code, StringComparer.Ordinal);
+        foreach (var seededDragItem in seededDragItems.OrderBy(item => item.Order))
+        {
+            if (!dragItemsByCode.TryGetValue(seededDragItem.Code, out var dragItem))
+            {
+                dragItems.Add(new LessonQuestionDragItem
+                {
+                    QuestionId = questionId,
+                    Code = seededDragItem.Code,
+                    Label = seededDragItem.Label,
+                    Order = seededDragItem.Order
+                });
+                changed = true;
+                continue;
+            }
+
+            if (!StringComparer.Ordinal.Equals(dragItem.Label, seededDragItem.Label))
+            {
+                dragItem.Label = seededDragItem.Label;
+                changed = true;
+            }
+
+            if (dragItem.Order != seededDragItem.Order)
+            {
+                dragItem.Order = seededDragItem.Order;
+                changed = true;
+            }
+        }
+
+        return changed;
+    }
+
+    private static bool SyncDragTargets(List<LessonQuestionDragTarget> dragTargets, IReadOnlyCollection<LessonQuestionDragTarget> seededDragTargets, string questionId)
+    {
+        var changed = false;
+        var seededTargetsByCode = seededDragTargets.ToDictionary(item => item.Code, StringComparer.Ordinal);
+        foreach (var dragTarget in dragTargets.Where(item => !seededTargetsByCode.ContainsKey(item.Code)).ToArray())
+        {
+            dragTargets.Remove(dragTarget);
+            changed = true;
+        }
+
+        var dragTargetsByCode = dragTargets.ToDictionary(item => item.Code, StringComparer.Ordinal);
+        foreach (var seededDragTarget in seededDragTargets.OrderBy(item => item.Order))
+        {
+            if (!dragTargetsByCode.TryGetValue(seededDragTarget.Code, out var dragTarget))
+            {
+                dragTargets.Add(new LessonQuestionDragTarget
+                {
+                    QuestionId = questionId,
+                    Code = seededDragTarget.Code,
+                    Label = seededDragTarget.Label,
+                    Order = seededDragTarget.Order
+                });
+                changed = true;
+                continue;
+            }
+
+            if (!StringComparer.Ordinal.Equals(dragTarget.Label, seededDragTarget.Label))
+            {
+                dragTarget.Label = seededDragTarget.Label;
+                changed = true;
+            }
+
+            if (dragTarget.Order != seededDragTarget.Order)
+            {
+                dragTarget.Order = seededDragTarget.Order;
+                changed = true;
+            }
+        }
+
+        return changed;
+    }
+
+    private static bool SyncDragPairs(List<LessonQuestionDragPair> pairs, IReadOnlyCollection<LessonQuestionDragPair> seededPairs, string questionId)
+    {
+        var changed = false;
+        var seededPairKeys = seededPairs.Select(GetPairKey).ToHashSet(StringComparer.Ordinal);
+        foreach (var pair in pairs.Where(item => !seededPairKeys.Contains(GetPairKey(item))).ToArray())
+        {
+            pairs.Remove(pair);
+            changed = true;
+        }
+
+        var pairKeys = pairs.Select(GetPairKey).ToHashSet(StringComparer.Ordinal);
+        foreach (var seededPair in seededPairs)
+        {
+            if (pairKeys.Contains(GetPairKey(seededPair)))
+            {
+                continue;
+            }
+
+            pairs.Add(new LessonQuestionDragPair
+            {
+                QuestionId = questionId,
+                DragItemCode = seededPair.DragItemCode,
+                DragTargetCode = seededPair.DragTargetCode
+            });
+            changed = true;
+        }
+
+        return changed;
+    }
+
+    private static string GetPairKey(LessonQuestionDragPair pair)
+    {
+        return $"{pair.DragItemCode}\u001f{pair.DragTargetCode}";
+    }
+
     private static LessonQuestion CloneQuestion(LessonQuestion source)
     {
         return new LessonQuestion
@@ -925,6 +2081,7 @@ public static class DatabaseInitializer
             Explanation = source.Explanation,
             Statement = source.Statement,
             MediaTitle = source.MediaTitle,
+            MediaUrl = source.MediaUrl,
             ScenarioTitle = source.ScenarioTitle,
             ScenarioContext = source.ScenarioContext,
             Options = source.Options.Select(item => new LessonQuestionOption

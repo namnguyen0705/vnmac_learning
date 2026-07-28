@@ -1,14 +1,23 @@
 using System.Text;
+using System.Security.Claims;
 using vnmac_elearning.Api.Contracts;
 using vnmac_elearning.Api.Domain;
 using vnmac_elearning.Api.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace vnmac_elearning.Api.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/admin")]
-public sealed class AdminController(AdminService adminService, MediaStorageService mediaStorageService) : ControllerBase
+public sealed class AdminController(
+    AdminService adminService,
+    MediaStorageService mediaStorageService,
+    SystemSettingsService settingsService,
+    AuditLogService auditLogService,
+    NotificationService notificationService,
+    RoleService roleService) : ControllerBase
 {
     [HttpGet("courses")]
     public ActionResult<object> GetCourses()
@@ -26,12 +35,138 @@ public sealed class AdminController(AdminService adminService, MediaStorageServi
     {
         try
         {
-            return Ok(await mediaStorageService.SaveAsync(file, mediaType, cancellationToken));
+            var result = await mediaStorageService.SaveAsync(file, mediaType, cancellationToken);
+            auditLogService.Track(
+                GetActorUserId(),
+                "media",
+                "upload",
+                "Media",
+                result.FileName,
+                $"Upload {mediaType}: {result.OriginalFileName}",
+                new { result.Url, result.ContentType, result.SizeBytes },
+                HttpContext.Connection.RemoteIpAddress?.ToString() ?? string.Empty,
+                Request.Headers.UserAgent.ToString());
+            auditLogService.SaveChanges();
+            return Ok(result);
         }
         catch (InvalidOperationException exception)
         {
             return BadRequest(new { key = "media.upload_invalid", message = exception.Message });
         }
+    }
+
+    [HttpGet("media/library")]
+    public ActionResult<IReadOnlyCollection<MediaLibraryItemResponse>> GetMediaLibrary()
+    {
+        return Ok(mediaStorageService.GetLibrary());
+    }
+
+    [HttpPost("media/library")]
+    public ActionResult<MediaLibraryItemResponse> CreateMediaLibraryItem(
+        [FromBody] UpsertLibraryDocumentRequest request)
+    {
+        try
+        {
+            return Ok(mediaStorageService.CreateLibraryDocument(request));
+        }
+        catch (InvalidOperationException exception)
+        {
+            return BadRequest(new { key = "library.invalid", message = exception.Message });
+        }
+    }
+
+    [HttpPut("media/library/{id}")]
+    public ActionResult<MediaLibraryItemResponse> UpdateMediaLibraryItem(
+        string id,
+        [FromBody] UpdateLibraryDocumentRequest request)
+    {
+        try
+        {
+            return Ok(mediaStorageService.UpdateLibraryDocument(id, request));
+        }
+        catch (KeyNotFoundException exception)
+        {
+            return NotFound(new { key = "library.not_found", message = exception.Message });
+        }
+        catch (InvalidOperationException exception)
+        {
+            return BadRequest(new { key = "library.invalid", message = exception.Message });
+        }
+    }
+
+    [HttpDelete("media/library/{fileName}")]
+    public IActionResult DeleteMediaLibraryItem(string fileName)
+    {
+        try
+        {
+            if (!mediaStorageService.Delete(fileName))
+            {
+                return NotFound(new { key = "media.not_found", message = "Không tìm thấy tài liệu." });
+            }
+        }
+        catch (InvalidOperationException exception)
+        {
+            return Conflict(new { key = "media.in_use", message = exception.Message });
+        }
+
+        auditLogService.Track(
+            GetActorUserId(),
+            "media",
+            "delete",
+            "Media",
+            fileName,
+            $"Xóa tài liệu: {fileName}",
+            new { fileName },
+            HttpContext.Connection.RemoteIpAddress?.ToString() ?? string.Empty,
+            Request.Headers.UserAgent.ToString());
+        auditLogService.SaveChanges();
+        return NoContent();
+    }
+
+    [HttpGet("settings")]
+    public ActionResult<SystemSettingsResponse> GetSettings()
+    {
+        return Ok(settingsService.GetSettings());
+    }
+
+    [HttpPut("settings")]
+    public ActionResult<SystemSettingsResponse> UpdateSettings([FromBody] UpdateSystemSettingsRequest request)
+    {
+        return Ok(settingsService.UpdateSettings(request, GetActorUserId()));
+    }
+
+    [HttpGet("system-logs")]
+    public ActionResult<SystemAuditLogResponse> GetSystemLogs(
+        [FromQuery] string? search = null,
+        [FromQuery] string? module = null,
+        [FromQuery] string? action = null,
+        [FromQuery] string? actorUserId = null,
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 20)
+    {
+        return Ok(auditLogService.GetLogs(search, module, action, actorUserId, page, pageSize));
+    }
+
+    [HttpGet("notifications")]
+    public ActionResult<AdminNotificationListResponse> GetNotifications(
+        [FromQuery] string? search = null,
+        [FromQuery] NotificationAudience? audience = null,
+        [FromQuery] NotificationType? type = null,
+        [FromQuery] bool? unreadOnly = null,
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 20)
+    {
+        return Ok(notificationService.GetAdminNotifications(search, audience, type, unreadOnly, page, pageSize));
+    }
+
+    [HttpPost("notifications")]
+    public ActionResult<AdminNotificationResponse> CreateNotification([FromBody] CreateAdminNotificationRequest request)
+    {
+        return Ok(notificationService.CreateAdminNotification(
+            request,
+            GetActorUserId(),
+            HttpContext.Connection.RemoteIpAddress?.ToString() ?? string.Empty,
+            Request.Headers.UserAgent.ToString()));
     }
 
     [HttpPost("courses")]
@@ -60,6 +195,12 @@ public sealed class AdminController(AdminService adminService, MediaStorageServi
         return Ok(adminService.CreateSection(courseId, request));
     }
 
+    [HttpPut("courses/{courseId}/sections/{sectionId}")]
+    public ActionResult<CourseSection> UpdateSection(string courseId, string sectionId, [FromBody] UpdateSectionRequest request)
+    {
+        return Ok(adminService.UpdateSection(courseId, sectionId, request));
+    }
+
     [HttpGet("quizzes")]
     public ActionResult<IReadOnlyCollection<CourseQuiz>> GetQuizzes(
         [FromQuery] string? courseId = null,
@@ -74,6 +215,43 @@ public sealed class AdminController(AdminService adminService, MediaStorageServi
         return Ok(adminService.CreateLesson(request));
     }
 
+    [HttpGet("lessons/catalog")]
+    public ActionResult<AdminLessonCatalogResponse> GetLessonCatalog(
+        [FromQuery] string? search = null,
+        [FromQuery] string? topic = null,
+        [FromQuery] LessonPublicationStatus? status = null,
+        [FromQuery] LessonDifficulty? difficulty = null,
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 10)
+    {
+        return Ok(adminService.GetLessonCatalog(search, topic, status, difficulty, page, pageSize));
+    }
+
+    [HttpGet("lessons/{lessonId}/content")]
+    public ActionResult<LessonContent> GetLessonContent(string lessonId)
+    {
+        return Ok(adminService.GetLessonContent(lessonId));
+    }
+
+    [HttpPost("lessons/{lessonId}/content")]
+    public ActionResult<LessonContent> CreateLessonContent(string lessonId, [FromBody] LessonContent request)
+    {
+        return Ok(adminService.UpsertLessonContent(lessonId, request));
+    }
+
+    [HttpPut("lessons/{lessonId}/content")]
+    public ActionResult<LessonContent> UpdateLessonContent(string lessonId, [FromBody] LessonContent request)
+    {
+        return Ok(adminService.UpsertLessonContent(lessonId, request));
+    }
+
+    [HttpDelete("lessons/{lessonId}/content")]
+    public IActionResult DeleteLessonContent(string lessonId)
+    {
+        adminService.DeleteLessonContent(lessonId);
+        return NoContent();
+    }
+
     [HttpPost("quizzes")]
     public ActionResult<CourseQuiz> CreateQuiz([FromBody] CreateCourseQuizRequest request)
     {
@@ -84,6 +262,12 @@ public sealed class AdminController(AdminService adminService, MediaStorageServi
     public ActionResult<Lesson> UpdateLesson(string lessonId, [FromBody] UpsertLessonRequest request)
     {
         return Ok(adminService.UpdateLesson(lessonId, request));
+    }
+
+    [HttpPut("lessons/{lessonId}/metadata")]
+    public ActionResult<Lesson> UpdateLessonMetadata(string lessonId, [FromBody] UpdateLessonMetadataRequest request)
+    {
+        return Ok(adminService.UpdateLessonMetadata(lessonId, request));
     }
 
     [HttpPut("quizzes/{quizId}")]
@@ -154,6 +338,13 @@ public sealed class AdminController(AdminService adminService, MediaStorageServi
         return Ok(adminService.UpdateUser(userId, request));
     }
 
+    [HttpPut("user-accounts/{userId}/role")]
+    public IActionResult AssignUserRole(string userId, [FromBody] AssignUserRoleRequest request)
+    {
+        roleService.AssignUser(userId, request.RoleId);
+        return NoContent();
+    }
+
     [HttpDelete("user-accounts/{userId}")]
     public IActionResult DeleteUser(string userId)
     {
@@ -203,5 +394,10 @@ public sealed class AdminController(AdminService adminService, MediaStorageServi
     {
         var csv = adminService.ExportLearnersCsv(province, group);
         return File(Encoding.UTF8.GetBytes(csv), "text/csv; charset=utf-8", "learners-export.csv");
+    }
+
+    private string? GetActorUserId()
+    {
+        return User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue("sub");
     }
 }

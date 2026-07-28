@@ -16,6 +16,7 @@ import { getTracking, getTrackingExportUrl } from "../../shared/api/admin";
 import { clampPercent, formatDateTime, humanizeEnum } from "../../shared/lib/format";
 import { LoadingBlock } from "../../shared/ui/LoadingBlock";
 import { MessageBanner } from "../../shared/ui/MessageBanner";
+import { ProvinceSelect } from "../../shared/ui/ProvinceSelect";
 import type { TrackingCourseProgress, TrackingLearnerRow, TrackingLessonProgress } from "../../shared/types/api";
 import { Activity, AlertTriangle, BookOpenCheck, Clock3, Download, Eye, FilterX, PlayCircle, Search, Users } from "lucide-react";
 
@@ -146,10 +147,10 @@ export function TrackingPage() {
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_minmax(0,1fr)_180px]">
           <Select value={courseId} onValueChange={setCourseId}>
             <SelectTrigger className="rounded-2xl">
-              <SelectValue placeholder="Chọn khóa học" />
+              <SelectValue placeholder="Chọn chủ đề" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Tất cả khóa học</SelectItem>
+              <SelectItem value="all">Tất cả chủ đề</SelectItem>
               {data.courses.map((course) => (
                 <SelectItem key={course.courseId} value={course.courseId}>
                   {course.title}
@@ -157,12 +158,13 @@ export function TrackingPage() {
               ))}
             </SelectContent>
           </Select>
-          <Input
+          <div className="hidden"><Input
             className="h-11 rounded-2xl border-slate-200"
             placeholder="Tỉnh/thành"
             value={province}
             onChange={(event) => setProvince(event.target.value)}
-          />
+          /></div>
+          <ProvinceSelect allowAll value={province} onChange={setProvince} />
           <Input
             className="h-11 rounded-2xl border-slate-200"
             placeholder="Nhóm học viên"
@@ -192,7 +194,7 @@ export function TrackingPage() {
       </section>
 
       <div className="grid gap-6 xl:grid-cols-3">
-        <AdminSection title="Khóa học đăng ký nhiều">
+        <AdminSection title="Chủ đề đăng ký nhiều">
           <div className="grid gap-4">
             {data.courseSummaries.slice(0, 6).map((item) => (
               <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3" key={item.courseId}>
@@ -212,7 +214,7 @@ export function TrackingPage() {
                 </div>
               </div>
             ))}
-            {data.courseSummaries.length === 0 ? <p className="text-sm text-slate-500">Chưa có dữ liệu khóa học.</p> : null}
+            {data.courseSummaries.length === 0 ? <p className="text-sm text-slate-500">Chưa có dữ liệu chủ đề.</p> : null}
           </div>
         </AdminSection>
 

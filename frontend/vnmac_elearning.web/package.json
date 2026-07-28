@@ -4,24 +4,29 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "node scripts/dev.mjs",
-    "build": "tsc --project tsconfig.app.json --noEmit && vite build",
-    "preview": "vite preview"
+    "dev": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/use-runtime-node.ps1 node scripts/dev.mjs",
+    "build": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/use-runtime-node.ps1 node_modules\\.bin\\tsc.cmd --project tsconfig.app.json --noEmit && powershell -NoProfile -ExecutionPolicy Bypass -File scripts/use-runtime-node.ps1 node_modules\\.bin\\vite.cmd build",
+    "preview": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/use-runtime-node.ps1 node_modules\\.bin\\vite.cmd preview"
   },
   "dependencies": {
+    "@fontsource/inter": "5.2.8",
+    "@fontsource/roboto": "5.2.10",
     "@radix-ui/react-checkbox": "^1.3.3",
     "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-slot": "^1.2.4",
     "@tailwindcss/vite": "^4.2.4",
     "@tanstack/react-query": "^5.100.6",
+    "@tinymce/tinymce-react": "6.3.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.12.0",
+    "prop-types": "15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.14.2",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.4",
+    "tinymce": "8.7.0",
     "zustand": "^5.0.12"
   },
   "devDependencies": {

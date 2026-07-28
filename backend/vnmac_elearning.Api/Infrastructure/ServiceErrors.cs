@@ -17,6 +17,11 @@ public sealed record ServiceErrorResponse(string Key, string Message);
 
 public static class ServiceErrors
 {
+    public static readonly ServiceError InvalidProvince = new(
+        "user.invalid_province",
+        "Tỉnh/Thành phố không hợp lệ.",
+        StatusCodes.Status400BadRequest);
+
     public static readonly ServiceError AuthInvalidFullName = new(
         "auth.invalid_full_name",
         "Ho ten phai co it nhat 4 ky tu.",
@@ -55,6 +60,16 @@ public static class ServiceErrors
     public static readonly ServiceError AuthWeakPassword = new(
         "auth.weak_password",
         "Password phai co it nhat 8 ky tu.",
+        StatusCodes.Status400BadRequest);
+
+    public static readonly ServiceError AuthCurrentPasswordIncorrect = new(
+        "auth.current_password_incorrect",
+        "Mat khau hien tai khong dung.",
+        StatusCodes.Status400BadRequest);
+
+    public static readonly ServiceError AuthAvatarInvalid = new(
+        "auth.avatar_invalid",
+        "Anh dai dien khong hop le hoac vuot qua dung luong cho phep.",
         StatusCodes.Status400BadRequest);
 
     public static readonly ServiceError AuthInvalidCredentials = new(
@@ -366,4 +381,18 @@ public static class ServiceErrors
         "admin.user_not_found",
         "Khong tim thay tai khoan nguoi dung.",
         StatusCodes.Status404NotFound);
+
+    public static readonly ServiceError AdminRoleNotFound = new(
+        "admin.role_not_found", "Không tìm thấy vai trò.", StatusCodes.Status404NotFound);
+    public static readonly ServiceError AdminRoleInvalid = new(
+        "admin.role_invalid", "Tên và mã vai trò là bắt buộc.", StatusCodes.Status400BadRequest);
+    public static readonly ServiceError AdminRoleCodeExists = new(
+        "admin.role_code_exists", "Mã vai trò đã tồn tại.", StatusCodes.Status409Conflict);
+    public static readonly ServiceError AdminRoleCannotDelete = new(
+        "admin.role_cannot_delete", "Không thể xóa vai trò hệ thống hoặc vai trò đang được sử dụng.", StatusCodes.Status409Conflict);
+
+    public static readonly ServiceError AdminNotificationInvalid = new(
+        "admin.notification_invalid",
+        "Tieu de va noi dung thong bao la bat buoc.",
+        StatusCodes.Status400BadRequest);
 }

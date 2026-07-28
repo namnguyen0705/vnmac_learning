@@ -7,19 +7,26 @@ import { CertificateVerifyPage } from "../pages/CertificateVerifyPage";
 import { LoginPage } from "../pages/LoginPage";
 import { VerifyEmailPage } from "../pages/VerifyEmailPage";
 import { AdminOverviewPage } from "../pages/admin/AdminOverviewPage";
+import { AdminNotificationsPage } from "../pages/admin/AdminNotificationsPage";
 import { AdminPlaceholderPage } from "../pages/admin/AdminPlaceholderPage";
 import { AnalyticsPage } from "../pages/admin/AnalyticsPage";
 import { CoursesPage } from "../pages/admin/CoursesPage";
+import { LearningStatsPage } from "../pages/admin/LearningStatsPage";
+import { LessonContentPage } from "../pages/admin/LessonContentPage";
 import { LessonsPage } from "../pages/admin/LessonsPage";
+import { MediaLibraryPage } from "../pages/admin/MediaLibraryPage";
 import { QuestionBankPage } from "../pages/admin/QuestionBankPage";
 import { QuizzesPage } from "../pages/admin/QuizzesPage";
-import { TrackingPage } from "../pages/admin/TrackingPage";
+import { RolesPage } from "../pages/admin/RolesPage";
+import { SettingsPage } from "../pages/admin/SettingsPage";
+import { SystemLogsPage } from "../pages/admin/SystemLogsPage";
 import { UsersPage } from "../pages/admin/UsersPage";
 import { CertificatePage } from "../pages/learner/CertificatePage";
 import { CourseCatalogPage } from "../pages/learner/CourseCatalogPage";
 import { CoursePage } from "../pages/learner/CoursePage";
 import { DashboardPage } from "../pages/learner/DashboardPage";
 import { LessonPage } from "../pages/learner/LessonPage";
+import { LibraryPage } from "../pages/learner/LibraryPage";
 import { ProfilePage } from "../pages/learner/ProfilePage";
 import { QuizPage } from "../pages/learner/QuizPage";
 import { ScormPlayerPage } from "../pages/learner/ScormPlayerPage";
@@ -27,7 +34,6 @@ import { SupportPage } from "../pages/learner/SupportPage";
 import { LoadingBlock } from "../shared/ui/LoadingBlock";
 
 const learnerRoles = ["Learner"] as const;
-const managerRoles = ["Admin", "ContentManager"] as const;
 const adminRoles = ["Admin", "ContentManager", "DataViewer"] as const;
 
 function HomeRedirect() {
@@ -41,14 +47,20 @@ function HomeRedirect() {
     return <Navigate replace to="/login" />;
   }
 
-  if (session.user.role === "Learner") {
+  if (!session.user.hasAdminAccess) {
     return <Navigate replace to="/app/dashboard" />;
   }
 
   return <Navigate replace to="/admin" />;
 }
 
-function ProtectedOutlet({ allowedRoles }: { allowedRoles: readonly string[] }) {
+function ProtectedOutlet({
+  allowedRoles,
+  portal,
+}: {
+  allowedRoles?: readonly string[];
+  portal?: "learner" | "admin";
+}) {
   const { isInitializing, session } = useAuth();
   const location = useLocation();
 
@@ -60,7 +72,10 @@ function ProtectedOutlet({ allowedRoles }: { allowedRoles: readonly string[] }) 
     return <Navigate replace state={{ from: location.pathname }} to="/login" />;
   }
 
-  if (!allowedRoles.includes(session.user.role)) {
+  const portalDenied =
+    (portal === "admin" && !session.user.hasAdminAccess) ||
+    (portal === "learner" && session.user.hasAdminAccess);
+  if (portalDenied || (allowedRoles && !allowedRoles.includes(session.user.role))) {
     const fallback = session.user.role === "Learner" ? "/app/dashboard" : "/admin";
     return <Navigate replace to={fallback} />;
   }
@@ -108,7 +123,7 @@ const router = createBrowserRouter([
     errorElement: <RouteErrorBoundary />,
   },
   {
-    element: <ProtectedOutlet allowedRoles={learnerRoles} />,
+    element: <ProtectedOutlet portal="learner" allowedRoles={learnerRoles} />,
     errorElement: <RouteErrorBoundary />,
     children: [
       {
@@ -143,6 +158,10 @@ const router = createBrowserRouter([
             element: <CertificatePage />,
           },
           {
+            path: "/app/library",
+            element: <LibraryPage />,
+          },
+          {
             path: "/app/support",
             element: <SupportPage />,
           },
@@ -155,7 +174,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    element: <ProtectedOutlet allowedRoles={adminRoles} />,
+    element: <ProtectedOutlet portal="admin" allowedRoles={adminRoles} />,
     errorElement: <RouteErrorBoundary />,
     children: [
       {
@@ -179,7 +198,15 @@ const router = createBrowserRouter([
           },
           {
             path: "/admin/tracking",
-            element: <TrackingPage />,
+            element: <LearningStatsPage />,
+          },
+          {
+            path: "/admin/notifications",
+            element: <AdminNotificationsPage />,
+          },
+          {
+            path: "/admin/roles",
+            element: <RolesPage />,
           },
           {
             path: "/admin/certificates",
@@ -199,6 +226,14 @@ const router = createBrowserRouter([
           },
           {
             path: "/admin/settings",
+            element: <SettingsPage />,
+          },
+          {
+            path: "/admin/system-logs",
+            element: <SystemLogsPage />,
+          },
+          {
+            path: "/admin/settings-placeholder",
             element: (
               <AdminPlaceholderPage
                 title="Cài đặt"
@@ -206,7 +241,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            element: <ProtectedOutlet allowedRoles={managerRoles} />,
+            element: <ProtectedOutlet portal="admin" />,
             children: [
               {
                 path: "/admin/courses",
@@ -217,8 +252,16 @@ const router = createBrowserRouter([
                 element: <LessonsPage />,
               },
               {
+                path: "/admin/lessons/:lessonId/content",
+                element: <LessonContentPage />,
+              },
+              {
                 path: "/admin/quizzes",
                 element: <QuizzesPage />,
+              },
+              {
+                path: "/admin/materials",
+                element: <MediaLibraryPage />,
               },
               {
                 path: "/admin/lessons/new",

@@ -15,8 +15,15 @@ import {
   AdminSection,
   AdminStatusBadge,
 } from "@/shared/ui/admin-kit";
-import { getAdminUserAccounts, updateAdminUser } from "../../shared/api/admin";
-import type { AdminUserRow, CourseEnrollmentStatus, UpdateAdminUserRequest } from "../../shared/types/api";
+import { assignUserRole, createAdminUser, getAdminUserAccounts, getRoles, updateAdminUser } from "../../shared/api/admin";
+import type {
+  AdminUserRow,
+  CourseEnrollmentStatus,
+  CreateAdminUserRequest,
+  UpdateAdminUserRequest,
+} from "../../shared/types/api";
+import { ApiError } from "../../shared/api/client";
+import { getProvinceOptions } from "../../shared/api/auth";
 import { LoadingBlock } from "../../shared/ui/LoadingBlock";
 import { MessageBanner } from "../../shared/ui/MessageBanner";
 import {
@@ -28,6 +35,9 @@ import {
   Eye,
   Lock,
   MailCheck,
+  KeyRound,
+  Pencil,
+  Plus,
   Search,
   ShieldOff,
   Unlock,
@@ -39,8 +49,21 @@ type LearnerFilter = "all" | "new" | "inactive" | "locked" | "certified";
 
 const pageSize = 10;
 
+const emptyCreateForm: CreateAdminUserRequest = {
+  username: "",
+  password: "",
+  email: "",
+  fullName: "",
+  phoneNumber: "",
+  role: "Learner",
+  province: "",
+  group: "",
+  markEmailAsVerified: true,
+  isLocked: false,
+};
+
 const filterLabels: Record<LearnerFilter, string> = {
-  all: "Tất cả học viên",
+  all: "Tất cả người dùng",
   new: "Mới đăng ký",
   inactive: "Chưa kích hoạt",
   locked: "Bị khóa",
@@ -92,6 +115,7 @@ function buildUpdatePayload(user: AdminUserRow, overrides: Partial<UpdateAdminUs
     fullName: user.fullName,
     phoneNumber: user.phoneNumber,
     role: user.role,
+    roleId: user.roleId,
     province: user.province,
     group: user.group,
     isEmailVerified: user.isEmailVerified,
@@ -107,10 +131,6 @@ function learnerStatus(user: AdminUserRow) {
 
   if (!user.isEmailVerified) {
     return "Chưa kích hoạt";
-  }
-
-  if (user.certificateCount > 0) {
-    return "Đã có chứng chỉ";
   }
 
   return "Đang hoạt động";
@@ -138,17 +158,34 @@ export function UsersPage() {
   const [search, setSearch] = useState("");
   const [province, setProvince] = useState("all");
   const [group, setGroup] = useState("all");
+  const provinceCatalogQuery = useQuery({
+    queryKey: ["public", "provinces"],
+    queryFn: getProvinceOptions,
+  });
   const [filter, setFilter] = useState<LearnerFilter>("all");
   const [page, setPage] = useState(1);
   const [selectedLearner, setSelectedLearner] = useState<AdminUserRow | null>(null);
+  const [editingUser, setEditingUser] = useState<AdminUserRow | null>(null);
+  const [editForm, setEditForm] = useState<UpdateAdminUserRequest | null>(null);
+  const [resetUser, setResetUser] = useState<AdminUserRow | null>(null);
+  const [newPassword, setNewPassword] = useState("");
+  const [updateError, setUpdateError] = useState<string | null>(null);
+  const [selectedRoleId, setSelectedRoleId] = useState("all");
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [createForm, setCreateForm] = useState<CreateAdminUserRequest>(emptyCreateForm);
+  const [createError, setCreateError] = useState<string | null>(null);
+
+  const rolesQuery = useQuery({
+    queryKey: ["admin", "roles"],
+    queryFn: getRoles,
+  });
 
   const learnersQuery = useQuery({
-    queryKey: ["admin", "user-accounts", { province, group, role: "Learner" }],
+    queryKey: ["admin", "user-accounts", { province, group }],
     queryFn: () =>
       getAdminUserAccounts({
         province: province !== "all" ? province : undefined,
         group: group !== "all" ? group : undefined,
-        role: "Learner",
       }),
   });
 
@@ -161,11 +198,64 @@ export function UsersPage() {
     },
   });
 
+  const updateMutation = useMutation({
+    mutationFn: ({ userId, payload }: { userId: string; payload: UpdateAdminUserRequest }) =>
+      updateAdminUser(userId, payload),
+    onSuccess: async (updatedUser) => {
+      setSelectedLearner((current) => (current?.userId === updatedUser.userId ? updatedUser : current));
+      setEditingUser(null);
+      setEditForm(null);
+      setUpdateError(null);
+      await queryClient.invalidateQueries({ queryKey: ["admin", "user-accounts"] });
+      await queryClient.invalidateQueries({ queryKey: ["public", "provinces"] });
+    },
+    onError: (cause) => {
+      setUpdateError(cause instanceof ApiError ? cause.message : "Không thể cập nhật tài khoản.");
+    },
+  });
+
+  const resetPasswordMutation = useMutation({
+    mutationFn: ({ user, password }: { user: AdminUserRow; password: string }) =>
+      updateAdminUser(user.userId, buildUpdatePayload(user, { password })),
+    onSuccess: async (updatedUser) => {
+      setSelectedLearner((current) => (current?.userId === updatedUser.userId ? updatedUser : current));
+      setResetUser(null);
+      setNewPassword("");
+      setUpdateError(null);
+      await queryClient.invalidateQueries({ queryKey: ["admin", "user-accounts"] });
+    },
+    onError: (cause) => {
+      setUpdateError(cause instanceof ApiError ? cause.message : "Không thể đặt lại mật khẩu.");
+    },
+  });
+
+  const createMutation = useMutation({
+    mutationFn: createAdminUser,
+    onSuccess: async () => {
+      setIsCreateOpen(false);
+      setCreateForm(emptyCreateForm);
+      setCreateError(null);
+      await queryClient.invalidateQueries({ queryKey: ["admin", "user-accounts"] });
+    },
+    onError: (cause) => {
+      setCreateError(cause instanceof ApiError ? cause.message : "Không thể tạo người dùng.");
+    },
+  });
+
+  const roleMutation = useMutation({
+    mutationFn: ({ userId, roleId }: { userId: string; roleId: string }) => assignUserRole(userId, roleId),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["admin", "user-accounts"] });
+      await queryClient.invalidateQueries({ queryKey: ["admin", "roles"] });
+    },
+  });
+
   const learners = learnersQuery.data ?? [];
+  const roles = rolesQuery.data ?? [];
 
   const provinceOptions = useMemo(
-    () => Array.from(new Set(learners.map((item) => item.province).filter(Boolean))).sort(),
-    [learners],
+    () => provinceCatalogQuery.data ?? [],
+    [provinceCatalogQuery.data],
   );
   const groupOptions = useMemo(
     () => Array.from(new Set(learners.map((item) => item.group).filter(Boolean))).sort(),
@@ -188,12 +278,16 @@ export function UsersPage() {
   const filteredLearners = useMemo(() => {
     const keyword = search.trim();
     return learners.filter((item) => {
+      if (selectedRoleId !== "all" && item.roleId !== selectedRoleId) {
+        return false;
+      }
+
       if (!matchesKeyword(item, keyword)) {
         return false;
       }
 
       if (filter === "new") {
-        return isNewLearner(item);
+        return isNewLearner(item) && !item.isEmailVerified;
       }
 
       if (filter === "inactive") {
@@ -210,14 +304,14 @@ export function UsersPage() {
 
       return true;
     });
-  }, [filter, learners, search]);
+  }, [filter, learners, search, selectedRoleId]);
 
   const totalPages = Math.max(1, Math.ceil(filteredLearners.length / pageSize));
   const pagedLearners = filteredLearners.slice((page - 1) * pageSize, page * pageSize);
 
   useEffect(() => {
     setPage(1);
-  }, [filter, group, province, search]);
+  }, [filter, group, province, search, selectedRoleId]);
 
   useEffect(() => {
     if (page > totalPages) {
@@ -229,14 +323,26 @@ export function UsersPage() {
     lockMutation.mutate({ learner, isLocked: !learner.isLocked });
   }
 
+  function openEdit(user: AdminUserRow) {
+    setEditingUser(user);
+    setEditForm(buildUpdatePayload(user));
+    setUpdateError(null);
+  }
+
   return (
     <div className="space-y-6">
       <AdminPageHeader
-        breadcrumbs={["Quản trị", "Học viên"]}
-        title="Quản lý học viên"
+        breadcrumbs={["Quản trị", "Người dùng"]}
+        title="Quản lý người dùng"
+        actions={
+          <Button onClick={() => setIsCreateOpen(true)}>
+            <Plus className="size-4" />
+            Tạo người dùng
+          </Button>
+        }
       />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-        <AdminMetricCard icon={<Users className="size-5" />} label="Tổng học viên" value={stats.total.toString()} />
+        <AdminMetricCard icon={<Users className="size-5" />} label="Tổng người dùng" value={stats.total.toString()} />
         <AdminMetricCard
           accent="amber"
           icon={<CircleAlert className="size-5" />}
@@ -264,20 +370,42 @@ export function UsersPage() {
       </div>
 
       <AdminSection
-        title="Danh sách học viên"
+        title="Danh sách người dùng"
         action={
           <Badge variant="outline" className="rounded-full px-3 py-1">
-            {filteredLearners.length} học viên
+            {filteredLearners.length} người dùng
           </Badge>
         }
         contentClassName="space-y-4"
       >
+        <div className="flex flex-wrap gap-2 border-b border-slate-100 pb-4">
+          <Button
+            size="sm"
+            type="button"
+            variant={selectedRoleId === "all" ? "default" : "outline"}
+            onClick={() => setSelectedRoleId("all")}
+          >
+            Tất cả <Badge className="ml-1" variant="outline">{learners.length}</Badge>
+          </Button>
+          {roles.map((role) => (
+            <Button
+              key={role.id}
+              size="sm"
+              type="button"
+              variant={selectedRoleId === role.id ? "default" : "outline"}
+              onClick={() => setSelectedRoleId(role.id)}
+            >
+              {role.name} <Badge className="ml-1" variant="outline">{role.userCount}</Badge>
+            </Button>
+          ))}
+        </div>
+
         <div className="grid gap-3 xl:grid-cols-[minmax(280px,1fr)_220px_220px_220px]">
           <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
             <Input
               className="h-11 rounded-2xl pl-9"
-              placeholder="Tìm theo tên, tài khoản, email, số điện thoại, khóa học..."
+              placeholder="Tìm theo tên, tài khoản, email, số điện thoại, chủ đề..."
               value={search}
               onChange={(event) => setSearch(event.target.value)}
             />
@@ -325,23 +453,24 @@ export function UsersPage() {
           </Select>
         </div>
 
-        {learnersQuery.isLoading ? <LoadingBlock label="Đang tải danh sách học viên..." /> : null}
+        {learnersQuery.isLoading || rolesQuery.isLoading ? <LoadingBlock label="Đang tải danh sách người dùng..." /> : null}
 
-        {learnersQuery.isError ? (
+        {learnersQuery.isError || rolesQuery.isError ? (
           <MessageBanner tone="error">
-            Không tải được học viên. Vui lòng thử lại hoặc kiểm tra API quản trị.
+            Không tải được người dùng. Vui lòng thử lại hoặc kiểm tra API quản trị.
           </MessageBanner>
         ) : null}
 
-        {!learnersQuery.isLoading && !learnersQuery.isError ? (
+        {!learnersQuery.isLoading && !rolesQuery.isLoading && !learnersQuery.isError && !rolesQuery.isError ? (
           <div className="overflow-hidden rounded-3xl border border-slate-200">
             <Table>
               <TableHeader>
                 <TableRow className="bg-slate-50/80">
-                  <TableHead>Học viên</TableHead>
+                  <TableHead>Người dùng</TableHead>
                   <TableHead>Liên hệ</TableHead>
                   <TableHead>Địa bàn</TableHead>
                   <TableHead>Trạng thái</TableHead>
+                  <TableHead>Vai trò</TableHead>
                   <TableHead>Tiến độ</TableHead>
                   <TableHead>Chứng chỉ</TableHead>
                   <TableHead>Lần đăng nhập gần nhất</TableHead>
@@ -386,10 +515,26 @@ export function UsersPage() {
                         {isNewLearner(learner) ? <Badge variant="outline">Mới đăng ký</Badge> : null}
                       </div>
                     </TableCell>
+                    <TableCell className="min-w-52">
+                      <Select
+                        value={learner.roleId}
+                        disabled={roleMutation.isPending}
+                        onValueChange={(roleId) => roleMutation.mutate({ userId: learner.userId, roleId })}
+                      >
+                        <SelectTrigger className="h-9 rounded-xl">
+                          <SelectValue placeholder="Chọn vai trò" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {roles.map((role) => (
+                            <SelectItem key={role.id} value={role.id}>{role.name}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </TableCell>
                     <TableCell>
-                      <div className="min-w-36 space-y-2">
+                      {learner.role === "Learner" ? <div className="min-w-36 space-y-2">
                         <div className="flex items-center justify-between text-xs">
-                          <span className="text-slate-500">{learner.enrollments.length} khóa học</span>
+                          <span className="text-slate-500">{learner.enrollments.length} chủ đề</span>
                           <span className="font-semibold text-slate-900">{learner.completionPercent}%</span>
                         </div>
                         <div className="h-2 rounded-full bg-slate-100">
@@ -398,13 +543,13 @@ export function UsersPage() {
                             style={{ width: `${Math.min(100, Math.max(0, learner.completionPercent))}%` }}
                           />
                         </div>
-                      </div>
+                      </div> : <span className="text-sm text-slate-400">Không áp dụng</span>}
                     </TableCell>
                     <TableCell>
-                      <div className="flex items-center gap-2 text-sm font-semibold text-slate-900">
+                      {learner.role === "Learner" ? <div className="flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <Award className="size-4 text-emerald-600" />
                         {learner.certificateCount}
-                      </div>
+                      </div> : <span className="text-sm text-slate-400">Không áp dụng</span>}
                     </TableCell>
                     <TableCell>{formatDateTime(learner.lastLogin)}</TableCell>
                     <TableCell>
@@ -437,9 +582,9 @@ export function UsersPage() {
 
                 {pagedLearners.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={8}>
+                    <TableCell colSpan={9}>
                       <div className="py-10 text-center text-sm text-slate-500">
-                        Không có học viên phù hợp với bộ lọc hiện tại.
+                        Không có người dùng phù hợp với bộ lọc hiện tại.
                       </div>
                     </TableCell>
                   </TableRow>
@@ -457,13 +602,98 @@ export function UsersPage() {
       </AdminSection>
 
       <AdminModal
+        open={isCreateOpen}
+        title="Tạo tài khoản học viên"
+        description="Quản trị viên có thể tạo và kích hoạt tài khoản để bàn giao trực tiếp cho học viên."
+        onClose={() => {
+          if (!createMutation.isPending) {
+            setIsCreateOpen(false);
+            setCreateError(null);
+          }
+        }}
+        actions={
+          <>
+            <Button type="button" variant="outline" onClick={() => setIsCreateOpen(false)}>
+              Hủy
+            </Button>
+            <Button
+              type="button"
+              disabled={createMutation.isPending}
+              onClick={() => {
+                setCreateError(null);
+                createMutation.mutate({
+                  ...createForm,
+                  username: createForm.username.trim(),
+                  email: createForm.email.trim(),
+                  fullName: createForm.fullName.trim(),
+                  phoneNumber: createForm.phoneNumber.trim(),
+                  province: createForm.province.trim(),
+                  group: createForm.group.trim(),
+                });
+              }}
+            >
+              {createMutation.isPending ? "Đang tạo..." : "Tạo tài khoản"}
+            </Button>
+          </>
+        }
+      >
+        <div className="space-y-4">
+          {createError ? <MessageBanner tone="error">{createError}</MessageBanner> : null}
+          <div className="grid gap-4 md:grid-cols-2">
+            <CreateField label="Họ và tên" value={createForm.fullName} onChange={(value) => setCreateForm((current) => ({ ...current, fullName: value }))} />
+            <CreateField label="Email" type="email" value={createForm.email} onChange={(value) => setCreateForm((current) => ({ ...current, email: value }))} />
+            <CreateField label="Số điện thoại" value={createForm.phoneNumber} onChange={(value) => setCreateForm((current) => ({ ...current, phoneNumber: value }))} />
+            <CreateField label="Tên đăng nhập" value={createForm.username} onChange={(value) => setCreateForm((current) => ({ ...current, username: value }))} />
+            <CreateField label="Mật khẩu ban đầu" type="password" value={createForm.password} onChange={(value) => setCreateForm((current) => ({ ...current, password: value }))} />
+            <CreateSelectField
+              label="Tỉnh/Thành phố"
+              options={provinceCatalogQuery.data ?? []}
+              value={createForm.province}
+              onChange={(value) => setCreateForm((current) => ({ ...current, province: value }))}
+            />
+            <CreateField label="Đối tượng" value={createForm.group} onChange={(value) => setCreateForm((current) => ({ ...current, group: value }))} />
+          </div>
+          <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-200 p-4">
+            <input
+              className="mt-1 size-4"
+              type="checkbox"
+              checked={createForm.markEmailAsVerified}
+              onChange={(event) =>
+                setCreateForm((current) => ({ ...current, markEmailAsVerified: event.target.checked }))
+              }
+            />
+            <span>
+              <span className="block font-medium text-slate-950">Kích hoạt tài khoản ngay</span>
+              <span className="mt-1 block text-sm text-slate-500">
+                Tài khoản do quản trị viên bàn giao có thể đăng nhập ngay mà không cần xác nhận email.
+              </span>
+            </span>
+          </label>
+        </div>
+      </AdminModal>
+
+      <AdminModal
         className="max-w-6xl"
         open={Boolean(selectedLearner)}
         title={selectedLearner ? `Chi tiết học viên: ${selectedLearner.fullName}` : "Chi tiết học viên"}
-        description="Thông tin tài khoản, khóa học đã đăng ký, tiến độ học tập và chứng chỉ đã cấp."
+        description="Thông tin tài khoản, chủ đề đã đăng ký, tiến độ học tập và chứng chỉ đã cấp."
         actions={
           selectedLearner ? (
             <>
+              <Button type="button" variant="outline" onClick={() => openEdit(selectedLearner)}>
+                <Pencil className="mr-2 size-4" /> Chỉnh sửa
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setResetUser(selectedLearner);
+                  setNewPassword("");
+                  setUpdateError(null);
+                }}
+              >
+                <KeyRound className="mr-2 size-4" /> Reset mật khẩu
+              </Button>
               <Button type="button" variant="outline" onClick={() => setSelectedLearner(null)}>
                 Đóng
               </Button>
@@ -483,7 +713,154 @@ export function UsersPage() {
       >
         {selectedLearner ? <LearnerDetail learner={selectedLearner} /> : null}
       </AdminModal>
+
+      <AdminModal
+        className="max-w-3xl"
+        open={Boolean(editingUser && editForm)}
+        title={editingUser ? `Chỉnh sửa tài khoản: ${editingUser.fullName}` : "Chỉnh sửa tài khoản"}
+        description="Cập nhật thông tin đăng nhập, liên hệ, địa bàn, đối tượng và trạng thái tài khoản."
+        onClose={() => {
+          setEditingUser(null);
+          setEditForm(null);
+          setUpdateError(null);
+        }}
+        actions={
+          <>
+            <Button type="button" variant="outline" onClick={() => { setEditingUser(null); setEditForm(null); }}>
+              Hủy
+            </Button>
+            <Button
+              disabled={!editingUser || !editForm || updateMutation.isPending}
+              type="button"
+              onClick={() => {
+                if (editingUser && editForm) {
+                  updateMutation.mutate({ userId: editingUser.userId, payload: { ...editForm, password: null } });
+                }
+              }}
+            >
+              {updateMutation.isPending ? "Đang lưu..." : "Lưu thay đổi"}
+            </Button>
+          </>
+        }
+      >
+        {editForm ? (
+          <div className="space-y-4">
+            {updateError ? <MessageBanner tone="error">{updateError}</MessageBanner> : null}
+            <div className="grid gap-4 md:grid-cols-2">
+              <CreateField label="Họ và tên" value={editForm.fullName} onChange={(value) => setEditForm((current) => current ? ({ ...current, fullName: value }) : current)} />
+              <CreateField label="Tên đăng nhập" value={editForm.username} onChange={(value) => setEditForm((current) => current ? ({ ...current, username: value }) : current)} />
+              <CreateField label="Email" type="email" value={editForm.email} onChange={(value) => setEditForm((current) => current ? ({ ...current, email: value }) : current)} />
+              <CreateField label="Số điện thoại" value={editForm.phoneNumber} onChange={(value) => setEditForm((current) => current ? ({ ...current, phoneNumber: value }) : current)} />
+              <CreateSelectField label="Tỉnh/Thành phố" options={provinceCatalogQuery.data ?? []} value={editForm.province} onChange={(value) => setEditForm((current) => current ? ({ ...current, province: value }) : current)} />
+              <CreateField label="Đối tượng" value={editForm.group} onChange={(value) => setEditForm((current) => current ? ({ ...current, group: value }) : current)} />
+              <CreateSelectField
+                label="Vai trò"
+                options={roles.map((role) => role.id)}
+                optionLabels={Object.fromEntries(roles.map((role) => [role.id, role.name]))}
+                value={editForm.roleId ?? ""}
+                onChange={(roleId) => {
+                  const role = roles.find((item) => item.id === roleId);
+                  setEditForm((current) => current ? ({
+                    ...current,
+                    roleId,
+                    role: role?.code === "learner" ? "Learner" : current.role,
+                  }) : current);
+                }}
+              />
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <label className="flex items-center gap-3 rounded-2xl border border-slate-200 p-4 text-sm font-medium text-slate-700">
+                <input type="checkbox" checked={editForm.isEmailVerified} onChange={(event) => setEditForm((current) => current ? ({ ...current, isEmailVerified: event.target.checked }) : current)} />
+                Email đã xác nhận
+              </label>
+              <label className="flex items-center gap-3 rounded-2xl border border-slate-200 p-4 text-sm font-medium text-slate-700">
+                <input type="checkbox" checked={editForm.isLocked} onChange={(event) => setEditForm((current) => current ? ({ ...current, isLocked: event.target.checked }) : current)} />
+                Khóa tài khoản
+              </label>
+            </div>
+          </div>
+        ) : null}
+      </AdminModal>
+
+      <AdminModal
+        className="max-w-lg"
+        open={Boolean(resetUser)}
+        title="Đặt lại mật khẩu"
+        description={resetUser ? `Tạo mật khẩu mới cho ${resetUser.fullName} (@${resetUser.username}).` : undefined}
+        onClose={() => { setResetUser(null); setNewPassword(""); setUpdateError(null); }}
+        actions={
+          <>
+            <Button type="button" variant="outline" onClick={() => { setResetUser(null); setNewPassword(""); }}>Hủy</Button>
+            <Button
+              disabled={!resetUser || newPassword.trim().length < 8 || resetPasswordMutation.isPending}
+              type="button"
+              onClick={() => resetUser && resetPasswordMutation.mutate({ user: resetUser, password: newPassword.trim() })}
+            >
+              {resetPasswordMutation.isPending ? "Đang đặt lại..." : "Xác nhận reset"}
+            </Button>
+          </>
+        }
+      >
+        <div className="space-y-4">
+          {updateError ? <MessageBanner tone="error">{updateError}</MessageBanner> : null}
+          <CreateField label="Mật khẩu mới (tối thiểu 8 ký tự)" type="password" value={newPassword} onChange={setNewPassword} />
+          <p className="text-sm text-slate-500">Mật khẩu cũ sẽ mất hiệu lực ngay sau khi xác nhận.</p>
+        </div>
+      </AdminModal>
     </div>
+  );
+}
+
+function CreateField({
+  label,
+  value,
+  onChange,
+  type = "text",
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  type?: string;
+}) {
+  return (
+    <label className="grid gap-2 text-sm font-medium text-slate-700">
+      {label}
+      <Input
+        className="h-11 rounded-2xl"
+        required
+        type={type}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+      />
+    </label>
+  );
+}
+
+function CreateSelectField({
+  label,
+  options,
+  optionLabels,
+  value,
+  onChange,
+}: {
+  label: string;
+  options: string[];
+  optionLabels?: Record<string, string>;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <label className="grid gap-2 text-sm font-medium text-slate-700">
+      {label}
+      <Select required value={value} onValueChange={onChange}>
+        <SelectTrigger className="h-11 rounded-2xl">
+          <SelectValue placeholder={`Chọn ${label.toLowerCase()}`} />
+        </SelectTrigger>
+        <SelectContent>
+          {options.map((option) => <SelectItem key={option} value={option}>{optionLabels?.[option] ?? option}</SelectItem>)}
+        </SelectContent>
+      </Select>
+    </label>
   );
 }
 
@@ -526,7 +903,7 @@ function LearnerDetail({ learner }: { learner: AdminUserRow }) {
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2">
-          <SummaryTile icon={<BookOpenCheck className="size-5" />} label="Khóa học đã đăng ký" value={learner.enrollments.length} />
+          <SummaryTile icon={<BookOpenCheck className="size-5" />} label="Chủ đề đã đăng ký" value={learner.enrollments.length} />
           <SummaryTile icon={<UserCheck className="size-5" />} label="Tiến độ trung bình" value={`${learner.completionPercent}%`} />
           <SummaryTile icon={<Award className="size-5" />} label="Chứng chỉ đã có" value={learner.certificateCount} />
           <SummaryTile icon={<Clock3 className="size-5" />} label="Thời gian học" value={formatMinutes(learner.studyTimeMinutes)} />
@@ -535,7 +912,7 @@ function LearnerDetail({ learner }: { learner: AdminUserRow }) {
 
       <div className="rounded-3xl border border-slate-200">
         <div className="border-b border-slate-100 px-5 py-4">
-          <h3 className="font-semibold text-slate-950">Khóa học đã đăng ký</h3>
+          <h3 className="font-semibold text-slate-950">Chủ đề đã đăng ký</h3>
         </div>
         <div className="divide-y divide-slate-100">
           {learner.enrollments.map((enrollment, index) => (
@@ -558,13 +935,13 @@ function LearnerDetail({ learner }: { learner: AdminUserRow }) {
               <div className="grid gap-3">
                 <ProgressLine label="Nội dung" value={enrollment.contentCompletionPercent} color="bg-blue-600" />
                 <ProgressLine label="Bài kiểm tra" value={enrollment.quizCompletionPercent} color="bg-emerald-600" />
-                <ProgressLine label="Toàn khóa" value={enrollment.overallCompletionPercent} color="bg-amber-500" />
+                <ProgressLine label="Toàn chủ đề" value={enrollment.overallCompletionPercent} color="bg-amber-500" />
               </div>
             </div>
           ))}
 
           {learner.enrollments.length === 0 ? (
-            <div className="p-8 text-center text-sm text-slate-500">Học viên chưa đăng ký khóa học nào.</div>
+            <div className="p-8 text-center text-sm text-slate-500">Học viên chưa đăng ký chủ đề nào.</div>
           ) : null}
         </div>
       </div>

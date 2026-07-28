@@ -11,11 +11,9 @@ internal static class CourseResponseMapper
 
     public static object Map(Course course)
     {
-        var quizHostLessonIds = course.Quizzes
-            .Select(item => item.AssessmentLessonId)
-            .ToHashSet(StringComparer.Ordinal);
         var lessonById = course.Sections
             .SelectMany(section => section.Lessons)
+            .Where(lesson => lesson.PublicationStatus != LessonPublicationStatus.Archived)
             .ToDictionary(lesson => lesson.Id, StringComparer.Ordinal);
 
         return new
@@ -34,19 +32,23 @@ internal static class CourseResponseMapper
                     section.Description,
                     section.Order,
                     Lessons = section.Lessons
-                        .Where(lesson => !quizHostLessonIds.Contains(lesson.Id))
+                        .Where(lesson => lesson.PublicationStatus != LessonPublicationStatus.Archived)
                         .OrderBy(lesson => lesson.Order)
                         .Select(MapLesson)
                         .ToArray(),
                     Quizzes = course.Quizzes
-                        .Where(quiz => string.Equals(quiz.SectionId, section.Id, StringComparison.Ordinal))
+                        .Where(quiz =>
+                            string.Equals(quiz.SectionId, section.Id, StringComparison.Ordinal) &&
+                            lessonById.ContainsKey(quiz.AssessmentLessonId))
                         .OrderBy(quiz => quiz.Order)
                         .Select(quiz => MapQuiz(quiz, lessonById))
                         .ToArray()
                 })
                 .ToArray(),
             Quizzes = course.Quizzes
-                .Where(quiz => string.IsNullOrWhiteSpace(quiz.SectionId))
+                .Where(quiz =>
+                    string.IsNullOrWhiteSpace(quiz.SectionId) &&
+                    lessonById.ContainsKey(quiz.AssessmentLessonId))
                 .OrderBy(quiz => quiz.Order)
                 .Select(quiz => MapQuiz(quiz, lessonById))
                 .ToArray()
@@ -65,6 +67,13 @@ internal static class CourseResponseMapper
             lesson.Order,
             lesson.DurationMinutes,
             lesson.StatusLabel,
+            lesson.Topic,
+            lesson.Difficulty,
+            lesson.PublicationStatus,
+            lesson.ThumbnailUrl,
+            lesson.CreatedAt,
+            lesson.UpdatedAt,
+            lesson.Content,
             lesson.VideoContent,
             ScormPackage = lesson.ScormPackage is null
                 ? null
@@ -98,9 +107,11 @@ internal static class CourseResponseMapper
                     lesson.Assessment.Intro,
                     lesson.Assessment.RetryHint,
                     lesson.Assessment.PassScore,
+                    lesson.Assessment.QuestionLimit,
                     lesson.Assessment.RandomizeQuestionOrder,
                     lesson.Assessment.RandomizeOptionOrder,
-                    QuestionCount = lesson.Assessment.Questions.Count,
+                    QuestionCount = GetEffectiveQuestionCount(lesson.Assessment),
+                    BankQuestionCount = lesson.Assessment.Questions.Count,
                     Questions = lesson.Type == LessonType.Interactive
                         ? lesson.Assessment.Questions
                             .OrderBy(question => question.Order)
@@ -133,11 +144,20 @@ internal static class CourseResponseMapper
                     assessment.Intro,
                     assessment.RetryHint,
                     assessment.PassScore,
+                    assessment.QuestionLimit,
                     assessment.RandomizeQuestionOrder,
                     assessment.RandomizeOptionOrder,
-                    QuestionCount = assessment.Questions.Count
+                    QuestionCount = GetEffectiveQuestionCount(assessment),
+                    BankQuestionCount = assessment.Questions.Count
                 }
         };
+    }
+
+    private static int GetEffectiveQuestionCount(LessonAssessment assessment)
+    {
+        return assessment.QuestionLimit is > 0
+            ? Math.Min(assessment.QuestionLimit.Value, assessment.Questions.Count)
+            : assessment.Questions.Count;
     }
 
     private static object MapQuestion(LessonQuestion question)

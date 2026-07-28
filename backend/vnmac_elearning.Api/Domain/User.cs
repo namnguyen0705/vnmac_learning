@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace vnmac_elearning.Api.Domain;
 
@@ -16,8 +17,16 @@ public sealed class User
     public bool CreatedByAdmin { get; set; }
     public bool IsLocked { get; set; }
     public UserRole Role { get; set; }
+    public string? RoleId { get; set; }
+    [NotMapped]
+    public string RoleName { get; set; } = string.Empty;
+    [NotMapped]
+    public bool HasAdminAccess { get; set; }
+    [NotMapped]
+    public IReadOnlyCollection<string> Permissions { get; set; } = [];
     public string Province { get; set; } = string.Empty;
     public string Group { get; set; } = string.Empty;
+    public string AvatarUrl { get; set; } = string.Empty;
 
     [JsonIgnore]
     public string PasswordHash { get; set; } = string.Empty;

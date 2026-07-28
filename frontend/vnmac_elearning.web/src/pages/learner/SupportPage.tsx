@@ -98,7 +98,7 @@ export function SupportPage() {
             <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-5 text-sm text-slate-600">
               Đính kèm ảnh chụp màn hình hoặc mô tả mã lỗi nếu có.
             </div>
-            <Button className="w-fit rounded-2xl bg-[#163b7b] px-5 hover:bg-[#0f2e63]" type="button">
+            <Button className="w-fit rounded-2xl bg-[#163b7b] px-5 text-white hover:bg-[#0f2e63] hover:text-white" type="button">
               <Send className="size-4" />
               Gửi yêu cầu
             </Button>

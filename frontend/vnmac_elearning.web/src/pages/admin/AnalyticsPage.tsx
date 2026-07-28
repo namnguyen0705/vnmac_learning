@@ -15,6 +15,7 @@ import { getAnalytics } from "../../shared/api/admin";
 import { formatMinutes } from "../../shared/lib/format";
 import { LoadingBlock } from "../../shared/ui/LoadingBlock";
 import { MessageBanner } from "../../shared/ui/MessageBanner";
+import { ProvinceSelect } from "../../shared/ui/ProvinceSelect";
 import { BarChart3, Clock3, Download, Search, ShieldAlert, Users } from "lucide-react";
 
 function formatNumber(value: number) {
@@ -55,7 +56,7 @@ export function AnalyticsPage() {
 
       <AdminSection title="">
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_160px]">
-          <div className="relative">
+          <div className="hidden">
             <Search className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
             <Input
               className="h-11 rounded-2xl border-slate-200 pl-10"
@@ -64,6 +65,7 @@ export function AnalyticsPage() {
               onChange={(event) => setProvince(event.target.value)}
             />
           </div>
+          <ProvinceSelect allowAll value={province} onChange={setProvince} />
           <Input
             className="h-11 rounded-2xl border-slate-200"
             placeholder="Lọc theo nhóm đối tượng..."

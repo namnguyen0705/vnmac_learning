@@ -29,6 +29,20 @@ public enum LessonType
     Scorm
 }
 
+public enum LessonDifficulty
+{
+    Basic,
+    Intermediate,
+    Advanced
+}
+
+public enum LessonPublicationStatus
+{
+    Published,
+    Draft,
+    Archived
+}
+
 public enum LessonProgressStatus
 {
     NotStarted,
@@ -91,5 +105,7 @@ public enum NotificationType
 {
     LearnerRegistered,
     CourseEnrolled,
-    CourseCompleted
+    CourseCompleted,
+    SystemAnnouncement,
+    LearningReminder
 }

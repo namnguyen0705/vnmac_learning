@@ -17,8 +17,8 @@ import {
   AdminSection,
   AdminStatusBadge,
 } from "@/shared/ui/admin-kit";
-import { createCourse, createSection, deleteCourse, getAdminCourses, updateCourse } from "../../shared/api/admin";
-import { flattenLessons, sortSections } from "../../shared/lib/course";
+import { createCourse, createSection, deleteCourse, getAdminCourses, getTracking, updateCourse, updateSection } from "../../shared/api/admin";
+import { sortSections } from "../../shared/lib/course";
 import { humanizeEnum } from "../../shared/lib/format";
 import { LoadingBlock } from "../../shared/ui/LoadingBlock";
 import { MessageBanner } from "../../shared/ui/MessageBanner";
@@ -74,20 +74,70 @@ function formatNumber(value: number) {
   return new Intl.NumberFormat("vi-VN").format(Math.max(0, Math.round(value)));
 }
 
+function getActiveContentLessons(section: CourseSection) {
+  return section.lessons.filter(
+    (lesson) => lesson.publicationStatus !== "Archived" && lesson.type !== "Quiz",
+  );
+}
+
+function getActiveQuizLessonIds(course: CourseTreeResponse) {
+  return new Set(
+    course.sections
+      .flatMap((section) => section.lessons)
+      .filter((lesson) => lesson.publicationStatus !== "Archived" && lesson.type === "Quiz")
+      .map((lesson) => lesson.id),
+  );
+}
+
+function getLessonQuestionCount(lesson: CourseSection["lessons"][number]) {
+  const checkStepQuestions = (lesson.content?.steps ?? [])
+    .filter((step) => step.key === "check")
+    .reduce((total, step) => total + (step.questions?.length ?? 0), 0);
+  const assessmentQuestions = lesson.assessment?.bankQuestionCount ?? lesson.assessment?.questionCount ?? 0;
+  return checkStepQuestions + assessmentQuestions;
+}
+
+function getQuizQuestionCount(quiz: NonNullable<CourseSection["quizzes"]>[number]) {
+  return quiz.assessment?.bankQuestionCount ?? quiz.assessment?.questionCount ?? 0;
+}
+
 function getSectionQuestionCount(section: CourseSection) {
   return (
-    section.lessons.reduce((total, lesson) => total + (lesson.assessment?.questionCount ?? 0), 0) +
-    (section.quizzes ?? []).reduce((total, quiz) => total + (quiz.assessment?.questionCount ?? 0), 0)
+    getActiveContentLessons(section).reduce((total, lesson) => total + getLessonQuestionCount(lesson), 0) +
+    (section.quizzes ?? []).reduce((total, quiz) => total + getQuizQuestionCount(quiz), 0)
   );
 }
 
 function getCourseQuizCount(course: CourseTreeResponse) {
-  return course.sections.reduce((total, section) => total + (section.quizzes?.length ?? 0), 0) + (course.quizzes?.length ?? 0);
+  const activeQuizLessonIds = getActiveQuizLessonIds(course);
+  return course.sections.reduce(
+    (total, section) =>
+      total + (section.quizzes ?? []).filter((quiz) => activeQuizLessonIds.has(quiz.assessmentLessonId)).length,
+    0,
+  ) + (course.quizzes ?? []).filter((quiz) => activeQuizLessonIds.has(quiz.assessmentLessonId)).length;
 }
 
 function getCourseQuestionCount(course: CourseTreeResponse) {
-  return course.sections.reduce((total, section) => total + getSectionQuestionCount(section), 0) +
-    (course.quizzes ?? []).reduce((total, quiz) => total + (quiz.assessment?.questionCount ?? 0), 0);
+  const activeQuizLessonIds = getActiveQuizLessonIds(course);
+  const lessonQuestions = course.sections.reduce(
+    (total, section) =>
+      total + getActiveContentLessons(section).reduce(
+        (sectionTotal, lesson) => sectionTotal + getLessonQuestionCount(lesson),
+        0,
+      ),
+    0,
+  );
+  const sectionQuizQuestions = course.sections.reduce(
+    (total, section) =>
+      total + (section.quizzes ?? [])
+        .filter((quiz) => activeQuizLessonIds.has(quiz.assessmentLessonId))
+        .reduce((sectionTotal, quiz) => sectionTotal + getQuizQuestionCount(quiz), 0),
+    0,
+  );
+  const courseQuizQuestions = (course.quizzes ?? [])
+    .filter((quiz) => activeQuizLessonIds.has(quiz.assessmentLessonId))
+    .reduce((total, quiz) => total + getQuizQuestionCount(quiz), 0);
+  return lessonQuestions + sectionQuizQuestions + courseQuizQuestions;
 }
 
 function CompactStat({
@@ -119,13 +169,17 @@ function CompactStat({
 
 function CourseStructure({ course }: { course: EnrichedCourse }) {
   const sections = sortSections(course.sections);
+  const activeQuizLessonIds = getActiveQuizLessonIds(course);
+  const courseQuizzes = course.quizzes.filter((quiz) => activeQuizLessonIds.has(quiz.assessmentLessonId));
 
   return (
     <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_280px]">
       <div className="space-y-3">
         {sections.map((section) => {
-          const lessons = [...section.lessons].sort((left, right) => left.order - right.order);
-          const quizzes = [...(section.quizzes ?? [])].sort((left, right) => left.order - right.order);
+          const lessons = getActiveContentLessons(section).sort((left, right) => left.order - right.order);
+          const quizzes = (section.quizzes ?? [])
+            .filter((quiz) => activeQuizLessonIds.has(quiz.assessmentLessonId))
+            .sort((left, right) => left.order - right.order);
           const questionCount = getSectionQuestionCount(section);
 
           return (
@@ -139,7 +193,7 @@ function CourseStructure({ course }: { course: EnrichedCourse }) {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="secondary">{lessons.length} bài học</Badge>
-                  <Badge variant="secondary">{quizzes.length} quiz</Badge>
+                  <Badge variant="secondary">{quizzes.length} bài kiểm tra</Badge>
                   <Badge variant="outline">{questionCount} câu hỏi</Badge>
                 </div>
               </div>
@@ -160,7 +214,7 @@ function CourseStructure({ course }: { course: EnrichedCourse }) {
                         </p>
                       </div>
                       <div className="flex flex-wrap gap-2">
-                        <Badge variant="outline">{lesson.assessment?.questionCount ?? 0} câu hỏi</Badge>
+                        <Badge variant="outline">{getLessonQuestionCount(lesson)} câu hỏi</Badge>
                         <Badge variant="secondary">{lesson.statusLabel}</Badge>
                       </div>
                     </div>
@@ -180,15 +234,15 @@ function CourseStructure({ course }: { course: EnrichedCourse }) {
                       >
                         <div className="space-y-1">
                           <p className="font-medium text-slate-900">
-                            Quiz {quiz.order}: {quiz.title}
+                            Bài kiểm tra {quiz.order}: {quiz.title}
                           </p>
                           <p className="text-sm text-slate-500">
-                            {quiz.description || "Quiz thuộc phần học này"} • {quiz.durationMinutes} phút
+                            {quiz.description || "Bài kiểm tra thuộc phần học này"} • {quiz.durationMinutes} phút
                           </p>
                         </div>
                         <div className="flex flex-wrap gap-2">
-                          <Badge variant="outline">{quiz.assessment?.questionCount ?? 0} câu hỏi</Badge>
-                          <Badge variant="secondary">Quiz phần học</Badge>
+                          <Badge variant="outline">{getQuizQuestionCount(quiz)} câu hỏi</Badge>
+                          <Badge variant="secondary">Kiểm tra phần học</Badge>
                         </div>
                       </div>
                     ))}
@@ -199,38 +253,38 @@ function CourseStructure({ course }: { course: EnrichedCourse }) {
           );
         })}
 
-        {course.quizzes.length ? (
+        {courseQuizzes.length ? (
           <div className="rounded-[24px] border border-slate-200 bg-white px-4 py-4">
             <div className="flex flex-col gap-3 border-b border-slate-100 pb-3 md:flex-row md:items-start md:justify-between">
               <div className="space-y-1">
-                <p className="font-semibold text-slate-950">Quiz toàn khóa</p>
-                <p className="text-sm text-slate-500">Các quiz chỉ mở khi học viên hoàn thành toàn bộ nội dung của khóa.</p>
+                <p className="font-semibold text-slate-950">Bài kiểm tra toàn chủ đề</p>
+                <p className="text-sm text-slate-500">Các bài kiểm tra chỉ mở khi học viên hoàn thành toàn bộ nội dung của chủ đề.</p>
               </div>
               <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">{course.quizzes.length} quiz</Badge>
+                <Badge variant="secondary">{courseQuizzes.length} bài kiểm tra</Badge>
                 <Badge variant="outline">
-                  {course.quizzes.reduce((total, quiz) => total + (quiz.assessment?.questionCount ?? 0), 0)} câu hỏi
+                  {courseQuizzes.reduce((total, quiz) => total + getQuizQuestionCount(quiz), 0)} câu hỏi
                 </Badge>
               </div>
             </div>
 
             <div className="mt-3 space-y-2">
-              {course.quizzes.map((quiz) => (
+              {courseQuizzes.map((quiz) => (
                 <div
                   className="flex flex-col gap-3 rounded-2xl border border-indigo-100 bg-indigo-50/50 px-3 py-3 md:flex-row md:items-center md:justify-between"
                   key={quiz.id}
                 >
                   <div className="space-y-1">
                     <p className="font-medium text-slate-900">
-                      Quiz {quiz.order}: {quiz.title}
+                      Bài kiểm tra {quiz.order}: {quiz.title}
                     </p>
                     <p className="text-sm text-slate-500">
-                      {quiz.description || "Quiz toàn khóa"} • {quiz.durationMinutes} phút
+                      {quiz.description || "Bài kiểm tra toàn chủ đề"} • {quiz.durationMinutes} phút
                     </p>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    <Badge variant="outline">{quiz.assessment?.questionCount ?? 0} câu hỏi</Badge>
-                    <Badge variant="secondary">Quiz khóa học</Badge>
+                      <Badge variant="outline">{getQuizQuestionCount(quiz)} câu hỏi</Badge>
+                    <Badge variant="secondary">Kiểm tra chủ đề</Badge>
                   </div>
                 </div>
               ))}
@@ -240,7 +294,7 @@ function CourseStructure({ course }: { course: EnrichedCourse }) {
       </div>
 
       <div className="rounded-[24px] border border-slate-200 bg-slate-50 px-5 py-5">
-        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">Tóm tắt khóa học</p>
+        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">Tóm tắt chủ đề</p>
         <div className="mt-4 space-y-3">
           <div className="rounded-2xl bg-white px-4 py-3">
             <p className="text-sm text-slate-500">Tổng phần học</p>
@@ -251,7 +305,7 @@ function CourseStructure({ course }: { course: EnrichedCourse }) {
             <p className="mt-1 text-2xl font-semibold text-slate-950">{formatNumber(course.lessonCount)}</p>
           </div>
           <div className="rounded-2xl bg-white px-4 py-3">
-            <p className="text-sm text-slate-500">Tổng quiz</p>
+            <p className="text-sm text-slate-500">Tổng bài kiểm tra</p>
             <p className="mt-1 text-2xl font-semibold text-slate-950">{formatNumber(course.quizCount)}</p>
           </div>
           <div className="rounded-2xl bg-white px-4 py-3">
@@ -269,7 +323,7 @@ function CourseStructure({ course }: { course: EnrichedCourse }) {
             <Link to={`/admin/lessons?courseId=${course.id}`}>Mở danh sách bài học chi tiết</Link>
           </Button>
           <Button asChild className="rounded-2xl" size="sm" variant="outline">
-            <Link to={`/admin/quizzes?courseId=${course.id}`}>Mở danh sách quiz</Link>
+            <Link to={`/admin/quizzes?courseId=${course.id}`}>Mở danh sách bài kiểm tra</Link>
           </Button>
         </div>
       </div>
@@ -287,10 +341,15 @@ export function CoursesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [courseForm, setCourseForm] = useState<CourseFormState>(emptyCourseForm);
   const [sectionForm, setSectionForm] = useState<SectionFormState>(emptySectionForm);
+  const [editingSectionId, setEditingSectionId] = useState<string | null>(null);
 
   const coursesQuery = useQuery({
     queryKey: ["admin", "courses"],
     queryFn: getAdminCourses,
+  });
+  const trackingQuery = useQuery({
+    queryKey: ["admin", "tracking", "course-counts"],
+    queryFn: () => getTracking({}),
   });
 
   const allCourses = coursesQuery.data ?? [];
@@ -300,12 +359,17 @@ export function CoursesPage() {
         ...course,
         index,
         sectionCount: course.sections.length,
-        lessonCount: flattenLessons(course).length,
+        lessonCount: course.sections.reduce(
+          (total, section) => total + getActiveContentLessons(section).length,
+          0,
+        ),
         quizCount: getCourseQuizCount(course),
         questionCount: getCourseQuestionCount(course),
-        learnerCount: Math.round(920 + (allCourses.length - index) * 138),
+        learnerCount: (trackingQuery.data?.learners ?? []).filter((learner) =>
+          learner.courses.some((item) => item.courseId === course.id),
+        ).length,
       })),
-    [allCourses],
+    [allCourses, trackingQuery.data],
   );
 
   const filteredCourses = useMemo(() => {
@@ -366,7 +430,7 @@ export function CoursesPage() {
   const createSectionMutation = useMutation({
     mutationFn: () => {
       if (!editingCourseId) {
-        throw new Error("Khóa học chưa được chọn.");
+        throw new Error("Chủ đề chưa được chọn.");
       }
 
       return createSection(editingCourseId, {
@@ -381,6 +445,20 @@ export function CoursesPage() {
         ...emptySectionForm,
         order: current.order + 1,
       }));
+    },
+  });
+
+  const updateSectionMutation = useMutation({
+    mutationFn: () => {
+      if (!editingCourseId || !editingSectionId) {
+        throw new Error("Phần học chưa được chọn.");
+      }
+      return updateSection(editingCourseId, editingSectionId, sectionForm);
+    },
+    onSuccess: async () => {
+      await invalidate();
+      setEditingSectionId(null);
+      setSectionForm({ ...emptySectionForm, order: (editingCourse?.sections.length ?? 0) + 1 });
     },
   });
 
@@ -400,6 +478,7 @@ export function CoursesPage() {
     setEditingCourseId(null);
     setCourseForm(emptyCourseForm);
     setSectionForm(emptySectionForm);
+    setEditingSectionId(null);
     setIsModalOpen(true);
   }
 
@@ -420,6 +499,7 @@ export function CoursesPage() {
       description: "",
       order: target.sections.length + 1,
     });
+    setEditingSectionId(null);
     setIsModalOpen(true);
   }
 
@@ -428,6 +508,7 @@ export function CoursesPage() {
     setEditingCourseId(null);
     setCourseForm(emptyCourseForm);
     setSectionForm(emptySectionForm);
+    setEditingSectionId(null);
   }
 
   function toggleExpanded(courseId: string) {
@@ -435,22 +516,22 @@ export function CoursesPage() {
   }
 
   if (coursesQuery.isLoading) {
-    return <LoadingBlock label="Đang tải danh sách khóa học..." />;
+    return <LoadingBlock label="Đang tải danh sách chủ đề..." />;
   }
 
   if (coursesQuery.isError || !coursesQuery.data) {
-    return <MessageBanner tone="error">Không tải được danh sách khóa học.</MessageBanner>;
+    return <MessageBanner tone="error">Không tải được danh sách chủ đề.</MessageBanner>;
   }
 
   return (
     <div className="grid gap-4">
       <AdminPageHeader
-        breadcrumbs={["Quản trị", "Khóa học"]}
-        title="Quản lý khóa học"
+        breadcrumbs={["Quản trị", "Chủ đề"]}
+        title="Quản lý chủ đề"
         actions={
           <Button className="rounded-2xl" type="button" onClick={openCreateModal}>
             <Plus className="size-4" />
-            Thêm khóa học
+            Thêm chủ đề
           </Button>
         }
       />
@@ -458,9 +539,9 @@ export function CoursesPage() {
       <section className="grid gap-2.5 md:grid-cols-2 xl:grid-cols-5">
         <CompactStat
           accentClassName="bg-blue-50 text-blue-600"
-          helper="Tổng số khóa học đang có trên hệ thống."
+          helper="Tổng số chủ đề đang có trên hệ thống."
           icon={<BookOpen className="size-5" />}
-          label="Khóa học"
+          label="Chủ đề"
           value={formatNumber(totalCourses)}
         />
         <CompactStat
@@ -472,7 +553,7 @@ export function CoursesPage() {
         />
         <CompactStat
           accentClassName="bg-violet-50 text-violet-600"
-          helper="Tổng số phần học thuộc tất cả khóa học."
+          helper="Tổng số phần học thuộc tất cả chủ đề."
           icon={<FolderTree className="size-5" />}
           label="Phần học"
           value={formatNumber(totalSections)}
@@ -486,25 +567,19 @@ export function CoursesPage() {
         />
         <CompactStat
           accentClassName="bg-rose-50 text-rose-600"
-          helper="Quiz đã được tách khỏi bài học và thuộc phần học hoặc toàn khóa."
+          helper="Bài kiểm tra thuộc trực tiếp một phần học trong chủ đề."
           icon={<PlayCircle className="size-5" />}
-          label="Quiz"
+          label="Bài kiểm tra"
           value={formatNumber(totalQuizzes)}
         />
       </section>
 
       <AdminSection
         action={
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="secondary">{filteredCourses.length} khóa học</Badge>
-            <Button className="h-8 px-3 text-xs" type="button" onClick={openCreateModal}>
-              <Plus className="size-3.5" />
-              Thêm khóa học
-            </Button>
-          </div>
+          <Badge variant="secondary">{filteredCourses.length} chủ đề</Badge>
         }
-        subtitle="Thu gọn bộ lọc và hiển thị luôn cấu trúc bên trong để không phải chuyển qua lại giữa Khóa học và Bài học."
-        title="Danh sách khóa học"
+        subtitle="Thu gọn bộ lọc và hiển thị luôn cấu trúc bên trong để không phải chuyển qua lại giữa Chủ đề và Bài học."
+        title="Danh sách chủ đề"
       >
         <div className="space-y-4">
           <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_220px]">
@@ -512,7 +587,7 @@ export function CoursesPage() {
               <Search className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
               <Input
                 className="h-10 rounded-2xl border-slate-200 pl-11"
-                placeholder="Tìm tên khóa học hoặc mô tả..."
+                placeholder="Tìm tên chủ đề hoặc mô tả..."
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
               />
@@ -533,7 +608,7 @@ export function CoursesPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Khóa học</TableHead>
+                  <TableHead>Chủ đề</TableHead>
                   <TableHead>Phần học</TableHead>
                   <TableHead>Bài học</TableHead>
                   <TableHead>Câu hỏi</TableHead>
@@ -552,7 +627,7 @@ export function CoursesPage() {
                         <TableCell>
                           <div className="flex items-start gap-3">
                             <button
-                              aria-label={isExpanded ? "Thu gọn cấu trúc khóa học" : "Mở cấu trúc khóa học"}
+                              aria-label={isExpanded ? "Thu gọn cấu trúc chủ đề" : "Mở cấu trúc chủ đề"}
                               className="mt-1 rounded-full border border-slate-200 p-1 text-slate-500 transition hover:border-slate-300 hover:text-slate-800"
                               onClick={() => toggleExpanded(course.id)}
                               type="button"
@@ -583,22 +658,22 @@ export function CoursesPage() {
                           <div className="flex justify-end gap-2">
   <AdminIconButton
     icon={<Eye className="size-4" />}
-    label={isExpanded ? "Ẩn cấu trúc khóa học" : "Xem cấu trúc khóa học"}
+    label={isExpanded ? "Ẩn cấu trúc chủ đề" : "Xem cấu trúc chủ đề"}
     variant="outline"
     onClick={() => toggleExpanded(course.id)}
   />
   <AdminIconButton
     icon={<Pencil className="size-4" />}
-    label={`Sửa khóa học ${course.title}`}
+    label={`Sửa chủ đề ${course.title}`}
     variant="ghost"
     onClick={() => openEditModal(course.id)}
   />
   <AdminIconButton
     icon={<Trash2 className="size-4" />}
-    label={`Xóa khóa học ${course.title}`}
+    label={`Xóa chủ đề ${course.title}`}
     variant="destructive"
     onClick={() => {
-      if (window.confirm(`Xóa khóa học "${course.title}"?`)) {
+      if (window.confirm(`Xóa chủ đề "${course.title}"?`)) {
         deleteMutation.mutate(course.id);
       }
     }}
@@ -633,19 +708,19 @@ export function CoursesPage() {
               Đóng
             </Button>
             <Button className="rounded-2xl" disabled={upsertMutation.isPending} type="button" onClick={() => upsertMutation.mutate()}>
-              {upsertMutation.isPending ? "Đang lưu..." : editingCourseId ? "Cập nhật khóa học" : "Thêm khóa học"}
+              {upsertMutation.isPending ? "Đang lưu..." : editingCourseId ? "Cập nhật chủ đề" : "Thêm chủ đề"}
             </Button>
           </>
         }
         description="Tạo, sửa và bổ sung phần học ngay trong cùng một hộp thoại để luồng quản trị không bị tách rời."
         onClose={closeModal}
         open={isModalOpen}
-        title={editingCourseId ? "Cập nhật khóa học" : "Thêm khóa học"}
+        title={editingCourseId ? "Cập nhật chủ đề" : "Thêm chủ đề"}
       >
         <div className="grid gap-6">
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2 md:col-span-2">
-              <Label>Tên khóa học</Label>
+              <Label>Tên chủ đề</Label>
               <Input
                 className="rounded-2xl"
                 value={courseForm.title}
@@ -678,7 +753,7 @@ export function CoursesPage() {
           </div>
 
           {editingCourse ? (
-            <AdminSection subtitle="Mỗi phần học hiển thị ngay số bài học để dễ tổ chức cấu trúc." title="Phần học trong khóa">
+            <AdminSection subtitle="Mỗi phần học hiển thị ngay số bài học để dễ tổ chức cấu trúc." title="Phần học trong chủ đề">
               <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
                 <div className="space-y-3">
                   {sortSections(editingCourse.sections).map((section) => (
@@ -691,22 +766,36 @@ export function CoursesPage() {
                           <p className="mt-1 text-sm text-slate-500">{section.description || "Chưa có mô tả"}</p>
                         </div>
                         <div className="flex flex-wrap gap-2">
-                          <Badge variant="secondary">{section.lessons.length} bài học</Badge>
+                          <Badge variant="secondary">{getActiveContentLessons(section).length} bài học</Badge>
                           <Badge variant="outline">{getSectionQuestionCount(section)} câu hỏi</Badge>
+                          <Button
+                            aria-label={`Sửa ${section.title}`}
+                            size="icon"
+                            type="button"
+                            variant="outline"
+                            onClick={() => {
+                              setEditingSectionId(section.id);
+                              setSectionForm({ title: section.title, description: section.description, order: section.order });
+                            }}
+                          >
+                            <Pencil className="size-4" />
+                          </Button>
                         </div>
                       </div>
                     </div>
                   ))}
                   {!editingCourse.sections.length ? (
                     <div className="rounded-[24px] border border-dashed border-slate-200 px-4 py-4 text-sm text-slate-500">
-                      Khóa học này chưa có phần học.
+                      Chủ đề này chưa có phần học.
                     </div>
                   ) : null}
                 </div>
 
                 <div className="rounded-[28px] border border-slate-200 bg-slate-50 p-5">
-                  <p className="font-semibold text-slate-900">Thêm phần học mới</p>
-                  <p className="mt-1 text-sm text-slate-500">Tạo nhanh phần học để nối tiếp sang danh sách bài học.</p>
+                  <p className="font-semibold text-slate-900">{editingSectionId ? "Sửa phần học" : "Thêm phần học mới"}</p>
+                  <p className="mt-1 text-sm text-slate-500">
+                    {editingSectionId ? "Cập nhật tiêu đề, mô tả và thứ tự phần học." : "Tạo nhanh phần học để nối tiếp sang danh sách bài học."}
+                  </p>
                   <div className="mt-4 space-y-4">
                     <div className="space-y-2">
                       <Label>Tiêu đề phần học</Label>
@@ -736,12 +825,27 @@ export function CoursesPage() {
                     </div>
                     <Button
                       className="w-full rounded-2xl"
-                      disabled={createSectionMutation.isPending}
+                      disabled={createSectionMutation.isPending || updateSectionMutation.isPending}
                       type="button"
-                      onClick={() => createSectionMutation.mutate()}
+                      onClick={() => editingSectionId ? updateSectionMutation.mutate() : createSectionMutation.mutate()}
                     >
-                      {createSectionMutation.isPending ? "Đang thêm phần học..." : "Thêm phần học"}
+                      {editingSectionId
+                        ? updateSectionMutation.isPending ? "Đang lưu..." : "Lưu phần học"
+                        : createSectionMutation.isPending ? "Đang thêm phần học..." : "Thêm phần học"}
                     </Button>
+                    {editingSectionId ? (
+                      <Button
+                        className="w-full rounded-2xl"
+                        type="button"
+                        variant="outline"
+                        onClick={() => {
+                          setEditingSectionId(null);
+                          setSectionForm({ ...emptySectionForm, order: editingCourse.sections.length + 1 });
+                        }}
+                      >
+                        Hủy sửa phần học
+                      </Button>
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -752,4 +856,3 @@ export function CoursesPage() {
     </div>
   );
 }
-

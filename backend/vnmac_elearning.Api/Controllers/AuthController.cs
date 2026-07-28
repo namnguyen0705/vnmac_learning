@@ -4,19 +4,42 @@ using vnmac_elearning.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.EntityFrameworkCore;
+using vnmac_elearning.Api.Infrastructure;
 
 namespace vnmac_elearning.Api.Controllers;
 
 [ApiController]
 [Route("api/auth")]
-public sealed class AuthController(AuthService authService) : ControllerBase
+public sealed class AuthController(AuthService authService, TrainingDbContext dbContext) : ControllerBase
 {
+    [HttpGet("provinces")]
+    [ProducesResponseType(typeof(IReadOnlyCollection<string>), StatusCodes.Status200OK)]
+    public ActionResult<IReadOnlyCollection<string>> GetProvinces()
+    {
+        return Ok(dbContext.Provinces
+            .AsNoTracking()
+            .Where(province => province.IsActive)
+            .OrderBy(province => province.SortOrder)
+            .Select(province => province.Name)
+            .ToArray());
+    }
+
     [EnableRateLimiting("login")]
     [HttpPost("register")]
     [ProducesResponseType(typeof(RegisterResponse), StatusCodes.Status200OK)]
-    public ActionResult<RegisterResponse> Register([FromBody] RegisterRequest request)
+    public async Task<ActionResult<RegisterResponse>> Register([FromBody] RegisterRequest request)
     {
-        return Ok(authService.Register(request));
+        return Ok(await authService.RegisterAsync(request));
+    }
+
+    [EnableRateLimiting("login")]
+    [HttpPost("resend-verification")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> ResendVerification([FromBody] ResendVerificationEmailRequest request)
+    {
+        await authService.ResendVerificationEmailAsync(request);
+        return NoContent();
     }
 
     [HttpPost("verify-email")]
@@ -58,5 +81,24 @@ public sealed class AuthController(AuthService authService) : ControllerBase
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         return Ok(authService.GetCurrentUser(userId));
+    }
+
+    [Authorize]
+    [HttpPut("profile")]
+    [ProducesResponseType(typeof(Domain.User), StatusCodes.Status200OK)]
+    public ActionResult<Domain.User> UpdateProfile([FromBody] UpdateProfileRequest request)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        return Ok(authService.UpdateProfile(userId, request));
+    }
+
+    [Authorize]
+    [HttpPut("password")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public IActionResult ChangePassword([FromBody] ChangePasswordRequest request)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        authService.ChangePassword(userId, request);
+        return NoContent();
     }
 }

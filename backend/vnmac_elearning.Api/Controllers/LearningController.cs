@@ -2,13 +2,24 @@ using vnmac_elearning.Api.Contracts;
 using vnmac_elearning.Api.Domain;
 using vnmac_elearning.Api.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace vnmac_elearning.Api.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/learning")]
-public sealed class LearningController(LearningService learningService) : ControllerBase
+public sealed class LearningController(
+    LearningService learningService,
+    MediaStorageService mediaStorageService) : ControllerBase
 {
+    [AllowAnonymous]
+    [HttpGet("library")]
+    public ActionResult<IReadOnlyCollection<MediaLibraryItemResponse>> GetLibrary()
+    {
+        return Ok(mediaStorageService.GetPublicLibrary());
+    }
+
     [HttpGet("learners/{userId}/catalog")]
     public ActionResult<LearnerCourseCatalogResponse> GetCatalog(string userId)
     {
@@ -31,6 +42,27 @@ public sealed class LearningController(LearningService learningService) : Contro
     public ActionResult<ProgressSnapshotResponse> GetCourseProgress(string userId, string courseId)
     {
         return Ok(learningService.GetCourseProgress(userId, courseId));
+    }
+
+    [HttpGet("learners/{userId}/courses/{courseId}/learning-results")]
+    public ActionResult<LearningResultsResponse> GetLearningResults(string userId, string courseId)
+    {
+        return Ok(learningService.GetLearningResults(userId, courseId));
+    }
+
+    [HttpPost("learners/{userId}/lessons/{lessonId}/study-state")]
+    public ActionResult<ProgressTracking> UpdateLessonStudyState(
+        string userId,
+        string lessonId,
+        [FromBody] LessonStudyStateRequest request)
+    {
+        return Ok(learningService.UpdateLessonStudyState(userId, lessonId, request));
+    }
+
+    [HttpPost("learners/{userId}/lessons/{lessonId}/complete")]
+    public ActionResult<ProgressTracking> CompleteLessonContent(string userId, string lessonId)
+    {
+        return Ok(learningService.CompleteLessonContent(userId, lessonId));
     }
 
     [HttpPost("learners/{userId}/lessons/{lessonId}/video-progress")]

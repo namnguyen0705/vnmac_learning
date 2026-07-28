@@ -1,4 +1,4 @@
-import { apiRequest } from "./client";
+import { apiRequest, resolveApiUrl } from "./client";
 import type {
   CertificateResponse,
   CertificateVerificationResponse,
@@ -9,6 +9,8 @@ import type {
   LearnerCertificatesResponse,
   LearnerDashboardResponse,
   LearnerEnrollmentSummary,
+  LearningResultsResponse,
+  MediaLibraryItem,
   ProgressTracking,
   ProgressSnapshotResponse,
   QuizAttemptRequest,
@@ -20,6 +22,15 @@ import type {
 
 export function getPublishedCourses() {
   return apiRequest<CourseTreeResponse[]>("/api/courses");
+}
+
+export async function getPublicMediaLibrary() {
+  const items = await apiRequest<MediaLibraryItem[]>("/api/learning/library");
+  return items.map((item) => ({
+    ...item,
+    url: resolveApiUrl(item.url),
+    thumbnailUrl: item.thumbnailUrl ? resolveApiUrl(item.thumbnailUrl) : "",
+  }));
 }
 
 export function getCourseById(courseId: string) {
@@ -42,6 +53,28 @@ export function enrollInCourse(userId: string, courseId: string) {
 
 export function getLearnerCourseProgress(userId: string, courseId: string) {
   return apiRequest<ProgressSnapshotResponse>(`/api/learning/learners/${userId}/courses/${courseId}/progress`);
+}
+
+export function getLearnerLearningResults(userId: string, courseId: string) {
+  return apiRequest<LearningResultsResponse>(`/api/learning/learners/${userId}/courses/${courseId}/learning-results`);
+}
+
+export function updateLessonStudyState(
+  userId: string,
+  lessonId: string,
+  currentStep: string,
+  activeSeconds = 0,
+) {
+  return apiRequest<ProgressTracking>(`/api/learning/learners/${userId}/lessons/${lessonId}/study-state`, {
+    method: "POST",
+    body: { currentStep, activeSeconds },
+  });
+}
+
+export function completeLessonContent(userId: string, lessonId: string) {
+  return apiRequest<ProgressTracking>(`/api/learning/learners/${userId}/lessons/${lessonId}/complete`, {
+    method: "POST",
+  });
 }
 
 export function updateVideoProgress(

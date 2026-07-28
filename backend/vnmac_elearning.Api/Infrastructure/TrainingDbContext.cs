@@ -7,6 +7,9 @@ namespace vnmac_elearning.Api.Infrastructure;
 public sealed class TrainingDbContext(DbContextOptions<TrainingDbContext> options) : DbContext(options)
 {
     public DbSet<User> Users => Set<User>();
+    public DbSet<AppRole> AppRoles => Set<AppRole>();
+    public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
+    public DbSet<Province> Provinces => Set<Province>();
 
     public DbSet<Course> Courses => Set<Course>();
 
@@ -64,6 +67,12 @@ public sealed class TrainingDbContext(DbContextOptions<TrainingDbContext> option
 
     public DbSet<Notification> Notifications => Set<Notification>();
 
+    public DbSet<SystemSettings> SystemSettings => Set<SystemSettings>();
+
+    public DbSet<SystemAuditLog> SystemAuditLogs => Set<SystemAuditLog>();
+
+    public DbSet<LibraryDocument> LibraryDocuments => Set<LibraryDocument>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>(entity =>
@@ -77,6 +86,48 @@ public sealed class TrainingDbContext(DbContextOptions<TrainingDbContext> option
                 .IsUnique()
                 .HasFilter("[Username] <> ''");
             entity.Property(item => item.Role).HasConversion<string>();
+            entity.HasOne<AppRole>()
+                .WithMany()
+                .HasForeignKey(item => item.RoleId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<AppRole>(entity =>
+        {
+            entity.HasKey(item => item.Id);
+            entity.HasIndex(item => item.Code).IsUnique();
+            entity.Property(item => item.Code).HasMaxLength(80);
+            entity.Property(item => item.Name).HasMaxLength(160);
+            entity.HasMany(item => item.Permissions)
+                .WithOne()
+                .HasForeignKey(item => item.RoleId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Province>(entity =>
+        {
+            entity.HasKey(item => item.Code);
+            entity.HasIndex(item => item.Name).IsUnique();
+            entity.Property(item => item.Code).HasMaxLength(10);
+            entity.Property(item => item.Name).HasMaxLength(120);
+            entity.Property(item => item.Type).HasMaxLength(30);
+        });
+
+        modelBuilder.Entity<RolePermission>(entity =>
+        {
+            entity.HasKey(item => new { item.RoleId, item.Resource });
+            entity.Property(item => item.Resource).HasMaxLength(80);
+        });
+
+        modelBuilder.Entity<LibraryDocument>(entity =>
+        {
+            entity.HasKey(item => item.Id);
+            entity.HasIndex(item => item.FileName).IsUnique();
+            entity.HasIndex(item => new { item.IsPublished, item.SortOrder });
+            entity.Property(item => item.Title).HasMaxLength(240);
+            entity.Property(item => item.Category).HasMaxLength(120);
+            entity.Property(item => item.FileUrl).HasMaxLength(1024);
+            entity.Property(item => item.ThumbnailUrl).HasMaxLength(1024);
         });
 
         modelBuilder.Entity<Course>(entity =>
@@ -134,7 +185,13 @@ public sealed class TrainingDbContext(DbContextOptions<TrainingDbContext> option
         {
             entity.HasKey(item => item.Id);
             entity.HasIndex(item => new { item.SectionId, item.Order }).IsUnique();
+            entity.HasIndex(item => item.PublicationStatus);
+            entity.HasIndex(item => item.Difficulty);
             entity.Property(item => item.Type).HasConversion<string>();
+            entity.Property(item => item.Difficulty).HasConversion<string>().HasMaxLength(32);
+            entity.Property(item => item.PublicationStatus).HasConversion<string>().HasMaxLength(32);
+            entity.Property(item => item.Topic).HasMaxLength(160);
+            entity.Property(item => item.ThumbnailUrl).HasMaxLength(1024);
             entity.HasOne(item => item.Assessment)
                 .WithOne()
                 .HasForeignKey<LessonAssessment>(item => item.LessonId)
@@ -143,12 +200,14 @@ public sealed class TrainingDbContext(DbContextOptions<TrainingDbContext> option
                 .WithOne()
                 .HasForeignKey<ScormPackage>(item => item.LessonId)
                 .OnDelete(DeleteBehavior.Cascade);
+            ConfigureJsonProperty(entity.Property(item => item.Content));
             ConfigureJsonProperty(entity.Property(item => item.VideoContent));
         });
 
         modelBuilder.Entity<LessonAssessment>(entity =>
         {
             entity.HasKey(item => item.LessonId);
+            entity.Property(item => item.QuestionLimit);
             entity.HasMany(item => item.Questions)
                 .WithOne()
                 .HasForeignKey(item => item.LessonId)
@@ -320,6 +379,7 @@ public sealed class TrainingDbContext(DbContextOptions<TrainingDbContext> option
         {
             entity.HasKey(item => new { item.UserId, item.LessonId });
             entity.Property(item => item.Status).HasConversion<string>();
+            entity.Property(item => item.CurrentStep).HasMaxLength(32);
             entity.HasOne<User>()
                 .WithMany()
                 .HasForeignKey(item => item.UserId)
@@ -455,6 +515,46 @@ public sealed class TrainingDbContext(DbContextOptions<TrainingDbContext> option
                 .WithMany()
                 .HasForeignKey(item => item.CourseId)
                 .OnDelete(DeleteBehavior.NoAction);
+        });
+
+        modelBuilder.Entity<SystemSettings>(entity =>
+        {
+            entity.HasKey(item => item.Id);
+            entity.Property(item => item.Id).HasMaxLength(64);
+            entity.Property(item => item.SiteTitle).HasMaxLength(220);
+            entity.Property(item => item.HeaderTitle).HasMaxLength(220);
+            entity.Property(item => item.HeaderSubtitle).HasMaxLength(500);
+            entity.Property(item => item.ProjectLogoUrl).HasMaxLength(1024);
+            entity.Property(item => item.LoginLogoUrl).HasMaxLength(1024);
+            entity.Property(item => item.VnmacLogoUrl).HasMaxLength(1024);
+            entity.Property(item => item.VietnamFlagUrl).HasMaxLength(1024);
+            entity.Property(item => item.UsFlagUrl).HasMaxLength(1024);
+            entity.Property(item => item.CrsLogoUrl).HasMaxLength(1024);
+            entity.Property(item => item.HeaderBackgroundColor).HasMaxLength(32);
+            entity.Property(item => item.HeaderBackgroundImageUrl).HasMaxLength(1024);
+            entity.Property(item => item.LoginBackgroundImageUrl).HasMaxLength(1024);
+            entity.Property(item => item.CertificateTemplateUrl).HasMaxLength(1024);
+            entity.Property(item => item.CertificateTitle).HasMaxLength(220);
+            entity.Property(item => item.CertificateCourseTitle).HasMaxLength(500);
+        });
+
+        modelBuilder.Entity<SystemAuditLog>(entity =>
+        {
+            entity.HasKey(item => item.Id);
+            entity.HasIndex(item => item.OccurredAt);
+            entity.HasIndex(item => item.ActorUserId);
+            entity.HasIndex(item => item.Module);
+            entity.HasIndex(item => item.Action);
+            entity.Property(item => item.ActorRole).HasConversion<string>().HasMaxLength(32);
+            entity.Property(item => item.ActorUserId).HasMaxLength(450);
+            entity.Property(item => item.ActorName).HasMaxLength(220);
+            entity.Property(item => item.Module).HasMaxLength(80);
+            entity.Property(item => item.Action).HasMaxLength(80);
+            entity.Property(item => item.EntityType).HasMaxLength(120);
+            entity.Property(item => item.EntityId).HasMaxLength(450);
+            entity.Property(item => item.Summary).HasMaxLength(1000);
+            entity.Property(item => item.IpAddress).HasMaxLength(80);
+            entity.Property(item => item.UserAgent).HasMaxLength(500);
         });
     }
 

@@ -6,6 +6,7 @@ public sealed class LessonAssessment
     public string Intro { get; set; } = string.Empty;
     public string RetryHint { get; set; } = string.Empty;
     public int PassScore { get; set; } = 100;
+    public int? QuestionLimit { get; set; }
     public bool RandomizeQuestionOrder { get; set; }
     public bool RandomizeOptionOrder { get; set; }
     public List<LessonQuestion> Questions { get; set; } = [];

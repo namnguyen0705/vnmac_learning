@@ -41,6 +41,8 @@ function getLessonIcon(type: string) {
       return Hand;
     case "Scorm":
       return MonitorPlay;
+    case "Quiz":
+      return ScrollText;
     default:
       return CirclePlay;
   }
@@ -124,7 +126,7 @@ export function CoursePage() {
               </div>
               <div className="flex flex-wrap gap-3">
                 <Button
-                  className="rounded-2xl bg-[#163b7b] hover:bg-[#0f2e63]"
+                  className="rounded-2xl bg-[#163b7b] text-white hover:bg-[#0f2e63] hover:text-white"
                   disabled={enrollMutation.isPending}
                   type="button"
                   onClick={() => enrollMutation.mutate()}
@@ -150,15 +152,18 @@ export function CoursePage() {
   const lessonSummaryMap = toLessonSummaryMap(progress.lessons);
   const quizSummaryMap = toQuizSummaryMap(progress.quizzes);
   const courseCompleted = progress.certificateIssued;
+  const lessonIdsRenderedInSections = new Set(
+    sortSections(course.sections).flatMap((section) => sortLessons(section.lessons).map((lesson) => lesson.id)),
+  );
 
   return (
-    <div className="grid gap-6">
+    <div className="learner-course-page grid gap-6">
       <LearnerScreenTitle index={2} title="Chi tiết khóa học" />
 
       <LearnerPanel className="overflow-hidden p-6">
         <div className="grid gap-6 xl:grid-cols-[0.4fr_0.6fr]">
           <div
-            className="min-h-[260px] rounded-[28px] border border-slate-200 bg-[linear-gradient(135deg,#456b42_0%,#8fba76_52%,#e5edd0_100%)] bg-cover bg-center"
+            className="course-detail-cover min-h-[260px] rounded-[28px] border border-slate-200 bg-[linear-gradient(135deg,#456b42_0%,#8fba76_52%,#e5edd0_100%)] bg-cover bg-center"
             style={cover.posterUrl ? { backgroundImage: `url('${cover.posterUrl}')` } : undefined}
           />
 
@@ -191,7 +196,7 @@ export function CoursePage() {
 
             <div className="flex flex-wrap gap-3">
               <Button
-                className="rounded-2xl bg-[#163b7b] hover:bg-[#0f2e63]"
+                className="rounded-2xl bg-[#163b7b] text-white hover:bg-[#0f2e63] hover:text-white"
                 type="button"
                 onClick={() => {
                   if (progress.nextLessonId) {
@@ -238,19 +243,55 @@ export function CoursePage() {
                   <div className="grid gap-3 pl-4">
                     {sectionLessons.map((lesson) => {
                       const summary = lessonSummaryMap.get(lesson.id);
+                      const quiz = lesson.type === "Quiz"
+                        ? sortQuizzes(course.quizzes).find((item) => item.assessmentLessonId === lesson.id)
+                        : undefined;
+                      const quizSummary = quiz ? quizSummaryMap.get(quiz.id) : undefined;
+                      const isUnlocked = lesson.type === "Quiz" ? Boolean(quizSummary?.isUnlocked) : Boolean(summary?.isUnlocked);
+                      const statusTone = quizSummary?.passed
+                        ? "success"
+                        : quizSummary?.isUnlocked
+                          ? "warning"
+                          : summary?.status === "Completed"
+                            ? "success"
+                            : summary?.status === "InProgress"
+                              ? "warning"
+                              : isUnlocked
+                                ? "brand"
+                                : "neutral";
+                      const statusText = quizSummary?.passed
+                        ? "Hoàn thành"
+                        : quizSummary?.isUnlocked
+                          ? "Đang mở"
+                          : summary?.status === "Completed"
+                            ? "Hoàn thành"
+                            : summary?.status === "InProgress"
+                              ? "Đang học"
+                              : isUnlocked
+                                ? "Sẵn sàng"
+                                : "Chưa mở";
                       const LessonIcon = getLessonIcon(lesson.type);
 
                       return (
                         <button
                           className={cn(
                             "grid gap-3 rounded-[22px] border p-4 text-left transition",
-                            summary?.isUnlocked
+                            isUnlocked
                               ? "border-slate-200 bg-white hover:border-slate-300 hover:shadow-[0_14px_28px_rgba(15,23,42,0.06)]"
                               : "border-slate-200 bg-slate-50/80 text-slate-400",
                           )}
                           key={lesson.id}
                           type="button"
                           onClick={() => {
+                            if (!isUnlocked) {
+                              return;
+                            }
+
+                            if (quiz) {
+                              navigate(`/app/courses/${course.id}/quizzes/${quiz.id}`);
+                              return;
+                            }
+
                             if (summary?.isUnlocked) {
                               navigate(`/app/courses/${course.id}/lessons/${lesson.id}`);
                             }
@@ -264,29 +305,17 @@ export function CoursePage() {
                               <div className="grid gap-1">
                                 <p className="text-sm font-semibold text-slate-950">{lesson.title}</p>
                                 <p className="text-xs text-slate-500">
-                                  {lesson.type === "Video" ? "Nội dung video" : lesson.type === "Interactive" ? "Hoạt động tương tác" : "Mô-đun SCORM"}
+                                  {lesson.type === "Video"
+                                    ? "Nội dung video"
+                                    : lesson.type === "Interactive"
+                                      ? "Hoạt động tương tác"
+                                      : lesson.type === "Quiz"
+                                        ? "Bài kiểm tra cuối khóa"
+                                        : "Mô-đun SCORM"}
                                 </p>
                               </div>
                             </div>
-                            <LearnerStatusBadge
-                              tone={
-                                summary?.status === "Completed"
-                                  ? "success"
-                                  : summary?.status === "InProgress"
-                                    ? "warning"
-                                    : summary?.isUnlocked
-                                      ? "brand"
-                                      : "neutral"
-                              }
-                            >
-                              {summary?.status === "Completed"
-                                ? "Hoàn thành"
-                                : summary?.status === "InProgress"
-                                  ? "Đang học"
-                                  : summary?.isUnlocked
-                                    ? "Sẵn sàng"
-                                    : "Chưa mở"}
-                            </LearnerStatusBadge>
+                            <LearnerStatusBadge tone={statusTone}>{statusText}</LearnerStatusBadge>
                           </div>
                         </button>
                       );
@@ -335,7 +364,7 @@ export function CoursePage() {
               );
             })}
 
-            {sortQuizzes(course.quizzes).map((quiz) => {
+            {sortQuizzes(course.quizzes).filter((quiz) => !lessonIdsRenderedInSections.has(quiz.assessmentLessonId)).map((quiz) => {
               const summary = quizSummaryMap.get(quiz.id);
 
               return (

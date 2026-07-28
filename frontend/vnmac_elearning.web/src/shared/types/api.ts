@@ -2,8 +2,15 @@ export type UserRole = "Learner" | "Admin" | "ContentManager" | "DataViewer";
 export type CourseStatus = "Draft" | "Published";
 export type CourseEnrollmentStatus = "Enrolled" | "InProgress" | "Completed";
 export type NotificationAudience = "Learner" | "Admin";
-export type NotificationType = "LearnerRegistered" | "CourseEnrolled" | "CourseCompleted";
-export type LessonType = "Video" | "Interactive" | "Scorm";
+export type NotificationType =
+  | "LearnerRegistered"
+  | "CourseEnrolled"
+  | "CourseCompleted"
+  | "SystemAnnouncement"
+  | "LearningReminder";
+export type LessonType = "Video" | "Interactive" | "Quiz" | "Scorm";
+export type LessonDifficulty = "Basic" | "Intermediate" | "Advanced";
+export type LessonPublicationStatus = "Published" | "Draft" | "Archived";
 export type LessonProgressStatus = "NotStarted" | "InProgress" | "Completed";
 export type QuestionType = "TrueFalse" | "MultipleChoice" | "DragDrop" | "Hotspot" | "Scenario";
 export type HotspotShape = "Rectangle" | "Circle";
@@ -26,13 +33,31 @@ export interface User {
   fullName: string;
   phoneNumber: string;
   createdAt: string;
-  lastLogin: string;
+    lastLogin?: string | null;
   isEmailVerified: boolean;
   emailVerifiedAt?: string | null;
   createdByAdmin: boolean;
   role: UserRole;
+  roleId?: string | null;
+  roleName: string;
+  hasAdminAccess: boolean;
+  permissions: string[];
   province: string;
   group: string;
+  avatarUrl: string;
+}
+
+export interface UpdateProfileRequest {
+  fullName: string;
+  phoneNumber: string;
+  province: string;
+  group: string;
+  avatarUrl?: string | null;
+}
+
+export interface ChangePasswordRequest {
+  currentPassword: string;
+  newPassword: string;
 }
 
 export interface AuthTokenResponse {
@@ -80,10 +105,12 @@ export interface RegisterResponse {
   username: string;
   email: string;
   requiresEmailVerification: boolean;
-  verificationToken: string;
-  verificationPath: string;
   verificationExpiresAt: string;
   message: string;
+}
+
+export interface ResendVerificationEmailRequest {
+  email: string;
 }
 
 export interface VerifyEmailRequest {
@@ -122,6 +149,12 @@ export interface CourseSection {
   quizzes: CourseQuiz[];
 }
 
+export interface UpdateSectionRequest {
+  title: string;
+  description: string;
+  order: number;
+}
+
 export interface CourseLesson {
   id: string;
   courseId: string;
@@ -131,6 +164,13 @@ export interface CourseLesson {
   order: number;
   durationMinutes: number;
   statusLabel: string;
+  topic: string;
+  difficulty: LessonDifficulty;
+  publicationStatus: LessonPublicationStatus;
+  thumbnailUrl: string;
+  createdAt: string;
+  updatedAt: string;
+  content?: LessonContent | null;
   videoContent?: VideoContent | null;
   assessment?: LearnerAssessment | null;
   scormPackage?: ScormPackage | null;
@@ -158,13 +198,124 @@ export interface VideoContent {
   transcriptHighlight: string;
 }
 
+export interface LessonContent {
+  summary: string;
+  coreMessage: string;
+  mainContentType: string;
+  steps: LessonContentStep[];
+  objectives: string[];
+  mainPoints: string[];
+  interactionTypes: string[];
+  activities: LessonContentActivity[];
+  reinforcementPoints: string[];
+  quiz: LessonContentQuiz;
+  completion: LessonCompletionContent;
+}
+
+export interface LessonContentStep {
+  key: string;
+  order: number;
+  label: string;
+  screenType: string;
+  description: string;
+  progressPercent: number;
+  isRequired: boolean;
+  title: string;
+  subtitle: string;
+  body: string;
+  instruction: string;
+  alertText: string;
+  primaryActionLabel: string;
+  secondaryActionLabel: string;
+  mediaUrl: string;
+  mediaType: string;
+  posterUrl: string;
+  captionUrl: string;
+  mediaAlt: string;
+  objectiveImageUrl: string;
+  objectiveImageAlt: string;
+  explanationTitle: string;
+  explanation: string;
+  points: string[];
+  tips: string[];
+  items: string[];
+  targets: string[];
+  options: string[];
+  dragQuestions: LessonContentDragQuestion[];
+  questions: LessonContentCheckQuestion[];
+  feedback: string;
+}
+
+export interface LessonContentActivity {
+  type: string;
+  title: string;
+  instruction: string;
+  items: string[];
+  targets: string[];
+  feedback: string;
+}
+
+export interface LessonContentDragQuestion {
+  id: string;
+  order: number;
+  prompt: string;
+  description: string;
+  tone: "red" | "amber" | "green" | "blue" | string;
+  imageUrl: string;
+  imageAlt: string;
+  answers: LessonContentDragAnswer[];
+}
+
+export interface LessonContentDragAnswer {
+  id: string;
+  order: number;
+  label: string;
+  description: string;
+  imageUrl: string;
+  imageAlt: string;
+  feedback: string;
+}
+
+export interface LessonContentCheckQuestion {
+  id: string;
+  order: number;
+  prompt: string;
+  imageUrl: string;
+  imageAlt: string;
+  explanation: string;
+  feedback: string;
+  options: LessonContentCheckOption[];
+}
+
+export interface LessonContentCheckOption {
+  id: string;
+  code: string;
+  order: number;
+  label: string;
+  isCorrect: boolean;
+}
+
+export interface LessonContentQuiz {
+  questionCount: number;
+  passScore: number;
+  description: string;
+}
+
+export interface LessonCompletionContent {
+  title: string;
+  message: string;
+  nextActionLabel: string;
+}
+
 export interface LearnerAssessment {
   intro: string;
   retryHint: string;
   passScore: number;
+  questionLimit?: number | null;
   randomizeQuestionOrder: boolean;
   randomizeOptionOrder: boolean;
   questionCount: number;
+  bankQuestionCount?: number;
   questions?: LearnerQuestionPayload[] | null;
 }
 
@@ -219,6 +370,33 @@ export interface LearnerEnrollmentSummary {
   passedQuizzes: number;
 }
 
+export interface LearningResultsResponse {
+  userId: string;
+  courseId: string;
+  courseTitle: string;
+  enrollmentStatus: CourseEnrollmentStatus;
+  contentCompletionPercent: number;
+  quizCompletionPercent: number;
+  overallCompletionPercent: number;
+  totalLessons: number;
+  completedLessons: number;
+  inProgressLessons: number;
+  lockedLessons: number;
+  totalQuizzes: number;
+  passedQuizzes: number;
+  studyTimeMinutes: number;
+  currentLessonId?: string | null;
+  currentLessonTitle?: string | null;
+  currentStep: string;
+  nextLessonId?: string | null;
+  nextLessonTitle?: string | null;
+  nextQuizId?: string | null;
+  nextQuizTitle?: string | null;
+  latestQuizScore: number;
+  latestQuizAttempts: number;
+  certificateIssued: boolean;
+}
+
 export interface LearnerLessonSummary {
   courseId: string;
   sectionId: string;
@@ -227,6 +405,8 @@ export interface LearnerLessonSummary {
   type: LessonType;
   status: LessonProgressStatus;
   isUnlocked: boolean;
+  currentStep: string;
+  lastAccessedAt?: string | null;
   watchPercent: number;
   watchTimeMinutes: number;
   interactionAttempts: number;
@@ -243,11 +423,14 @@ export interface ProgressTracking {
   lessonId: string;
   status: LessonProgressStatus;
   completionTime?: string | null;
+  currentStep: string;
+  lastAccessedAt?: string | null;
   watchPercent: number;
   watchTimeMinutes: number;
   lastPositionSeconds: number;
   lastWatchedAt?: string | null;
   interactionAttempts: number;
+  activeStudySeconds: number;
 }
 
 export interface QuizResult {
@@ -318,10 +501,16 @@ export interface DragDropMatchSubmission {
   dragTargetCode: string;
 }
 
+export interface HotspotClickSubmission {
+  x: number;
+  y: number;
+}
+
 export interface QuestionSubmissionRequest {
   questionId: string;
   selectedOptionCodes: string[];
   selectedHotspotCodes: string[];
+  hotspotClicks: HotspotClickSubmission[];
   matches: DragDropMatchSubmission[];
 }
 
@@ -352,14 +541,16 @@ export interface QuizSessionResponse {
 }
 
 export interface LearnerQuestionPayload {
-  questionId: string;
+  id: string;
   type: QuestionType;
   order: number;
   prompt: string;
   statement?: string | null;
   mediaTitle?: string | null;
+  mediaUrl?: string | null;
   scenarioTitle?: string | null;
   scenarioContext?: string | null;
+  allowMultipleAnswers?: boolean;
   options: LearnerQuestionOptionPayload[];
   hotspotTargets: LearnerHotspotTargetPayload[];
   dragItems: LearnerDragItemPayload[];
@@ -460,6 +651,41 @@ export interface NotificationResponse {
   createdAt: string;
   readAt?: string | null;
   isRead: boolean;
+}
+
+export interface AdminNotificationListResponse {
+  page: number;
+  pageSize: number;
+  totalItems: number;
+  unreadCount: number;
+  learnerAudienceCount: number;
+  adminAudienceCount: number;
+  items: AdminNotificationResponse[];
+}
+
+export interface AdminNotificationResponse {
+  id: string;
+  audience: NotificationAudience;
+  recipientUserId?: string | null;
+  recipientName: string;
+  type: NotificationType;
+  title: string;
+  message: string;
+  actorName: string;
+  courseTitle: string;
+  linkUrl: string;
+  createdAt: string;
+  readAt?: string | null;
+  isRead: boolean;
+}
+
+export interface CreateAdminNotificationRequest {
+  audience: NotificationAudience;
+  type: NotificationType;
+  title: string;
+  message: string;
+  linkUrl: string;
+  recipientUserIds: string[];
 }
 
 export interface ScormSco {
@@ -573,6 +799,8 @@ export interface AdminUserRow {
   createdByAdmin: boolean;
   isLocked: boolean;
   role: UserRole;
+  roleId: string;
+  roleName: string;
   province: string;
   group: string;
   completionPercent: number;
@@ -731,6 +959,52 @@ export interface TrackingTimelineEvent {
   occurredAt: string;
 }
 
+export interface SystemSettingsResponse {
+  siteTitle: string;
+  headerTitle: string;
+  headerSubtitle: string;
+  projectLogoUrl: string;
+  loginLogoUrl: string;
+  vnmacLogoUrl: string;
+  vietnamFlagUrl: string;
+  usFlagUrl: string;
+  crsLogoUrl: string;
+  headerBackgroundColor: string;
+  headerBackgroundImageUrl: string;
+  loginBackgroundImageUrl: string;
+  certificateTemplateUrl: string;
+  certificateTitle: string;
+  certificateCourseTitle: string;
+  updatedAt: string;
+  updatedByUserId: string;
+}
+
+export type UpdateSystemSettingsRequest = Omit<SystemSettingsResponse, "updatedAt" | "updatedByUserId">;
+
+export interface SystemAuditLogResponse {
+  page: number;
+  pageSize: number;
+  totalItems: number;
+  modules: string[];
+  actions: string[];
+  items: SystemAuditLogRow[];
+}
+
+export interface SystemAuditLogRow {
+  id: string;
+  occurredAt: string;
+  actorUserId: string;
+  actorName: string;
+  actorRole?: UserRole | null;
+  module: string;
+  action: string;
+  entityType: string;
+  entityId: string;
+  summary: string;
+  detailJson: string;
+  ipAddress: string;
+}
+
 export interface CreateAdminUserRequest {
   username: string;
   password: string;
@@ -738,6 +1012,7 @@ export interface CreateAdminUserRequest {
   fullName: string;
   phoneNumber: string;
   role: UserRole;
+  roleId?: string | null;
   province: string;
   group: string;
   markEmailAsVerified: boolean;
@@ -751,10 +1026,37 @@ export interface UpdateAdminUserRequest {
   fullName: string;
   phoneNumber: string;
   role: UserRole;
+  roleId?: string | null;
   province: string;
   group: string;
   isEmailVerified: boolean;
   isLocked: boolean;
+}
+
+export interface RolePermissionRequest {
+  resource: string;
+  canView: boolean;
+  canCreate: boolean;
+  canUpdate: boolean;
+  canDelete: boolean;
+}
+
+export interface RoleResponse {
+  id: string;
+  code: string;
+  name: string;
+  description: string;
+  isSystem: boolean;
+  isAdmin: boolean;
+  userCount: number;
+  permissions: RolePermissionRequest[];
+}
+
+export interface UpsertRoleRequest {
+  code: string;
+  name: string;
+  description: string;
+  permissions: RolePermissionRequest[];
 }
 
 export interface CreateCourseRequest {
@@ -775,6 +1077,7 @@ export interface LessonAssessmentRequest {
   intro: string;
   retryHint: string;
   passScore: number;
+  questionLimit?: number | null;
   randomizeQuestionOrder: boolean;
   randomizeOptionOrder: boolean;
 }
@@ -807,9 +1110,61 @@ export interface UpsertLessonRequest {
   order: number;
   durationMinutes: number;
   statusLabel: string;
+  topic?: string;
+  difficulty?: LessonDifficulty;
+  publicationStatus?: LessonPublicationStatus;
+  thumbnailUrl?: string;
+  content?: LessonContent | null;
   videoContent?: VideoContent | null;
   assessment?: LessonAssessmentRequest | null;
   scormPackage?: ScormPackageRequest | null;
+}
+
+export interface UpdateLessonMetadataRequest {
+  courseId: string;
+  sectionId: string;
+  title: string;
+  order: number;
+  durationMinutes: number;
+  statusLabel: string;
+  topic?: string;
+  difficulty: LessonDifficulty;
+  publicationStatus: LessonPublicationStatus;
+}
+
+export interface AdminLessonCatalogResponse {
+  totalLessons: number;
+  publishedLessons: number;
+  draftLessons: number;
+  archivedLessons: number;
+  newLessonsThisWeek: number;
+  page: number;
+  pageSize: number;
+  totalItems: number;
+  topics: string[];
+  items: AdminLessonCatalogRow[];
+}
+
+export interface AdminLessonCatalogRow {
+  lessonId: string;
+  courseId: string;
+  sectionId: string;
+  courseTitle: string;
+  sectionTitle: string;
+  title: string;
+  description: string;
+  type: LessonType;
+  order: number;
+  statusLabel: string;
+  topic: string;
+  difficulty: LessonDifficulty;
+  publicationStatus: LessonPublicationStatus;
+  learnerCount: number;
+  questionCount: number;
+  durationMinutes: number;
+  thumbnailUrl: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface MediaUploadResponse {
@@ -819,6 +1174,60 @@ export interface MediaUploadResponse {
   contentType: string;
   sizeBytes: number;
   mediaType: string;
+}
+
+export interface MediaLibraryItem {
+  id?: string;
+  fileName: string;
+  originalFileName: string;
+  url: string;
+  contentType: string;
+  sizeBytes: number;
+  mediaType: "document" | "image" | "video" | "caption";
+  uploadedAt: string;
+  isPublic: boolean;
+  title: string;
+  description: string;
+  thumbnailUrl: string;
+  category: string;
+  tags: string[];
+  isPublished: boolean;
+  sortOrder: number;
+  isInUse: boolean;
+  usages: MediaUsage[];
+}
+
+export interface CreateMediaLibraryItemRequest {
+  fileName: string;
+  originalFileName: string;
+  fileUrl: string;
+  contentType: string;
+  sizeBytes: number;
+  title: string;
+  description: string;
+  thumbnailUrl: string;
+  category: string;
+  tags: string[];
+  isPublished: boolean;
+  sortOrder: number;
+}
+
+export interface UpdateMediaLibraryItemRequest {
+  title: string;
+  description: string;
+  thumbnailUrl: string;
+  category: string;
+  tags: string[];
+  isPublished: boolean;
+  sortOrder: number;
+}
+
+export interface MediaUsage {
+  sourceType: "Lesson" | "Question";
+  sourceId: string;
+  sourceTitle: string;
+  field: string;
+  adminUrl: string;
 }
 
 export interface CreateCourseQuizRequest {
@@ -878,6 +1287,7 @@ export interface UpsertLessonQuestionRequest {
   explanation: string;
   statement?: string | null;
   mediaTitle?: string | null;
+  mediaUrl?: string | null;
   scenarioTitle?: string | null;
   scenarioContext?: string | null;
   options: QuestionOptionRequest[];
@@ -896,6 +1306,7 @@ export interface AdminQuestion {
   explanation: string;
   statement?: string | null;
   mediaTitle?: string | null;
+  mediaUrl?: string | null;
   scenarioTitle?: string | null;
   scenarioContext?: string | null;
   options: QuestionOptionRequest[];

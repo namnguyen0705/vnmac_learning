@@ -1,57 +1,64 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Link, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
-  Award,
+  ArrowRight,
+  BarChart3,
   BookOpen,
   CheckCircle2,
-  Clock3,
-  PlayCircle,
-  Search,
+  ChevronRight,
+  ClipboardCheck,
+  Download,
+  FileImage,
+  FileText,
+  Lock,
+  Play,
   ShieldCheck,
-  Sparkles,
+  Trophy,
+  Video,
   type LucideIcon,
 } from "lucide-react";
-import { useMemo, useState } from "react";
 import { useAuth } from "../../app/auth";
-import { enrollInCourse, getLearnerCourseCatalog, getPublishedCourses } from "../../shared/api/learner";
-import { formatMinutes } from "../../shared/lib/format";
-import { getCourseCoverAsset } from "../../shared/lib/course";
+import {
+  getLearnerCourseCatalog,
+  getLearnerLearningResults,
+  getLearnerCourseProgress,
+  getPublishedCourses,
+} from "../../shared/api/learner";
+import {
+  flattenLessons,
+  flattenQuizzes,
+  sortLessons,
+  sortSections,
+  toLessonSummaryMap,
+  toQuizSummaryMap,
+} from "../../shared/lib/course";
 import { LoadingBlock } from "../../shared/ui/LoadingBlock";
-import { LearnerMetaChip, LearnerPanel, LearnerProgressBar, LearnerStatusBadge } from "../../shared/ui/learner-ui";
+import { LearnerPanel } from "../../shared/ui/learner-ui";
 import { MessageBanner } from "../../shared/ui/MessageBanner";
-import type { LearnerCourseCatalogItem } from "../../shared/types/api";
+import type { CourseLesson, CourseTreeResponse, LearningResultsResponse, ProgressSnapshotResponse } from "../../shared/types/api";
 
-type CourseFilter = "all" | "new" | "learning" | "completed";
+const OFFICIAL_COURSE_ID = "course-vnmac-elearning";
 
-type CourseCover = {
-  posterUrl: string | null;
-  lessonTitle: string | null;
+type RouteItem = {
+  id: string;
+  number: string;
+  title: string;
+  status: "done" | "active" | "locked" | "ready";
+  href: string;
 };
 
-const filters: { id: CourseFilter; label: string }[] = [
-  { id: "all", label: "Tất cả" },
-  { id: "new", label: "Khóa học mới" },
-  { id: "learning", label: "Đang học" },
-  { id: "completed", label: "Đã hoàn thành" },
-];
-
-const fallbackImages = [
-  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80",
-];
+type RouteSection = {
+  id: string;
+  label: string;
+  items: RouteItem[];
+};
 
 export function CourseCatalogPage() {
   const { session } = useAuth();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const userId = session?.user.id ?? "";
-  const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState<CourseFilter>("all");
 
   const catalogQuery = useQuery({
     queryKey: ["learner", userId, "catalog"],
@@ -59,364 +66,373 @@ export function CourseCatalogPage() {
     enabled: Boolean(userId),
   });
 
-  const publishedCoursesQuery = useQuery({
-    queryKey: ["courses", "published", "covers"],
+  const coursesQuery = useQuery({
+    queryKey: ["courses", "published", "lesson-home"],
     queryFn: getPublishedCourses,
   });
 
-  const enrollMutation = useMutation({
-    mutationFn: (courseId: string) => enrollInCourse(userId, courseId),
-    onSuccess: async () => {
-      await Promise.all([
-        queryClient.invalidateQueries({ queryKey: ["learner", userId, "catalog"] }),
-        queryClient.invalidateQueries({ queryKey: ["learner", userId, "dashboard"] }),
-      ]);
-    },
+  const officialCourse = useMemo(() => {
+    const courses = coursesQuery.data ?? [];
+    return courses.find((course) => course.id === OFFICIAL_COURSE_ID) ?? courses[0] ?? null;
+  }, [coursesQuery.data]);
+
+  const catalogItem = officialCourse
+    ? catalogQuery.data?.courses.find((item) => item.courseId === officialCourse.id)
+    : undefined;
+
+  const progressQuery = useQuery({
+    queryKey: ["learner", userId, "course-progress", officialCourse?.id],
+    queryFn: () => getLearnerCourseProgress(userId, officialCourse?.id ?? ""),
+    enabled: Boolean(userId && officialCourse?.id && catalogItem?.isEnrolled),
   });
 
-  const coverMap = useMemo(() => {
-    return new Map(
-      (publishedCoursesQuery.data ?? []).map((course) => [course.id, getCourseCoverAsset(course)]),
-    );
-  }, [publishedCoursesQuery.data]);
+  const learningResultsQuery = useQuery({
+    queryKey: ["learner", userId, "learning-results", officialCourse?.id],
+    queryFn: () => getLearnerLearningResults(userId, officialCourse?.id ?? ""),
+    enabled: Boolean(userId && officialCourse?.id && catalogItem?.isEnrolled),
+  });
 
-  const groups = useMemo(() => {
-    const courses = catalogQuery.data?.courses ?? [];
-    return {
-      allCourses: courses,
-      newCourses: courses.filter((course) => !course.isEnrolled),
-      learningCourses: courses.filter((course) => course.isEnrolled && !course.enrollment?.certificateIssued),
-      completedCourses: courses.filter((course) => course.enrollment?.certificateIssued),
-    };
-  }, [catalogQuery.data?.courses]);
-
-  const visibleCourses = useMemo(() => {
-    const keyword = search.trim().toLowerCase();
-    let rows = groups.allCourses;
-
-    if (filter === "new") {
-      rows = groups.newCourses;
-    } else if (filter === "learning") {
-      rows = groups.learningCourses;
-    } else if (filter === "completed") {
-      rows = groups.completedCourses;
-    }
-
-    if (!keyword) {
-      return rows;
-    }
-
-    return rows.filter((course) => `${course.title} ${course.description}`.toLowerCase().includes(keyword));
-  }, [filter, groups.allCourses, groups.completedCourses, groups.learningCourses, groups.newCourses, search]);
-
-  const featuredCourse = groups.learningCourses[0] ?? groups.newCourses[0] ?? groups.completedCourses[0] ?? null;
-  const featuredCover = featuredCourse ? coverMap.get(featuredCourse.courseId) : null;
-
-  if (catalogQuery.isLoading) {
-    return <LoadingBlock label="Đang tải danh sách khóa học..." />;
+  if (catalogQuery.isLoading || coursesQuery.isLoading || (catalogItem?.isEnrolled && (progressQuery.isLoading || learningResultsQuery.isLoading))) {
+    return <LoadingBlock label="Đang tải màn hình bài học..." />;
   }
 
-  if (catalogQuery.isError || !catalogQuery.data) {
-    return <MessageBanner tone="error">Không tải được danh sách khóa học.</MessageBanner>;
+  if (catalogQuery.isError || coursesQuery.isError || !catalogQuery.data) {
+    return <MessageBanner tone="error">Không tải được dữ liệu bài học.</MessageBanner>;
   }
+
+  if (!officialCourse) {
+    return <MessageBanner tone="warning">Chưa có khóa học chính thức đang xuất bản.</MessageBanner>;
+  }
+
+  const progress = progressQuery.data;
+  const learningResults = learningResultsQuery.data;
+  const route = buildRoute(officialCourse, progress);
+  const routeItems = route.flatMap((section, sectionIndex) =>
+    section.items.map((item) => ({
+      ...item,
+      phase: sectionIndex + 1,
+    })),
+  );
+  const routeGridStyle = { gridTemplateColumns: `repeat(${routeItems.length}, minmax(0, 1fr))` };
+  const lessons = flattenLessons(officialCourse).filter((lesson) => lesson.type !== "Quiz");
+  const percent = learningResults?.overallCompletionPercent ?? progress?.overallCompletionPercent ?? catalogItem?.enrollment?.overallCompletionPercent ?? 0;
+  const completedLessons = learningResults?.completedLessons ?? progress?.lessons.filter((lesson) => lesson.status === "Completed").length ?? catalogItem?.enrollment?.completedLessons ?? 0;
+  const nextTitle = learningResults?.currentLessonTitle ?? learningResults?.nextLessonTitle ?? findNextTitle(officialCourse, progress);
+  const isFreshStart = percent === 0 && completedLessons === 0;
+  const heroTitle = isFreshStart
+    ? "Bắt đầu hành trình học tập của bạn."
+    : "Bạn đã làm rất tốt ở lần học trước.";
+  const heroSubtitle = isFreshStart
+    ? "Hoàn thành bài học hiện tại để mở bài tiếp theo nhé"
+    : `Hoàn thành ${percent}% bài học và mở bài tiếp theo nhé`;
 
   return (
-    <div className="grid gap-7">
-      <section className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_430px]">
-        <LearnerPanel className="overflow-hidden">
-          <div className="relative min-h-[500px]">
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${featuredCover?.posterUrl ?? getFallbackImage(featuredCourse?.courseId ?? "hero")})` }}
-            />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,250,252,0.97)_0%,rgba(248,250,252,0.9)_46%,rgba(15,46,99,0.34)_100%)]" />
-            <div className="relative z-10 grid min-h-[500px] gap-8 p-7 sm:p-10 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end">
-              <div className="max-w-3xl">
-                <div className="inline-flex items-center gap-2 rounded-full bg-white/85 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#163b7b] shadow-sm">
-                  <Sparkles className="size-3.5" />
-                  Thư viện học tập
+    <div className={`lesson-home-page ${isFreshStart ? "is-fresh-start" : "is-in-progress"}`}>
+      <section className="lesson-home-hero">
+        <div className="lesson-home-hero-copy">
+          <h1>{heroTitle}</h1>
+          <h2>{heroSubtitle}</h2>
+          <span />
+
+          <div className="lesson-home-progress-card">
+            <p>Tiếp tục khóa học của bạn</p>
+            <div className="lesson-home-percent-row">
+              <strong>
+                {percent}%
+                <span>TIẾN ĐỘ HOÀN THÀNH</span>
+              </strong>
+              <div>
+                <div className="lesson-home-progress-track">
+                  <span style={{ width: `${Math.max(0, Math.min(100, percent))}%` }} />
                 </div>
-                <h1 className="mt-5 text-[2.35rem] font-semibold leading-tight text-slate-950 sm:text-[3rem]">
-                  Chọn khóa học phù hợp và bắt đầu lộ trình an toàn
-                </h1>
-                <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-700">
-                  Toàn bộ khóa học được trình bày như một thư viện nội dung. Học viên có thể xem video giới thiệu,
-                  đăng ký khóa mới, tiếp tục khóa đang học hoặc mở lại khóa đã hoàn thành.
-                </p>
-                <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                  <div className="relative flex-1">
-                    <Search className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
-                    <Input
-                      className="h-12 rounded-2xl border-slate-200 bg-white/95 pl-10"
-                      placeholder="Tìm kiếm khóa học..."
-                      value={search}
-                      onChange={(event) => setSearch(event.target.value)}
+                <small>Bạn đang ở {nextTitle}</small>
+              </div>
+            </div>
+          </div>
+
+          <div className="lesson-home-actions">
+            <Button className="lesson-home-primary" type="button" onClick={() => openNext(officialCourse, progress, learningResults, navigate)}>
+              <Play className="size-4 fill-current" />
+              Tiếp tục học
+            </Button>
+            <Button className="lesson-home-secondary" type="button" variant="outline" onClick={() => navigate(`/app/courses/${officialCourse.id}`)}>
+              Xem lộ trình học
+            </Button>
+          </div>
+        </div>
+
+        <div className="lesson-home-image">
+          <div className="lesson-home-photo">
+            <span className="lesson-home-cloud cloud-one" />
+            <span className="lesson-home-cloud cloud-two" />
+            <span className="lesson-home-mountain mountain-one" />
+            <span className="lesson-home-mountain mountain-two" />
+            <span className="lesson-home-path" />
+            <span className="lesson-home-grass" />
+            <span className="lesson-home-person person-one" />
+            <span className="lesson-home-person person-two" />
+            <span className="lesson-home-shell shell-one" />
+            <span className="lesson-home-shell shell-two" />
+            <div className="lesson-home-warning">
+              <span>☠</span>
+              <strong>KHU VỰC</strong>
+              <strong>CÓ BOM MÌN!</strong>
+            </div>
+            <blockquote>
+              <span>“</span>
+              Nhận biết
+              <br />
+              Tránh xa
+              <br />
+              Báo ngay
+              <span>”</span>
+            </blockquote>
+            <p>Cùng nhau phòng tránh tai nạn bom mìn vật nổ.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="lesson-home-grid">
+        <LearnerPanel className="lesson-route-card">
+          <div className="lesson-route-title">
+            <h2>Lộ trình học</h2>
+            <ChevronRight className="size-4" />
+          </div>
+          <div className="lesson-route-scroll">
+            <div className="lesson-route-track">
+              <div className="lesson-route-phase-row" style={routeGridStyle}>
+                {route.map((section, sectionIndex) => (
+                  <div
+                    className={`lesson-route-phase-label phase-${sectionIndex + 1}`}
+                    key={section.id}
+                    style={{ gridColumn: `span ${section.items.length}` }}
+                  >
+                    {section.label}
+                  </div>
+                ))}
+              </div>
+
+              <div className="lesson-route-flat-items" style={routeGridStyle}>
+                <div className="lesson-route-rail-segments" style={routeGridStyle}>
+                  {route.map((section, sectionIndex) => (
+                    <span
+                      className={`lesson-route-rail-segment phase-${sectionIndex + 1}`}
+                      key={section.id}
+                      style={{ gridColumn: `span ${section.items.length}` }}
                     />
-                  </div>
-                  <Button className="h-12 rounded-2xl bg-[#163b7b] px-6 hover:bg-[#0f2e63]" type="button" onClick={() => setFilter("all")}>
-                    Xem tất cả
-                  </Button>
+                  ))}
                 </div>
-              </div>
 
-              <div className="grid gap-3 rounded-2xl border border-white/70 bg-white/90 p-5 shadow-[0_22px_60px_rgba(15,46,99,0.18)] backdrop-blur">
-                <p className="text-sm font-semibold text-slate-950">Tổng quan thư viện</p>
-                <LandingStat label="Tất cả khóa học" value={groups.allCourses.length} icon={BookOpen} />
-                <LandingStat label="Đang học" value={groups.learningCourses.length} icon={PlayCircle} />
-                <LandingStat label="Đã hoàn thành" value={groups.completedCourses.length} icon={Award} />
+                {routeItems.map((item) => (
+                  <button
+                    className={`lesson-route-item phase-${item.phase} ${item.status}`}
+                    disabled={item.status === "locked"}
+                    key={item.id}
+                    type="button"
+                    onClick={() => navigate(item.href)}
+                  >
+                    <span className="lesson-route-dot">
+                      {item.status === "done" || item.status === "active" ? (
+                        <CheckCircle2 className="size-4" />
+                      ) : item.status === "locked" ? (
+                        <Lock className="size-4" />
+                      ) : null}
+                    </span>
+                    <strong className="lesson-route-number">{item.number}</strong>
+                    <small>{item.title}</small>
+                  </button>
+                ))}
               </div>
             </div>
           </div>
         </LearnerPanel>
 
-        <LearnerPanel className="p-6">
-          <h2 className="text-[1.25rem] font-semibold text-slate-950">Khóa học nổi bật</h2>
-          {featuredCourse ? (
-            <div className="mt-5 grid gap-4">
-              <CourseCard
-                course={featuredCourse}
-                cover={featuredCover}
-                emphasized
-                onEnroll={() => enrollMutation.mutate(featuredCourse.courseId)}
-                onOpen={() => navigate(`/app/courses/${featuredCourse.courseId}`)}
-              />
+        <LearnerPanel className="lesson-current-course">
+          <h2>Khóa học của bạn</h2>
+          <div className="lesson-current-course-body">
+            <div className="lesson-current-thumb" aria-hidden="true" />
+            <div>
+              <strong>{officialCourse.title}</strong>
+              <div className="lesson-current-progress">
+                <span style={{ width: `${Math.max(0, Math.min(100, percent))}%` }} />
+              </div>
+              <p>{completedLessons} / {lessons.length} bài đã hoàn thành <b>{percent}%</b></p>
             </div>
-          ) : (
-            <div className="mt-5">
-              <MessageBanner tone="info">Chưa có khóa học để hiển thị.</MessageBanner>
-            </div>
-          )}
+          </div>
+          <div className="lesson-current-actions">
+            <Button className="lesson-home-primary" type="button" onClick={() => openNext(officialCourse, progress, learningResults, navigate)}>
+              <Play className="size-4 fill-current" />
+              Tiếp tục học
+            </Button>
+            <Button variant="outline" onClick={() => navigate(`/app/courses/${officialCourse.id}`)}>
+              Xem chi tiết
+            </Button>
+          </div>
         </LearnerPanel>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-3">
-        <SummaryCard label="Khóa học mới" value={groups.newCourses.length} icon={BookOpen} />
-        <SummaryCard label="Khóa đang học" value={groups.learningCourses.length} icon={PlayCircle} />
-        <SummaryCard label="Khóa đã hoàn thành" value={groups.completedCourses.length} icon={CheckCircle2} />
-      </section>
-
-      <LearnerPanel className="p-6">
-        <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-          <div>
-            <h2 className="text-[1.35rem] font-semibold text-slate-950">Toàn bộ khóa học</h2>
-            <p className="mt-2 text-sm text-slate-600">
-              Mỗi khóa học có thumbnail video ở bên ngoài để học viên nhận diện nhanh nội dung trước khi mở chi tiết.
-            </p>
+      <section className="lesson-home-bottom-grid">
+        <InfoBand
+          icon={ShieldCheck}
+          title="Thông điệp quan trọng"
+          value="Nhận biết - Tránh xa - Báo ngay"
+          description="Bảo vệ bản thân và cộng đồng khỏi tai nạn bom mìn vật nổ."
+        />
+        <LearnerPanel className="lesson-result-card">
+          <h2>Kết quả học tập</h2>
+          <div className="lesson-result-list">
+            <MiniStat icon={BarChart3} label="Tiến độ khóa học" value={`${percent}%`} note={`${completedLessons} / ${lessons.length} bài`} tone="blue" />
+            <MiniStat icon={ClipboardCheck} label="Quiz gần nhất" value={`${learningResults?.latestQuizScore ?? 0}/100`} note={`${learningResults?.latestQuizAttempts ?? 0} lần làm`} tone="green" />
+            <MiniStat icon={Trophy} label="Trạng thái" value={learningResults?.certificateIssued || progress?.certificateIssued ? "Hoàn thành" : "Chưa hoàn thành"} note={`${learningResults?.studyTimeMinutes ?? 0} phút học`} tone="gold" />
           </div>
-          <div className="flex flex-wrap gap-2">
-            {filters.map((item) => (
-              <Button
-                className="rounded-2xl"
-                key={item.id}
-                type="button"
-                variant={filter === item.id ? "default" : "outline"}
-                onClick={() => setFilter(item.id)}
-              >
-                {item.label}
-              </Button>
-            ))}
+        </LearnerPanel>
+        <LearnerPanel className="lesson-resource-card">
+          <div className="lesson-resource-header">
+            <h2>Tài liệu nhanh</h2>
+            <button type="button">Xem tất cả</button>
           </div>
-        </div>
-
-        <div className="mt-6 grid gap-5 md:grid-cols-2 2xl:grid-cols-4">
-          {visibleCourses.length ? (
-            visibleCourses.map((course) => (
-              <CourseCard
-                course={course}
-                cover={coverMap.get(course.courseId)}
-                key={course.courseId}
-                onEnroll={() => enrollMutation.mutate(course.courseId)}
-                onOpen={() => navigate(`/app/courses/${course.courseId}`)}
-              />
-            ))
-          ) : (
-            <div className="md:col-span-2 2xl:col-span-4">
-              <MessageBanner tone="info">Không có khóa học phù hợp với bộ lọc hiện tại.</MessageBanner>
-            </div>
-          )}
-        </div>
-      </LearnerPanel>
-
-      <section className="grid gap-6 xl:grid-cols-2">
-        <CourseCollection title="Khóa học mới nhất" courses={groups.newCourses} coverMap={coverMap} empty="Hiện chưa có khóa học mới." />
-        <CourseCollection title="Khóa học đã hoàn thành" courses={groups.completedCourses} coverMap={coverMap} empty="Bạn chưa hoàn thành khóa học nào." />
+          <div className="lesson-resource-list">
+            <ResourceChip icon={Download} title="Hướng dẫn xử lý khi gặp vật lạ" type="PDF" tone="red" />
+            <ResourceChip icon={FileImage} title="Poster EORE" type="PDF" tone="green" />
+            <ResourceChip icon={Video} title="Video minh họa thực tế" type="MP4" tone="blue" />
+          </div>
+        </LearnerPanel>
       </section>
     </div>
   );
 }
 
-function CourseCard({
-  course,
-  cover,
-  emphasized = false,
-  onEnroll,
-  onOpen,
-}: {
-  course: LearnerCourseCatalogItem;
-  cover?: CourseCover | null;
-  emphasized?: boolean;
-  onEnroll: () => void;
-  onOpen: () => void;
-}) {
-  const progress = course.enrollment?.overallCompletionPercent ?? 0;
-  const completed = Boolean(course.enrollment?.certificateIssued);
-  const imageUrl = cover?.posterUrl ?? getFallbackImage(course.courseId);
+function buildRoute(course: CourseTreeResponse, progress?: ProgressSnapshotResponse): RouteSection[] {
+  const lessonMap = progress ? toLessonSummaryMap(progress.lessons) : new Map();
+  const quizMap = progress ? toQuizSummaryMap(progress.quizzes) : new Map();
+  const quizByLessonId = new Map(flattenQuizzes(course).map((quiz) => [quiz.assessmentLessonId, quiz]));
 
-  return (
-    <div
-      className={
-        emphasized
-          ? "group grid gap-4 overflow-hidden rounded-2xl border border-[#bdd7ff] bg-[#f7fbff] shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_55px_rgba(15,46,99,0.16)]"
-          : "group grid gap-4 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#163b7b]/35 hover:shadow-[0_22px_55px_rgba(15,46,99,0.14)]"
-      }
-    >
-      <button className="relative aspect-video overflow-hidden text-left" type="button" onClick={onOpen}>
-        <img className="h-full w-full object-cover transition duration-500 group-hover:scale-105" src={imageUrl} alt={course.title} loading="lazy" />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,23,42,0.08)_0%,rgba(15,23,42,0.76)_100%)]" />
-        <div className="absolute left-4 top-4">
-          <LearnerStatusBadge tone={completed ? "success" : course.isEnrolled ? "brand" : "neutral"}>
-            {completed ? "Hoàn thành" : course.isEnrolled ? "Đang học" : "Mới"}
-          </LearnerStatusBadge>
-        </div>
-        <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-white/80">Video khóa học</p>
-            <p className="mt-1 line-clamp-1 text-sm font-semibold text-white">{cover?.lessonTitle ?? "Xem nội dung giới thiệu"}</p>
-          </div>
-          <span className="grid size-12 shrink-0 place-items-center rounded-full bg-white text-[#163b7b] shadow-lg transition duration-300 group-hover:scale-110">
-            <PlayCircle className="size-6" />
-          </span>
-        </div>
-      </button>
-
-      <div className="grid gap-4 p-5 pt-0">
-        <div>
-          <h3 className="line-clamp-2 text-lg font-semibold leading-snug text-slate-950">{course.title}</h3>
-          <p className="mt-2 line-clamp-3 text-sm leading-6 text-slate-600">{course.description}</p>
-        </div>
-
-        <div className="flex flex-wrap gap-2">
-          <LearnerMetaChip>
-            <BookOpen className="size-3.5" />
-            {course.totalLessons} bài học
-          </LearnerMetaChip>
-          <LearnerMetaChip>
-            <ShieldCheck className="size-3.5" />
-            {course.totalQuizzes} bài kiểm tra
-          </LearnerMetaChip>
-          <LearnerMetaChip>
-            <Clock3 className="size-3.5" />
-            {formatMinutes(course.estimatedStudyTimeMinutes)}
-          </LearnerMetaChip>
-        </div>
-
-        {course.isEnrolled ? (
-          <LearnerProgressBar label="Tiến độ khóa học" value={progress} />
-        ) : (
-          <div className="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-600">
-            Đăng ký để bắt đầu học, lưu tiến độ và nhận chứng chỉ khi hoàn thành.
-          </div>
-        )}
-
-        <div className="flex flex-wrap gap-3">
-          {course.isEnrolled ? (
-            <Button className="rounded-2xl bg-[#163b7b] hover:bg-[#0f2e63]" type="button" onClick={onOpen}>
-              {completed ? "Xem lại khóa" : "Tiếp tục học"}
-            </Button>
-          ) : (
-            <Button className="rounded-2xl bg-[#163b7b] hover:bg-[#0f2e63]" type="button" onClick={onEnroll}>
-              Đăng ký học
-            </Button>
-          )}
-          <Button className="rounded-2xl" type="button" variant="outline" onClick={onOpen}>
-            Chi tiết
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
+  return sortSections(course.sections).map((section, sectionIndex) => ({
+    id: section.id,
+    label: getSectionLabel(section.title, sectionIndex),
+    items: sortLessons(section.lessons).map((lesson) => {
+      const quiz = lesson.type === "Quiz" ? quizByLessonId.get(lesson.id) : undefined;
+      const summary = quiz ? quizMap.get(quiz.id) : lessonMap.get(lesson.id);
+      const done = quiz ? quizMap.get(quiz.id)?.passed : lessonMap.get(lesson.id)?.status === "Completed";
+      const active = progress?.nextLessonId === lesson.id || (quiz && progress?.nextQuizId === quiz.id);
+      const ready = "isUnlocked" in (summary ?? {}) ? Boolean(summary?.isUnlocked) : false;
+      return {
+        id: quiz?.id ?? lesson.id,
+        number: getLessonNumber(lesson, sectionIndex),
+        title: trimLessonTitle(quiz?.title ?? lesson.title),
+        href: quiz ? `/app/courses/${course.id}/quizzes/${quiz.id}` : `/app/courses/${course.id}/lessons/${lesson.id}`,
+        status: done ? "done" : active ? "active" : ready ? "ready" : "locked",
+      };
+    }),
+  }));
 }
 
-function CourseCollection({
+function openNext(
+  course: CourseTreeResponse,
+  progress: ProgressSnapshotResponse | undefined,
+  learningResults: LearningResultsResponse | undefined,
+  navigate: ReturnType<typeof useNavigate>,
+) {
+  const nextLessonId = learningResults?.nextLessonId ?? progress?.nextLessonId;
+  if (nextLessonId) {
+    const rememberedStep = learningResults?.currentLessonId === nextLessonId ? learningResults.currentStep : "intro";
+    const step = rememberedStep === "complete" ? "intro" : rememberedStep;
+    const query = step && step !== "intro" ? `?step=${encodeURIComponent(step)}` : "";
+    navigate(`/app/courses/${course.id}/lessons/${nextLessonId}${query}`);
+    return;
+  }
+  const nextQuizId = learningResults?.nextQuizId ?? progress?.nextQuizId;
+  if (nextQuizId) {
+    navigate(`/app/courses/${course.id}/quizzes/${nextQuizId}`);
+    return;
+  }
+  const firstLesson = flattenLessons(course).find((lesson) => lesson.type !== "Quiz");
+  navigate(firstLesson ? `/app/courses/${course.id}/lessons/${firstLesson.id}` : `/app/courses/${course.id}`);
+}
+
+function findNextTitle(course: CourseTreeResponse, progress?: ProgressSnapshotResponse) {
+  const lesson = progress?.nextLessonId ? flattenLessons(course).find((item) => item.id === progress.nextLessonId) : null;
+  if (lesson) {
+    return trimLessonTitle(lesson.title);
+  }
+  const quiz = progress?.nextQuizId ? flattenQuizzes(course).find((item) => item.id === progress.nextQuizId) : null;
+  return quiz ? quiz.title : "Bài học tiếp theo";
+}
+
+function getSectionLabel(title: string, index: number) {
+  const lower = title.toLowerCase();
+  if (lower.includes("eore")) return "PHẦN 1 - EORE";
+  if (lower.includes("sbc")) return "PHẦN 2 - SBC";
+  return `PHẦN ${index + 1}`;
+}
+
+function getLessonNumber(lesson: CourseLesson, sectionIndex: number) {
+  const match = lesson.title.match(/Bài\s+(\d+(?:\.\d+)?)/i);
+  return match?.[1] ?? `${sectionIndex + 1}.${lesson.order}`;
+}
+
+function trimLessonTitle(title: string) {
+  return title.replace(/^Bài\s+\d+(?:\.\d+)?\s*-\s*/i, "").trim();
+}
+
+function InfoBand({
+  icon: Icon,
   title,
-  courses,
-  coverMap,
-  empty,
+  value,
+  description,
 }: {
+  icon: LucideIcon;
   title: string;
-  courses: LearnerCourseCatalogItem[];
-  coverMap: Map<string, CourseCover>;
-  empty: string;
+  value: string;
+  description: string;
 }) {
   return (
-    <LearnerPanel className="p-6">
-      <div className="flex items-center justify-between gap-3">
-        <h2 className="text-[1.25rem] font-semibold text-slate-950">{title}</h2>
-        <span className="text-sm text-slate-500">{courses.length} khóa học</span>
-      </div>
-      <div className="mt-5 grid gap-3">
-        {courses.length ? (
-          courses.slice(0, 5).map((course) => {
-            const cover = coverMap.get(course.courseId);
-            return (
-              <Link
-                className="group grid grid-cols-[92px_minmax(0,1fr)] gap-4 rounded-2xl border border-slate-200 bg-white p-3 transition duration-300 hover:-translate-y-0.5 hover:border-[#163b7b]/40 hover:shadow-md"
-                key={course.courseId}
-                to={`/app/courses/${course.courseId}`}
-              >
-                <div className="relative aspect-video overflow-hidden rounded-xl bg-slate-100">
-                  <img className="h-full w-full object-cover transition duration-300 group-hover:scale-105" src={cover?.posterUrl ?? getFallbackImage(course.courseId)} alt={course.title} loading="lazy" />
-                  <div className="absolute inset-0 grid place-items-center bg-slate-950/20 text-white">
-                    <PlayCircle className="size-6" />
-                  </div>
-                </div>
-                <div className="min-w-0">
-                  <p className="line-clamp-2 font-semibold text-slate-950">{course.title}</p>
-                  <p className="mt-1 text-sm text-slate-500">
-                    {course.totalLessons} bài học - {course.totalQuizzes} bài kiểm tra
-                  </p>
-                  <p className="mt-2 text-sm font-semibold text-[#163b7b]">{course.enrollment?.overallCompletionPercent ?? 0}%</p>
-                </div>
-              </Link>
-            );
-          })
-        ) : (
-          <MessageBanner tone="info">{empty}</MessageBanner>
-        )}
+    <LearnerPanel className="lesson-info-band">
+      <span>
+        <Icon className="size-6" />
+      </span>
+      <div>
+        <h2>{title}</h2>
+        <strong>{value}</strong>
+        <p>{description}</p>
       </div>
     </LearnerPanel>
   );
 }
 
-function SummaryCard({ label, value, icon: Icon }: { label: string; value: number; icon: LucideIcon }) {
+function MiniStat({
+  icon: Icon,
+  label,
+  value,
+  note,
+  tone = "blue",
+}: {
+  icon: LucideIcon;
+  label: string;
+  value: string;
+  note: string;
+  tone?: "blue" | "green" | "gold";
+}) {
   return (
-    <LearnerPanel className="overflow-hidden p-5">
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <p className="text-sm text-slate-500">{label}</p>
-          <p className="mt-2 text-3xl font-semibold text-slate-950">{value}</p>
-        </div>
-        <span className="grid size-12 place-items-center rounded-2xl bg-[#eaf3ff] text-[#163b7b]">
-          <Icon className="size-5" />
-        </span>
+    <div className={`lesson-mini-stat ${tone}`}>
+      <span>
+        <Icon className="size-5" />
+      </span>
+      <div>
+        <small>{label}</small>
+        <strong>{value}</strong>
+        <p>{note}</p>
       </div>
-    </LearnerPanel>
-  );
-}
-
-function LandingStat({ label, value, icon: Icon }: { label: string; value: number; icon: LucideIcon }) {
-  return (
-    <div className="flex items-center justify-between gap-3 rounded-2xl bg-slate-50 px-4 py-3">
-      <div className="flex items-center gap-3">
-        <Icon className="size-4 text-[#163b7b]" />
-        <span className="text-sm text-slate-600">{label}</span>
-      </div>
-      <strong className="text-slate-950">{value}</strong>
     </div>
   );
 }
 
-function getFallbackImage(seed: string) {
-  const hash = [...seed].reduce((sum, char) => sum + char.charCodeAt(0), 0);
-  return fallbackImages[hash % fallbackImages.length];
+function ResourceChip({ icon: Icon, title, type, tone }: { icon: LucideIcon; title: string; type: string; tone: string }) {
+  return (
+    <button className={`lesson-resource-chip ${tone}`} type="button">
+      <Icon className="size-5" />
+      <span>{title}</span>
+      <small>{type}</small>
+    </button>
+  );
 }

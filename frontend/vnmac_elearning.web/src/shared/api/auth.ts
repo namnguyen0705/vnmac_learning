@@ -3,8 +3,11 @@ import type {
   LoginRequest,
   LoginResponse,
   LogoutRequest,
+  ChangePasswordRequest,
   RegisterRequest,
   RegisterResponse,
+  ResendVerificationEmailRequest,
+  UpdateProfileRequest,
   User,
   VerifyEmailRequest,
   VerifyEmailResponse,
@@ -26,6 +29,20 @@ export function registerRequest(payload: RegisterRequest) {
   });
 }
 
+export function getProvinceOptions() {
+  return apiRequest<string[]>("/api/auth/provinces", {
+    auth: false,
+  });
+}
+
+export function resendVerificationEmailRequest(payload: ResendVerificationEmailRequest) {
+  return apiRequest<void>("/api/auth/resend-verification", {
+    method: "POST",
+    auth: false,
+    body: payload,
+  });
+}
+
 export function verifyEmailRequest(payload: VerifyEmailRequest) {
   return apiRequest<VerifyEmailResponse>("/api/auth/verify-email", {
     method: "POST",
@@ -36,6 +53,20 @@ export function verifyEmailRequest(payload: VerifyEmailRequest) {
 
 export function getCurrentUser() {
   return apiRequest<User>("/api/auth/me");
+}
+
+export function updateCurrentUserProfile(payload: UpdateProfileRequest) {
+  return apiRequest<User>("/api/auth/profile", {
+    method: "PUT",
+    body: payload,
+  });
+}
+
+export function changeCurrentUserPassword(payload: ChangePasswordRequest) {
+  return apiRequest<void>("/api/auth/password", {
+    method: "PUT",
+    body: payload,
+  });
 }
 
 export function logoutRequest(payload: LogoutRequest) {

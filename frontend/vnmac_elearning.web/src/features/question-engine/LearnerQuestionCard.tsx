@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { AlertTriangle, CheckCircle2, MapPin } from "lucide-react";
+import { AlertTriangle, CheckCircle2, MapPin, ShieldCheck } from "lucide-react";
 import type {
   DragDropMatchSubmission,
   LearnerQuestionPayload,
@@ -14,6 +14,7 @@ import { humanizeEnum } from "../../shared/lib/format";
 export interface QuestionDraftAnswer {
   selectedOptionCodes: string[];
   selectedHotspotCodes: string[];
+  hotspotClicks: { x: number; y: number }[];
   matches: Record<string, string>;
 }
 
@@ -21,6 +22,7 @@ export function createEmptyAnswer(): QuestionDraftAnswer {
   return {
     selectedOptionCodes: [],
     selectedHotspotCodes: [],
+    hotspotClicks: [],
     matches: {},
   };
 }
@@ -41,6 +43,7 @@ export function toSubmissionRequest(
     questionId,
     selectedOptionCodes: draft.selectedOptionCodes,
     selectedHotspotCodes: draft.selectedHotspotCodes,
+    hotspotClicks: draft.hotspotClicks,
     matches,
   };
 }
@@ -61,6 +64,18 @@ function updateSelection(list: string[], code: string, single = false) {
   return list.includes(code) ? list.filter((item) => item !== code) : [...list, code];
 }
 
+function getQuestionTypeLabel(question: LearnerQuestionPayload) {
+  if (question.type === "DragDrop") return "Phân loại hành động";
+  if (question.type === "Hotspot") return "Chọn vị trí";
+  return humanizeEnum(question.type);
+}
+
+function getChoiceCountLabel(question: LearnerQuestionPayload, count: number) {
+  if (question.type === "DragDrop") return `${count} hành động`;
+  if (question.type === "Hotspot") return "1 điểm cần chọn";
+  return `${count} lựa chọn`;
+}
+
 export function LearnerQuestionCard({
   question,
   answer,
@@ -73,7 +88,7 @@ export function LearnerQuestionCard({
     question.type === "TrueFalse" ||
     question.type === "MultipleChoice" ||
     question.type === "Scenario";
-  const isSingleChoice = question.type === "TrueFalse";
+  const isSingleChoice = !question.allowMultipleAnswers;
   const choiceCount = question.options.length || question.hotspotTargets.length || question.dragItems.length;
 
   return (
@@ -82,8 +97,8 @@ export function LearnerQuestionCard({
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="space-y-2">
             <div className="flex flex-wrap items-center gap-2">
-              <Badge variant="outline">{humanizeEnum(question.type)}</Badge>
-              <Badge variant="secondary">{choiceCount} lựa chọn</Badge>
+              <Badge variant="outline">{getQuestionTypeLabel(question)}</Badge>
+              <Badge variant="secondary">{getChoiceCountLabel(question, choiceCount)}</Badge>
             </div>
             <CardTitle className="text-lg leading-tight">{question.prompt}</CardTitle>
             {question.statement ? <p className="text-sm leading-6 text-slate-600">{question.statement}</p> : null}
@@ -105,7 +120,7 @@ export function LearnerQuestionCard({
         {question.mediaTitle ? (
           <Alert variant="info">
             <MapPin className="size-4" />
-            <AlertTitle>Tư liệu tham chiếu</AlertTitle>
+            <AlertTitle>Bối cảnh câu hỏi</AlertTitle>
             <AlertDescription>{question.mediaTitle}</AlertDescription>
           </Alert>
         ) : null}
@@ -144,76 +159,88 @@ export function LearnerQuestionCard({
 
         {question.type === "Hotspot" ? (
           <div className="space-y-4">
-            <div className="relative min-h-80 overflow-hidden rounded-3xl border border-slate-200 bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.14),_rgba(255,255,255,1)_55%)]">
-              <div className="absolute inset-0 bg-[linear-gradient(rgba(148,163,184,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.12)_1px,transparent_1px)] bg-[size:32px_32px]" />
-              <div className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500 shadow-sm">
-                Vùng tương tác
-              </div>
+            <Alert variant="warning">
+              <MapPin className="size-4" />
+              <AlertTitle>Cách trả lời</AlertTitle>
+              <AlertDescription>
+                Quan sát ảnh và bấm trực tiếp vào vị trí bạn chọn. Vùng đáp án được ẩn cho đến khi chấm bài.
+              </AlertDescription>
+            </Alert>
 
-              {question.hotspotTargets.map((target) => {
-                const selected = current.selectedHotspotCodes.includes(target.code);
-                return (
-                  <Button
-                    aria-label={target.label}
-                    className="absolute size-10 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow-lg"
-                    disabled={disabled}
-                    key={target.code}
-                    size="icon"
-                    style={{ left: `${target.x}%`, top: `${target.y}%` }}
-                    type="button"
-                    variant={selected ? "default" : "outline"}
-                    onClick={() =>
-                      onChange({
-                        ...current,
-                        selectedHotspotCodes: updateSelection(current.selectedHotspotCodes, target.code),
-                      })
-                    }
-                  >
-                    <span className="text-xs font-bold">{target.order}</span>
-                  </Button>
-                );
-              })}
+            <div
+              className="relative aspect-video min-h-80 cursor-crosshair overflow-hidden rounded-3xl border border-slate-200 bg-[radial-gradient(circle_at_center,_rgba(254,226,226,0.95)_0,_rgba(254,226,226,0.55)_18%,_rgba(254,249,195,0.45)_35%,_rgba(236,253,245,0.8)_58%,_rgba(255,255,255,1)_80%)]"
+              role="button"
+              tabIndex={disabled ? -1 : 0}
+              onClick={(event) => {
+                if (disabled) return;
+                const bounds = event.currentTarget.getBoundingClientRect();
+                const x = Math.max(0, Math.min(100, ((event.clientX - bounds.left) / bounds.width) * 100));
+                const y = Math.max(0, Math.min(100, ((event.clientY - bounds.top) / bounds.height) * 100));
+                onChange({
+                  ...current,
+                  selectedHotspotCodes: [],
+                  hotspotClicks: [{ x: Math.round(x * 10) / 10, y: Math.round(y * 10) / 10 }],
+                });
+              }}
+            >
+              {question.mediaUrl ? (
+                <img
+                  alt={question.mediaTitle || question.prompt}
+                  className="absolute inset-0 size-full object-contain"
+                  src={question.mediaUrl}
+                />
+              ) : (
+                <>
+                  <div className="absolute inset-0 bg-[linear-gradient(rgba(148,163,184,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.12)_1px,transparent_1px)] bg-[size:32px_32px]" />
+                  <div className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-600 shadow-sm">
+                    Sơ đồ khu vực
+                  </div>
+                  <div className="absolute left-1/2 top-1/2 flex size-28 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border-2 border-dashed border-red-400 bg-red-50/90 text-center text-red-700 shadow-sm">
+                    <AlertTriangle className="mb-1 size-7" />
+                    <span className="px-2 text-xs font-bold">Vật nghi nguy hiểm</span>
+                  </div>
+                  <div className="absolute bottom-5 right-5 flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50/95 px-3 py-2 text-xs font-semibold text-emerald-800 shadow-sm">
+                    <ShieldCheck className="size-4" />
+                    Càng xa tâm càng an toàn
+                  </div>
+                </>
+              )}
+
+              {current.hotspotClicks[0] ? (
+                <span
+                  className="pointer-events-none absolute size-7 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-white bg-blue-600 shadow-[0_0_0_3px_rgba(37,99,235,0.5)]"
+                  style={{
+                    left: `${current.hotspotClicks[0].x}%`,
+                    top: `${current.hotspotClicks[0].y}%`,
+                  }}
+                />
+              ) : null}
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2">
-              {question.hotspotTargets.map((target) => {
-                const selected = current.selectedHotspotCodes.includes(target.code);
-                return (
-                  <Button
-                    className="h-auto justify-start whitespace-normal rounded-2xl px-4 py-3 text-left"
-                    disabled={disabled}
-                    key={target.code}
-                    type="button"
-                    variant={selected ? "secondary" : "outline"}
-                    onClick={() =>
-                      onChange({
-                        ...current,
-                        selectedHotspotCodes: updateSelection(current.selectedHotspotCodes, target.code),
-                      })
-                    }
-                  >
-                    <span className="flex w-full items-center justify-between gap-3">
-                      <span>{target.label}</span>
-                      <Badge variant={selected ? "success" : "outline"}>{target.code}</Badge>
-                    </span>
-                  </Button>
-                );
-              })}
-            </div>
+            <p className="text-center text-sm text-slate-600">
+              {current.hotspotClicks.length
+                ? "Đã ghi nhận vị trí. Bấm vị trí khác trên ảnh nếu muốn thay đổi."
+                : "Chưa chọn vị trí nào."}
+            </p>
           </div>
         ) : null}
 
         {question.type === "DragDrop" ? (
-          <div className="grid gap-3 lg:grid-cols-2">
-            {question.dragItems.map((item) => (
+          <div className="space-y-4">
+            <Alert variant="info">
+              <CheckCircle2 className="size-4" />
+              <AlertTitle>Cách trả lời</AlertTitle>
+              <AlertDescription>
+                Với từng hành động, hãy chọn nhóm phù hợp: hành động an toàn hoặc hành động nguy hiểm.
+              </AlertDescription>
+            </Alert>
+            <div className="grid gap-3 lg:grid-cols-2">
+            {question.dragItems.map((item, index) => (
               <Card className="border-slate-200 shadow-none" key={item.code}>
                 <CardContent className="space-y-3 p-4">
                   <div className="flex items-center justify-between gap-3">
-                    <div>
-                      <p className="text-sm font-semibold text-slate-900">{item.label}</p>
-                      <p className="text-xs uppercase tracking-[0.12em] text-slate-500">{item.code}</p>
-                    </div>
-                    <Badge variant="outline">Mục kéo</Badge>
+                    <p className="text-sm font-semibold text-slate-900">{item.label}</p>
+                    <Badge variant="outline">Hành động {index + 1}</Badge>
                   </div>
 
                   <Select
@@ -230,7 +257,7 @@ export function LearnerQuestionCard({
                     }
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Chọn đích ghép" />
+                      <SelectValue placeholder="Chọn nhóm cho hành động này" />
                     </SelectTrigger>
                     <SelectContent>
                       {question.dragTargets.map((target) => (
@@ -243,6 +270,7 @@ export function LearnerQuestionCard({
                 </CardContent>
               </Card>
             ))}
+            </div>
           </div>
         ) : null}
 
