@@ -42,11 +42,7 @@ yarn-error.log*
 pnpm-debug.log*
 # Editor and OS files
 .vs/
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
-!.vscode/launch.json
-!.vscode/tasks.json
+.vscode/
 .idea/
 *.swp
 *.swo
@@ -66,3 +62,18 @@ temp/
 .eslintcache
 .sass-cache/
 docs/
+frontend/.vscode
+
+# Local AI/editor instructions
+.github/copilot-instructions.md
+
+# Runtime uploads (user-generated content)
+backend/vnmac_elearning.Api/wwwroot/uploads/
+
+# Frontend local diagnostics and generated runtime probes
+frontend/vnmac_elearning.web/dom.dump.html
+frontend/vnmac_elearning.web/dump.out.html
+frontend/vnmac_elearning.web/headless*.png
+frontend/vnmac_elearning.web/*.runtime.js
+frontend/vnmac_elearning.web/*.runtime.html
+frontend/vnmac_elearning.web/module-check.txt
