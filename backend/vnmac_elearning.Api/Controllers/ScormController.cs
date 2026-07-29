@@ -144,11 +144,19 @@ public sealed class ScormController(LearningService learningService) : Controlle
       }
 
       function commit() {
-        return syncRequest('POST', runtimeBase + '/commit') ? 'true' : 'false';
+        const result = syncRequest('POST', runtimeBase + '/commit');
+        if (result) {
+          window.parent.postMessage({ type: 'scorm-runtime', action: 'commit', sessionId: '{{sessionId}}', registration: result.registration }, '*');
+        }
+        return result ? 'true' : 'false';
       }
 
       function terminate() {
-        return syncRequest('POST', runtimeBase + '/terminate') ? 'true' : 'false';
+        const result = syncRequest('POST', runtimeBase + '/terminate');
+        if (result) {
+          window.parent.postMessage({ type: 'scorm-runtime', action: 'terminate', sessionId: '{{sessionId}}', registration: result.registration }, '*');
+        }
+        return result ? 'true' : 'false';
       }
 
       function getErrorString(code) {

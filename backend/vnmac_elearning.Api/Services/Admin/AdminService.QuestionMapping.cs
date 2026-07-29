@@ -396,6 +396,21 @@ public sealed partial class AdminService
         return section.Lessons.Select(item => item.Order).DefaultIfEmpty(0).Max() + 1;
     }
 
+    private static int ResolveAvailableLessonOrder(CourseSection section, int requestedOrder, string? excludedLessonId = null)
+    {
+        var occupiedOrders = section.Lessons
+            .Where(item => item.Id != excludedLessonId)
+            .Select(item => item.Order)
+            .ToHashSet();
+
+        if (requestedOrder > 0 && !occupiedOrders.Contains(requestedOrder))
+        {
+            return requestedOrder;
+        }
+
+        return occupiedOrders.DefaultIfEmpty(0).Max() + 1;
+    }
+
     private CourseSection ResolveQuizHostSection(Course course, string? sectionId)
     {
         if (!string.IsNullOrWhiteSpace(sectionId))

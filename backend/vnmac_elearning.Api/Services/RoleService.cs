@@ -13,37 +13,6 @@ public sealed class RoleService(TrainingDbContext dbContext, TimeProvider timePr
         "notifications", "users", "roles", "tracking", "reports", "settings", "system-logs"
     ];
 
-    public void InitializeDefaults()
-    {
-        if (dbContext.AppRoles.Any())
-        {
-            return;
-        }
-
-        var now = timeProvider.GetUtcNow();
-        var admin = CreateSystemRole("role-admin", "admin", "Quản trị hệ thống", true, now, Resources);
-        var content = CreateSystemRole(
-            "role-content-manager", "content-manager", "Quản lý nội dung", false, now,
-            ["overview", "courses", "lessons", "questions", "quizzes", "materials", "notifications", "reports"]);
-        var viewer = CreateSystemRole(
-            "role-data-viewer", "data-viewer", "Theo dõi dữ liệu", false, now,
-            ["overview", "tracking", "reports", "system-logs"]);
-        var learner = CreateSystemRole("role-learner", "learner", "Học viên", false, now, []);
-
-        dbContext.AppRoles.AddRange(admin, content, viewer, learner);
-        foreach (var user in dbContext.Users)
-        {
-            user.RoleId = user.Role switch
-            {
-                UserRole.Admin => admin.Id,
-                UserRole.ContentManager => content.Id,
-                UserRole.DataViewer => viewer.Id,
-                _ => learner.Id
-            };
-        }
-        dbContext.SaveChanges();
-    }
-
     public IReadOnlyCollection<RoleResponse> GetRoles()
     {
         return dbContext.AppRoles
@@ -169,29 +138,6 @@ public sealed class RoleService(TrainingDbContext dbContext, TimeProvider timePr
             CanDelete = item.CanDelete
         }).ToArray()
     };
-
-    private static AppRole CreateSystemRole(
-        string id, string code, string name, bool isAdmin, DateTimeOffset now, IReadOnlyCollection<string> resources) =>
-        new()
-        {
-            Id = id,
-            Code = code,
-            Name = name,
-            Description = name,
-            IsSystem = true,
-            IsAdmin = isAdmin,
-            CreatedAt = now,
-            UpdatedAt = now,
-            Permissions = resources.Select(resource => new RolePermission
-            {
-                RoleId = id,
-                Resource = resource,
-                CanView = true,
-                CanCreate = isAdmin || code == "content-manager",
-                CanUpdate = isAdmin || code == "content-manager",
-                CanDelete = isAdmin || code == "content-manager"
-            }).ToArray()
-        };
 
     private static List<RolePermission> BuildPermissions(IEnumerable<RolePermissionRequest> requests) =>
         requests.Where(item => Resources.Contains(item.Resource)).Select(item => new RolePermission

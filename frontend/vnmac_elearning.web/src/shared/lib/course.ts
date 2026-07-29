@@ -7,7 +7,6 @@ import type {
   LearnerLessonSummary,
   ProgressTracking,
   QuizResult,
-  ScormRegistration,
 } from "../types/api";
 
 export function sortSections(sections: CourseSection[]) {
@@ -58,10 +57,6 @@ export function toProgressMap(progress: ProgressTracking[]) {
 }
 
 export function toQuizResultMap(items: QuizResult[]) {
-  return new Map(items.map((item) => [item.lessonId, item]));
-}
-
-export function toScormMap(items: ScormRegistration[]) {
   return new Map(items.map((item) => [item.lessonId, item]));
 }
 

@@ -5,11 +5,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { createLesson, deleteLesson, getAdminCourses, getAdminLessonCatalog } from "@/shared/api/admin";
+import {
+  createLesson,
+  deleteImportedScormPackage,
+  deleteLesson,
+  getAdminCourses,
+  getAdminLessonCatalog,
+  importScormPackage,
+} from "@/shared/api/admin";
 import { AdminModal } from "@/shared/ui/admin-kit";
 import { LoadingBlock } from "@/shared/ui/LoadingBlock";
 import { MessageBanner } from "@/shared/ui/MessageBanner";
-import type { AdminLessonCatalogRow, LessonDifficulty, LessonPublicationStatus, LessonType } from "@/shared/types/api";
+import type { AdminLessonCatalogRow, LessonDifficulty, LessonPublicationStatus, LessonType, ScormPackageRequest } from "@/shared/types/api";
 import {
   Archive,
   BookOpen,
@@ -18,6 +25,7 @@ import {
   ChevronRight,
   Eye,
   Filter,
+  Loader2,
   Pencil,
   Plus,
   RefreshCcw,
@@ -43,6 +51,10 @@ const difficultyOptions = [
 const pageSizeOptions = ["10", "20", "30"] as const;
 
 const fallbackThumb = "https://picsum.photos/seed/vnmac-admin-lesson/240/160";
+
+function getNextLessonOrder(lessons: Array<{ order: number }>) {
+  return Math.max(0, ...lessons.map((lesson) => lesson.order)) + 1;
+}
 
 function formatPercent(part: number, total: number) {
   if (total <= 0) {
@@ -180,6 +192,9 @@ export function LessonsPage() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [scormPackage, setScormPackage] = useState<ScormPackageRequest | null>(null);
+  const [isImportingScorm, setIsImportingScorm] = useState(false);
+  const [scormImportError, setScormImportError] = useState("");
   const [createForm, setCreateForm] = useState({
     courseId: "",
     sectionId: "",
@@ -218,8 +233,13 @@ export function LessonsPage() {
       statusLabel: createForm.publicationStatus === "Published" ? "Đã xuất bản" : "Bản nháp",
       topic: selectedCourse?.sections.find((section) => section.id === createForm.sectionId)?.title ?? "",
       thumbnailUrl: "",
+      scormPackage: createForm.type === "Scorm" ? scormPackage : null,
     }),
     onSuccess: async (lesson) => {
+      if (createForm.type !== "Scorm" && scormPackage) {
+        await deleteImportedScormPackage(scormPackage.entryPath).catch(() => undefined);
+      }
+      setScormPackage(null);
       await queryClient.invalidateQueries({ queryKey: ["admin-lesson-catalog"] });
       setIsCreateOpen(false);
       navigate(`/admin/lessons/${lesson.id}/content`);
@@ -241,12 +261,46 @@ export function LessonsPage() {
       sectionId: course?.sections[0]?.id ?? "",
       title: "",
       type: "Video",
-      order: (course?.sections[0]?.lessons.length ?? 0) + 1,
+      order: getNextLessonOrder(course?.sections[0]?.lessons ?? []),
       durationMinutes: 5,
       difficulty: "Basic",
       publicationStatus: "Draft",
     });
+    setScormPackage(null);
+    setScormImportError("");
+    setIsImportingScorm(false);
     setIsCreateOpen(true);
+  };
+
+  const closeCreateLesson = () => {
+    const importedPackage = scormPackage;
+    setIsCreateOpen(false);
+    setScormPackage(null);
+    setScormImportError("");
+    if (importedPackage) {
+      void deleteImportedScormPackage(importedPackage.entryPath).catch(() => undefined);
+    }
+  };
+
+  const importScorm = async (file: File) => {
+    setIsImportingScorm(true);
+    setScormImportError("");
+    try {
+      const imported = await importScormPackage(file);
+      const previousPackage = scormPackage;
+      setScormPackage(imported);
+      if (previousPackage && previousPackage.entryPath !== imported.entryPath) {
+        await deleteImportedScormPackage(previousPackage.entryPath).catch(() => undefined);
+      }
+      setCreateForm((current) => ({
+        ...current,
+        title: current.title.trim() ? current.title : imported.title,
+      }));
+    } catch (error) {
+      setScormImportError(error instanceof Error ? error.message : "Không thể nhập gói SCORM.");
+    } finally {
+      setIsImportingScorm(false);
+    }
   };
   const totalPages = Math.max(1, Math.ceil((catalog?.totalItems ?? 0) / pageSize));
   const visiblePages = useMemo(() => {
@@ -542,9 +596,16 @@ export function LessonsPage() {
         description="Chọn chủ đề và phần học trước khi tạo. Sau khi tạo, hệ thống mở ngay màn hình biên soạn nội dung."
         actions={(
           <>
-            <Button type="button" variant="outline" onClick={() => setIsCreateOpen(false)}>Hủy</Button>
+            <Button type="button" variant="outline" onClick={closeCreateLesson}>Hủy</Button>
             <Button
-              disabled={createMutation.isPending || !createForm.courseId || !createForm.sectionId || !createForm.title.trim()}
+              disabled={
+                createMutation.isPending ||
+                isImportingScorm ||
+                !createForm.courseId ||
+                !createForm.sectionId ||
+                !createForm.title.trim() ||
+                (createForm.type === "Scorm" && !scormPackage)
+              }
               type="button"
               onClick={() => createMutation.mutate()}
             >
@@ -555,7 +616,7 @@ export function LessonsPage() {
         )}
         open={isCreateOpen}
         title="Thêm bài học mới"
-        onClose={() => setIsCreateOpen(false)}
+        onClose={closeCreateLesson}
       >
         <div className="grid gap-4 md:grid-cols-2">
           <label className="grid gap-2 md:col-span-2">
@@ -572,7 +633,7 @@ export function LessonsPage() {
                   ...current,
                   courseId,
                   sectionId: course?.sections[0]?.id ?? "",
-                  order: (course?.sections[0]?.lessons.length ?? 0) + 1,
+                  order: getNextLessonOrder(course?.sections[0]?.lessons ?? []),
                 }));
               }}
             >
@@ -588,7 +649,7 @@ export function LessonsPage() {
               value={createForm.sectionId}
               onValueChange={(sectionId) => {
                 const section = selectedCourse?.sections.find((item) => item.id === sectionId);
-                setCreateForm((current) => ({ ...current, sectionId, order: (section?.lessons.length ?? 0) + 1 }));
+                setCreateForm((current) => ({ ...current, sectionId, order: getNextLessonOrder(section?.lessons ?? []) }));
               }}
             >
               <SelectTrigger><SelectValue placeholder="Chọn phần học" /></SelectTrigger>
@@ -599,7 +660,19 @@ export function LessonsPage() {
           </label>
           <label className="grid gap-2">
             <Label>Loại bài học</Label>
-            <Select value={createForm.type} onValueChange={(type) => setCreateForm((current) => ({ ...current, type: type as LessonType }))}>
+            <Select
+              value={createForm.type}
+              onValueChange={(type) => {
+                setCreateForm((current) => ({ ...current, type: type as LessonType }));
+                if (type !== "Scorm") {
+                  if (scormPackage) {
+                    void deleteImportedScormPackage(scormPackage.entryPath).catch(() => undefined);
+                  }
+                  setScormPackage(null);
+                  setScormImportError("");
+                }
+              }}
+            >
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="Video">Video</SelectItem>
@@ -608,6 +681,42 @@ export function LessonsPage() {
               </SelectContent>
             </Select>
           </label>
+          {createForm.type === "Scorm" ? (
+            <div className="grid gap-3 rounded-lg border border-dashed border-slate-300 bg-slate-50 p-4 md:col-span-2">
+              <div>
+                <Label>Gói SCORM (.zip)</Label>
+                <p className="mt-1 text-xs text-slate-500">
+                  Hệ thống tự đọc imsmanifest.xml, nhận diện SCORM 1.2/2004 và danh sách SCO.
+                </p>
+              </div>
+              <label className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border bg-white px-4 py-3 text-sm font-medium hover:bg-slate-50">
+                {isImportingScorm ? <Loader2 className="size-4 animate-spin" /> : <Upload className="size-4" />}
+                {isImportingScorm ? "Đang kiểm tra và giải nén..." : scormPackage ? "Thay gói SCORM" : "Chọn file ZIP"}
+                <input
+                  accept=".zip,application/zip"
+                  className="sr-only"
+                  disabled={isImportingScorm}
+                  type="file"
+                  onChange={(event) => {
+                    const file = event.target.files?.[0];
+                    if (file) void importScorm(file);
+                    event.target.value = "";
+                  }}
+                />
+              </label>
+              {scormPackage ? (
+                <div className="grid gap-1 rounded-md border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-900">
+                  <strong>{scormPackage.title}</strong>
+                  <span>
+                    {scormPackage.version === "Scorm2004" ? "SCORM 2004" : "SCORM 1.2"}
+                    {" · "}{scormPackage.scos.length} SCO
+                  </span>
+                  <span className="break-all text-xs">{scormPackage.entryPath}</span>
+                </div>
+              ) : null}
+              {scormImportError ? <MessageBanner tone="error">{scormImportError}</MessageBanner> : null}
+            </div>
+          ) : null}
           <label className="grid gap-2">
             <Label>Độ khó</Label>
             <Select value={createForm.difficulty} onValueChange={(difficulty) => setCreateForm((current) => ({ ...current, difficulty: difficulty as LessonDifficulty }))}>

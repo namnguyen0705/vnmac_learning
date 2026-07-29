@@ -70,12 +70,15 @@ dotnet run --project backend/vnmac_elearning.Api
 - Current migration that removes legacy lesson and quiz storage: `20260414084742_EnforceRelationalLearningSchema`
 - Current migration that adds LMS SCORM runtime tables: `20260429014628_AddScormLmsRuntime`
 
-### SCORM demo content
+### SCORM packages
 
-- `backend/vnmac_elearning.Api/wwwroot/scorm/demo-scorm-12/index.html`
-- `backend/vnmac_elearning.Api/wwwroot/scorm/demo-scorm-2004/index.html`
+SCORM 1.2/2004 ZIP packages are imported from the admin lesson screen. The API
+validates and extracts each package under
+`backend/vnmac_elearning.Api/wwwroot/scorm/packages/`.
 
-These are sample SCO pages that can be referenced from admin lesson payloads when creating a `Scorm` lesson.
+The extracted package directory is runtime data and must be copied together with
+the database when deploying or moving an environment. A test package is available
+at `artifacts/vnmac-scorm-sample-12.zip`.
 
 ## Frontend
 

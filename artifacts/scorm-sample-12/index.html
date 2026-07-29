@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VNMAC - SCORM 1.2 mẫu</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div>
+        <span class="eyebrow">VNMAC E-LEARNING</span>
+        <h1>Gói SCORM 1.2 thử nghiệm</h1>
+        <p>Dùng package này để kiểm tra launch, commit, resume, điểm số và hoàn thành bài học.</p>
+      </div>
+      <span id="connectionBadge" class="badge">Đang kết nối LMS…</span>
+    </header>
+
+    <section class="card">
+      <div class="progress-copy">
+        <strong id="stepLabel">Bước 1/3</strong>
+        <span id="learnerName">Học viên</span>
+      </div>
+      <div class="progress"><div id="progressBar"></div></div>
+
+      <article class="lesson" data-step="1">
+        <span class="number">01</span>
+        <div>
+          <h2>Nhận biết nguy hiểm</h2>
+          <p>Không chạm, không di chuyển và không tiếp cận vật thể nghi là bom mìn.</p>
+        </div>
+      </article>
+
+      <article class="lesson hidden" data-step="2">
+        <span class="number">02</span>
+        <div>
+          <h2>Giữ khoảng cách an toàn</h2>
+          <p>Cảnh báo những người xung quanh và ghi nhớ vị trí từ một khoảng cách an toàn.</p>
+        </div>
+      </article>
+
+      <article class="lesson hidden" data-step="3">
+        <span class="number">03</span>
+        <div>
+          <h2>Báo cho cơ quan chức năng</h2>
+          <p>Thông báo cho chính quyền địa phương hoặc lực lượng chức năng gần nhất.</p>
+        </div>
+      </article>
+
+      <div class="actions">
+        <button id="previousButton" class="secondary" type="button">Quay lại</button>
+        <button id="nextButton" type="button">Bước tiếp theo</button>
+        <button id="completeButton" class="success hidden" type="button">Hoàn thành với 100 điểm</button>
+      </div>
+    </section>
+
+    <section class="runtime">
+      <strong>Thông tin runtime</strong>
+      <span id="runtimeMessage">Chưa có dữ liệu.</span>
+    </section>
+  </main>
+  <script src="scorm.js"></script>
+</body>
+</html>

@@ -14,6 +14,7 @@ import type {
   CreateCourseQuizRequest,
   CreateAdminUserRequest,
   RoleResponse,
+  ScormPackageRequest,
   UpsertRoleRequest,
   CreateAdminNotificationRequest,
   CreateCourseRequest,
@@ -181,6 +182,36 @@ export async function uploadAdminMedia(file: File, mediaType: "image" | "video" 
     ...payload,
     url: resolveApiUrl(payload.url),
   };
+}
+
+export async function importScormPackage(file: File) {
+  const session = useAuthStore.getState().session;
+  const formData = new FormData();
+  formData.set("file", file);
+
+  const headers = new Headers();
+  if (session?.tokens.accessToken) {
+    headers.set("Authorization", `Bearer ${session.tokens.accessToken}`);
+  }
+
+  const response = await fetch(resolveApiUrl("/api/admin/scorm/import"), {
+    method: "POST",
+    headers,
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const payload = await response.json().catch(() => null) as { message?: string } | null;
+    throw new Error(payload?.message ?? "Không thể nhập gói SCORM.");
+  }
+
+  return await response.json() as ScormPackageRequest;
+}
+
+export function deleteImportedScormPackage(entryPath: string) {
+  return apiRequest<void>(`/api/admin/scorm/import?entryPath=${encodeURIComponent(entryPath)}`, {
+    method: "DELETE",
+  });
 }
 
 export async function getMediaLibrary() {

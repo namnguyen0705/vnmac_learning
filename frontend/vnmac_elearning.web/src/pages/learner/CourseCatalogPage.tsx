@@ -64,6 +64,7 @@ export function CourseCatalogPage() {
     queryKey: ["learner", userId, "catalog"],
     queryFn: () => getLearnerCourseCatalog(userId),
     enabled: Boolean(userId),
+    refetchOnMount: "always",
   });
 
   const coursesQuery = useQuery({
@@ -84,12 +85,14 @@ export function CourseCatalogPage() {
     queryKey: ["learner", userId, "course-progress", officialCourse?.id],
     queryFn: () => getLearnerCourseProgress(userId, officialCourse?.id ?? ""),
     enabled: Boolean(userId && officialCourse?.id && catalogItem?.isEnrolled),
+    refetchOnMount: "always",
   });
 
   const learningResultsQuery = useQuery({
     queryKey: ["learner", userId, "learning-results", officialCourse?.id],
     queryFn: () => getLearnerLearningResults(userId, officialCourse?.id ?? ""),
     enabled: Boolean(userId && officialCourse?.id && catalogItem?.isEnrolled),
+    refetchOnMount: "always",
   });
 
   if (catalogQuery.isLoading || coursesQuery.isLoading || (catalogItem?.isEnrolled && (progressQuery.isLoading || learningResultsQuery.isLoading))) {

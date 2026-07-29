@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,7 @@ import type { ScormLaunchResponse } from "../../shared/types/api";
 export function ScormPlayerPage() {
   const { session } = useAuth();
   const { courseId = "", lessonId = "" } = useParams();
+  const queryClient = useQueryClient();
   const userId = session?.user.id ?? "";
   const [launch, setLaunch] = useState<ScormLaunchResponse | null>(null);
 
@@ -30,6 +31,28 @@ export function ScormPlayerPage() {
       launchMutation.mutate();
     }
   }, [launch, launchMutation, lessonId, userId]);
+
+  useEffect(() => {
+    const handleRuntimeMessage = (event: MessageEvent) => {
+      const payload = event.data as {
+        type?: string;
+        sessionId?: string;
+        registration?: ScormLaunchResponse["registration"];
+      };
+      if (payload?.type !== "scorm-runtime" || payload.sessionId !== launch?.sessionId) {
+        return;
+      }
+
+      if (payload.registration) {
+        setLaunch((current) => current ? { ...current, registration: payload.registration! } : current);
+      }
+      void queryClient.invalidateQueries({ queryKey: ["learner", userId, "course-progress", courseId] });
+      void queryClient.invalidateQueries({ queryKey: ["learner", userId, "catalog"] });
+    };
+
+    window.addEventListener("message", handleRuntimeMessage);
+    return () => window.removeEventListener("message", handleRuntimeMessage);
+  }, [courseId, launch?.sessionId, queryClient, userId]);
 
   if (launchMutation.isPending && !launch) {
     return <LoadingBlock label="Đang tạo phiên học SCORM..." />;
@@ -56,7 +79,7 @@ export function ScormPlayerPage() {
 
             <div className="flex flex-wrap gap-3">
               <Button asChild className="rounded-2xl" variant="outline">
-                <Link to={`/app/courses/${courseId}/lessons/${lessonId}`}>
+                <Link to={`/app/courses/${courseId}`}>
                   <ArrowLeft className="mr-2 size-4" />
                   Về bài học
                 </Link>
@@ -78,6 +101,7 @@ export function ScormPlayerPage() {
           <div className="overflow-hidden rounded-[24px] border border-slate-200 bg-white">
             <iframe
               className="min-h-[760px] w-full border-0"
+              sandbox="allow-downloads allow-forms allow-popups allow-same-origin allow-scripts"
               src={resolveApiUrl(launch.playerUrl)}
               title={launch.packageTitle}
             />

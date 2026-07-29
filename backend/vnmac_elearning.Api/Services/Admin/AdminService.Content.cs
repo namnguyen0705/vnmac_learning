@@ -257,7 +257,7 @@ public sealed partial class AdminService
             SectionId = section.Id,
             Title = request.Title.Trim(),
             Type = request.Type,
-            Order = request.Order,
+            Order = ResolveAvailableLessonOrder(section, request.Order),
             DurationMinutes = request.DurationMinutes,
             StatusLabel = request.StatusLabel.Trim(),
             Topic = NormalizeAdminTopic(request.Topic, section),
@@ -352,7 +352,7 @@ public sealed partial class AdminService
         lesson.SectionId = request.SectionId;
         lesson.Title = request.Title.Trim();
         lesson.Type = request.Type;
-        lesson.Order = request.Order;
+        lesson.Order = ResolveAvailableLessonOrder(section, request.Order, lesson.Id);
         lesson.DurationMinutes = request.DurationMinutes;
         lesson.StatusLabel = request.StatusLabel.Trim();
         lesson.Topic = NormalizeAdminTopic(request.Topic, section);
@@ -429,7 +429,7 @@ public sealed partial class AdminService
         lesson.CourseId = request.CourseId;
         lesson.SectionId = section.Id;
         lesson.Title = request.Title.Trim();
-        lesson.Order = request.Order;
+        lesson.Order = ResolveAvailableLessonOrder(section, request.Order, lesson.Id);
         lesson.DurationMinutes = request.DurationMinutes;
         lesson.StatusLabel = request.StatusLabel.Trim();
         lesson.Topic = NormalizeAdminTopic(request.Topic, section);

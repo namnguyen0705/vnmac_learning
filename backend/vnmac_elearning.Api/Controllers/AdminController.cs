@@ -14,6 +14,7 @@ namespace vnmac_elearning.Api.Controllers;
 public sealed class AdminController(
     AdminService adminService,
     MediaStorageService mediaStorageService,
+    ScormPackageImportService scormPackageImportService,
     SystemSettingsService settingsService,
     AuditLogService auditLogService,
     NotificationService notificationService,
@@ -52,6 +53,49 @@ public sealed class AdminController(
         catch (InvalidOperationException exception)
         {
             return BadRequest(new { key = "media.upload_invalid", message = exception.Message });
+        }
+    }
+
+    [HttpPost("scorm/import")]
+    [RequestSizeLimit(512L * 1024 * 1024)]
+    [RequestFormLimits(MultipartBodyLengthLimit = 512L * 1024 * 1024)]
+    public async Task<ActionResult<ScormPackageRequest>> ImportScormPackage(
+        [FromForm] IFormFile file,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var result = await scormPackageImportService.ImportAsync(file, cancellationToken);
+            auditLogService.Track(
+                GetActorUserId(),
+                "scorm",
+                "import",
+                "ScormPackage",
+                result.Identifier,
+                $"Import SCORM: {result.Title}",
+                new { result.Version, result.EntryPath, ScoCount = result.Scos.Count },
+                HttpContext.Connection.RemoteIpAddress?.ToString() ?? string.Empty,
+                Request.Headers.UserAgent.ToString());
+            auditLogService.SaveChanges();
+            return Ok(result);
+        }
+        catch (InvalidOperationException exception)
+        {
+            return BadRequest(new { key = "scorm.import_invalid", message = exception.Message });
+        }
+    }
+
+    [HttpDelete("scorm/import")]
+    public IActionResult DeleteImportedScormPackage([FromQuery] string entryPath)
+    {
+        try
+        {
+            var deleted = scormPackageImportService.DeleteUnreferencedPackage(entryPath);
+            return deleted ? NoContent() : Ok();
+        }
+        catch (InvalidOperationException exception)
+        {
+            return BadRequest(new { key = "scorm.package_path_invalid", message = exception.Message });
         }
     }
 

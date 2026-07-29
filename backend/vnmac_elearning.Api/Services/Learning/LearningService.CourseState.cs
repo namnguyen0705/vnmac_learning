@@ -794,7 +794,6 @@ public sealed partial class LearningService
             ScoTitle = sco.Title,
             LaunchContentUrl = $"/{NormalizeUrlPath(sco.LaunchPath)}",
             PlayerUrl = $"/api/scorm/player/{sessionId}",
-            ApiAdapterName = package.Version == ScormVersion.Scorm12 ? "API" : "API_1484_11",
             Registration = MapScormRegistrationSnapshot(registration)
         };
     }

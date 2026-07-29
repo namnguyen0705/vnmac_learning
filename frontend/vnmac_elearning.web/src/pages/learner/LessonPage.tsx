@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Lock } from "lucide-react";
 import { useAuth } from "../../app/auth";
@@ -121,10 +121,10 @@ export function LessonPage() {
 
   const invalidateLearnerQueries = async () => {
     await Promise.all([
-      queryClient.invalidateQueries({ queryKey: ["learner", userId, "dashboard"] }),
-      queryClient.invalidateQueries({ queryKey: ["learner", userId, "catalog"] }),
-      queryClient.invalidateQueries({ queryKey: ["learner", userId, "course-progress", courseId] }),
-      queryClient.invalidateQueries({ queryKey: ["learner", userId, "learning-results", courseId] }),
+      queryClient.invalidateQueries({ queryKey: ["learner", userId, "dashboard"], refetchType: "all" }),
+      queryClient.invalidateQueries({ queryKey: ["learner", userId, "catalog"], refetchType: "all" }),
+      queryClient.invalidateQueries({ queryKey: ["learner", userId, "course-progress", courseId], refetchType: "all" }),
+      queryClient.invalidateQueries({ queryKey: ["learner", userId, "learning-results", courseId], refetchType: "all" }),
     ]);
   };
 
@@ -275,6 +275,10 @@ export function LessonPage() {
 
   if (progressQuery.isError || !progressQuery.data) {
     return <MessageBanner tone="error">Không tải được tiến độ bài học.</MessageBanner>;
+  }
+
+  if (lesson.type === "Scorm") {
+    return <Navigate replace to={`/app/courses/${courseId}/lessons/${lessonId}/scorm`} />;
   }
 
   if (lesson.type === "Quiz") {

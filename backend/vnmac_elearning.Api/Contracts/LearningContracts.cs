@@ -302,7 +302,6 @@ public sealed class ScormLaunchResponse
     public string ScoTitle { get; init; } = string.Empty;
     public string LaunchContentUrl { get; init; } = string.Empty;
     public string PlayerUrl { get; init; } = string.Empty;
-    public string ApiAdapterName { get; init; } = string.Empty;
     public required ScormRegistrationSnapshot Registration { get; init; }
 }
 

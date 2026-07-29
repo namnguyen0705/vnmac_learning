@@ -73,6 +73,10 @@ export default defineConfig({
         target: "http://localhost:5211",
         changeOrigin: true,
       },
+      "/scorm": {
+        target: "http://localhost:5211",
+        changeOrigin: true,
+      },
     },
   },
 });

@@ -79,6 +79,7 @@ export function DashboardPage() {
     queryKey: ["learner", userId, "catalog"],
     queryFn: () => getLearnerCourseCatalog(userId),
     enabled: Boolean(userId),
+    refetchOnMount: "always",
   });
 
   const publishedCoursesQuery = useQuery({
@@ -99,6 +100,7 @@ export function DashboardPage() {
     queryKey: ["learner", userId, "course-progress", officialCourse?.id],
     queryFn: () => getLearnerCourseProgress(userId, officialCourse?.id ?? ""),
     enabled: Boolean(userId && officialCourse?.id && catalogItem?.isEnrolled),
+    refetchOnMount: "always",
   });
 
   if (

@@ -48,6 +48,11 @@ function getLessonIcon(type: string) {
   }
 }
 
+function getLessonPath(courseId: string, lesson: { id: string; type: string }) {
+  const base = `/app/courses/${courseId}/lessons/${lesson.id}`;
+  return lesson.type === "Scorm" ? `${base}/scorm` : base;
+}
+
 export function CoursePage() {
   const { session } = useAuth();
   const navigate = useNavigate();
@@ -65,6 +70,7 @@ export function CoursePage() {
     queryKey: ["learner", userId, "catalog"],
     queryFn: () => getLearnerCourseCatalog(userId),
     enabled: Boolean(userId),
+    refetchOnMount: "always",
   });
 
   const catalogItem = catalogQuery.data?.courses.find((item) => item.courseId === courseId);
@@ -74,6 +80,7 @@ export function CoursePage() {
     queryKey: ["learner", userId, "course-progress", courseId],
     queryFn: () => getLearnerCourseProgress(userId, courseId),
     enabled: Boolean(userId && courseId && isEnrolled),
+    refetchOnMount: "always",
   });
 
   const enrollMutation = useMutation({
@@ -200,7 +207,12 @@ export function CoursePage() {
                 type="button"
                 onClick={() => {
                   if (progress.nextLessonId) {
-                    navigate(`/app/courses/${course.id}/lessons/${progress.nextLessonId}`);
+                    const nextLesson = course.sections
+                      .flatMap((section) => section.lessons)
+                      .find((lesson) => lesson.id === progress.nextLessonId);
+                    if (nextLesson) {
+                      navigate(getLessonPath(course.id, nextLesson));
+                    }
                     return;
                   }
 
@@ -293,7 +305,7 @@ export function CoursePage() {
                             }
 
                             if (summary?.isUnlocked) {
-                              navigate(`/app/courses/${course.id}/lessons/${lesson.id}`);
+                              navigate(getLessonPath(course.id, lesson));
                             }
                           }}
                         >

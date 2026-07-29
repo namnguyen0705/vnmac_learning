@@ -118,6 +118,7 @@ public class Program
         builder.Services.AddScoped<TokenService>();
         builder.Services.AddSingleton<NotificationRealtimeService>();
         builder.Services.AddScoped<MediaStorageService>();
+        builder.Services.AddScoped<ScormPackageImportService>();
         builder.Services.AddScoped<AuthService>();
         builder.Services.AddScoped<EmailSender>();
         builder.Services.AddScoped<RoleService>();
@@ -129,10 +130,11 @@ public class Program
 
         var app = builder.Build();
 
-        DatabaseInitializer.Initialize(app.Services);
-        using (var roleScope = app.Services.CreateScope())
+        using (var migrationScope = app.Services.CreateScope())
         {
-            roleScope.ServiceProvider.GetRequiredService<RoleService>().InitializeDefaults();
+            migrationScope.ServiceProvider
+                .GetRequiredService<TrainingDbContext>()
+                .Database.Migrate();
         }
 
         app.UseExceptionHandler(errorApp =>

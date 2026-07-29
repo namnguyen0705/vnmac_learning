@@ -25,12 +25,31 @@ public sealed partial class LearningService
 
         var package = lesson.ScormPackage ?? throw new ServiceException(ServiceErrors.LearningScormPackageMissing);
         var sco = ResolveLaunchSco(package, requestedScoId);
+        using var transaction = dbContext.Database.BeginTransaction();
         var registration = GetOrCreateScormRegistrationInternal(userId, lesson);
+        SaveChangesIfNeeded();
+
+        // Allocate the attempt number with an atomic database update. Using only the
+        // tracked AttemptCount can reuse an existing number when data was restored or
+        // when two launch requests arrive at nearly the same time.
+        var latestSessionAttempt = dbContext.ScormRuntimeSessions
+            .Where(item => item.UserId == userId && item.LessonId == lessonId)
+            .Select(item => (int?)item.AttemptNumber)
+            .Max() ?? 0;
+
+        dbContext.ScormRegistrations
+            .Where(item => item.UserId == userId && item.LessonId == lessonId)
+            .ExecuteUpdate(setters => setters.SetProperty(
+                item => item.AttemptCount,
+                item => item.AttemptCount < latestSessionAttempt
+                    ? latestSessionAttempt + 1
+                    : item.AttemptCount + 1));
+        dbContext.Entry(registration).Reload();
+
         var sessionId = $"scorm-session-{Guid.NewGuid():N}"[..30];
         var now = DateTimeOffset.UtcNow;
         var entryMode = ShouldResumeRegistration(registration) ? "resume" : "ab-initio";
 
-        registration.AttemptCount += 1;
         registration.CurrentScoId = sco.Id;
         registration.LastLaunchedAt = now;
         TouchEnrollmentInternal(GetOrCreateEnrollmentInternal(userId, course), now);
@@ -55,6 +74,7 @@ public sealed partial class LearningService
         });
 
         SaveChangesIfNeeded();
+        transaction.Commit();
         return BuildScormLaunchResponse(package, sco, sessionId, registration);
     }
 

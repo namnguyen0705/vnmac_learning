@@ -737,24 +737,6 @@ export interface ScormLaunchResponse {
   scoTitle: string;
   launchContentUrl: string;
   playerUrl: string;
-  apiAdapterName: string;
-  registration: ScormRegistrationSnapshot;
-}
-
-export interface ScormInitializeResponse {
-  sessionId: string;
-  entryMode: string;
-  registration: ScormRegistrationSnapshot;
-}
-
-export interface ScormValueResponse {
-  element: string;
-  value: string;
-}
-
-export interface ScormCommitResponse {
-  sessionId: string;
-  isActive: boolean;
   registration: ScormRegistrationSnapshot;
 }
 
