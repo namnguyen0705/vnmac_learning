@@ -35,21 +35,23 @@ public sealed partial class LearningService
             .Select(item => item.CourseId)
             .ToHashSet(StringComparer.Ordinal);
 
-        var courses = GetPublishedCoursesInternal()
+        var courses = GetAccessibleCourses(userId)
             .Select(course =>
             {
                 var isEnrolled = enrollmentCourseIds.Contains(course.Id);
+                var visibleLessons = GetVisibleLessons(course, GetOrderedLessons(course));
+                var quizzes = GetOrderedQuizzes(course);
                 return new LearnerCourseCatalogItem
                 {
                     CourseId = course.Id,
                     Title = course.Title,
                     Description = course.Description,
                     Status = course.Status,
-                    TotalSections = course.Sections.Count,
-                    TotalLessons = GetVisibleLessons(course, GetOrderedLessons(course)).Count,
-                    TotalQuizzes = GetOrderedQuizzes(course).Count,
-                    EstimatedStudyTimeMinutes = GetVisibleLessons(course, GetOrderedLessons(course)).Sum(item => item.DurationMinutes)
-                        + GetOrderedQuizzes(course)
+                    TotalSections = course.Sections.Count(section => !section.IsHidden),
+                    TotalLessons = visibleLessons.Count,
+                    TotalQuizzes = quizzes.Count,
+                    EstimatedStudyTimeMinutes = visibleLessons.Sum(item => item.DurationMinutes)
+                        + quizzes
                             .Select(quiz =>
                             {
                                 var lesson = course.Sections
@@ -152,7 +154,7 @@ public sealed partial class LearningService
             QuizCompletionPercent = CalculateQuizCompletionPercentInternal(userId, orderedQuizzes, orderedLessons),
             OverallCompletionPercent = CalculateOverallCompletionPercentInternal(userId, visibleLessons, orderedQuizzes, orderedLessons),
             QuizUnlocked = IsAnyQuizUnlockedInternal(userId, course, visibleLessons, orderedLessons, orderedQuizzes),
-            CertificateIssued = dbContext.Certificates.Any(item => item.UserId == userId && item.CourseId == courseId),
+            CertificateIssued = HasCurrentCertificate(userId, course),
             Lessons = BuildLessonSummaries(userId, visibleLessons),
             Quizzes = BuildQuizSummaries(userId, course, visibleLessons, orderedLessons, orderedQuizzes),
             Progress = progress,
@@ -223,7 +225,7 @@ public sealed partial class LearningService
             NextQuizTitle = nextQuiz?.Title,
             LatestQuizScore = latestQuizResult?.Score ?? 0,
             LatestQuizAttempts = latestQuizResult?.Attempts ?? 0,
-            CertificateIssued = dbContext.Certificates.Any(item => item.UserId == userId && item.CourseId == course.Id)
+            CertificateIssued = HasCurrentCertificate(userId, course)
         };
     }
 

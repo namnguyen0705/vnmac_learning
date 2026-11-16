@@ -37,7 +37,7 @@ public sealed partial class LearningService
         SaveChangesIfNeeded();
 
         var certificate = dbContext.Certificates.SingleOrDefault(item => item.UserId == userId && item.CourseId == courseId);
-        if (certificate is not null)
+        if (certificate is not null && HasCurrentCertificate(userId,course))
         {
             return new CertificateResponse
             {
@@ -51,6 +51,8 @@ public sealed partial class LearningService
         }
 
         var outstanding = new List<string>();
+        if (UsesManualCertificate(course)) outstanding.Add("Kiểm tra và xác nhận thông tin tại màn hoàn thành khóa học trước khi nhận chứng chỉ.");
+        if (!course.CertificateEnabled) outstanding.Add("Chương trình chưa bật cấp chứng chỉ cho đối tượng học viên này.");
         if (CalculateContentCompletionPercentInternal(userId, visibleLessons) < 100)
         {
             outstanding.Add("Hoàn thành 100% nội dung khóa học.");
@@ -58,7 +60,7 @@ public sealed partial class LearningService
 
         if (!HasPassedAllCourseQuizzesInternal(userId, orderedQuizzes, orderedLessons))
         {
-            outstanding.Add("Đạt 100% bài quiz của khóa học.");
+            outstanding.Add("Đạt ngưỡng điểm yêu cầu của tất cả bài kiểm tra trong khóa học.");
         }
 
         SaveChangesIfNeeded();
@@ -93,7 +95,7 @@ public sealed partial class LearningService
         {
             IsValid = true,
             Message = "Chung nhan hop le.",
-            LearnerName = learner.FullName,
+            LearnerName = string.IsNullOrEmpty(certificate.FullNameSnapshot) ? learner.FullName : certificate.FullNameSnapshot,
             CourseId = certificate.CourseId,
             CourseTitle = dbContext.Courses.Single(course => course.Id == certificate.CourseId).Title,
             CertificateId = certificate.CertificateId,

@@ -2,36 +2,38 @@ import { createBrowserRouter, Navigate, Outlet, RouterProvider, useLocation } fr
 import { useAuth } from "./auth";
 import { AdminLayout } from "./layouts/AdminLayout";
 import { LearnerLayout } from "./layouts/LearnerLayout";
+import { PublicLayout } from "./layouts/PublicLayout";
 import { RouteErrorBoundary } from "./RouteErrorBoundary";
-import { CertificateVerifyPage } from "../pages/CertificateVerifyPage";
 import { LoginPage } from "../pages/LoginPage";
+import { IntroductionPage } from "../pages/IntroductionPage";
+import { ContactPage } from "../pages/ContactPage";
 import { VerifyEmailPage } from "../pages/VerifyEmailPage";
 import { AdminOverviewPage } from "../pages/admin/AdminOverviewPage";
 import { AdminNotificationsPage } from "../pages/admin/AdminNotificationsPage";
-import { AdminPlaceholderPage } from "../pages/admin/AdminPlaceholderPage";
+import { AdminSupportPage } from "../pages/admin/AdminSupportPage";
 import { AnalyticsPage } from "../pages/admin/AnalyticsPage";
 import { CoursesPage } from "../pages/admin/CoursesPage";
 import { LearningStatsPage } from "../pages/admin/LearningStatsPage";
 import { LessonContentPage } from "../pages/admin/LessonContentPage";
 import { LessonsPage } from "../pages/admin/LessonsPage";
+import { LessonPreviewPage } from "../pages/admin/LessonPreviewPage";
 import { MediaLibraryPage } from "../pages/admin/MediaLibraryPage";
 import { QuestionBankPage } from "../pages/admin/QuestionBankPage";
 import { QuizzesPage } from "../pages/admin/QuizzesPage";
-import { RolesPage } from "../pages/admin/RolesPage";
 import { SettingsPage } from "../pages/admin/SettingsPage";
 import { SystemLogsPage } from "../pages/admin/SystemLogsPage";
-import { UsersPage } from "../pages/admin/UsersPage";
-import { CertificatePage } from "../pages/learner/CertificatePage";
+import { UserManagementPage } from "../pages/admin/UserManagementPage";
+import { SectionsPage } from "../pages/admin/SectionsPage";
 import { CourseCatalogPage } from "../pages/learner/CourseCatalogPage";
-import { CoursePage } from "../pages/learner/CoursePage";
 import { DashboardPage } from "../pages/learner/DashboardPage";
 import { LessonPage } from "../pages/learner/LessonPage";
+import { LearningResultsPage } from "../pages/learner/LearningResultsPage";
 import { LibraryPage } from "../pages/learner/LibraryPage";
 import { ProfilePage } from "../pages/learner/ProfilePage";
 import { QuizPage } from "../pages/learner/QuizPage";
-import { ScormPlayerPage } from "../pages/learner/ScormPlayerPage";
 import { SupportPage } from "../pages/learner/SupportPage";
 import { LoadingBlock } from "../shared/ui/LoadingBlock";
+import { MascotFigure } from "../shared/ui/LearningCompanion";
 
 const learnerRoles = ["Learner"] as const;
 const adminRoles = ["Admin", "ContentManager", "DataViewer"] as const;
@@ -103,24 +105,19 @@ function LegacyLessonsRedirect() {
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <HomeRedirect />,
+    element: <><Outlet /><MascotFigure pose="welcome" className="public-corner-mascot" /></>,
     errorElement: <RouteErrorBoundary />,
-  },
-  {
-    path: "/login",
-    element: <LoginPage />,
-    errorElement: <RouteErrorBoundary />,
-  },
-  {
-    path: "/verify-email",
-    element: <VerifyEmailPage />,
-    errorElement: <RouteErrorBoundary />,
-  },
-  {
-    path: "/verify-certificate/:certificateId",
-    element: <CertificateVerifyPage />,
-    errorElement: <RouteErrorBoundary />,
+    children: [
+      {
+        element: <PublicLayout />,
+        children: [
+          { path: "/", element: <IntroductionPage /> },
+          { path: "/contact", element: <ContactPage /> },
+          { path: "/login", element: <LoginPage /> },
+        ],
+      },
+      { path: "/verify-email", element: <VerifyEmailPage /> },
+    ],
   },
   {
     element: <ProtectedOutlet portal="learner" allowedRoles={learnerRoles} />,
@@ -139,7 +136,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/app/courses/:courseId",
-            element: <CoursePage />,
+            element: <Navigate replace to="/app/courses" />,
           },
           {
             path: "/app/courses/:courseId/lessons/:lessonId",
@@ -150,12 +147,12 @@ const router = createBrowserRouter([
             element: <QuizPage />,
           },
           {
-            path: "/app/courses/:courseId/lessons/:lessonId/scorm",
-            element: <ScormPlayerPage />,
+            path: "/app/results",
+            element: <LearningResultsPage />,
           },
           {
             path: "/app/certificate",
-            element: <CertificatePage />,
+            element: <Navigate replace to="/app/results" />,
           },
           {
             path: "/app/library",
@@ -178,15 +175,25 @@ const router = createBrowserRouter([
     errorElement: <RouteErrorBoundary />,
     children: [
       {
+        path: "/admin/lessons/:lessonId/preview",
+        element: <LessonPreviewPage />,
+      },
+      {
+        path: "/admin/courses/:courseId/lessons/:lessonId/preview",
+        element: <LessonPreviewPage />,
+      },
+      {
         element: <AdminLayout />,
         children: [
+          { path: "/admin/profile", element: <ProfilePage /> },
+          { path: "/admin/sections", element: <SectionsPage /> },
           {
             path: "/admin",
             element: <AdminOverviewPage />,
           },
           {
             path: "/admin/users",
-            element: <UsersPage />,
+            element: <UserManagementPage />,
           },
           {
             path: "/admin/reports",
@@ -205,24 +212,16 @@ const router = createBrowserRouter([
             element: <AdminNotificationsPage />,
           },
           {
+            path: "/admin/support",
+            element: <AdminSupportPage />,
+          },
+          {
             path: "/admin/roles",
-            element: <RolesPage />,
+            element: <Navigate replace to="/admin/users?tab=roles" />,
           },
           {
             path: "/admin/certificates",
-            element: (
-              <AdminPlaceholderPage
-                title="Chứng nhận"
-              />
-            ),
-          },
-          {
-            path: "/admin/tracking-placeholder",
-            element: (
-              <AdminPlaceholderPage
-                title="Tracking"
-              />
-            ),
+            element: <Navigate replace to="/admin/reports" />,
           },
           {
             path: "/admin/settings",
@@ -231,14 +230,6 @@ const router = createBrowserRouter([
           {
             path: "/admin/system-logs",
             element: <SystemLogsPage />,
-          },
-          {
-            path: "/admin/settings-placeholder",
-            element: (
-              <AdminPlaceholderPage
-                title="Cài đặt"
-              />
-            ),
           },
           {
             element: <ProtectedOutlet portal="admin" />,

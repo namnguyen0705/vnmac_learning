@@ -119,7 +119,7 @@ export function LearningStatsPage() {
     : 0;
 
   return (
-    <div className="grid gap-5">
+    <div className="grid gap-3">
       <AdminPageHeader
         actions={
           <>
@@ -180,7 +180,7 @@ export function LearningStatsPage() {
         </div>
       </AdminSection>
 
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+      <section className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
         <AdminMetricCard icon={<Users className="size-5" />} label="Học viên" value={numberLabel(data.overview.totalLearners)} />
         <AdminMetricCard accent="green" icon={<Activity className="size-5" />} label="Đang học" value={numberLabel(data.overview.activeLearners)} />
         <AdminMetricCard accent="amber" icon={<AlertTriangle className="size-5" />} label="Mắc kẹt" value={numberLabel(data.overview.stalledLearners)} />
@@ -188,7 +188,7 @@ export function LearningStatsPage() {
         <AdminMetricCard accent="green" icon={<GraduationCap className="size-5" />} label="Tiến độ TB" value={`${completionAverage}%`} />
       </section>
 
-      <div className="grid gap-5 xl:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
+      <div className="grid gap-3 xl:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
         <AdminSection title="Tiến độ theo chủ đề">
           <div className="grid gap-3">
             {data.courseSummaries.map((course) => (
@@ -212,7 +212,7 @@ export function LearningStatsPage() {
         </AdminSection>
 
         <AdminSection title="Điểm cần chú ý">
-          <div className="grid gap-4">
+          <div className="grid gap-3">
             <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4">
               <div className="mb-3 flex items-center gap-2 font-semibold text-amber-800">
                 <AlertTriangle className="size-5" />

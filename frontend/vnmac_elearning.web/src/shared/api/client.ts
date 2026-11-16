@@ -19,7 +19,7 @@ export class ApiError extends Error {
 
 export interface ApiRequestOptions extends Omit<RequestInit, "body"> {
   auth?: boolean;
-  body?: unknown;
+  body?: unknown | FormData;
 }
 
 let refreshPromise: Promise<AuthTokenResponse | null> | null = null;
@@ -90,7 +90,7 @@ export async function apiRequest<T>(path: string, options: ApiRequestOptions = {
   const session = useAuthStore.getState().session;
   const requestHeaders = new Headers(headers);
 
-  if (body !== undefined) {
+  if (body !== undefined && !(body instanceof FormData)) {
     requestHeaders.set("Content-Type", "application/json");
   }
 
@@ -101,7 +101,7 @@ export async function apiRequest<T>(path: string, options: ApiRequestOptions = {
   const response = await fetch(resolveApiUrl(path), {
     ...rest,
     headers: requestHeaders,
-    body: body !== undefined ? JSON.stringify(body) : undefined,
+    body: body instanceof FormData ? body : body !== undefined ? JSON.stringify(body) : undefined,
   });
 
   if (response.status === 401 && auth) {

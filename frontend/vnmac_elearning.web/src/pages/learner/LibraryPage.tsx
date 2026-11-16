@@ -1,3 +1,4 @@
+import { LearningCompanion } from "@/shared/ui/LearningCompanion";
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -83,6 +84,7 @@ export function LibraryPage() {
 
   return (
     <div className="grid gap-6 pb-6">
+      <LearningCompanion><strong>Cùng tìm tài liệu nhé!</strong><p>Dùng ô tìm kiếm hoặc chọn loại tài liệu. Bạn có thể xem trước rồi tải về để ôn tập.</p></LearningCompanion>
       <section className="relative overflow-hidden rounded-[28px] bg-[#0d3b78] text-white shadow-[0_20px_55px_rgba(15,52,105,0.18)]">
         <div className="absolute -right-16 -top-24 size-80 rounded-full bg-cyan-300/15 blur-2xl" />
         <div className="absolute bottom-0 right-[18%] size-48 translate-y-1/2 rounded-full bg-emerald-300/15 blur-xl" />

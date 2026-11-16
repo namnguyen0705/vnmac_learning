@@ -4,8 +4,15 @@ namespace vnmac_elearning.Api.Infrastructure;
 
 public sealed class AdminPermissionMiddleware(RequestDelegate next)
 {
-    public async Task InvokeAsync(HttpContext context)
+    public async Task InvokeAsync(HttpContext context, TrainingDbContext db)
     {
+        // A database reset removes accounts. Previously issued JWTs must stop working immediately.
+        if (context.User.Identity?.IsAuthenticated == true && !db.Users.Any(user => user.Id == context.User.FindFirstValue(ClaimTypes.NameIdentifier)))
+        {
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            await context.Response.WriteAsJsonAsync(new { key = "auth.account_removed", message = "Tài khoản đã bị xóa hoặc phiên đăng nhập không còn hợp lệ." });
+            return;
+        }
         if (context.Request.Path.StartsWithSegments("/api/learning/learners") &&
             context.User.Identity?.IsAuthenticated == true &&
             string.Equals(context.User.FindFirstValue("admin_access"), "true", StringComparison.OrdinalIgnoreCase))

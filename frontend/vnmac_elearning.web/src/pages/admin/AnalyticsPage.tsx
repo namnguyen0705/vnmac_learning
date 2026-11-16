@@ -16,7 +16,7 @@ import { formatMinutes } from "../../shared/lib/format";
 import { LoadingBlock } from "../../shared/ui/LoadingBlock";
 import { MessageBanner } from "../../shared/ui/MessageBanner";
 import { ProvinceSelect } from "../../shared/ui/ProvinceSelect";
-import { BarChart3, Clock3, Download, Search, ShieldAlert, Users } from "lucide-react";
+import { BarChart3, Clock3, Search, ShieldAlert, Users } from "lucide-react";
 
 function formatNumber(value: number) {
   return new Intl.NumberFormat("vi-VN").format(Math.max(0, Math.round(value)));
@@ -42,20 +42,14 @@ export function AnalyticsPage() {
   const data = query.data;
 
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-4">
       <AdminPageHeader
         breadcrumbs={["Quản trị", "Báo cáo"]}
-        actions={
-          <Button className="rounded-2xl" variant="outline">
-            <Download className="size-4" />
-            Xuất báo cáo
-          </Button>
-        }
         title="Báo cáo và phân tích"
       />
 
       <AdminSection title="">
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_160px]">
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_160px]">
           <div className="hidden">
             <Search className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
             <Input
@@ -81,37 +75,26 @@ export function AnalyticsPage() {
         </div>
       </AdminSection>
 
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <AdminMetricCard accent="blue" delta="+12,5%" icon={<Users className="size-8" />} label="Tổng học viên" value={formatNumber(data.totalLearners)} />
-        <AdminMetricCard accent="green" delta="+6,7%" icon={<BarChart3 className="size-8" />} label="Tỷ lệ hoàn thành" value={`${data.completionRatePercent.toFixed(1)}%`} />
-        <AdminMetricCard accent="amber" delta="+5,2%" icon={<ShieldAlert className="size-8" />} label="Tỷ lệ pass" value={`${data.passRatePercent.toFixed(1)}%`} />
-        <AdminMetricCard accent="violet" delta="+8,3%" icon={<Clock3 className="size-8" />} label="Thời gian học TB" value={formatMinutes(data.averageStudyTimeMinutes)} />
+      <section className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        <AdminMetricCard accent="blue" icon={<Users className="size-8" />} label="Tổng học viên" value={formatNumber(data.totalLearners)} />
+        <AdminMetricCard accent="green" icon={<BarChart3 className="size-8" />} label="Tỷ lệ hoàn thành" value={`${data.completionRatePercent.toFixed(1)}%`} />
+        <AdminMetricCard accent="amber" icon={<ShieldAlert className="size-8" />} label="Tỷ lệ đạt yêu cầu" value={`${data.passRatePercent.toFixed(1)}%`} />
+        <AdminMetricCard accent="violet" icon={<Clock3 className="size-8" />} label="Thời gian học TB" value={formatMinutes(data.averageStudyTimeMinutes)} />
       </section>
 
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_360px]">
-        <div className="grid gap-6">
-          <div className="grid gap-6 lg:grid-cols-2">
-            <AdminSection subtitle="Nhiều lỗi sai nhất trong bài kiểm tra và đánh giá." title="Top bài học khó">
-              <div className="space-y-4">
-                {data.topDifficultLessons.map((item, index) => (
-                  <AdminProgressRow
-                    colorClassName="bg-amber-500"
-                    key={item.id}
-                    label={`${index + 1}. ${item.title}`}
-                    value={24 + index * 5.2}
-                  />
-                ))}
-              </div>
-            </AdminSection>
+      <div className="grid gap-4 xl:grid-cols-[minmax(0,1.1fr)_360px]">
+        <div className="grid gap-4">
+          <div className="grid gap-4">
+            
 
-            <AdminSection subtitle="Học viên dừng lại nhiều nhất." title="Tỷ lệ bỏ bài">
+            <AdminSection subtitle="Học viên dừng lại nhiều nhất." title="Điểm dừng học">
               <div className="space-y-4">
                 {data.dropOffLessons.map((item, index) => (
                   <AdminProgressRow
                     colorClassName={index % 2 === 0 ? "bg-rose-500" : "bg-cyan-500"}
                     key={item.id}
                     label={item.title}
-                    value={12 + index * 6.4}
+                    value={data.dropOffLessons[0]?.total ? (item.total / data.dropOffLessons[0].total) * 100 : 0}
                   />
                 ))}
               </div>
@@ -155,7 +138,7 @@ export function AnalyticsPage() {
           </AdminSection>
         </div>
 
-        <div className="grid gap-6">
+        <div className="grid gap-4">
           <AdminSection subtitle="Đạt / chưa đạt trong quiz cuối." title="Tỷ lệ đạt">
             <AdminDonut label="Tỷ lệ đạt" sublabel="Tỷ lệ đạt trong bộ lọc hiện tại." value={data.passRatePercent} />
           </AdminSection>

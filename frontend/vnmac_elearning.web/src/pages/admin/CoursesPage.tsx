@@ -1,4 +1,4 @@
-﻿import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Fragment, useEffect, useMemo, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -44,6 +44,7 @@ interface CourseFormState {
 }
 
 interface SectionFormState {
+  isHidden?: boolean;
   title: string;
   description: string;
   order: number;
@@ -90,11 +91,7 @@ function getActiveQuizLessonIds(course: CourseTreeResponse) {
 }
 
 function getLessonQuestionCount(lesson: CourseSection["lessons"][number]) {
-  const checkStepQuestions = (lesson.content?.steps ?? [])
-    .filter((step) => step.key === "check")
-    .reduce((total, step) => total + (step.questions?.length ?? 0), 0);
-  const assessmentQuestions = lesson.assessment?.bankQuestionCount ?? lesson.assessment?.questionCount ?? 0;
-  return checkStepQuestions + assessmentQuestions;
+  return (lesson.content?.flow ?? []).flatMap(step => step.items).filter(item => ["choice", "classify", "sort", "hotspot"].includes(item.kind)).length;
 }
 
 function getQuizQuestionCount(quiz: NonNullable<CourseSection["quizzes"]>[number]) {
@@ -109,12 +106,7 @@ function getSectionQuestionCount(section: CourseSection) {
 }
 
 function getCourseQuizCount(course: CourseTreeResponse) {
-  const activeQuizLessonIds = getActiveQuizLessonIds(course);
-  return course.sections.reduce(
-    (total, section) =>
-      total + (section.quizzes ?? []).filter((quiz) => activeQuizLessonIds.has(quiz.assessmentLessonId)).length,
-    0,
-  ) + (course.quizzes ?? []).filter((quiz) => activeQuizLessonIds.has(quiz.assessmentLessonId)).length;
+  return course.sections.flatMap(section => section.lessons).filter(lesson => lesson.publicationStatus !== "Archived").flatMap(lesson => lesson.content?.flow ?? []).filter(step => step.policy === "quiz").length;
 }
 
 function getCourseQuestionCount(course: CourseTreeResponse) {
@@ -173,7 +165,7 @@ function CourseStructure({ course }: { course: EnrichedCourse }) {
   const courseQuizzes = course.quizzes.filter((quiz) => activeQuizLessonIds.has(quiz.assessmentLessonId));
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_280px]">
+    <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_280px]">
       <div className="space-y-3">
         {sections.map((section) => {
           const lessons = getActiveContentLessons(section).sort((left, right) => left.order - right.order);
@@ -193,7 +185,7 @@ function CourseStructure({ course }: { course: EnrichedCourse }) {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="secondary">{lessons.length} bài học</Badge>
-                  <Badge variant="secondary">{quizzes.length} bài kiểm tra</Badge>
+                  <Badge variant="secondary">{section.lessons.filter(lesson => lesson.publicationStatus !== "Archived").flatMap(lesson => lesson.content?.flow ?? []).filter(step => step.policy === "quiz").length} bài kiểm tra</Badge>
                   <Badge variant="outline">{questionCount} câu hỏi</Badge>
                 </div>
               </div>
@@ -207,7 +199,7 @@ function CourseStructure({ course }: { course: EnrichedCourse }) {
                     >
                       <div className="space-y-1">
                         <p className="font-medium text-slate-900">
-                          Bài {lesson.order}: {lesson.title}
+                          {lesson.title}
                         </p>
                         <p className="text-sm text-slate-500">
                           {humanizeEnum(lesson.type)} • {lesson.durationMinutes} phút
@@ -293,7 +285,7 @@ function CourseStructure({ course }: { course: EnrichedCourse }) {
         ) : null}
       </div>
 
-      <div className="rounded-[24px] border border-slate-200 bg-slate-50 px-5 py-5">
+      <div className="rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3">
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">Tóm tắt chủ đề</p>
         <div className="mt-4 space-y-3">
           <div className="rounded-2xl bg-white px-4 py-3">
@@ -437,6 +429,7 @@ export function CoursesPage() {
         title: sectionForm.title,
         description: sectionForm.description,
         order: Number(sectionForm.order),
+        isHidden: sectionForm.isHidden ?? false,
       });
     },
     onSuccess: async () => {
@@ -524,7 +517,7 @@ export function CoursesPage() {
   }
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-3">
       <AdminPageHeader
         breadcrumbs={["Quản trị", "Chủ đề"]}
         title="Quản lý chủ đề"
@@ -685,7 +678,7 @@ export function CoursesPage() {
                       {isExpanded ? (
                         <TableRow key={`${course.id}-expanded`} className="bg-slate-50/70">
                           <TableCell className="p-0" colSpan={7}>
-                            <div className="border-t border-slate-100 px-5 py-5">
+                            <div className="border-t border-slate-100 px-4 py-3">
                               <CourseStructure course={course} />
                             </div>
                           </TableCell>
@@ -717,8 +710,8 @@ export function CoursesPage() {
         open={isModalOpen}
         title={editingCourseId ? "Cập nhật chủ đề" : "Thêm chủ đề"}
       >
-        <div className="grid gap-6">
-          <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4">
+          <div className="grid gap-3 md:grid-cols-2">
             <div className="space-y-2 md:col-span-2">
               <Label>Tên chủ đề</Label>
               <Input
@@ -754,7 +747,7 @@ export function CoursesPage() {
 
           {editingCourse ? (
             <AdminSection subtitle="Mỗi phần học hiển thị ngay số bài học để dễ tổ chức cấu trúc." title="Phần học trong chủ đề">
-              <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
+              <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_360px]">
                 <div className="space-y-3">
                   {sortSections(editingCourse.sections).map((section) => (
                     <div className="rounded-[24px] border border-slate-200 px-4 py-4" key={section.id}>
@@ -775,7 +768,7 @@ export function CoursesPage() {
                             variant="outline"
                             onClick={() => {
                               setEditingSectionId(section.id);
-                              setSectionForm({ title: section.title, description: section.description, order: section.order });
+                              setSectionForm({ title: section.title, description: section.description, order: section.order, isHidden: section.isHidden });
                             }}
                           >
                             <Pencil className="size-4" />
@@ -791,14 +784,14 @@ export function CoursesPage() {
                   ) : null}
                 </div>
 
-                <div className="rounded-[28px] border border-slate-200 bg-slate-50 p-5">
+                <div className="rounded-[28px] border border-slate-200 bg-slate-50 p-4">
                   <p className="font-semibold text-slate-900">{editingSectionId ? "Sửa phần học" : "Thêm phần học mới"}</p>
                   <p className="mt-1 text-sm text-slate-500">
                     {editingSectionId ? "Cập nhật tiêu đề, mô tả và thứ tự phần học." : "Tạo nhanh phần học để nối tiếp sang danh sách bài học."}
                   </p>
                   <div className="mt-4 space-y-4">
                     <div className="space-y-2">
-                      <Label>Tiêu đề phần học</Label>
+                      <label className="flex items-center gap-2"><input type="checkbox" checked={!sectionForm.isHidden} onChange={e => setSectionForm(current => ({ ...current, isHidden: !e.target.checked }))} />Hiển thị phần học cho học viên</label><Label>Tiêu đề phần học</Label>
                       <Input
                         className="rounded-2xl"
                         value={sectionForm.title}

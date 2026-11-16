@@ -1,0 +1,177 @@
+/* Full-width bands with the approved type scale capped at a 1120px canvas. */
+@font-face{font-family:RapportDisplay;src:url('/fonts/playfair-display-600.ttf') format('truetype');font-style:normal;font-weight:600;font-display:swap}
+@font-face{font-family:RapportDisplay;src:url('/fonts/playfair-display-500.ttf') format('truetype');font-style:normal;font-weight:500;font-display:swap}
+.rapport-editorial{width:100%;max-width:none;margin-inline:auto;container-type:inline-size;position:relative;background:#fff}
+.rapport-editorial .rapport-container{width:100%;max-width:1120px;margin-inline:auto;padding-inline:min(6.5cqw,72.8px)}
+.rapport-editorial .rapport-section{padding-block:min(2cqw, 22.4px) min(1.5cqw, 16.8px)}
+.rapport-editorial .rapport-section-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4.3%;align-items:start}
+.rapport-editorial .rapport-section-0 .rapport-section-grid{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)}
+.rapport-editorial .rapport-section-2 .rapport-section-grid{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:3%}
+.rapport-editorial .rapport-section h2,.rapport-editorial .rapport-hero h1{font-family:RapportDisplay,Georgia,serif!important;font-weight:600!important;letter-spacing:-.055em;color:#071e38}
+.rapport-editorial .rapport-section h2{font-size:min(4.2cqw, 47.04px)!important;line-height:1.04!important;max-width:none;margin-bottom:min(1.55cqw, 17.36px)}
+.rapport-editorial .rapport-section-0 h2{max-width:none;font-size:min(3.9cqw, 43.68px)!important}
+.rapport-editorial .rapport-section-1 h2{font-size:min(3.3cqw, 36.96px)!important;white-space:nowrap;letter-spacing:-.06em}
+.rapport-editorial .rapport-section-2 h2{font-size:min(3.3cqw, 36.96px)!important;letter-spacing:-.06em}
+.rapport-editorial .rapport-kicker{font-size:min(1.25cqw, 14px)!important;font-weight:600;line-height:1.4!important;margin-bottom:min(1.7cqw, 19.04px)!important}
+.rapport-editorial .rapport-kicker:after{width:min(6cqw, 67.2px);margin-left:min(1.2cqw, 13.44px)}
+.rapport-editorial .rapport-source-text p{font-size:min(1.3cqw, 14.56px)!important;line-height:1.4!important;font-weight:400;margin-bottom:min(1.4cqw, 15.68px)}
+.rapport-editorial .rapport-source-text h3{font-size:min(2cqw, 22.4px)!important}
+.rapport-editorial .rapport-stats{gap:4.3%;margin-top:min(1.4cqw, 15.68px)}
+.rapport-editorial .rapport-stats>div{display:flex;gap:min(2.6cqw, 29.12px);align-items:center}
+.rapport-editorial .rapport-stats>div+div{padding-left:min(3.4cqw, 38.08px)}
+.rapport-editorial .rapport-stats strong,.rapport-editorial .rapport-crs-stat strong{font-family:RapportDisplay,Georgia,serif;font-weight:500;letter-spacing:-.065em;line-height:1}
+.rapport-editorial .rapport-stats strong{font-size:min(7.6cqw, 85.12px);display:block}
+.rapport-editorial .rapport-stats span{font-size:min(1.2cqw, 13.44px);line-height:1.4}
+.rapport-editorial .rapport-crs-stat{gap:min(1.6cqw, 17.92px);margin-top:min(1.5cqw, 16.8px);flex-wrap:nowrap}
+.rapport-editorial .rapport-crs-stat strong{font-size:min(6.9cqw, 77.28px)}
+.rapport-editorial .rapport-crs-stat em{font-size:.64em}
+.rapport-editorial .rapport-crs-stat span{font-size:min(1.2cqw, 13.44px);max-width:min(19cqw, 212.8px)}
+.rapport-editorial .rapport-project-stats{grid-template-columns:1.1fr 1fr 1.15fr;gap:min(2.4cqw, 26.88px);margin-top:min(2cqw, 22.4px)}
+.rapport-editorial .rapport-project-stats>div{display:block}
+.rapport-editorial .rapport-project-stats strong{font-size:min(3.9cqw, 43.68px);white-space:nowrap}
+.rapport-editorial .rapport-project-stats em{font-size:.56em;display:inline;letter-spacing:-.04em}
+.rapport-editorial .rapport-details{margin-top:min(.6cqw, 6.72px)}
+.rapport-editorial .rapport-details summary{font-size:min(1cqw, 11.2px);padding-block:min(.25cqw, 2.8px)}
+.rapport-editorial .rapport-details summary span{font-size:min(1.5cqw, 16.8px)}
+.rapport-editorial .rapport-section-3{padding-block:min(2.4cqw, 26.88px) min(1.5cqw, 16.8px)}
+.rapport-editorial .rapport-section-3 .rapport-section-copy{width:62%}
+.rapport-editorial .rapport-section-3 .rapport-source-text{max-width:80%}
+.rapport-editorial .rapport-section-3 h2{font-size:min(4.1cqw, 45.92px)!important;color:#fff;white-space:nowrap}
+.rapport-editorial .rapport-section-3 .intro-primary{font-size:min(1.1cqw, 12.32px);padding:min(1cqw, 11.2px) min(2.2cqw, 24.64px);min-height:0;border-radius:min(1.5cqw, 16.8px)}
+.rapport-editorial .rapport-footer{padding-block:min(1.8cqw, 20.16px)}
+.rapport-editorial .rapport-footer-brand{font-size:min(2.4cqw, 26.88px)}
+.rapport-editorial .rapport-footer nav{font-size:min(1cqw, 11.2px);gap:min(2cqw, 22.4px)}
+@media(min-width:701px){
+.rapport-editorial .public-header{height:min(6.5cqw, 72.8px);min-height:0;padding-inline:max(min(5.8cqw,64.96px),calc((100% - 990.08px)/2));gap:min(2.6cqw, 29.12px)}
+.rapport-editorial .public-wordmark{font-size:min(2.8cqw, 31.36px)}
+.rapport-editorial .public-wordmark small{font-size:min(.85cqw, 9.52px)!important;margin-top:min(.4cqw, 4.48px)}
+.rapport-editorial .public-menu{margin-left:min(3.2cqw, 35.84px);gap:min(2.2cqw, 24.64px)}
+.rapport-editorial .public-menu a{font-size:min(1cqw, 11.2px)}
+.rapport-editorial .public-header nav>.intro-primary{font-size:min(1cqw, 11.2px);padding:min(1cqw, 11.2px) min(1.5cqw, 16.8px);border-radius:min(1.6cqw, 17.92px);min-height:0}
+.rapport-editorial .public-header .official-partner-marks{gap:min(2.5cqw, 28px)}
+.rapport-editorial .public-header .partner-vnmac,.rapport-editorial .public-header .partner-crs{font-size:min(2.3cqw, 25.76px)}
+.rapport-editorial .public-header .partner-vnmac small{font-size:min(.48cqw, 5.376px)}
+.rapport-editorial .public-header .partner-crs small{font-size:min(.55cqw, 6.16px)}
+.rapport-editorial .public-header .official-partner-image{max-width:min(10cqw, 112px);max-height:min(4.5cqw, 50.4px)}
+.rapport-editorial .rapport-hero{height:min(38.6cqw, 432.32px);min-height:0;padding-top:min(6.5cqw, 72.8px)}
+.rapport-editorial .rapport-hero-content{width:100%;max-width:1120px;padding:0 min(5.8cqw,64.96px);margin-inline:auto;transform:none}
+.rapport-editorial .rapport-hero h1{font-size:min(5cqw, 56px)!important;line-height:1.02!important;max-width:none;width:max-content;white-space:nowrap;margin:0 0 min(1.4cqw, 15.68px);letter-spacing:-.06em}
+.rapport-editorial .rapport-hero-content>p{font-size:min(1.55cqw, 17.36px)!important;line-height:1.4!important;max-width:none;margin-bottom:min(2.3cqw, 25.76px)}
+.rapport-editorial .rapport-actions{gap:min(1.8cqw, 20.16px)}
+.rapport-editorial .rapport-actions .intro-primary,.rapport-editorial .rapport-watch{font-size:min(1.15cqw, 12.88px);padding:min(1.25cqw, 14px) min(2cqw, 22.4px);border-radius:min(1.5cqw, 16.8px);gap:min(1.2cqw, 13.44px);min-height:0}
+.rapport-editorial .rapport-actions svg{width:min(1.6cqw, 17.92px);height:min(1.6cqw, 17.92px)}
+}
+@media(max-width:700px){
+.rapport-editorial .rapport-container{padding-inline:20px}
+.rapport-editorial .rapport-section{padding-block:26px 18px}
+.rapport-editorial .rapport-section .rapport-section-grid{grid-template-columns:minmax(0,1fr);gap:18px}
+.rapport-editorial .rapport-section h2,.rapport-editorial .rapport-section-1 h2,.rapport-editorial .rapport-section-2 h2,.rapport-editorial .rapport-section-3 h2{font-size:29px!important;max-width:none;white-space:normal;margin-bottom:16px}
+.rapport-editorial .rapport-kicker{font-size:11px!important;margin-bottom:14px!important}
+.rapport-editorial .rapport-kicker:after{width:50px}
+.rapport-editorial .rapport-source-text p{font-size:14px!important;line-height:1.55!important;margin-bottom:14px}
+.rapport-editorial .rapport-source-text h3{font-size:18px!important}
+.rapport-editorial .rapport-hero{min-height:400px;padding-bottom:190px}
+.rapport-editorial .rapport-hero h1{font-size:33px!important}
+.rapport-editorial .rapport-hero-content>p{font-size:14px!important}
+.rapport-editorial .rapport-stats{gap:18px;margin-top:18px}
+.rapport-editorial .rapport-stats>div{display:block}
+.rapport-editorial .rapport-stats>div+div{padding-left:18px}
+.rapport-editorial .rapport-stats strong{font-size:48px}
+.rapport-editorial .rapport-stats span{font-size:11px}
+.rapport-editorial .rapport-project-stats{grid-template-columns:1fr;gap:15px}
+.rapport-editorial .rapport-project-stats>div{display:flex;gap:20px}
+.rapport-editorial .rapport-project-stats>div+div{padding:15px 0 0}
+.rapport-editorial .rapport-project-stats strong{font-size:29px}
+.rapport-editorial .rapport-project-stats em{font-size:16px;display:block}
+.rapport-editorial .rapport-crs-stat{gap:16px;margin-top:18px}
+.rapport-editorial .rapport-crs-stat strong{font-size:49px}
+.rapport-editorial .rapport-crs-stat span{font-size:11px;max-width:150px}
+.rapport-editorial .rapport-section-3 .rapport-section-copy{width:100%}
+.rapport-editorial .rapport-section-3 .rapport-source-text{max-width:none}
+.rapport-editorial .rapport-section-3 .intro-primary{font-size:12px;padding:10px 18px;border-radius:12px}
+.rapport-editorial .rapport-details summary{font-size:11px;padding-top:10px}
+.rapport-editorial .rapport-details summary span{font-size:18px}
+.rapport-editorial .rapport-footer{padding-block:20px}
+.rapport-editorial .rapport-footer-brand{font-size:22px}
+.rapport-editorial .rapport-footer nav{font-size:10px;gap:16px}
+}
+/* Compact content frame with full-width background bands. */
+@media(min-width:701px){
+  .rapport-editorial .rapport-container,
+  .rapport-editorial .rapport-hero-content{
+    width:80%;
+    max-width:none;
+    margin-inline:auto;
+    padding-inline:0;
+  }
+  .rapport-editorial .public-header{padding-inline:10%}
+}
+.rapport-editorial .rapport-focus-items{display:flex;flex-wrap:wrap;gap:14px 22px;padding:17px 0;margin:18px 0 0;border-top:1px solid #cdddea;list-style:none}
+.rapport-editorial .rapport-focus-items li{display:flex;align-items:center;gap:9px;color:#325b7c;font-size:12px;line-height:1.5}
+.rapport-editorial .rapport-focus-items svg{flex-shrink:0;color:#22649a}
+.rapport-editorial .rapport-vnmac-stats{margin-top:12px;padding-top:18px;border-top:1px solid #cdddea;gap:24px}
+.rapport-editorial .rapport-vnmac-stats>div{display:block}
+.rapport-editorial .rapport-vnmac-stats>div+div{padding-left:24px}
+.rapport-editorial .rapport-vnmac-stats strong{font-size:clamp(44px,4.5vw,65px);margin-bottom:8px}
+.rapport-editorial .rapport-vnmac-stats span{display:block;font-size:12px;max-width:210px}
+.rapport-editorial .rapport-section-grid{align-items:center}
+.rapport-editorial .rapport-section-1 .rapport-crs-stat{border-top:1px solid #cdddea;padding-top:20px;margin-top:6px}
+.rapport-editorial .rapport-project-stats{padding:20px 0 10px;border-top:1px solid #c4d9e9;margin-top:22px}
+.rapport-editorial .rapport-section-2 .rapport-focus-items{border-color:#c4d9e9}
+.rapport-editorial .rapport-details summary{width:fit-content;padding:9px 0;font-size:12px;opacity:1;gap:12px}
+.rapport-editorial .rapport-details summary:hover{color:#073b66;text-decoration:underline;text-underline-offset:4px}
+.rapport-editorial .rapport-section-3 .rapport-details summary:hover{color:#fff}
+@media(min-width:701px){
+  .rapport-editorial .rapport-section-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:38px}
+  .rapport-editorial .rapport-section-0 .rapport-section-grid{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}
+  .rapport-editorial .rapport-section-1 .rapport-section-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr)}
+  .rapport-editorial .rapport-section-2 .rapport-section-grid{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}
+  .rapport-editorial .rapport-figure .rapport-scene{max-height:390px}
+  .rapport-editorial .rapport-section-3 .rapport-figure .rapport-scene{max-height:none}
+}
+@media(min-width:701px) and (max-width:1050px){
+  .rapport-editorial .public-header{gap:12px}
+  .rapport-editorial .public-menu{margin-left:0;gap:14px}
+  .rapport-editorial .public-header .official-partner-marks{gap:12px}
+  .rapport-editorial .rapport-section-grid,.rapport-editorial .rapport-section-0 .rapport-section-grid,.rapport-editorial .rapport-section-1 .rapport-section-grid,.rapport-editorial .rapport-section-2 .rapport-section-grid{gap:22px}
+  .rapport-editorial .rapport-section-1 h2{white-space:normal}
+  .rapport-editorial .rapport-section-3 h2{white-space:normal}
+  .rapport-editorial .rapport-vnmac-stats{gap:12px}
+  .rapport-editorial .rapport-vnmac-stats>div+div{padding-left:12px}
+  .rapport-editorial .rapport-vnmac-stats strong{font-size:40px}
+  .rapport-editorial .rapport-vnmac-stats span{font-size:11px}
+}
+@media(max-width:700px){
+  .rapport-editorial .rapport-focus-items{gap:12px 18px;margin-top:16px;padding-block:16px}
+  .rapport-editorial .rapport-focus-items li{font-size:11px}
+  .rapport-editorial .rapport-vnmac-stats strong{font-size:44px}
+}
+/* Stronger reading affordance and consistent desktop statistic size. */
+.rapport-editorial .rapport-details{margin-top:20px}
+.rapport-editorial .rapport-details summary{display:flex;align-items:center;justify-content:space-between;gap:20px;max-width:100%;min-height:46px;padding:12px 20px;border:1px solid #12569b;border-radius:7px;background:#12569b;color:#fff;font-size:14px;font-weight:600;line-height:1.45;box-shadow:0 3px 9px #123e6812;cursor:pointer}
+.rapport-editorial .rapport-details summary b{font-weight:600}
+.rapport-editorial .rapport-details summary span{display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:25px;line-height:1;width:24px;height:24px;color:inherit}
+.rapport-editorial .rapport-details summary:hover{background:#0e467f;border-color:#0e467f;color:#fff;text-decoration:none}
+.rapport-editorial .rapport-details .rapport-collapse-label{display:none}
+.rapport-editorial .rapport-details[open] .rapport-read-label{display:none}
+.rapport-editorial .rapport-details[open] .rapport-collapse-label{display:block}
+.rapport-editorial .rapport-section-3 .rapport-details summary{background:#fff;border-color:#fff;color:#123e68}
+.rapport-editorial .rapport-section-3 .rapport-details summary:hover{background:#eaf3fc;color:#123e68}
+.rapport-editorial .rapport-details[open]>.rapport-source-text{margin-top:22px;padding:24px 0;border-top:1px solid #cfdeea}
+.rapport-editorial .rapport-section-3 .rapport-details[open]>.rapport-source-text{border-color:#ffffff38}
+@media(min-width:1051px){
+.rapport-editorial .rapport-stats strong,.rapport-editorial .rapport-vnmac-stats strong,.rapport-editorial .rapport-crs-stat strong{font-size:80px;line-height:1.1}
+.rapport-editorial .rapport-project-stats strong{font-size:80px;white-space:normal;overflow-wrap:normal;line-height:1.1}
+.rapport-editorial .rapport-project-stats em{display:block;font-size:25px;margin-top:7px;letter-spacing:-.035em}
+.rapport-editorial .rapport-crs-stat em{font-size:51px}
+.rapport-editorial .rapport-project-stats>div{min-width:0}
+}
+@media(min-width:701px) and (max-width:1050px){
+.rapport-editorial .rapport-vnmac-stats strong,.rapport-editorial .rapport-crs-stat strong{font-size:56px}
+.rapport-editorial .rapport-project-stats strong{font-size:46px;white-space:normal}
+.rapport-editorial .rapport-project-stats em{font-size:19px;display:block}
+}
+@media(max-width:700px){
+.rapport-editorial .rapport-details summary{font-size:13px;min-height:46px;padding:11px 16px;gap:14px}
+.rapport-editorial .rapport-section-3 .rapport-details{width:100%}
+}

@@ -11,7 +11,6 @@ public sealed class Lesson
     public int DurationMinutes { get; set; }
     public string StatusLabel { get; set; } = string.Empty;
     public string Topic { get; set; } = string.Empty;
-    public LessonDifficulty Difficulty { get; set; } = LessonDifficulty.Basic;
     public LessonPublicationStatus PublicationStatus { get; set; } = LessonPublicationStatus.Published;
     public string ThumbnailUrl { get; set; } = string.Empty;
     public DateTimeOffset CreatedAt { get; set; }

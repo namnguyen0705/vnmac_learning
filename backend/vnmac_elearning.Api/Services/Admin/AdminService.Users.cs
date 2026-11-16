@@ -50,6 +50,7 @@ public sealed partial class AdminService
             EmailVerifiedAt = request.MarkEmailAsVerified ? now : null,
             CreatedByAdmin = true,
             IsLocked = request.IsLocked,
+            LearnerType = request.LearnerType,
             Role = request.Role,
             RoleId = request.RoleId ?? (request.Role == UserRole.Learner ? "role-learner" : null),
             Province = request.Province.Trim(),
@@ -86,6 +87,7 @@ public sealed partial class AdminService
         user.Email = normalizedEmail;
         user.FullName = request.FullName.Trim();
         user.PhoneNumber = normalizedPhoneNumber;
+        user.LearnerType = request.LearnerType;
         user.Role = request.Role;
         if (!string.IsNullOrWhiteSpace(request.RoleId))
         {
@@ -145,7 +147,7 @@ public sealed partial class AdminService
                 var completionPercent = enrollments.Length == 0
                     ? 0
                     : (int)Math.Round(enrollments.Average(item => item.OverallCompletionPercent));
-                var passed = enrollments.Any(item => item.CertificateIssued);
+                var passed = enrollments.Any(item => item.OverallCompletionPercent >= 100 && item.PassedAllQuizzes);
 
                 return new LearnerAdminRow
                 {

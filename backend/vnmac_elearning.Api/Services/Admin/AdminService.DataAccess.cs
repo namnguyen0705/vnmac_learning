@@ -11,7 +11,7 @@ public sealed partial class AdminService
 {
     private IQueryable<Course> CourseGraphQuery()
     {
-        return dbContext.Courses
+        return dbContext.Courses.AsSplitQuery()
             .Include(course => course.Quizzes)
             .Include(course => course.Sections)
                 .ThenInclude(section => section.Lessons)
@@ -46,7 +46,7 @@ public sealed partial class AdminService
 
     private IQueryable<LessonQuestion> QuestionGraphQuery()
     {
-        return dbContext.LessonQuestions
+        return dbContext.LessonQuestions.AsSplitQuery()
             .Include(question => question.Options)
             .Include(question => question.HotspotTargets)
             .Include(question => question.DragItems)
@@ -79,7 +79,7 @@ public sealed partial class AdminService
         var completionPercent = enrollments.Length == 0
             ? 0
             : (int)Math.Round(enrollments.Average(item => item.OverallCompletionPercent));
-        var passed = enrollments.Any(item => item.CertificateIssued);
+        var passed = enrollments.Any(item => item.OverallCompletionPercent >= 100 && item.PassedAllQuizzes);
 
         return new AdminUserRow
         {
@@ -101,6 +101,7 @@ public sealed partial class AdminService
                 .Select(role => role.Name)
                 .FirstOrDefault() ?? user.Role.ToString(),
             Province = user.Province,
+            LearnerType = user.LearnerType,
             Group = user.Group,
             CompletionPercent = completionPercent,
             Passed = passed,

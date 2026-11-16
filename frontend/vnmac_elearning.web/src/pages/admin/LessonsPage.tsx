@@ -7,16 +7,14 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   createLesson,
-  deleteImportedScormPackage,
   deleteLesson,
   getAdminCourses,
   getAdminLessonCatalog,
-  importScormPackage,
 } from "@/shared/api/admin";
 import { AdminModal } from "@/shared/ui/admin-kit";
 import { LoadingBlock } from "@/shared/ui/LoadingBlock";
 import { MessageBanner } from "@/shared/ui/MessageBanner";
-import type { AdminLessonCatalogRow, LessonDifficulty, LessonPublicationStatus, LessonType, ScormPackageRequest } from "@/shared/types/api";
+import type { AdminLessonCatalogRow, LessonPublicationStatus, LessonType } from "@/shared/types/api";
 import {
   Archive,
   BookOpen,
@@ -24,14 +22,11 @@ import {
   ChevronLeft,
   ChevronRight,
   Eye,
-  Filter,
-  Loader2,
   Pencil,
   Plus,
   RefreshCcw,
   Search,
   Trash2,
-  Upload,
 } from "lucide-react";
 
 const statusOptions = [
@@ -41,16 +36,10 @@ const statusOptions = [
   { value: "Archived", label: "Đã lưu trữ" },
 ] as const;
 
-const difficultyOptions = [
-  { value: "all", label: "Tất cả độ khó" },
-  { value: "Basic", label: "Cơ bản" },
-  { value: "Intermediate", label: "Trung bình" },
-  { value: "Advanced", label: "Nâng cao" },
-] as const;
 
 const pageSizeOptions = ["10", "20", "30"] as const;
 
-const fallbackThumb = "https://picsum.photos/seed/vnmac-admin-lesson/240/160";
+const fallbackThumb = "/lesson-placeholder.svg";
 
 function getNextLessonOrder(lessons: Array<{ order: number }>) {
   return Math.max(0, ...lessons.map((lesson) => lesson.order)) + 1;
@@ -83,17 +72,6 @@ function formatDateTime(value: string) {
   };
 }
 
-function getDifficultyMeta(value: LessonDifficulty) {
-  switch (value) {
-    case "Advanced":
-      return { label: "Nâng cao", tone: "danger" };
-    case "Intermediate":
-      return { label: "Trung bình", tone: "warning" };
-    case "Basic":
-    default:
-      return { label: "Cơ bản", tone: "success" };
-  }
-}
 
 function getStatusMeta(value: LessonPublicationStatus) {
   switch (value) {
@@ -110,15 +88,16 @@ function getStatusMeta(value: LessonPublicationStatus) {
 function LessonRow({
   index,
   lesson,
+  onPreview,
   onEditContent,
   onArchive,
 }: {
   index: number;
   lesson: AdminLessonCatalogRow;
+  onPreview: (lesson: AdminLessonCatalogRow) => void;
   onEditContent: (lesson: AdminLessonCatalogRow) => void;
   onArchive: (lesson: AdminLessonCatalogRow) => void;
 }) {
-  const difficulty = getDifficultyMeta(lesson.difficulty);
   const status = getStatusMeta(lesson.publicationStatus);
   const updatedAt = formatDateTime(lesson.updatedAt);
 
@@ -145,9 +124,6 @@ function LessonRow({
         <span className="admin-pill admin-pill-blue">{lesson.topic || lesson.sectionTitle}</span>
       </td>
       <td>
-        <span className={`admin-pill admin-pill-${difficulty.tone}`}>{difficulty.label}</span>
-      </td>
-      <td>
         <span className={`admin-status admin-status-${status.tone}`}>
           <i />
           {status.label}
@@ -160,7 +136,7 @@ function LessonRow({
       </td>
       <td>
         <div className="admin-table-actions">
-          <Button aria-label="Xem nội dung bài học" onClick={() => onEditContent(lesson)} size="icon" type="button" variant="outline">
+          <Button aria-label="Xem trước bài học như học viên" onClick={() => onPreview(lesson)} size="icon" type="button" variant="outline">
             <Eye className="size-4" />
           </Button>
           <Button aria-label="Sửa nội dung bài học" onClick={() => onEditContent(lesson)} size="icon" type="button" variant="outline">
@@ -188,21 +164,17 @@ export function LessonsPage() {
   const [search, setSearch] = useState("");
   const [topic, setTopic] = useState("all");
   const [status, setStatus] = useState<LessonPublicationStatus | "all">("all");
-  const [difficulty, setDifficulty] = useState<LessonDifficulty | "all">("all");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [previewLesson, setPreviewLesson] = useState<AdminLessonCatalogRow | null>(null);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
-  const [scormPackage, setScormPackage] = useState<ScormPackageRequest | null>(null);
-  const [isImportingScorm, setIsImportingScorm] = useState(false);
-  const [scormImportError, setScormImportError] = useState("");
   const [createForm, setCreateForm] = useState({
     courseId: "",
     sectionId: "",
     title: "",
-    type: "Video" as LessonType,
+    type: "Interactive" as LessonType,
     order: 1,
     durationMinutes: 5,
-    difficulty: "Basic" as LessonDifficulty,
     publicationStatus: "Draft" as LessonPublicationStatus,
   });
 
@@ -212,13 +184,12 @@ export function LessonsPage() {
   });
 
   const catalogQuery = useQuery({
-    queryKey: ["admin-lesson-catalog", search, topic, status, difficulty, page, pageSize],
+    queryKey: ["admin-lesson-catalog", search, topic, status, page, pageSize],
     queryFn: () =>
       getAdminLessonCatalog({
         search,
         topic,
         status,
-        difficulty,
         page,
         pageSize,
       }),
@@ -233,13 +204,8 @@ export function LessonsPage() {
       statusLabel: createForm.publicationStatus === "Published" ? "Đã xuất bản" : "Bản nháp",
       topic: selectedCourse?.sections.find((section) => section.id === createForm.sectionId)?.title ?? "",
       thumbnailUrl: "",
-      scormPackage: createForm.type === "Scorm" ? scormPackage : null,
     }),
     onSuccess: async (lesson) => {
-      if (createForm.type !== "Scorm" && scormPackage) {
-        await deleteImportedScormPackage(scormPackage.entryPath).catch(() => undefined);
-      }
-      setScormPackage(null);
       await queryClient.invalidateQueries({ queryKey: ["admin-lesson-catalog"] });
       setIsCreateOpen(false);
       navigate(`/admin/lessons/${lesson.id}/content`);
@@ -260,48 +226,16 @@ export function LessonsPage() {
       courseId: course?.id ?? "",
       sectionId: course?.sections[0]?.id ?? "",
       title: "",
-      type: "Video",
+      type: "Interactive",
       order: getNextLessonOrder(course?.sections[0]?.lessons ?? []),
       durationMinutes: 5,
-      difficulty: "Basic",
       publicationStatus: "Draft",
     });
-    setScormPackage(null);
-    setScormImportError("");
-    setIsImportingScorm(false);
     setIsCreateOpen(true);
   };
 
-  const closeCreateLesson = () => {
-    const importedPackage = scormPackage;
-    setIsCreateOpen(false);
-    setScormPackage(null);
-    setScormImportError("");
-    if (importedPackage) {
-      void deleteImportedScormPackage(importedPackage.entryPath).catch(() => undefined);
-    }
-  };
+  const closeCreateLesson = () => setIsCreateOpen(false);
 
-  const importScorm = async (file: File) => {
-    setIsImportingScorm(true);
-    setScormImportError("");
-    try {
-      const imported = await importScormPackage(file);
-      const previousPackage = scormPackage;
-      setScormPackage(imported);
-      if (previousPackage && previousPackage.entryPath !== imported.entryPath) {
-        await deleteImportedScormPackage(previousPackage.entryPath).catch(() => undefined);
-      }
-      setCreateForm((current) => ({
-        ...current,
-        title: current.title.trim() ? current.title : imported.title,
-      }));
-    } catch (error) {
-      setScormImportError(error instanceof Error ? error.message : "Không thể nhập gói SCORM.");
-    } finally {
-      setIsImportingScorm(false);
-    }
-  };
   const totalPages = Math.max(1, Math.ceil((catalog?.totalItems ?? 0) / pageSize));
   const visiblePages = useMemo(() => {
     const pages = new Set<number>([1, totalPages, page - 1, page, page + 1]);
@@ -360,10 +294,6 @@ export function LessonsPage() {
           <p>Trang chủ <span>/</span> Quản lý nội dung <span>/</span> Quản lý bài học</p>
         </div>
         <div className="admin-lessons-heading-actions">
-          <Button className="admin-secondary-button" type="button" variant="outline">
-            <Upload className="size-4" />
-            Nhập bài học
-          </Button>
           <Button className="admin-primary-button" type="button" onClick={openCreateLesson}>
             <Plus className="size-4" />
             Thêm bài học mới
@@ -456,32 +386,7 @@ export function LessonsPage() {
                 </Select>
               </label>
 
-              <label>
-                <span>Độ khó</span>
-                <Select
-                  onValueChange={(value) => {
-                    resetToFirstPage();
-                    setDifficulty(value as LessonDifficulty | "all");
-                  }}
-                  value={difficulty}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {difficultyOptions.map((item) => (
-                      <SelectItem key={item.value} value={item.value}>
-                        {item.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </label>
 
-              <Button className="admin-filter-button" type="button" variant="outline">
-                <Filter className="size-4" />
-                Lọc nâng cao
-              </Button>
               <Button
                 aria-label="Tải lại"
                 className="admin-refresh-button"
@@ -501,7 +406,6 @@ export function LessonsPage() {
                     <th>#</th>
                     <th>Bài học</th>
                     <th>Phần học</th>
-                    <th>Độ khó</th>
                     <th>Trạng thái</th>
                     <th>Lượt học</th>
                     <th>Cập nhật</th>
@@ -514,13 +418,14 @@ export function LessonsPage() {
                       index={(page - 1) * pageSize + index + 1}
                       key={lesson.lessonId}
                       lesson={lesson}
+                      onPreview={setPreviewLesson}
                       onEditContent={openLessonContentPage}
                       onArchive={archiveLesson}
                     />
                   ))}
                   {catalog?.items.length === 0 ? (
                     <tr>
-                      <td className="admin-lessons-empty" colSpan={8}>
+                      <td className="admin-lessons-empty" colSpan={7}>
                         Không có bài học phù hợp với bộ lọc hiện tại.
                       </td>
                     </tr>
@@ -593,6 +498,32 @@ export function LessonsPage() {
       )}
 
       <AdminModal
+        actions={(
+          <>
+            <Button type="button" variant="outline" onClick={() => setPreviewLesson(null)}>Đóng</Button>
+            {previewLesson ? (
+              <Button type="button" onClick={() => navigate(`/admin/lessons/${previewLesson.lessonId}/content`)}>
+                <Pencil className="size-4" />Chỉnh sửa nội dung
+              </Button>
+            ) : null}
+          </>
+        )}
+        className="h-[94vh] max-w-[calc(100vw-24px)]"
+        description="Mô phỏng giao diện học viên; thao tác trong cửa sổ này không ghi nhận tiến độ hoặc kết quả."
+        open={Boolean(previewLesson)}
+        title={previewLesson ? `Xem trước: ${previewLesson.title}` : "Xem trước bài học"}
+        onClose={() => setPreviewLesson(null)}
+      >
+        {previewLesson ? (
+          <iframe
+            className="h-[calc(94vh-190px)] min-h-[560px] w-full rounded-lg border border-slate-200 bg-[#f3f7fb]"
+            src={`/admin/courses/${previewLesson.courseId}/lessons/${previewLesson.lessonId}/preview?embedded=1`}
+            title={`Xem trước bài học ${previewLesson.title}`}
+          />
+        ) : null}
+      </AdminModal>
+
+      <AdminModal
         description="Chọn chủ đề và phần học trước khi tạo. Sau khi tạo, hệ thống mở ngay màn hình biên soạn nội dung."
         actions={(
           <>
@@ -600,11 +531,9 @@ export function LessonsPage() {
             <Button
               disabled={
                 createMutation.isPending ||
-                isImportingScorm ||
                 !createForm.courseId ||
                 !createForm.sectionId ||
-                !createForm.title.trim() ||
-                (createForm.type === "Scorm" && !scormPackage)
+                !createForm.title.trim()
               }
               type="button"
               onClick={() => createMutation.mutate()}
@@ -618,7 +547,7 @@ export function LessonsPage() {
         title="Thêm bài học mới"
         onClose={closeCreateLesson}
       >
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-3 md:grid-cols-2">
           <label className="grid gap-2 md:col-span-2">
             <Label>Tên bài học</Label>
             <Input value={createForm.title} onChange={(event) => setCreateForm((current) => ({ ...current, title: event.target.value }))} />
@@ -655,76 +584,6 @@ export function LessonsPage() {
               <SelectTrigger><SelectValue placeholder="Chọn phần học" /></SelectTrigger>
               <SelectContent>
                 {(selectedCourse?.sections ?? []).map((section) => <SelectItem key={section.id} value={section.id}>{section.title}</SelectItem>)}
-              </SelectContent>
-            </Select>
-          </label>
-          <label className="grid gap-2">
-            <Label>Loại bài học</Label>
-            <Select
-              value={createForm.type}
-              onValueChange={(type) => {
-                setCreateForm((current) => ({ ...current, type: type as LessonType }));
-                if (type !== "Scorm") {
-                  if (scormPackage) {
-                    void deleteImportedScormPackage(scormPackage.entryPath).catch(() => undefined);
-                  }
-                  setScormPackage(null);
-                  setScormImportError("");
-                }
-              }}
-            >
-              <SelectTrigger><SelectValue /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Video">Video</SelectItem>
-                <SelectItem value="Interactive">Tương tác</SelectItem>
-                <SelectItem value="Scorm">SCORM</SelectItem>
-              </SelectContent>
-            </Select>
-          </label>
-          {createForm.type === "Scorm" ? (
-            <div className="grid gap-3 rounded-lg border border-dashed border-slate-300 bg-slate-50 p-4 md:col-span-2">
-              <div>
-                <Label>Gói SCORM (.zip)</Label>
-                <p className="mt-1 text-xs text-slate-500">
-                  Hệ thống tự đọc imsmanifest.xml, nhận diện SCORM 1.2/2004 và danh sách SCO.
-                </p>
-              </div>
-              <label className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border bg-white px-4 py-3 text-sm font-medium hover:bg-slate-50">
-                {isImportingScorm ? <Loader2 className="size-4 animate-spin" /> : <Upload className="size-4" />}
-                {isImportingScorm ? "Đang kiểm tra và giải nén..." : scormPackage ? "Thay gói SCORM" : "Chọn file ZIP"}
-                <input
-                  accept=".zip,application/zip"
-                  className="sr-only"
-                  disabled={isImportingScorm}
-                  type="file"
-                  onChange={(event) => {
-                    const file = event.target.files?.[0];
-                    if (file) void importScorm(file);
-                    event.target.value = "";
-                  }}
-                />
-              </label>
-              {scormPackage ? (
-                <div className="grid gap-1 rounded-md border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-900">
-                  <strong>{scormPackage.title}</strong>
-                  <span>
-                    {scormPackage.version === "Scorm2004" ? "SCORM 2004" : "SCORM 1.2"}
-                    {" · "}{scormPackage.scos.length} SCO
-                  </span>
-                  <span className="break-all text-xs">{scormPackage.entryPath}</span>
-                </div>
-              ) : null}
-              {scormImportError ? <MessageBanner tone="error">{scormImportError}</MessageBanner> : null}
-            </div>
-          ) : null}
-          <label className="grid gap-2">
-            <Label>Độ khó</Label>
-            <Select value={createForm.difficulty} onValueChange={(difficulty) => setCreateForm((current) => ({ ...current, difficulty: difficulty as LessonDifficulty }))}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Basic">Cơ bản</SelectItem>
-                <SelectItem value="Intermediate">Trung bình</SelectItem>
-                <SelectItem value="Advanced">Nâng cao</SelectItem>
               </SelectContent>
             </Select>
           </label>

@@ -69,8 +69,22 @@ namespace vnmac_elearning.Api.Infrastructure.Migrations
                     b.Property<string>("CourseId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("AddressSnapshot")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
                     b.Property<string>("CertificateId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DocumentSvg")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullNameSnapshot")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
 
                     b.Property<DateTimeOffset>("IssuedDate")
                         .HasColumnType("datetimeoffset");
@@ -78,6 +92,11 @@ namespace vnmac_elearning.Api.Infrastructure.Migrations
                     b.Property<string>("QrCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TemplateVersion")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
                     b.HasKey("UserId", "CourseId");
 
@@ -94,6 +113,9 @@ namespace vnmac_elearning.Api.Infrastructure.Migrations
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("CertificateEnabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -192,6 +214,9 @@ namespace vnmac_elearning.Api.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsHidden")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Order")
                         .HasColumnType("int");
@@ -296,6 +321,34 @@ namespace vnmac_elearning.Api.Infrastructure.Migrations
                     b.ToTable("InteractionAttemptResults");
                 });
 
+            modelBuilder.Entity("vnmac_elearning.Api.Domain.LearningFlowProgress", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LessonId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ContentVersion")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<long>("Revision")
+                        .IsConcurrencyToken()
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("StateJson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LessonId");
+
+                    b.HasIndex("LessonId");
+
+                    b.ToTable("LearningFlowProgresses");
+                });
+
             modelBuilder.Entity("vnmac_elearning.Api.Domain.Lesson", b =>
                 {
                     b.Property<string>("Id")
@@ -310,11 +363,6 @@ namespace vnmac_elearning.Api.Infrastructure.Migrations
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Difficulty")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
 
                     b.Property<int>("DurationMinutes")
                         .HasColumnType("int");
@@ -360,8 +408,6 @@ namespace vnmac_elearning.Api.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Difficulty");
 
                     b.HasIndex("PublicationStatus");
 
@@ -1214,6 +1260,72 @@ namespace vnmac_elearning.Api.Infrastructure.Migrations
                     b.ToTable("ScormScos");
                 });
 
+            modelBuilder.Entity("vnmac_elearning.Api.Domain.SupportTicket", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AdminResponse")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AssignedUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AttachmentUrl")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(24)
+                        .HasColumnType("nvarchar(24)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LearnerUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTimeOffset?>("ResolvedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(240)
+                        .HasColumnType("nvarchar(240)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssignedUserId");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.HasIndex("LearnerUserId", "CreatedAt");
+
+                    b.HasIndex("Status", "CreatedAt");
+
+                    b.ToTable("SupportTickets");
+                });
+
             modelBuilder.Entity("vnmac_elearning.Api.Domain.SystemAuditLog", b =>
                 {
                     b.Property<string>("Id")
@@ -1334,6 +1446,10 @@ namespace vnmac_elearning.Api.Infrastructure.Migrations
                         .HasMaxLength(220)
                         .HasColumnType("nvarchar(220)");
 
+                    b.Property<string>("HomeContentJson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LoginBackgroundImageUrl")
                         .IsRequired()
                         .HasMaxLength(1024)
@@ -1348,6 +1464,10 @@ namespace vnmac_elearning.Api.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(1024)
                         .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("PublicContentJson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SiteTitle")
                         .IsRequired()
@@ -1386,6 +1506,10 @@ namespace vnmac_elearning.Api.Infrastructure.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("AvatarUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1419,6 +1543,9 @@ namespace vnmac_elearning.Api.Infrastructure.Migrations
 
                     b.Property<DateTimeOffset>("LastLogin")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("LearnerType")
+                        .HasColumnType("int");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -1550,6 +1677,21 @@ namespace vnmac_elearning.Api.Infrastructure.Migrations
                     b.HasOne("vnmac_elearning.Api.Domain.InteractionAttempt", null)
                         .WithMany("QuestionResults")
                         .HasForeignKey("UserId", "LessonId", "AttemptNumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("vnmac_elearning.Api.Domain.LearningFlowProgress", b =>
+                {
+                    b.HasOne("vnmac_elearning.Api.Domain.Lesson", null)
+                        .WithMany()
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("vnmac_elearning.Api.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1820,6 +1962,20 @@ namespace vnmac_elearning.Api.Infrastructure.Migrations
                     b.HasOne("vnmac_elearning.Api.Domain.ScormPackage", null)
                         .WithMany("Scos")
                         .HasForeignKey("PackageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("vnmac_elearning.Api.Domain.SupportTicket", b =>
+                {
+                    b.HasOne("vnmac_elearning.Api.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("AssignedUserId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("vnmac_elearning.Api.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("LearnerUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

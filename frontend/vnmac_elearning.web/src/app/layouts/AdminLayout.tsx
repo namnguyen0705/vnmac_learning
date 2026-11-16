@@ -16,13 +16,13 @@ import {
   FileText,
   Home,
   ListChecks,
+  Layers,
   LogOut,
   Menu,
   MessageSquare,
   Settings,
-  ShieldQuestion,
-  UserCog,
   Users,
+  UserRound,
   X,
 } from "lucide-react";
 import { useAuth } from "../auth";
@@ -37,17 +37,17 @@ const navGroups = [
     items: [
       { label: "Quản lý bài học", to: "/admin/lessons", icon: BookOpen, match: "/admin/lessons" },
       { label: "Quản lý chủ đề", to: "/admin/courses", icon: ListChecks, match: "/admin/courses" },
-      { label: "Quản lý câu hỏi", to: "/admin/questions", icon: ShieldQuestion, match: "/admin/questions" },
+      { label: "Quản lý Phần học", to: "/admin/sections", icon: Layers, match: "/admin/sections" },
       { label: "Quản lý bài kiểm tra", to: "/admin/quizzes", icon: ClipboardCheck, match: "/admin/quizzes" },
       { label: "Quản lý tài liệu", to: "/admin/materials", icon: FileText, match: "/admin/materials" },
       { label: "Quản lý thông báo", to: "/admin/notifications", icon: Bell, match: "/admin/notifications" },
+      { label: "Yêu cầu hỗ trợ", to: "/admin/support", icon: CircleHelp, match: "/admin/support" },
     ],
   },
   {
     title: "Quản lý người dùng",
     items: [
-      { label: "Quản lý người dùng", to: "/admin/users", icon: Users, match: "/admin/users" },
-      { label: "Quản lý vai trò", to: "/admin/roles", icon: UserCog, match: "/admin/roles" },
+      { label: "Người dùng & vai trò", to: "/admin/users", icon: Users, match: "/admin/users" },
     ],
   },
   {
@@ -70,6 +70,7 @@ function resourceForAdminPath(path: string) {
   const segment = path.split("/").filter(Boolean)[1] ?? "overview";
   if (segment === "admin") return "overview";
   if (segment === "reports") return "reports";
+  if (segment === "sections") return "courses";
   return segment;
 }
 
@@ -134,8 +135,50 @@ export function AdminLayout() {
         }}
       >
         <div className="official-admin-brandbar-inner">
+            <Button className="official-admin-menu-button" onClick={toggleNav} size="icon" type="button" variant="ghost">
+              {isNavOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+            </Button>
           <OfficialLogo />
+          <div className="official-admin-banner-right">
           <OfficialPartnerMarks />
+          <div className="official-admin-banner-actions">
+
+
+
+
+            <Button asChild variant="ghost" size="sm"><Link to="/admin/profile"><UserRound className="size-4" />Hồ sơ cá nhân</Link></Button>
+            <NotificationBell compact />
+            <div className="official-admin-user-menu" ref={userMenuRef}>
+              <button
+                className="official-admin-user-button"
+                onClick={() => setIsUserMenuOpen((current) => !current)}
+                type="button"
+              >
+                <span className="official-admin-avatar">{initials || "A"}</span>
+                <span className="official-admin-user-copy">
+                  <strong>{session.user.fullName}</strong>
+                  <small>{roleLabel}</small>
+                </span>
+                <ChevronDown className={cn("size-4", isUserMenuOpen && "rotate-180")} />
+              </button>
+
+              {isUserMenuOpen ? (
+                <div className="official-admin-user-dropdown">
+                  <div>
+                    <strong>{session.user.fullName}</strong>
+                    <span>{roleLabel}</span>
+                  </div>
+                  <Link className="admin-profile-menu-link" to="/admin/profile" onClick={() => setIsUserMenuOpen(false)}><UserRound className="size-4" />Hồ sơ cá nhân</Link>
+                  <button onClick={logout} type="button">
+                    <LogOut className="size-4" />
+                    Đăng xuất
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          </div>
+
+          </div>
         </div>
       </header>
 
@@ -143,13 +186,14 @@ export function AdminLayout() {
         <aside className={cn("official-admin-sidebar", isNavOpen && "is-open")}>
           <nav className="official-admin-nav" aria-label="Admin">
             {navGroups.map((group) => (
-              <div className="official-admin-nav-group" key={group.title || "overview"}>
+              <div className={cn("official-admin-nav-group", group.title && "has-children")} key={group.title || "overview"}>
                 {group.title ? <p>{group.title}</p> : null}
                 {group.items
                   .filter(
                     (item) =>
                       session.user.role === "Admin" ||
-                      session.user.permissions.includes(`${resourceForAdminPath(item.to)}.view`),
+                      session.user.permissions.includes(`${resourceForAdminPath(item.to)}.view`) ||
+                      (item.to === "/admin/users" && session.user.permissions.includes("roles.view")),
                   )
                   .map((item) => {
                   const Icon = item.icon;
@@ -187,43 +231,6 @@ export function AdminLayout() {
         {isNavOpen ? <button className="official-admin-overlay" onClick={closeNav} type="button" /> : null}
 
         <div className="official-admin-content">
-          <div className="official-admin-topbar">
-            <Button className="official-admin-menu-button" onClick={toggleNav} size="icon" type="button" variant="ghost">
-              {isNavOpen ? <X className="size-5" /> : <Menu className="size-5" />}
-            </Button>
-
-            <div className="official-admin-topbar-spacer" />
-
-            <NotificationBell compact />
-            <div className="official-admin-user-menu" ref={userMenuRef}>
-              <button
-                className="official-admin-user-button"
-                onClick={() => setIsUserMenuOpen((current) => !current)}
-                type="button"
-              >
-                <span className="official-admin-avatar">{initials || "A"}</span>
-                <span className="official-admin-user-copy">
-                  <strong>{session.user.fullName}</strong>
-                  <small>{roleLabel}</small>
-                </span>
-                <ChevronDown className={cn("size-4", isUserMenuOpen && "rotate-180")} />
-              </button>
-
-              {isUserMenuOpen ? (
-                <div className="official-admin-user-dropdown">
-                  <div>
-                    <strong>{session.user.fullName}</strong>
-                    <span>{roleLabel}</span>
-                  </div>
-                  <button onClick={logout} type="button">
-                    <LogOut className="size-4" />
-                    Đăng xuất
-                  </button>
-                </div>
-              ) : null}
-            </div>
-          </div>
-
           <main className="official-admin-main">
             <Outlet />
           </main>
@@ -232,3 +239,4 @@ export function AdminLayout() {
     </div>
   );
 }
+

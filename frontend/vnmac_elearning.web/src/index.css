@@ -1175,6 +1175,58 @@ body {
   color: #8a99b2;
 }
 
+.auth-select-shell {
+  padding-right: 8px;
+}
+
+.auth-select-trigger {
+  min-width: 0;
+  height: 100% !important;
+  flex: 1;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding: 0 4px 0 0 !important;
+  color: #64748b !important;
+  box-shadow: none !important;
+}
+
+.auth-select-trigger:focus {
+  box-shadow: none !important;
+}
+
+.auth-province-select-content {
+  max-height: min(360px, var(--radix-select-content-available-height)) !important;
+  border-color: #d9e4f2 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 18px 45px rgba(23, 52, 95, 0.18) !important;
+}
+
+.auth-province-select-content [data-radix-select-viewport] {
+  height: auto !important;
+  max-height: 320px !important;
+  padding: 6px !important;
+}
+
+.auth-province-select-item {
+  min-height: 38px;
+  border-radius: 9px !important;
+  padding: 8px 12px 8px 34px !important;
+  color: #334b6d;
+  font-size: 14px;
+}
+
+.auth-province-select-item[data-highlighted] {
+  color: #075bd8 !important;
+  background: #eef5ff !important;
+}
+
+.auth-province-select-item[data-state="checked"] {
+  color: #075bd8;
+  font-weight: 600;
+  background: #e8f2ff;
+}
+
 .auth-input-action {
   display: grid;
   place-items: center;
@@ -4042,6 +4094,59 @@ img {
   padding-top: 13px;
   color: #42556f;
   font-size: 12px;
+}
+
+.official-home-rich-content {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.official-home-rich-content > :first-child {
+  margin-top: 0;
+}
+
+.official-home-rich-content > :last-child {
+  margin-bottom: 0;
+}
+
+.official-home-rich-content p {
+  margin: 0 0 8px;
+}
+
+.official-home-rich-content ul,
+.official-home-rich-content ol {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding-left: 20px;
+}
+
+.official-home-rich-content ul {
+  list-style: circle;
+}
+
+.official-home-rich-content ol {
+  list-style: decimal;
+}
+
+.official-home-rich-content img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  margin: 10px auto;
+  border-radius: 10px;
+}
+
+.official-home-rich-content table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.official-home-rich-content th,
+.official-home-rich-content td {
+  border: 1px solid #dbe5f1;
+  padding: 6px;
 }
 
 .official-check-row,
@@ -7473,9 +7578,27 @@ img {
   height: calc(100vh - 76px);
   flex-direction: column;
   overflow-y: auto;
-  padding: 30px 12px 22px;
+  padding: 14px 10px;
   color: #fff;
   background: linear-gradient(180deg, var(--admin-sidebar) 0%, var(--admin-sidebar-dark) 100%);
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.official-admin-sidebar:hover,
+.official-admin-sidebar:focus-within {
+  scrollbar-color: rgba(183, 207, 241, 0.45) transparent;
+}
+
+.official-admin-sidebar::-webkit-scrollbar { width: 5px; }
+.official-admin-sidebar::-webkit-scrollbar-track { background: transparent; }
+.official-admin-sidebar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: transparent;
+}
+.official-admin-sidebar:hover::-webkit-scrollbar-thumb,
+.official-admin-sidebar:focus-within::-webkit-scrollbar-thumb {
+  background: rgba(183, 207, 241, 0.45);
 }
 
 .official-admin-sidebar-title {
@@ -7488,21 +7611,59 @@ img {
 
 .official-admin-nav {
   display: grid;
-  gap: 18px;
+  gap: 12px;
 }
 
 .official-admin-nav-group {
   display: grid;
-  gap: 4px;
+  gap: 2px;
 }
 
 .official-admin-nav-group p {
-  margin: 0 0 6px;
-  padding: 0 10px;
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 12px;
-  font-weight: 400;
+  margin: 0 0 2px;
+  padding: 5px 8px;
+  color: #a9c6eb;
+  font-size: 14px;
+  font-weight: 700;
   text-transform: uppercase;
+}
+
+.official-admin-nav-group.has-children .official-admin-nav-link {
+  margin-left: 8px;
+  border-left: 1px solid rgba(180, 208, 255, 0.16);
+  border-radius: 0 5px 5px 0;
+  padding-left: 10px;
+}
+
+.official-admin-nav-group.has-children .official-admin-nav-link.is-active {
+  border-left: 3px solid #b9d6ff;
+  padding-left: 8px;
+}
+
+.admin-user-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #d3e0f3;
+}
+
+.admin-user-tabs a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 3px solid transparent;
+  color: #526984;
+  text-decoration: none;
+}
+
+.admin-user-tabs a:hover { background: #f0f5fd; }
+.admin-user-tabs a[aria-current="page"] {
+  border-bottom-color: #1767e8;
+  color: #1255bd;
+  background: #edf4ff;
+  font-weight: 700;
 }
 
 .official-admin-nav-link {
@@ -7510,7 +7671,7 @@ img {
   align-items: center;
   gap: 11px;
   min-height: 34px;
-  padding: 8px 10px;
+  padding: 7px 10px;
   border-radius: 8px;
   color: rgba(255, 255, 255, 0.84);
   font-size: 14px;
@@ -7519,7 +7680,11 @@ img {
   transition: background 160ms ease, color 160ms ease;
 }
 
-.official-admin-nav-link:hover,
+.official-admin-nav-link:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
 .official-admin-nav-link.is-active {
   color: #fff;
   background: #0f66ff;
@@ -7531,9 +7696,9 @@ img {
   gap: 10px;
   align-items: center;
   margin-top: auto;
-  padding: 13px 12px;
+  padding: 10px;
   border-radius: 8px;
-  background: rgba(39, 122, 245, 0.32);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .official-admin-help strong,
@@ -7669,6 +7834,11 @@ img {
   min-height: calc(100vh - 180px);
   padding: 26px 42px 34px;
   background: #fff;
+}
+
+.settings-save-bar {
+  right: 0;
+  left: 252px;
 }
 
 .admin-lessons-page {
@@ -7814,7 +7984,7 @@ img {
 
 .admin-lesson-filters {
   display: grid;
-  grid-template-columns: minmax(320px, 1.5fr) repeat(3, minmax(190px, 0.8fr)) auto auto;
+  grid-template-columns: minmax(260px, 1.5fr) repeat(2, minmax(170px, 0.8fr)) auto;
   gap: 12px;
   align-items: end;
   padding: 12px;
@@ -9206,6 +9376,10 @@ img {
 }
 
 @media (max-width: 1160px) {
+  .settings-save-bar {
+    left: 0;
+  }
+
   .official-admin-body {
     display: block;
   }
@@ -11755,3 +11929,220 @@ small,
     height: 24%;
   }
 }
+
+/* Admin banner: partners, notifications and account share a single row. */
+.official-admin-shell {--admin-text-size:14px;--admin-heading-size:18px;--admin-banner-height:64px}
+.official-admin-shell .official-admin-brandbar-inner {gap:12px;padding:3px 20px;min-height:var(--admin-banner-height)}
+.official-admin-banner-right {display:flex;align-items:center;gap:20px;margin-left:auto;min-width:0}
+.official-admin-banner-actions {display:flex;align-items:center;gap:12px;flex-shrink:0}
+.official-admin-banner-right .official-partner-marks {gap:16px}
+.official-admin-banner-actions .official-admin-user-button {max-width:270px}
+.official-admin-banner-actions .official-admin-user-copy strong {max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.official-admin-main {min-height:calc(100dvh - 76px)}
+.official-admin-shell :where(div,p,span,small,strong,b,a,button,input,select,textarea,label,li,td,th,summary,legend):not(.flow-rich-content, .flow-rich-content *) {font-size:var(--admin-text-size) !important}
+.official-admin-shell :where(h1,h2,h3,h4,h5,h6),
+.official-admin-shell :where(h1,h2,h3,h4,h5,h6) :where(span,strong,b,a) {font-size:var(--admin-heading-size) !important}
+.official-admin-shell .official-logo p {line-height:1.35}
+.official-admin-shell .official-logo p:last-child {max-width:370px}
+.official-admin-shell .partner-vnmac,.official-admin-shell .partner-crs {font-size:var(--admin-heading-size) !important}
+.official-admin-shell .official-partner-marks small {line-height:1.2}
+.official-admin-shell .flow-editor--split .fe-workspace {height:calc(100dvh - 145px)}
+@media(max-width:1400px){
+  .official-admin-banner-right {gap:12px}
+  .official-admin-banner-right .official-partner-marks {gap:10px}
+  .official-admin-shell .official-logo p:last-child {max-width:280px}
+  .official-admin-banner-actions .official-admin-user-copy {display:none}
+}
+@media(max-width:1160px){
+  .official-admin-shell .official-admin-brandbar-inner {gap:10px}
+  .official-admin-shell .official-logo {flex:1}
+  .official-admin-shell .official-logo p:last-child {max-width:250px}
+  .official-admin-shell .official-partner-marks .partner-vnmac small,
+  .official-admin-shell .official-partner-marks .partner-crs small {display:none}
+}
+@media(max-width:760px){
+  .official-admin-shell {--admin-banner-height:56px}
+  .official-admin-shell .official-admin-brandbar-inner {min-height:var(--admin-banner-height);padding:3px 12px}
+  .official-admin-banner-right {gap:8px}
+  .official-admin-banner-actions {gap:6px}
+  .official-admin-shell .official-admin-brandbar .official-partner-marks {display:none}
+  .official-admin-shell .official-logo>div:not(.official-logo-mark) {display:none}
+  .official-admin-shell .flow-editor--split .fe-workspace {height:auto}
+}
+.official-admin-shell .official-admin-main :is(h1,h2,h3,h4,h5,h6),
+.official-admin-shell .official-admin-main :is(h1,h2,h3,h4,h5,h6) :is(span,strong,b,a) {font-size:var(--admin-heading-size) !important}
+
+
+/* Keep the shell aligned with the compact branding row at every breakpoint. */
+.official-admin-shell .official-admin-body {min-height:calc(100dvh - var(--admin-banner-height))}
+.official-admin-shell .official-admin-sidebar {top:var(--admin-banner-height);height:calc(100dvh - var(--admin-banner-height))}
+.official-admin-shell .official-admin-overlay {inset:var(--admin-banner-height) 0 0}
+.official-admin-shell .official-admin-main {min-height:calc(100dvh - var(--admin-banner-height))}
+.official-admin-shell .official-logo {gap:10px}
+.official-admin-shell .official-logo-image {width:44px;max-width:44px;max-height:48px}
+.official-admin-shell .official-admin-brandbar .official-logo-mark {width:56px;height:46px;transform:scale(.78);transform-origin:center}
+.official-admin-shell .official-logo p {line-height:1.2}
+.official-admin-shell .official-partner-image {max-height:32px;max-width:100px}
+.official-admin-shell .official-flag-image {width:48px;height:30px}
+.official-admin-shell .official-admin-avatar {width:30px;height:30px}
+.official-admin-shell .flow-editor--split .fe-workspace {height:calc(100dvh - var(--admin-banner-height) - 69px)}
+@media(max-width:760px){
+  .official-admin-shell .flow-editor--split .fe-workspace {height:auto}
+}
+
+/* Shared admin content density: compact spacing, comfortable controls. */
+.official-admin-shell .official-admin-main {padding:18px 24px 24px}
+.official-admin-shell .admin-lessons-page {gap:12px}
+.official-admin-shell .admin-lessons-heading {gap:12px}
+.official-admin-shell .admin-lessons-heading p {margin-top:4px}
+.official-admin-shell .admin-lesson-metrics {gap:12px}
+.official-admin-shell .admin-lesson-metric-card {min-height:76px;padding:10px 12px;gap:10px}
+.official-admin-shell .admin-lesson-metric-icon {width:38px;height:38px;flex-shrink:0}
+.official-admin-shell .admin-lesson-metric-icon svg {width:20px;height:20px}
+.official-admin-shell .admin-lesson-metric-card span {margin-top:2px}
+.official-admin-shell .admin-lesson-filters {padding:10px;gap:10px}
+.official-admin-shell .admin-lesson-filters label {gap:4px}
+.official-admin-shell .admin-lesson-filters :is(input,button,[role="combobox"]) {height:36px}
+.official-admin-shell :is(.admin-primary-button,.admin-secondary-button) {height:36px;padding-inline:14px}
+.official-admin-shell .admin-lessons-table th {height:36px;padding:8px 10px}
+.official-admin-shell .admin-lessons-table td {padding:8px 10px}
+.official-admin-shell .admin-lesson-title-cell {grid-template-columns:44px minmax(180px,1fr);gap:10px}
+.official-admin-shell .admin-lesson-thumb {width:44px;height:34px}
+.official-admin-shell .admin-lessons-pagination {padding:8px 10px;gap:10px}
+.official-admin-shell .admin-table-actions {gap:6px}
+.official-admin-shell .admin-user-tabs {margin-bottom:12px}
+.official-admin-shell .admin-user-tabs a {padding:8px 12px}
+@media(max-width:760px){
+ .official-admin-shell .official-admin-main {padding:12px}
+}
+
+/* The supplied RAPPORT artwork contains both the project name and its subtitle. */
+.official-logo.official-logo--wordmark {display:block;width:clamp(240px,30vw,420px);max-width:100%;min-width:0;flex-shrink:1}
+.official-logo.official-logo--wordmark .official-logo-image {display:block;width:100%;max-width:100%;height:auto;max-height:none;aspect-ratio:auto;object-fit:contain}
+.official-admin-shell .official-logo.official-logo--wordmark {width:min(360px,40vw);flex:0 1 360px}
+.public-header .official-logo.official-logo--wordmark {width:clamp(240px,28vw,360px)}
+.public-site-footer .official-logo.official-logo--wordmark {width:300px}
+.public-auth-project .official-logo.official-logo--wordmark {width:100%;background:#fff;padding:10px;border-radius:4px}
+.public-auth-project .official-logo.official-logo--wordmark .official-logo-image {position:static;inset:auto;display:block;width:100%;height:auto;max-width:100%;max-height:none;transform:none;margin:0}
+@media(max-width:760px){
+ .official-admin-shell .official-logo.official-logo--wordmark {width:min(290px,65vw);flex:1 1 220px}
+ .public-header .official-logo.official-logo--wordmark {width:min(320px,80vw)}
+}
+
+/* Compact learner footer stays outside the scrolling content. */
+.learner-app-shell .learner-bottom-nav{position:static;padding:5px max(16px,calc((100vw - 1440px)/2 + 24px));gap:12px;box-shadow:0 -2px 8px #15345b05}
+.learner-app-shell .learner-bottom-nav-inner{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;max-width:700px}
+.learner-app-shell .learner-bottom-link{min-height:34px;gap:7px;font-size:13px;padding:4px 10px}
+.learner-app-shell .learner-bottom-link svg{width:17px;height:17px}
+.learner-app-shell .learner-copyright{font-size:12px;margin:0}
+@media(max-width:800px){
+ .learner-app-shell .learner-bottom-nav{grid-template-columns:1fr;padding:3px 8px calc(3px + env(safe-area-inset-bottom))}
+ .learner-app-shell .learner-bottom-nav-inner{max-width:none;width:100%}
+ .learner-app-shell .learner-bottom-link{min-height:42px;gap:3px;font-size:10px;padding:3px}
+ .learner-app-shell .learner-copyright{display:none}
+}
+
+/* One shared content grid across every learner route. */
+.learner-app-shell{--learner-content-width:1600px;--learner-gutter:24px;--learner-scrollbar-width:0px}
+.learner-app-shell .learner-content-scroll{scrollbar-gutter:stable}
+.learner-app-shell .learner-content-scroll:has(.learning-flow--player){scrollbar-gutter:auto}
+.learner-app-shell .learner-official-header{padding-right:var(--learner-scrollbar-width)}
+.learner-app-shell .learner-header-inner{width:100%;max-width:var(--learner-content-width);padding-inline:var(--learner-gutter)}
+.learner-app-shell .learner-main-shell{width:100%;max-width:var(--learner-content-width);padding-inline:var(--learner-gutter)!important}
+.learner-app-shell .learner-main-shell>.official-learner-home{width:100%;max-width:none}
+.learner-app-shell .learner-bottom-nav{display:block;padding:5px var(--learner-scrollbar-width) 5px 0}
+.learner-app-shell .learner-footer-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;max-width:var(--learner-content-width);margin-inline:auto;padding-inline:var(--learner-gutter)}
+.learner-app-shell .learner-footer-inner .learner-bottom-nav-inner{flex:1;min-width:0}
+.learner-app-shell .learner-footer-inner .learner-copyright{flex-shrink:0}
+@media(max-width:800px){
+ .learner-app-shell{--learner-gutter:16px}
+ .learner-app-shell .learner-main-shell{padding-bottom:12px!important}
+ .learner-app-shell .learner-bottom-nav{padding-block:3px calc(3px + env(safe-area-inset-bottom))}
+ .learner-app-shell .learner-footer-inner{gap:0}
+}
+/* A single course home: illustrated introduction and actionable lesson list. */
+.course-learning-hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:28px;padding:24px;border:1px solid #d6e4f4;border-radius:14px;background:linear-gradient(120deg,#fff,#f1f7ff)}
+.course-learning-hero-copy{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.course-learning-art{position:relative;min-height:230px;overflow:hidden;border-radius:10px;background:linear-gradient(90deg,#163b7b22,#163b7b88),url('/media/rapport-hero-landscape.png') center/cover}
+.course-learning-art>div{display:flex;height:100%;min-height:230px;flex-direction:column;justify-content:center;align-items:flex-end;padding:24px;color:#fff;text-align:right;text-shadow:0 2px 8px #163b7b88}
+.course-learning-art span{font-size:clamp(24px,2.5vw,38px);font-weight:800;line-height:1.15}
+.course-learning-art p{max-width:240px;margin-top:12px;font-size:13px;line-height:1.6}
+.course-learning-workspace{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:18px;align-items:start}
+.course-learning-sidebar{display:grid;gap:14px}
+@media(max-width:1000px){.course-learning-hero{gap:20px;padding:20px}.course-learning-workspace{grid-template-columns:minmax(0,1fr) 250px}}
+@media(max-width:760px){.course-learning-hero{grid-template-columns:minmax(0,1fr);padding:16px}.course-learning-art,.course-learning-art>div{min-height:170px}.course-learning-art>div{padding:18px}.course-learning-workspace{grid-template-columns:minmax(0,1fr)}.course-learning-sidebar{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}}
+/* The same companion accompanies learners at each meaningful milestone. */
+.learning-companion{display:flex;align-items:center;gap:14px;padding:14px 16px;margin:0 0 16px;border:1px solid #d7e5f6;border-radius:14px;background:linear-gradient(115deg,#edf5ff,#fff);text-align:left;max-width:660px;color:#244568}
+.learning-companion-avatar{position:relative;display:block;flex:0 0 64px;width:64px;height:64px;overflow:hidden;border:3px solid #fff;border-radius:50%;background:#0757c9;box-shadow:0 0 0 1px #d8e5f2}
+.learning-companion-avatar img{position:absolute;width:210px!important;max-width:none!important;height:auto;left:-44px;top:-34px}
+.learning-companion-message{min-width:0;font-size:14px;line-height:1.65}
+.learning-companion-message strong{font-size:15px;color:#174778}
+.learning-companion-message p,.learning-flow--player .learning-companion p{margin:4px 0 0!important;line-height:1.65;color:#526b85;font-size:14px}
+.learning-companion--celebrate{background:linear-gradient(115deg,#eaf8ef,#fff);border-color:#c7e6d3}
+.learning-companion--celebrate strong{color:#146448}
+.flow-complete>.learning-companion,.flow-result-panel>.learning-companion{margin:0 auto 20px}
+.course-learning-sidebar>.learning-companion{margin:0;align-items:flex-start;gap:10px;padding:14px}
+.course-learning-sidebar .learning-companion-avatar{flex-basis:52px;width:52px;height:52px}
+.course-learning-sidebar .learning-companion-avatar img{width:175px!important;left:-37px;top:-29px}
+@media(max-width:600px){.learning-companion{padding:12px;gap:10px}.learning-companion-avatar{flex-basis:52px;width:52px;height:52px}.learning-companion-avatar img{width:175px!important;left:-37px;top:-29px}}
+.results-course-card{overflow:hidden;padding:24px;display:grid;gap:22px}
+.results-course-heading{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.results-eyebrow{font-size:11px;letter-spacing:.1em;font-weight:700;color:#56769e}
+.results-course-heading h2{margin-top:5px;font-size:19px;font-weight:700;line-height:1.5;color:#163b63}
+.results-status{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;border:1px solid #c9ddf8;background:#edf5ff;color:#2264ae;padding:5px 11px;border-radius:20px;font-size:12px;font-weight:600}
+.results-status.is-complete{background:#edf9f1;border-color:#c6e5d3;color:#17734d}
+.results-overview{display:grid;grid-template-columns:minmax(240px,.8fr) minmax(0,1.2fr);gap:30px;align-items:center;padding:20px 24px;border:1px solid #e0eaf7;border-radius:14px;background:linear-gradient(120deg,#f2f7ff,#fff)}
+.results-percent{font-size:46px;line-height:1;font-weight:800;color:#1b59a1;letter-spacing:-.04em}
+.results-percent small{font-size:24px;font-weight:600;margin-left:3px}
+.results-progress>p{margin:8px 0 14px;font-size:13px;color:#5a718d}
+.results-overview>.learning-companion{margin:0;background:#fff;border-color:#d8e6f4;max-width:none}
+.results-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.results-stat{display:flex;align-items:center;gap:14px;border:1px solid #e1e8f2;border-radius:12px;padding:18px}
+.results-stat-icon{display:grid;place-items:center;flex-shrink:0;width:44px;height:44px;border-radius:12px;background:#edf4ff;color:#2169bd}
+.results-stat-icon.is-green{background:#eaf8f0;color:#21845e}.results-stat-icon.is-amber{background:#fff5e4;color:#b57b16}
+.results-stat p{font-size:13px;color:#60748b;margin-bottom:6px}.results-stat strong{font-size:24px;color:#183a60}.results-stat small{font-size:13px;font-weight:400;color:#60748b}
+.results-next{display:flex;align-items:center;justify-content:space-between;gap:18px;border-top:1px solid #e6edf5;padding-top:18px}
+.results-next strong{font-size:14px;color:#244568}.results-next p{margin-top:5px;font-size:14px;line-height:1.6;color:#60748b}.results-next a{flex-shrink:0;gap:8px}
+@media(max-width:900px){.results-overview{gap:18px;padding:18px;grid-template-columns:minmax(200px,.8fr) minmax(0,1.2fr)}.results-stat{padding:14px;gap:10px}.results-stat-icon{width:36px;height:36px}}
+@media(max-width:650px){.results-course-card{padding:16px;gap:16px}.results-course-heading{align-items:flex-start;flex-direction:column;gap:10px}.results-overview,.results-stats{grid-template-columns:minmax(0,1fr)}.results-next{align-items:stretch;flex-direction:column}.results-next a{justify-content:center}.results-percent{font-size:38px}}
+/* The companion stays present without floating over learning controls. */
+.home-mascot-scene{position:relative;min-width:0;min-height:250px;overflow:hidden}
+.home-mascot-scene>.safety-hero-illustration{height:100%;min-height:260px}
+.home-mascot-greeting{position:absolute;bottom:16px;left:18px;right:18px}
+.home-mascot-greeting .learning-companion{margin:0;max-width:510px;background:#ffffffed;border-color:#fff;box-shadow:0 6px 22px #183a6020;backdrop-filter:blur(6px)}
+.home-mascot-greeting .learning-companion-avatar{flex-basis:76px;width:76px;height:76px}
+.home-mascot-greeting .learning-companion-avatar img{width:245px!important;left:-50px;top:-39px}
+.learning-flow--player .flow-companion-guide{margin-top:auto;padding-top:14px;flex-shrink:0}
+.flow-companion-guide summary{cursor:pointer;font-size:12px;font-weight:600;color:#4e6e95;padding:6px 4px}
+.flow-companion-guide .learning-companion{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin:4px 0 0;padding:12px;background:#ffffffc9}
+.flow-companion-guide .learning-companion-message{font-size:12px;line-height:1.6}
+.flow-companion-guide .learning-companion-message strong{font-size:13px}
+.learning-flow--player .flow-companion-guide .learning-companion-message p{font-size:12px}
+.flow-companion-guide[open] .learning-companion-avatar{animation:companion-hello .35s ease-out}
+@keyframes companion-hello{from{transform:translateY(5px);opacity:.4}to{transform:translateY(0);opacity:1}}
+@media(max-width:800px){.learning-flow--player .flow-companion-guide{display:none}.home-mascot-scene{min-height:240px}.home-mascot-greeting{left:12px;right:12px;bottom:12px}.home-mascot-greeting .learning-companion{padding:12px;gap:12px}.home-mascot-greeting .learning-companion-avatar{flex-basis:56px;width:56px;height:56px}.home-mascot-greeting .learning-companion-avatar img{width:190px!important;left:-40px;top:-32px}}
+@media(prefers-reduced-motion:reduce){.flow-companion-guide[open] .learning-companion-avatar{animation:none}}
+
+
+.official-admin-shell .admin-user-management .admin-user-tabs { margin-bottom: 8px; }
+.admin-users-compact .users-summary { display:flex; flex-wrap:wrap; gap:6px 20px; padding:8px 12px; border:1px solid #e2e8f0; border-radius:10px; background:#f8fafc; font-size:12px; color:#64748b; }
+.admin-users-compact .users-summary strong { margin-left:6px; color:#0f172a; }
+.admin-users-compact input, .admin-users-compact button[role="combobox"] { min-height:34px; height:34px; border-radius:10px; }
+.admin-profile-menu-link { display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:8px; font-size:14px; }
+.admin-profile-menu-link:hover { background:#f1f5f9; }
+
+/* User management uses square controls and sentence-case table headings. */
+.official-admin-shell .admin-user-management,
+.official-admin-shell .admin-user-management * { border-radius: 0 !important; }
+.official-admin-shell .admin-users-compact table th { font-size: 12px !important; text-transform: none !important; letter-spacing: normal !important; font-weight: 600; line-height: 1.4; height: 38px; }
+
+/* Every admin data table follows the lesson table typography and density. */
+.official-admin-main table { width:100%; border-collapse:collapse; color:#243a5e; font-size:14px; font-weight:400; border-radius:0 !important; }
+.official-admin-main table th { height:36px; padding:8px 10px !important; color:#50647f; background:#f7f9fd; font-size:12px !important; font-weight:400 !important; text-transform:none !important; letter-spacing:normal !important; text-align:left; line-height:1.4; }
+.official-admin-main table td { padding:8px 10px !important; border-top:1px solid #edf2f8; vertical-align:middle; }
+.official-admin-main table tbody tr:hover { background:#f8fafc; }
+.official-admin-main table *,
+.official-admin-main :is(div,section,article):has(table) { border-radius:0 !important; }
+.official-admin-main .admin-lesson-table-card { border-radius:0; }
+
+.learner-app-shell .learner-bottom-link { white-space: nowrap; }

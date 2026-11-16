@@ -14,7 +14,6 @@ import { MessageBanner } from "../../shared/ui/MessageBanner";
 import {
   Activity,
   ArrowRight,
-  Award,
   BookOpenCheck,
   BookPlus,
   Clock3,
@@ -91,7 +90,6 @@ export function AdminOverviewPage() {
   const tracking = trackingQuery.data;
   const learners = analytics.learners;
   const totalLearners = analytics.totalLearners;
-  const totalCertificates = learners.reduce((total, learner) => total + learner.certificateCount, 0);
 
   const learnersWithEnrollment = tracking.learners.filter((learner) => learner.courses.length > 0).length;
   const learnersStarted = tracking.learners.filter((learner) =>
@@ -100,8 +98,7 @@ export function AdminOverviewPage() {
         lesson.status !== "NotStarted" ||
         lesson.watchPercent > 0 ||
         lesson.interactionAttempts > 0 ||
-        lesson.quizAttempts > 0 ||
-        lesson.scormAttempts > 0,
+        lesson.quizAttempts > 0,
       ),
     ),
   ).length;
@@ -109,14 +106,12 @@ export function AdminOverviewPage() {
     learner.courses.some((course) => course.lessons.some((lesson) => lesson.quizAttempts > 0)),
   ).length;
   const completedLearners = learners.filter((learner) => learner.completionPercent >= 100).length;
-  const certifiedLearners = learners.filter((learner) => learner.certificateCount > 0).length;
 
   const journey = [
     { label: "Đã ghi danh", value: learnersWithEnrollment, color: "bg-blue-500" },
     { label: "Đã bắt đầu học", value: learnersStarted, color: "bg-cyan-500" },
     { label: "Đã làm bài kiểm tra", value: learnersWithQuiz, color: "bg-violet-500" },
     { label: "Hoàn thành", value: completedLearners, color: "bg-emerald-500" },
-    { label: "Có chứng chỉ", value: certifiedLearners, color: "bg-amber-500" },
   ].map((item) => ({ ...item, percent: percentage(item.value, totalLearners) }));
 
   const provinceRows = Array.from(
@@ -145,16 +140,15 @@ export function AdminOverviewPage() {
       const course = courseMap.get(summary.courseId);
       return {
         ...summary,
-        lessonCount: course?.sections.reduce((total, section) => total + section.lessons.length, 0) ?? 0,
+        lessonCount: course?.sections.reduce((total, section) => total + section.lessons.filter(lesson => lesson.type !== "Quiz").length, 0) ?? 0,
         status: course?.status ?? "Draft",
       };
     });
 
-  const maxDifficult = Math.max(0, ...analytics.topDifficultLessons.map((item) => item.total));
   const maxDropOff = Math.max(0, ...tracking.dropOffLessons.map((item) => item.learnerCount));
 
   return (
-    <div className="grid gap-5">
+    <div className="grid gap-3">
       <AdminPageHeader
         breadcrumbs={["Quản trị", "Tổng quan"]}
         actions={
@@ -170,12 +164,11 @@ export function AdminOverviewPage() {
         title="Tổng quan hệ thống"
       />
 
-      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <AdminMetricCard accent="blue" icon={<Users className="size-7" />} label="Người học" value={formatNumber(totalLearners)} />
         <AdminMetricCard accent="green" icon={<GraduationCap className="size-7" />} label="Hoàn thành" value={`${analytics.completionRatePercent.toFixed(1)}%`} />
         <AdminMetricCard accent="amber" icon={<Trophy className="size-7" />} label="Đạt yêu cầu" value={`${analytics.passRatePercent.toFixed(1)}%`} />
         <AdminMetricCard accent="blue" icon={<Clock3 className="size-7" />} label="Thời gian học TB" value={formatMinutes(analytics.averageStudyTimeMinutes)} />
-        <AdminMetricCard accent="violet" icon={<Award className="size-7" />} label="Chứng chỉ đã cấp" value={formatNumber(totalCertificates)} />
       </section>
 
       <AdminSection
@@ -184,10 +177,10 @@ export function AdminOverviewPage() {
             <Link to="/admin/tracking">Theo dõi chi tiết <ArrowRight className="size-4" /></Link>
           </Button>
         }
-        subtitle="Tính trực tiếp từ ghi danh, tiến độ bài học, lượt làm bài và chứng chỉ."
+        subtitle="Tính trực tiếp từ ghi danh, tiến độ bài học, lượt làm bài."
         title="Hành trình người học"
       >
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           {journey.map((item, index) => (
             <div className="rounded-2xl border border-slate-200 bg-white p-4" key={item.label}>
               <div className="flex items-start justify-between gap-3">
@@ -206,8 +199,8 @@ export function AdminOverviewPage() {
         </div>
       </AdminSection>
 
-      <div className="grid gap-5 xl:grid-cols-[minmax(0,1.55fr)_minmax(320px,0.75fr)]">
-        <div className="grid gap-5">
+      <div className="grid gap-3 xl:grid-cols-[minmax(0,1.55fr)_minmax(320px,0.75fr)]">
+        <div className="grid gap-3">
           <AdminSection
             action={<Button asChild className="rounded-xl" variant="ghost"><Link to="/admin/courses">Tất cả khóa học <ArrowRight className="size-4" /></Link></Button>}
             subtitle="Xếp theo số người ghi danh; tiến độ lấy từ enrollment."
@@ -252,7 +245,7 @@ export function AdminOverviewPage() {
             ) : <EmptyState>Chưa có lượt ghi danh để tổng hợp theo khóa học.</EmptyState>}
           </AdminSection>
 
-          <div className="grid gap-5 lg:grid-cols-2">
+          <div className="grid gap-3 lg:grid-cols-2">
             <AdminSection subtitle="Chỉ bao gồm tài khoản có vai trò học viên." title="Người học theo tỉnh">
               {provinceRows.length ? (
                 <div className="space-y-4">
@@ -296,26 +289,8 @@ export function AdminOverviewPage() {
           </div>
         </div>
 
-        <div className="grid content-start gap-5">
-          <AdminSection subtitle="Xếp theo tổng số câu trả lời sai thực tế." title="Bài học khó">
-            {analytics.topDifficultLessons.length ? (
-              <div className="space-y-4">
-                {analytics.topDifficultLessons.slice(0, 5).map((item, index) => (
-                  <div key={item.id}>
-                    <div className="mb-2 flex items-start justify-between gap-3 text-sm">
-                      <span className="font-medium text-slate-700">{index + 1}. {item.title}</span>
-                      <span className="shrink-0 font-semibold text-amber-600">{formatNumber(item.total)} lỗi</span>
-                    </div>
-                    <AdminProgressRow
-                      colorClassName="bg-amber-500"
-                      label=""
-                      value={percentage(item.total, maxDifficult)}
-                    />
-                  </div>
-                ))}
-              </div>
-            ) : <EmptyState>Chưa có câu trả lời sai để thống kê.</EmptyState>}
-          </AdminSection>
+        <div className="grid content-start gap-3">
+          
 
           <AdminSection subtitle="Người học dừng tại bài trước khi hoàn thành khóa." title="Điểm rơi rụng">
             {tracking.dropOffLessons.length ? (
@@ -350,17 +325,17 @@ export function AdminOverviewPage() {
               <div className="rounded-2xl bg-amber-50 p-4">
                 <BookOpenCheck className="size-5 text-amber-600" />
                 <p className="mt-3 text-2xl font-semibold text-slate-950">{formatNumber(tracking.overview.stalledLearners)}</p>
-                <p className="text-xs text-slate-500">Mắc kẹt</p>
+                <p className="text-xs text-slate-500">Đang học dở</p>
               </div>
               <div className="rounded-2xl bg-blue-50 p-4">
                 <GraduationCap className="size-5 text-blue-600" />
                 <p className="mt-3 text-2xl font-semibold text-slate-950">{formatNumber(tracking.overview.completedCourses)}</p>
-                <p className="text-xs text-slate-500">Lượt hoàn thành khóa</p>
+                <p className="text-xs text-slate-500">Lượt hoàn thành phần học</p>
               </div>
               <div className="rounded-2xl bg-violet-50 p-4">
-                <Award className="size-5 text-violet-600" />
-                <p className="mt-3 text-2xl font-semibold text-slate-950">{formatNumber(totalCertificates)}</p>
-                <p className="text-xs text-slate-500">Chứng chỉ</p>
+                <Trophy className="size-5 text-violet-600" />
+                <p className="mt-3 text-2xl font-semibold text-slate-950">{formatNumber(learnersWithQuiz)}</p>
+                <p className="text-xs text-slate-500">Đã làm kiểm tra</p>
               </div>
             </div>
           </AdminSection>

@@ -12,7 +12,7 @@ public sealed partial class LearningService
 {
     public ScormLaunchResponse LaunchScormLesson(string userId, string lessonId, string? requestedScoId = null)
     {
-        var (course, orderedLessons, lesson) = ResolveLessonContext(lessonId);
+        var (course, orderedLessons, lesson) = ResolveLessonContext(lessonId, userId);
         var visibleLessons = GetVisibleLessons(course, orderedLessons);
         EnsureLearnerExists(userId);
 

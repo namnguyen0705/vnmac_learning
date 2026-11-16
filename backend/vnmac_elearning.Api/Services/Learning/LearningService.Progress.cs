@@ -12,7 +12,8 @@ public sealed partial class LearningService
 {
     public ProgressTracking UpdateLessonStudyState(string userId, string lessonId, LessonStudyStateRequest request)
     {
-        var (course, orderedLessons, lesson) = ResolveLessonContext(lessonId);
+        var (course, orderedLessons, lesson) = ResolveLessonContext(lessonId, userId);
+        RejectLegacyFlowWrite(lesson);
         var visibleLessons = GetVisibleLessons(course, orderedLessons);
         _ = GetLearnerCourseInternal(userId, course.Id);
 
@@ -55,7 +56,8 @@ public sealed partial class LearningService
 
     public ProgressTracking CompleteLessonContent(string userId, string lessonId)
     {
-        var (course, orderedLessons, lesson) = ResolveLessonContext(lessonId);
+        var (course, orderedLessons, lesson) = ResolveLessonContext(lessonId, userId);
+        RejectLegacyFlowWrite(lesson);
         var visibleLessons = GetVisibleLessons(course, orderedLessons);
         _ = GetLearnerCourseInternal(userId, course.Id);
 
@@ -102,7 +104,8 @@ public sealed partial class LearningService
 
     public ProgressTracking UpdateVideoProgress(string userId, string lessonId, UpdateVideoProgressRequest request)
     {
-        var (course, orderedLessons, lesson) = ResolveLessonContext(lessonId);
+        var (course, orderedLessons, lesson) = ResolveLessonContext(lessonId, userId);
+        RejectLegacyFlowWrite(lesson);
         var visibleLessons = GetVisibleLessons(course, orderedLessons);
         EnsureLearnerExists(userId);
         var hasStructuredVideoStep = lesson.Content?.Steps.Any(step =>
@@ -174,7 +177,8 @@ public sealed partial class LearningService
         string lessonId,
         InteractiveAttemptRequest request)
     {
-        var (course, orderedLessons, lesson) = ResolveLessonContext(lessonId);
+        var (course, orderedLessons, lesson) = ResolveLessonContext(lessonId, userId);
+        RejectLegacyFlowWrite(lesson);
         var visibleLessons = GetVisibleLessons(course, orderedLessons);
         EnsureLearnerExists(userId);
 

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1123" height="794" viewBox="0 0 1123 794" role="img" aria-labelledby="title desc">
+  <title id="title">Chứng chỉ hoàn thành khóa học của {{NAME}}</title>
+  <desc id="desc">Mẫu chứng chỉ tạm thời cho khóa học giáo dục phòng tránh tai nạn bom mìn, vật nổ và kỹ năng truyền thông cộng đồng.</desc>
+  <rect width="1123" height="794" fill="#fffdf7"/>
+  <rect x="28" y="28" width="1067" height="738" rx="3" fill="none" stroke="#173d48" stroke-width="3"/>
+  <rect x="40" y="40" width="1043" height="714" fill="none" stroke="#bca678"/>
+  <path d="M64 40H40V64M1059 40H1083V64M40 730V754H64M1059 754H1083V730" fill="none" stroke="#bca678" stroke-width="5"/>
+  <g font-family="Arial, sans-serif" text-anchor="middle" fill="#173d48">
+    <text x="561.5" y="98" font-size="18" letter-spacing="5" font-weight="700">RAPPORT</text>
+    <text x="561.5" y="130" font-size="14" fill="#667b7d">Học tập vì cộng đồng an toàn</text>
+    <text x="561.5" y="192" font-size="38" letter-spacing="3" font-weight="700">CHỨNG CHỈ</text>
+    <text x="561.5" y="231" font-size="25" letter-spacing="1.5">HOÀN THÀNH KHÓA HỌC</text>
+    <text x="561.5" y="276" font-size="15" fill="#667b7d">Chứng nhận</text>
+    {{NAME_LINES}}
+    {{ADDRESS_LINES}}
+    <text x="561.5" y="482" font-size="16" fill="#667b7d">Đã hoàn thành chương trình</text>
+    <text x="561.5" y="521" font-size="23" font-weight="700">Giáo dục phòng tránh tai nạn bom mìn, vật nổ</text>
+    <text x="561.5" y="557" font-size="23" font-weight="700">và kỹ năng truyền thông cộng đồng</text>
+    <text x="561.5" y="621" font-size="16">Ngày cấp {{DATE}}</text>
+    <text x="561.5" y="685" font-size="13" fill="#667b7d">Mã chứng chỉ {{ID}}</text>
+    <text x="561.5" y="719" font-size="12" fill="#7b735f">MẪU TẠM THỜI · Có thể thay thế khi có mẫu chính thức</text>
+  </g>
+</svg>

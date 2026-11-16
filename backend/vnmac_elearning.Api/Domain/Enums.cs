@@ -1,5 +1,11 @@
 namespace vnmac_elearning.Api.Domain;
 
+public enum LearnerType
+{
+    Citizen,
+    Collaborator
+}
+
 public enum UserRole
 {
     Learner,
@@ -27,13 +33,6 @@ public enum LessonType
     Interactive,
     Quiz,
     Scorm
-}
-
-public enum LessonDifficulty
-{
-    Basic,
-    Intermediate,
-    Advanced
 }
 
 public enum LessonPublicationStatus

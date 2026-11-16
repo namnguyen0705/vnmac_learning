@@ -9,7 +9,6 @@ export type NotificationType =
   | "SystemAnnouncement"
   | "LearningReminder";
 export type LessonType = "Video" | "Interactive" | "Quiz" | "Scorm";
-export type LessonDifficulty = "Basic" | "Intermediate" | "Advanced";
 export type LessonPublicationStatus = "Published" | "Draft" | "Archived";
 export type LessonProgressStatus = "NotStarted" | "InProgress" | "Completed";
 export type QuestionType = "TrueFalse" | "MultipleChoice" | "DragDrop" | "Hotspot" | "Scenario";
@@ -27,6 +26,7 @@ export type ScormCompletionStatus =
 export type ScormSuccessStatus = "Unknown" | "Passed" | "Failed";
 
 export interface User {
+  learnerType?: "Citizen" | "Collaborator";
   id: string;
   username: string;
   email: string;
@@ -140,6 +140,7 @@ export interface CourseTreeResponse {
 }
 
 export interface CourseSection {
+  isHidden?: boolean;
   id: string;
   courseId?: string;
   title: string;
@@ -150,12 +151,14 @@ export interface CourseSection {
 }
 
 export interface UpdateSectionRequest {
+  isHidden?: boolean;
   title: string;
   description: string;
   order: number;
 }
 
 export interface CourseLesson {
+  outline?: { id: string; title: string; order: number; itemCount: number }[];
   id: string;
   courseId: string;
   sectionId: string;
@@ -165,7 +168,6 @@ export interface CourseLesson {
   durationMinutes: number;
   statusLabel: string;
   topic: string;
-  difficulty: LessonDifficulty;
   publicationStatus: LessonPublicationStatus;
   thumbnailUrl: string;
   createdAt: string;
@@ -199,6 +201,7 @@ export interface VideoContent {
 }
 
 export interface LessonContent {
+  flow?: import("@/features/learning-flow/types").FlowStep[];
   summary: string;
   coreMessage: string;
   mainContentType: string;
@@ -769,6 +772,7 @@ export interface LearnerAdminRow {
 }
 
 export interface AdminUserRow {
+  learnerType?: "Citizen" | "Collaborator";
   userId: string;
   username: string;
   email: string;
@@ -815,7 +819,6 @@ export interface AnalyticsResponse {
   completionRatePercent: number;
   passRatePercent: number;
   averageStudyTimeMinutes: number;
-  topDifficultLessons: AnalyticsItem[];
   dropOffLessons: AnalyticsItem[];
   learners: LearnerAdminRow[];
 }
@@ -957,6 +960,8 @@ export interface SystemSettingsResponse {
   certificateTemplateUrl: string;
   certificateTitle: string;
   certificateCourseTitle: string;
+  publicContentJson: string;
+  homeContentJson: string;
   updatedAt: string;
   updatedByUserId: string;
 }
@@ -988,6 +993,7 @@ export interface SystemAuditLogRow {
 }
 
 export interface CreateAdminUserRequest {
+  learnerType?: "Citizen" | "Collaborator";
   username: string;
   password: string;
   email: string;
@@ -1002,6 +1008,7 @@ export interface CreateAdminUserRequest {
 }
 
 export interface UpdateAdminUserRequest {
+  learnerType?: "Citizen" | "Collaborator";
   username: string;
   password?: string | null;
   email: string;
@@ -1050,6 +1057,7 @@ export interface CreateCourseRequest {
 export interface UpdateCourseRequest extends CreateCourseRequest {}
 
 export interface CreateSectionRequest {
+  isHidden?: boolean;
   title: string;
   description: string;
   order: number;
@@ -1093,7 +1101,6 @@ export interface UpsertLessonRequest {
   durationMinutes: number;
   statusLabel: string;
   topic?: string;
-  difficulty?: LessonDifficulty;
   publicationStatus?: LessonPublicationStatus;
   thumbnailUrl?: string;
   content?: LessonContent | null;
@@ -1110,7 +1117,6 @@ export interface UpdateLessonMetadataRequest {
   durationMinutes: number;
   statusLabel: string;
   topic?: string;
-  difficulty: LessonDifficulty;
   publicationStatus: LessonPublicationStatus;
 }
 
@@ -1139,7 +1145,6 @@ export interface AdminLessonCatalogRow {
   order: number;
   statusLabel: string;
   topic: string;
-  difficulty: LessonDifficulty;
   publicationStatus: LessonPublicationStatus;
   learnerCount: number;
   questionCount: number;
@@ -1302,4 +1307,25 @@ export interface ApiErrorPayload {
   key?: string;
   message?: string;
   detail?: string;
+}
+export type SupportTicketStatus = "New" | "InProgress" | "WaitingForLearner" | "Resolved" | "Closed";
+export type SupportTicketCategory = "Account" | "CourseContent" | "LearningProgress" | "Quiz" | "Certificate" | "Other";
+
+export interface SupportTicket {
+  id: string; code: string; learnerUserId: string; learnerName: string; phoneNumber: string;
+  group: string; province: string; category: SupportTicketCategory; subject: string; description: string;
+  attachmentUrl?: string; status: SupportTicketStatus; assignedUserId?: string; assignedUserName?: string;
+  adminResponse?: string; createdAt: string; updatedAt: string; resolvedAt?: string;
+}
+
+export interface SupportTicketList {
+  items: SupportTicket[]; totalItems: number; newCount: number; inProgressCount: number;
+  overdueCount: number; resolvedCount: number; page: number; pageSize: number;
+}
+export interface SupportInfo {
+  email: string;
+  phone: string;
+  workingHours: string;
+  operatorName: string;
+  faqs: Array<{ question: string; answer: string }>;
 }

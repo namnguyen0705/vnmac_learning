@@ -9,6 +9,7 @@ public sealed class MediaStorageService(IWebHostEnvironment environment, Trainin
 {
     private const long MaxVideoBytes = 2L * 1024 * 1024 * 1024;
     private const long MaxImageBytes = 20L * 1024 * 1024;
+    private static readonly HashSet<string> AudioExtensions = new(StringComparer.OrdinalIgnoreCase) { ".mp3", ".wav", ".ogg", ".m4a" };
     private const long MaxCaptionBytes = 5L * 1024 * 1024;
     private const long MaxDocumentBytes = 100L * 1024 * 1024;
 
@@ -51,6 +52,7 @@ public sealed class MediaStorageService(IWebHostEnvironment environment, Trainin
         var folder = normalizedType switch
         {
             "video" => "videos",
+            "audio" => "audio",
             "poster" => "posters",
             "caption" => "captions",
             "document" => "documents",
@@ -116,6 +118,7 @@ public sealed class MediaStorageService(IWebHostEnvironment environment, Trainin
                     MediaType = folder switch
                     {
                         "videos" => "video",
+                        "audio" => "audio",
                         "posters" => "image",
                         "captions" => "caption",
                         _ => "document"
@@ -354,6 +357,7 @@ public sealed class MediaStorageService(IWebHostEnvironment environment, Trainin
         return mediaType.Trim().ToLowerInvariant() switch
         {
             "video" => "video",
+            "audio" => "audio",
             "poster" or "image" => "poster",
             "caption" or "captions" or "subtitle" => "caption",
             "document" or "file" or "library" => "document",
@@ -366,6 +370,7 @@ public sealed class MediaStorageService(IWebHostEnvironment environment, Trainin
         var (allowedExtensions, maxBytes) = mediaType switch
         {
             "video" => (VideoExtensions, MaxVideoBytes),
+            "audio" => (AudioExtensions, MaxDocumentBytes),
             "poster" => (ImageExtensions, MaxImageBytes),
             "caption" => (CaptionExtensions, MaxCaptionBytes),
             "document" => (DocumentExtensions, MaxDocumentBytes),
@@ -398,6 +403,10 @@ public sealed class MediaStorageService(IWebHostEnvironment environment, Trainin
             ".png" => "image/png",
             ".webp" => "image/webp",
             ".gif" => "image/gif",
+            ".mp3" => "audio/mpeg",
+            ".wav" => "audio/wav",
+            ".ogg" => "audio/ogg",
+            ".m4a" => "audio/mp4",
             ".mp4" => "video/mp4",
             ".webm" => "video/webm",
             ".mov" => "video/quicktime",

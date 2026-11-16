@@ -7,5 +7,6 @@ public sealed class CourseSection
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public int Order { get; set; }
+    public bool IsHidden { get; set; }
     public List<Lesson> Lessons { get; set; } = [];
 }

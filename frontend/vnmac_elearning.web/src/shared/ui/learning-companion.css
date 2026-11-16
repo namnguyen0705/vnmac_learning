@@ -1,0 +1,25 @@
+/* Every illustration uses contain: helmet, hands and boots remain visible. */
+.mascot-figure{display:block;position:relative;flex:0 0 88px;width:88px;height:132px;overflow:visible;background:none;border:0;box-shadow:none;line-height:0}
+.mascot-figure>img{display:block;position:static;width:100%;height:100%;max-width:100%;object-fit:contain;object-position:center;filter:drop-shadow(0 3px 3px #183a6012)}
+.learning-companion--full{align-items:center;gap:16px;min-width:0}
+.learning-companion--full .mascot-figure{flex-shrink:0}
+.course-learning-sidebar .learning-companion--full{align-items:center}
+.course-learning-sidebar .mascot-figure{flex-basis:72px;width:72px;height:112px}
+.home-mascot-greeting .mascot-figure{flex-basis:100px;width:100px;height:150px}
+.official-start-brand .mascot-figure{flex-basis:52px;width:52px;height:78px}
+.learning-flow--player .flow-companion-guide .learning-companion--full{flex-direction:row;gap:8px;padding:10px}
+.flow-companion-guide .mascot-figure{flex-basis:62px;width:62px;height:100px}
+.mascot-figure--milestone{width:112px;height:166px;margin:0 0 14px}
+.flow-result-panel>.mascot-figure--milestone{margin:0 auto 14px}
+.mascot-figure--intro{width:96px;height:142px;margin:0 0 12px}
+.flow-mascot-feedback>.mascot-figure--feedback{flex-basis:86px;width:86px;height:130px}
+@media(max-width:600px){.mascot-figure{flex-basis:66px;width:66px;height:104px}.learning-companion--full{gap:10px}.home-mascot-greeting .mascot-figure{flex-basis:76px;width:76px;height:114px}.flow-mascot-feedback>.mascot-figure--feedback{flex-basis:64px;width:64px;height:100px}.mascot-figure--milestone{width:88px;height:130px}.mascot-figure--intro{width:76px;height:112px}}
+.mascot-figure.public-corner-mascot {
+  position: fixed;
+  right: max(12px, env(safe-area-inset-right));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  width: clamp(48px, 7vw, 96px);
+  height: clamp(72px, 10.5vw, 144px);
+  z-index: 10;
+  pointer-events: none;
+}

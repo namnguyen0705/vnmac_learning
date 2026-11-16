@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "../../app/auth";
-import { changeCurrentUserPassword, updateCurrentUserProfile } from "../../shared/api/auth";
+import { changeCurrentUserPassword, updateCurrentUserProfile, getCurrentUser } from "../../shared/api/auth";
 import { getLearnerDashboard } from "../../shared/api/learner";
 import { formatMinutes } from "../../shared/lib/format";
 import { useAuthStore } from "../../shared/stores/auth-store";
@@ -56,7 +56,7 @@ export function ProfilePage() {
 
   const dashboardQuery = useQuery({
     queryKey: ["learner", userId, "dashboard"],
-    queryFn: () => getLearnerDashboard(userId),
+    queryFn: async () => session?.user.hasAdminAccess ? ({ user: await getCurrentUser(), totalEnrolledCourses: 0, totalCompletedCourses: 0, totalStudyTimeMinutes: 0, courses: [] }) : getLearnerDashboard(userId),
     enabled: Boolean(userId),
   });
 
@@ -180,7 +180,7 @@ export function ProfilePage() {
           <div className="grid gap-3 p-6">
             <ProfileInfo icon={Phone} label="Số điện thoại" value={user.phoneNumber} />
             <ProfileInfo icon={MapPin} label="Tỉnh/thành" value={user.province} />
-            <ProfileInfo icon={ShieldCheck} label="Vai trò" value={user.role === "Learner" ? "Học viên" : user.role} />
+            <ProfileInfo icon={ShieldCheck} label="Vai trò" value={user.role === "Learner" ? (user.learnerType === "Collaborator" ? "Cộng tác viên" : "Người dân") : user.role} />
             <ProfileInfo icon={Mail} label="Email" value={user.email || "Chưa cập nhật"} />
           </div>
         </LearnerPanel>
@@ -189,8 +189,8 @@ export function ProfilePage() {
           <LearnerPanel className="p-6">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.12em] text-[#163b7b]">Hồ sơ học viên</p>
-                <h2 className="mt-2 text-[1.8rem] font-semibold text-slate-950">Thông tin học tập của bạn</h2>
+                <p className="text-sm font-semibold uppercase tracking-[0.12em] text-[#163b7b]">Hồ sơ cá nhân</p>
+                <h2 className="mt-2 text-[1.8rem] font-semibold text-slate-950">Thông tin cá nhân của bạn</h2>
                 <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600">
                   Quản lý thông tin cá nhân và theo dõi kết quả học tập của bạn.
                 </p>
@@ -209,21 +209,20 @@ export function ProfilePage() {
             </div>
           </LearnerPanel>
 
-          <div className="grid gap-4 md:grid-cols-4">
+          <div className={user.hasAdminAccess ? "hidden" : "grid gap-4 md:grid-cols-3"}>
             <Metric icon={GraduationCap} label="Khóa đã đăng ký" value={dashboardQuery.data.totalEnrolledCourses} />
             <Metric icon={BookOpenCheck} label="Khóa hoàn thành" value={dashboardQuery.data.totalCompletedCourses} />
-            <Metric icon={Award} label="Chứng chỉ" value={dashboardQuery.data.totalCertificates} />
             <Metric icon={CalendarDays} label="Thời gian học" value={formatMinutes(dashboardQuery.data.totalStudyTimeMinutes)} />
           </div>
         </div>
       </section>
 
-      <section className="grid gap-6 xl:grid-cols-3">
+      {!user.hasAdminAccess && <section className="grid gap-6 xl:grid-cols-3">
         <LearnerPanel className="p-6 xl:col-span-2">
           <h2 className="text-[1.25rem] font-semibold text-slate-950">Khóa học gần đây</h2>
           <div className="mt-5 grid gap-3">
             {dashboardQuery.data.courses.length ? dashboardQuery.data.courses.slice(0, 4).map((course) => (
-              <Link className="rounded-2xl border border-slate-200 bg-white p-4 hover:border-[#163b7b]/40 hover:shadow-md" key={course.courseId} to={`/app/courses/${course.courseId}`}>
+              <Link className="rounded-2xl border border-slate-200 bg-white p-4 hover:border-[#163b7b]/40 hover:shadow-md" key={course.courseId} to="/app/courses">
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="font-semibold text-slate-950">{course.title}</p>
@@ -242,7 +241,7 @@ export function ProfilePage() {
           <h2 className="text-[1.25rem] font-semibold text-slate-950">Liên kết nhanh</h2>
           <div className="mt-5 grid gap-3">
             <QuickLink to="/app/courses" icon={GraduationCap}>Khóa học của tôi</QuickLink>
-            <QuickLink to="/app/certificate" icon={Award}>Chứng chỉ</QuickLink>
+            <QuickLink to="/app/results" icon={Award}>Kết quả học tập</QuickLink>
             <QuickLink to="/app/support" icon={LifeBuoy}>Hỗ trợ học viên</QuickLink>
             <Button className="profile-logout-button justify-start rounded-2xl" type="button" variant="outline" onClick={logout}>
               <LogOut className="size-4" /> Đăng xuất
@@ -251,6 +250,7 @@ export function ProfilePage() {
         </LearnerPanel>
       </section>
 
+      }
       {isProfileEditorOpen ? (
         <ProfileDialog icon={UserRound} title="Chỉnh sửa hồ sơ" onClose={() => setIsProfileEditorOpen(false)}>
           <form className="grid gap-4" onSubmit={submitProfile}>

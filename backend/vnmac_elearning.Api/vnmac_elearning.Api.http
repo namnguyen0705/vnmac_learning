@@ -13,9 +13,8 @@ Content-Type: application/json
   "phoneNumber": "0931234567",
   "province": "Quang Tri",
   "group": "Nguoi dan",
-  "useOtp": true,
-  "otpCode": "246810",
-  "captchaToken": "demo-pass"
+  "useOtp": false,
+  "captchaToken": "{{turnstileToken}}"
 }
 
 ###

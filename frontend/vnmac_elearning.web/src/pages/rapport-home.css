@@ -1,0 +1,164 @@
+.rapport-home-shell {
+  --home-ink: #102b48;
+  --home-blue: #105889;
+  --home-pale: #edf5fc;
+  --home-serif: RapportDisplay, "Times New Roman", serif;
+  color: var(--home-ink);
+}
+.rapport-home-width,
+.rapport-home-shell .public-site-footer-inner,
+.rapport-home-shell .public-contact-main :is(.public-page-banner-inner, .public-contact-grid) {
+  width: min(94%, 1440px);
+  margin-inline: auto;
+}
+.rapport-home-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: clamp(420px, 41.7vw, 600px);
+  background: var(--home-pale);
+}
+.rapport-home-hero-photo, .rapport-home-hero::after {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.rapport-home-hero-photo { z-index: -2; object-fit: cover; object-position: 64% center; }
+.rapport-home-hero::after {
+  content: "";
+  z-index: -1;
+  background: linear-gradient(180deg, #fff 0, #fffffff2 76px, transparent 155px),
+              linear-gradient(90deg, #f5faffd9, #f5faffa8 35%, transparent 64%);
+}
+.rapport-home-header {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: clamp(16px, 2vw, 36px);
+  padding-block: 16px;
+}
+.rapport-home-header > a { justify-self: start; }
+.rapport-home-header .official-logo.official-logo--wordmark { width: clamp(270px, 30vw, 440px); }
+.rapport-home-header nav { display: flex; flex-wrap: wrap; gap: 12px clamp(12px, 2vw, 32px); font-size: 14px; font-weight: 600; }
+.rapport-home-header nav a { display: inline-flex; align-items: center; gap: 5px; min-height: 40px; }
+.rapport-home-header nav a:hover { text-decoration: underline; }
+.rapport-home-header .official-partner-marks { display: flex; align-items: center; gap: clamp(12px, 2vw, 32px); }
+.rapport-home-header .official-partner-image { width: clamp(66px, 8vw, 115px); height: 54px; object-fit: contain; }
+.rapport-home-header :is(.official-flag-image, .flag-vietnam, .flag-us) { display: none; }
+.rapport-home-lead { padding: clamp(24px, 4vw, 56px) 0 48px; }
+.rapport-home h1, .rapport-home-story h2, .rapport-home-cta h2 {
+  font-family: var(--home-serif);
+  font-weight: 600;
+  letter-spacing: -.015em;
+  line-height: 1.05;
+}
+.rapport-home h1 { max-width: 64%; white-space: pre-line; font-size: clamp(36px, 5vw, 76px); }
+.rapport-home-lead > p { max-width: 54%; margin: 12px 0 20px; font-size: clamp(16px, 1.8vw, 24px); }
+.rapport-home-actions, .rapport-home-links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.rapport-home-actions .intro-primary, .rapport-home-outline {
+  min-height: 46px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border: 1px solid var(--home-blue);
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.rapport-home-actions .intro-primary { background: var(--home-blue); }
+.rapport-home-actions .intro-primary:hover { background: #0d436b; }
+.rapport-home-outline { background: #fff; color: var(--home-blue); }
+.rapport-home-outline:hover { background: var(--home-pale); }
+.rapport-home-overline, .rapport-home-kicker { font-size: 13px; letter-spacing: .045em; font-weight: 700; text-transform: uppercase; }
+.rapport-home-overline { display: flex; align-items: center; gap: 16px; margin: 18px 0 10px; }
+.rapport-home-overline::after { content: ""; height: 1px; flex: 1; background: #ccdae5; }
+.rapport-home-topics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: #dce8f2; margin-bottom: 12px; }
+.rapport-home-topics button {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  text-align: left;
+  padding: clamp(14px, 2vw, 28px);
+  background: var(--home-pale);
+  color: #456078;
+  font-size: 14px;
+  line-height: 1.35;
+}
+.rapport-home-topics button:hover { background: #dfedf9; }
+.rapport-home-topics button[aria-pressed="true"] { background: #123f68; color: white; box-shadow: inset 0 -4px #2074a9; }
+.rapport-home-topics button[aria-pressed="true"]::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: calc(50% - 11px);
+  border: 11px solid transparent;
+  border-top-color: #2074a9;
+  border-bottom: 0;
+}
+.rapport-home-number { font: 500 clamp(32px, 4.5vw, 61px)/1 var(--home-serif); color: #6285a5; }
+.rapport-home-topics strong { font: 600 clamp(16px, 2vw, 26px)/1.2 var(--home-serif); color: var(--home-ink); }
+.rapport-home-topics [aria-pressed="true"] .rapport-home-number { color: #b4cee4; }
+.rapport-home-topics [aria-pressed="true"] strong { color: inherit; }
+.rapport-home-story { display: grid; grid-template-columns: 45% 55%; align-items: stretch; }
+.rapport-home-copy { align-self: center; padding: clamp(16px, 2.2vw, 30px) clamp(14px, 2vw, 26px) clamp(16px, 2.2vw, 30px) 14px; }
+.rapport-home-kicker { color: var(--home-blue); margin-bottom: 10px; }
+.rapport-home-story h2 { font-size: clamp(30px, 4.5vw, 65px); margin-bottom: 16px; }
+.rapport-home .rapport-source-text { display: grid; gap: 12px; color: #283d50; line-height: 1.55; font-size: clamp(14px, 1.28vw, 17px); }
+.rapport-home-figure { position: relative; margin: 0; min-width: 0; min-height: 260px; }
+.rapport-home-figure > img, .rapport-home-figure .rapport-scene { width: 100%; height: 100%; }
+.rapport-home-figure > img { object-fit: cover; }
+.rapport-home-figure .rapport-scene { display: block; overflow: hidden; }
+.rapport-home-figure::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #fff, transparent 18%); pointer-events: none; }
+.rapport-home-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); background: var(--home-pale); padding: 16px 0; margin: 8px 0 18px; text-align: center; }
+.rapport-home-stats > div { padding: 0 10px; }
+.rapport-home-stats > div + div { border-left: 1px solid #d4e3ef; }
+.rapport-home-stats dt { font: 600 clamp(22px, 3.3vw, 48px)/1.15 var(--home-serif); color: #123f68; }
+.rapport-home-number, .rapport-home-stats dt { font-variant-numeric: lining-nums tabular-nums; }
+.rapport-home-stats dd { font-size: 14px; margin: 6px 0 0; }
+.rapport-home-details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.rapport-home-details article { display: flex; align-items: flex-start; gap: 18px; padding: 0 clamp(18px, 2.5vw, 36px) 0 0; }
+.rapport-home-details article + article { border-left: 1px solid #ccdce9; padding: 0 0 0 clamp(18px, 2.5vw, 36px); }
+.rapport-home-details svg { flex: none; color: #286b99; }
+.rapport-home-details h3 { font-family: var(--home-serif); font-size: 20px !important; font-weight: 600 !important; line-height: 1.25 !important; color: #123f68; margin: 0 0 6px; }
+.rapport-home-details p { font-size: 14px; line-height: 1.5; color: #283d50; margin: 0; }
+.rapport-home-links { justify-content: flex-end; padding: 10px 0 14px; }
+.rapport-home-read-more { margin-top: 14px; }
+.rapport-home-read-more, .rapport-home-links button { display: inline-flex; align-items: center; gap: 8px; color: #184f79; text-decoration: underline; font-size: 14px; }
+.rapport-home-cta { background: linear-gradient(90deg, #092e51f5, #0b3d67b5), url('/media/rapport-hero-landscape.png') left 50% / cover; color: #fff; }
+.rapport-home-cta .rapport-home-width { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding-block: 20px; }
+.rapport-home-cta h2 { font-size: clamp(26px, 3vw, 42px); margin-bottom: 5px; }
+.rapport-home-shell .public-site-footer { background: #fff; padding: 18px 0; }
+.rapport-home-shell .public-site-footer .official-logo.official-logo--wordmark { width: min(320px, 80vw); }
+
+@media (max-width: 850px) {
+  .rapport-home-width,
+  .rapport-home-shell .public-site-footer-inner,
+  .rapport-home-shell .public-contact-main :is(.public-page-banner-inner, .public-contact-grid) { width: calc(100% - 32px); }
+  .rapport-home-header { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; }
+  .rapport-home-header .official-logo.official-logo--wordmark { width: min(100%, clamp(175px, 47vw, 330px)); }
+  .rapport-home-header .official-partner-image { width: clamp(48px, 12vw, 80px); }
+  .rapport-home-header nav { grid-column: 1 / -1; grid-row: 2; justify-content: space-between; gap: 0 12px; font-size: 13px; }
+  .rapport-home-header nav a { min-height: 44px; }
+  .rapport-home-hero { display: flex; flex-direction: column; min-height: 0; }
+  .rapport-home-hero-photo { position: static; order: 1; z-index: auto; height: clamp(180px, 50vw, 325px); object-position: right center; }
+  .rapport-home-hero::after { content: none; }
+  .rapport-home-lead { padding: 16px 0 24px; }
+  .rapport-home h1, .rapport-home-lead > p { max-width: none; }
+  .rapport-home-topics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; background: transparent; }
+  .rapport-home-topics button[aria-pressed="true"]::after { display: none; }
+  .rapport-home-story, .rapport-home-details { grid-template-columns: minmax(0, 1fr); }
+  .rapport-home-copy { padding-inline: 0; }
+  .rapport-home-figure { min-height: 0; aspect-ratio: 3 / 2; }
+  .rapport-home-figure::after { display: none; }
+  .rapport-home-details { gap: 16px; }
+  .rapport-home-details article + article { border-left: 0; padding: 0; }
+  .rapport-home-stats dd { font-size: 12px; }
+}
+
+.rapport-interior-masthead {
+  background: linear-gradient(#fffffff0, #ffffffcf), url('/media/rapport-hero-landscape.png') center 12% / cover;
+  border-bottom: 1px solid #d7e5f0;
+}

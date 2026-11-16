@@ -13,25 +13,6 @@ public sealed partial class AdminService
     {
         var learners = GetLearners(province, group).ToArray();
         var lessonMap = dbContext.Lessons.ToDictionary(lesson => lesson.Id, lesson => lesson.Title, StringComparer.Ordinal);
-        var questionLessonMap = dbContext.LessonQuestions.ToDictionary(question => question.Id, question => question.LessonId, StringComparer.Ordinal);
-        var filteredUserIds = learners.Select(item => item.UserId).ToHashSet(StringComparer.Ordinal);
-
-        var difficultLessons = dbContext.QuizAttemptWrongQuestions
-            .Where(attempt => filteredUserIds.Contains(attempt.UserId))
-            .Select(attempt => attempt.QuestionId)
-            .AsEnumerable()
-            .Where(questionLessonMap.ContainsKey)
-            .GroupBy(questionId => questionLessonMap[questionId])
-            .Select(grouping => new AnalyticsItem
-            {
-                Id = grouping.Key,
-                Title = lessonMap.GetValueOrDefault(grouping.Key, grouping.Key),
-                Total = grouping.Count()
-            })
-            .OrderByDescending(item => item.Total)
-            .Take(5)
-            .ToArray();
-
         var dropOffLessons = learners
             .Where(item => item.CompletionPercent < 100)
             .GroupBy(item => item.StalledAtLessonId)
@@ -58,7 +39,6 @@ public sealed partial class AdminService
             CompletionRatePercent = completionRate,
             PassRatePercent = passRate,
             AverageStudyTimeMinutes = averageStudyTime,
-            TopDifficultLessons = difficultLessons,
             DropOffLessons = dropOffLessons,
             Learners = learners
         };
@@ -290,7 +270,7 @@ public sealed partial class AdminService
     {
         var rows = GetLearners(province, group);
         var builder = new StringBuilder();
-        builder.AppendLine("UserId,Username,FullName,PhoneNumber,Province,Group,CompletionPercent,Passed,StudyTimeMinutes,StalledAtLessonId,CertificateCount,Enrollments");
+        builder.AppendLine("UserId,Username,FullName,PhoneNumber,Province,Group,CompletionPercent,Passed,StudyTimeMinutes,StalledAtLessonId,Enrollments");
 
         foreach (var row in rows)
         {
@@ -307,7 +287,6 @@ public sealed partial class AdminService
                 row.Passed,
                 row.StudyTimeMinutes,
                 EscapeCsv(row.StalledAtLessonId),
-                row.CertificateCount,
                 EscapeCsv(enrollments)));
         }
 
@@ -498,9 +477,7 @@ public sealed partial class AdminService
             return 100;
         }
 
-        return lesson.Type == LessonType.Video
-            ? lesson.WatchPercent
-            : IsLessonStarted(lesson) ? 50 : 0;
+        return lesson.Type == LessonType.Video ? lesson.WatchPercent : 0;
     }
 
 }

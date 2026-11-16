@@ -34,12 +34,17 @@ public static class ServiceErrors
 
     public static readonly ServiceError AuthInvalidCaptchaToken = new(
         "auth.invalid_captcha_token",
-        "CaptchaToken khong hop le. Dung gia tri 'demo-pass' de thu nghiem API.",
+        "CaptchaToken khong hop le hoac da het han.",
         StatusCodes.Status400BadRequest);
 
     public static readonly ServiceError AuthInvalidOtpCode = new(
         "auth.invalid_otp_code",
-        "OTP khong hop le. Dung ma '246810' de thu nghiem API.",
+        "OTP khong hop le hoac da het han.",
+        StatusCodes.Status400BadRequest);
+
+    public static readonly ServiceError AdminAssessmentRequired = new(
+        "admin.assessment_required",
+        "Can cung cap cau hinh bai danh gia.",
         StatusCodes.Status400BadRequest);
 
     public static readonly ServiceError AuthInvalidUsername = new(

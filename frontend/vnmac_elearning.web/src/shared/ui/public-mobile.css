@@ -1,0 +1,340 @@
+/* Center the public mobile experience without changing the desktop grid. */
+.rapport-menu-toggle,
+.rapport-menu-backdrop { display: none; }
+
+@media(max-width:700px){
+  .rapport-home-shell { --public-gutter: 16px; }
+  .rapport-home-shell .rapport-home-lead h1,
+  .rapport-home-shell .public-contact-main .public-page-banner h1,
+  .public-site-shell.rapport-home-shell .public-auth-blue .public-auth-title,
+  .rapport-home-shell .rapport-home-overline,
+  .rapport-home-shell .rapport-home-copy h2,
+  .rapport-home-shell .public-contact-main :is(.public-contact-channels, .public-contact-assistance) > h2 {
+    font-family: var(--mobile-font) !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    letter-spacing: normal;
+  }
+  .rapport-home-shell .rapport-home-lead h1,
+  .rapport-home-shell .public-contact-main .public-page-banner h1,
+  .public-site-shell.rapport-home-shell .public-auth-blue .public-auth-title {
+    font-size: var(--mobile-title) !important;
+  }
+  .rapport-home-shell .public-auth-blue .public-auth-card-body {
+    min-width: 0;
+    padding-inline: var(--public-gutter);
+  }
+  .rapport-home-shell .public-auth-blue .public-auth-form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .rapport-home-shell .rapport-home-overline,
+  .rapport-home-shell .rapport-home-copy h2,
+  .rapport-home-shell .public-contact-main :is(.public-contact-channels, .public-contact-assistance) > h2 {
+    font-size: var(--mobile-section-title) !important;
+  }
+  .rapport-home-shell :is(.rapport-home-topics strong, .rapport-home-details h3) {
+    font-family: var(--mobile-font) !important;
+    font-size: var(--mobile-item-title) !important;
+    line-height: 1.3 !important;
+  }
+  .rapport-home-shell :is(.rapport-home-lead > p, .rapport-source-text p, .rapport-home-details p, .public-page-banner-description) {
+    font-size: var(--mobile-body) !important;
+    line-height: 1.5 !important;
+  }
+  .rapport-home-shell .rapport-home-width,
+  .rapport-home-shell .public-site-footer .public-site-footer-inner,
+  .rapport-home-shell .public-contact-main :is(.public-page-banner-inner, .public-contact-grid),
+  .public-site-shell.rapport-home-shell .public-auth-blue .public-auth-layout {
+    width: calc(100% - 2 * var(--public-gutter));
+    max-width: none;
+    margin-inline: auto;
+  }
+  html:has(.rapport-menu-toggle[aria-expanded="true"]),
+  body:has(.rapport-menu-toggle[aria-expanded="true"]) {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+  .rapport-home .rapport-home-hero { isolation: auto; }
+  .rapport-home .rapport-home-hero-photo {
+    opacity: .75;
+    mask-image: linear-gradient(to bottom, transparent, #000 36%);
+  }
+  .rapport-home-shell .rapport-menu-toggle {
+    display: grid;
+    place-items: center start;
+    padding: 0;
+    grid-area: 2 / 1;
+    justify-self: start;
+    align-self: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 8px;
+    color: #124e80;
+    background: transparent;
+  }
+  .rapport-home-shell .rapport-home-header .official-partner-marks {
+    grid-area: 2 / 1;
+    justify-self: end;
+  }
+  .rapport-home .rapport-home-lead,
+  .rapport-home .rapport-home-overline,
+  .rapport-home .rapport-home-kicker,
+  .rapport-home .rapport-home-copy h2,
+  .rapport-home .rapport-home-cta { text-align: center; }
+  .rapport-home .rapport-home-overline,
+  .rapport-home .rapport-home-cta .rapport-home-width { justify-content: center; }
+  .rapport-home .rapport-home-overline::after { display: none; }
+  .rapport-home .rapport-home-topics { margin-bottom: 0; gap: 6px; }
+  .rapport-home .rapport-home-topics button {
+    min-height: 44px;
+    place-content: center;
+    padding: 8px;
+    border-radius: 6px;
+    text-align: center;
+  }
+  .rapport-home .rapport-home-topics button > span { display: none; }
+  .rapport-home #rapport-home-topic {
+    margin-top: 10px;
+    padding: 0 0 8px;
+    border-block-start: 1px solid #d7e5f0;
+  }
+  .rapport-home #rapport-home-topic .rapport-home-copy { padding-inline: 0; }
+  .rapport-home #rapport-home-topic .rapport-home-details article {
+    display: grid;
+    grid-template-columns: minmax(22px, 1fr) auto minmax(22px, 1fr);
+    align-items: center;
+    gap: 6px 10px;
+    padding: 0;
+  }
+  .rapport-home #rapport-home-topic .rapport-home-details article > div { display: contents; }
+  .rapport-home #rapport-home-topic .rapport-home-details article > svg { width: 22px; height: 22px; justify-self: end; }
+  .rapport-home #rapport-home-topic .rapport-home-details h3 { margin: 0; text-align: center; }
+  .rapport-home #rapport-home-topic .rapport-home-details p { grid-column: 1 / -1; }
+  .rapport-home #rapport-home-topic .rapport-home-read-more {
+    display: flex;
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    background: #deedf9;
+    color: #124e80;
+    font-weight: 600;
+    text-align: left;
+    text-decoration: none;
+  }
+  .rapport-home #rapport-home-topic .rapport-home-read-more svg { flex-shrink: 0; }
+  .rapport-home #rapport-home-topic .rapport-home-figure {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-radius: 6px;
+  }
+  .rapport-home #rapport-home-topic .rapport-home-figure > :is(img, svg) {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .rapport-home #rapport-home-topic .rapport-home-links { padding: 12px 0 8px; }
+  .rapport-home #rapport-home-topic .rapport-home-links button {
+    width: 100%;
+    min-height: 44px;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border: 1px solid #d7e5f0;
+    border-radius: 6px;
+    background: var(--home-pale);
+    text-align: left;
+    text-decoration: none;
+  }
+  .rapport-home #rapport-home-topic .rapport-home-links svg { flex-shrink: 0; }
+  .rapport-home-shell .rapport-home-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 6px;
+  }
+  .rapport-home-shell .rapport-home-actions .intro-primary {
+    min-height: 44px;
+    padding-inline: 8px;
+    justify-content: center;
+    white-space: normal;
+  }
+  .rapport-home-shell .rapport-home-actions .intro-primary:only-child { grid-column: 1 / -1; }
+  .rapport-home-shell :is(.rapport-source-text, .rapport-home-details) p,
+  .rapport-home-shell .rapport-home-lead > p,
+  .rapport-home-shell .public-page-banner-description,
+  .rapport-home-shell .public-contact-assistance > p {
+    text-align: justify;
+  }
+  .rapport-home-shell .rapport-home-actions .rapport-home-outline {
+    min-width: 44px;
+    min-height: 44px;
+    padding-inline: 10px;
+    justify-content: center;
+  }
+  .rapport-home-shell .rapport-home-actions .rapport-home-outline > span { display: none; }
+  html:has(.public-site-shell) { scrollbar-gutter: auto; }
+  .rapport-home-shell .rapport-home-header {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(44px, auto);
+    justify-items: center;
+    gap: 8px;
+    padding-block: 14px 4px;
+  }
+  .rapport-home-shell .rapport-home-header > a,
+  .rapport-home-shell .public-site-footer-inner > a {
+    width: 100%;
+    justify-self: center;
+  }
+  .rapport-home-shell .rapport-home-header .official-logo.official-logo--wordmark {
+    width: 100%;
+  }
+  .rapport-home-shell .rapport-home-header .official-partner-marks { gap: 8px; }
+  .rapport-home-shell .rapport-home-header .official-partner-image { height: 34px; }
+  .rapport-home-shell .rapport-home-header nav,
+  .rapport-home-shell .public-site-footer nav {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    margin: 0;
+    border-top: 1px solid #d7e5f0;
+  }
+  .rapport-home-shell .rapport-home-header nav {
+    position: fixed;
+    inset: 0;
+    z-index: 22;
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    gap: 8px;
+    padding: max(64px, calc(env(safe-area-inset-top) + 52px)) 16px 16px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: #f2f8fce0;
+    backdrop-filter: blur(6px);
+    border: 0;
+    visibility: hidden;
+    transform: translateX(-100%);
+    transition: transform 180ms ease, visibility 180ms;
+  }
+  .rapport-home-shell .rapport-home-header nav[data-open="true"] {
+    visibility: visible;
+    transform: translateX(0);
+  }
+  .rapport-home-shell .rapport-home-header nav a {
+    width: min(100%, 360px);
+    justify-self: center;
+    background: #fff;
+    border: 1px solid #d7e5f0;
+    font-size: 15px;
+  }
+  .rapport-home-shell .rapport-menu-toggle[aria-expanded="true"] {
+    position: fixed;
+    top: max(12px, env(safe-area-inset-top));
+    left: var(--public-gutter);
+    z-index: 23;
+    margin: 0;
+  }
+  .rapport-home-shell .rapport-menu-backdrop[data-open="true"] {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 21;
+    background: #102b4826;
+    touch-action: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rapport-home-shell .rapport-home-header nav { transition: none; }
+  }
+  .rapport-home-shell .rapport-home-header nav a,
+  .rapport-home-shell .public-site-footer nav a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 4px;
+    text-align: center;
+    line-height: 1.25;
+    border-radius: 6px;
+  }
+  .rapport-home-shell .rapport-home-header nav a[aria-current="page"] {
+    background: #deedf9;
+    color: #124e80;
+  }
+  .rapport-home-shell .rapport-home-header nav svg { display: none; }
+  .rapport-home-shell ~ .public-corner-mascot { display: none; }
+  .public-site-shell.introduction-page>header.public-header.public-header-unified{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    height:auto;min-height:0;padding:20px;gap:16px;
+    background-image:linear-gradient(#f5faffed,#f5faffed),url('/media/rapport-hero-landscape.png');
+  }
+  .public-site-shell>.public-header .intro-brand{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;width:100%;margin:0;padding:0}
+  .public-site-shell>.public-header .intro-brand>a{order:0;margin:0;text-align:center}
+  .public-site-shell>.public-header .official-partner-marks{order:initial;justify-content:center;flex-wrap:wrap;margin:0;max-width:100%}
+  .public-site-shell.introduction-page>.public-header nav{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:12px 20px;width:100%;min-height:0;margin:0;padding:0;border:0}
+  .public-site-shell>.public-header .public-menu{order:initial;flex:0 0 auto;justify-content:center;align-self:center;margin:0;gap:22px}
+  .public-site-shell>.public-header nav>.intro-primary{order:initial;margin:0}
+
+  .public-site-shell .rapport-editorial .rapport-hero{
+    display:flex;flex-direction:column;align-items:stretch;min-height:0;height:auto;padding:0;
+  }
+  .public-site-shell .rapport-editorial .rapport-hero-content{
+    order:0;position:relative;width:100%;max-width:none;padding:30px 20px 28px;
+    text-align:center;background:#edf5fb;margin:0;
+  }
+  .public-site-shell .rapport-editorial .rapport-hero h1{max-width:none;width:auto;margin:0 auto 16px;text-align:center;font-size:32px!important;line-height:1.12!important;white-space:normal}
+  .public-site-shell .rapport-editorial .rapport-hero-content>p{max-width:360px;margin:0 auto 22px;text-align:center;line-height:1.65!important}
+  .public-site-shell .rapport-editorial .rapport-actions{justify-content:center;gap:12px}
+  .public-site-shell .rapport-editorial .rapport-hero-photo{
+    order:1;position:relative;inset:auto;width:100%;height:245px;min-height:0;
+    aspect-ratio:auto!important;background-size:cover;background-position:65% 55%;z-index:0;
+  }
+  .public-site-shell .rapport-editorial .rapport-hero-wash{display:none}
+
+  .public-site-shell .rapport-editorial .rapport-section-copy{text-align:center}
+  .public-site-shell .rapport-editorial .rapport-kicker{justify-content:center;gap:6px;text-align:center}
+  .public-site-shell .rapport-editorial .rapport-kicker:before{content:'';width:30px;height:1px;background:#80a9c7;margin-right:8px}
+  .public-site-shell .rapport-editorial .rapport-kicker:after{width:30px;margin-left:8px}
+  .public-site-shell .rapport-editorial .rapport-section h2{max-width:none;margin-inline:auto;text-align:center}
+  .public-site-shell .rapport-editorial .rapport-section-copy>.rapport-source-text p{text-align:justify;line-height:1.65!important}
+  .public-site-shell .rapport-editorial .rapport-focus-items{justify-content:center;text-align:center;gap:14px 18px}
+  .public-site-shell .rapport-editorial .rapport-focus-items li{justify-content:center}
+  .public-site-shell .rapport-editorial .rapport-vnmac-stats{gap:0;text-align:center}
+  .public-site-shell .rapport-editorial .rapport-vnmac-stats>div{padding:0 12px}
+  .public-site-shell .rapport-editorial .rapport-vnmac-stats strong,
+  .public-site-shell .rapport-editorial .rapport-vnmac-stats span{margin-inline:auto;text-align:center}
+  .public-site-shell .rapport-editorial .rapport-crs-stat{flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center}
+  .public-site-shell .rapport-editorial .rapport-crs-stat span{max-width:260px;text-align:center}
+  .public-site-shell .rapport-editorial .rapport-project-stats{text-align:center}
+  .public-site-shell .rapport-editorial .rapport-project-stats>div{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding-inline:0}
+  .public-site-shell .rapport-editorial .rapport-project-stats strong{min-width:0;margin:0;text-align:center}
+  .public-site-shell .rapport-editorial .rapport-project-stats span{max-width:none;text-align:center}
+  .public-site-shell .rapport-editorial .rapport-project-stats em{display:inline;font-size:.55em}
+  .public-site-shell .rapport-editorial .rapport-read-action{display:flex;justify-content:center}
+  .public-site-shell .rapport-editorial .rapport-section-3 .intro-primary{margin-inline:auto}
+  .public-site-shell .rapport-editorial .rapport-section-3 .rapport-source-text{margin-inline:auto}
+
+  .public-site-shell .public-page-banner-inner{text-align:center}
+  .public-site-shell .public-page-banner-description{margin-inline:auto}
+  .public-site-shell .public-interior-page .public-auth-intro{text-align:center}
+  .public-site-shell .public-interior-page .public-auth-intro>p{margin-inline:auto}
+  .public-site-shell .public-interior-page .public-auth-card .auth-card-copy{text-align:center}
+  .public-site-shell .public-interior-page .public-auth-tabs{justify-content:center}
+  .public-site-shell .public-contact-channels{text-align:center}
+  .public-site-shell .public-contact-row{flex-direction:column;align-items:center;gap:12px;text-align:center}
+  .public-site-shell .public-contact-assistance{text-align:center}
+  .public-site-shell .public-contact-assistance>svg{margin-inline:auto}
+  .public-site-shell .public-contact-assistance li{justify-content:center}
+  .public-site-shell .public-contact-assistance .intro-primary{margin-inline:auto;max-width:100%;white-space:normal}
+  .public-site-shell .public-contact-assistance .intro-primary svg{flex-shrink:0}
+
+  .rapport-home-shell .public-site-footer{width:100%;max-width:none;margin-inline:0}
+  .rapport-home-shell .public-site-footer-inner{flex-direction:column;align-items:center;gap:12px;text-align:center}
+  .rapport-home-shell .public-site-footer .official-logo.official-logo--wordmark{width:100%}
+  .public-site-shell .public-site-footer p{padding:0;border:0;text-align:center}
+}
+@media(max-width:380px){.public-site-shell .rapport-editorial .rapport-hero h1{font-size:29px!important}.public-site-shell .rapport-editorial .rapport-hero-photo{height:220px}}

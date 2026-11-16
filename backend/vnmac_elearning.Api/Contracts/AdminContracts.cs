@@ -10,7 +10,6 @@ public sealed class AnalyticsResponse
     public int CompletionRatePercent { get; init; }
     public int PassRatePercent { get; init; }
     public int AverageStudyTimeMinutes { get; init; }
-    public required IReadOnlyCollection<AnalyticsItem> TopDifficultLessons { get; init; }
     public required IReadOnlyCollection<AnalyticsItem> DropOffLessons { get; init; }
     public required IReadOnlyCollection<LearnerAdminRow> Learners { get; init; }
 }
@@ -164,6 +163,8 @@ public sealed class SystemSettingsResponse
     public string CertificateTemplateUrl { get; init; } = string.Empty;
     public string CertificateTitle { get; init; } = string.Empty;
     public string CertificateCourseTitle { get; init; } = string.Empty;
+    public string PublicContentJson { get; init; } = string.Empty;
+    public string HomeContentJson { get; init; } = string.Empty;
     public DateTimeOffset UpdatedAt { get; init; }
     public string UpdatedByUserId { get; init; } = string.Empty;
 }
@@ -185,6 +186,8 @@ public sealed class UpdateSystemSettingsRequest
     public string CertificateTemplateUrl { get; init; } = string.Empty;
     public string CertificateTitle { get; init; } = string.Empty;
     public string CertificateCourseTitle { get; init; } = string.Empty;
+    public string? PublicContentJson { get; init; }
+    public string HomeContentJson { get; init; } = string.Empty;
 }
 
 public sealed class SystemAuditLogResponse
@@ -215,6 +218,7 @@ public sealed class SystemAuditLogRow
 
 public sealed class AdminUserRow
 {
+    public LearnerType LearnerType { get; init; } = LearnerType.Citizen;
     public string UserId { get; init; } = string.Empty;
     public string Username { get; init; } = string.Empty;
     public string Email { get; init; } = string.Empty;
@@ -287,6 +291,7 @@ public sealed class LearnerEnrollmentAdminRow
 
 public sealed class CreateAdminUserRequest
 {
+    public LearnerType LearnerType { get; init; } = LearnerType.Citizen;
     public string Username { get; init; } = string.Empty;
     public string Password { get; init; } = string.Empty;
     public string Email { get; init; } = string.Empty;
@@ -302,6 +307,7 @@ public sealed class CreateAdminUserRequest
 
 public sealed class UpdateAdminUserRequest
 {
+    public LearnerType LearnerType { get; init; } = LearnerType.Citizen;
     public string Username { get; init; } = string.Empty;
     public string? Password { get; init; }
     public string Email { get; init; } = string.Empty;
@@ -331,6 +337,7 @@ public sealed class UpdateCourseRequest
 
 public sealed class CreateSectionRequest
 {
+    public bool IsHidden { get; init; }
     public string Title { get; init; } = string.Empty;
     public string Description { get; init; } = string.Empty;
     public int Order { get; init; }
@@ -338,6 +345,7 @@ public sealed class CreateSectionRequest
 
 public sealed class UpdateSectionRequest
 {
+    public bool IsHidden { get; init; }
     public string Title { get; init; } = string.Empty;
     public string Description { get; init; } = string.Empty;
     public int Order { get; init; }
@@ -353,7 +361,6 @@ public sealed class UpsertLessonRequest
     public int DurationMinutes { get; init; }
     public string StatusLabel { get; init; } = string.Empty;
     public string Topic { get; init; } = string.Empty;
-    public LessonDifficulty Difficulty { get; init; } = LessonDifficulty.Basic;
     public LessonPublicationStatus PublicationStatus { get; init; } = LessonPublicationStatus.Published;
     public string ThumbnailUrl { get; init; } = string.Empty;
     public LessonContent? Content { get; init; }
@@ -371,7 +378,6 @@ public sealed class UpdateLessonMetadataRequest
     public int DurationMinutes { get; init; }
     public string StatusLabel { get; init; } = string.Empty;
     public string Topic { get; init; } = string.Empty;
-    public LessonDifficulty Difficulty { get; init; } = LessonDifficulty.Basic;
     public LessonPublicationStatus PublicationStatus { get; init; } = LessonPublicationStatus.Published;
 }
 
@@ -402,7 +408,6 @@ public sealed class AdminLessonCatalogRow
     public int Order { get; init; }
     public string StatusLabel { get; init; } = string.Empty;
     public string Topic { get; init; } = string.Empty;
-    public LessonDifficulty Difficulty { get; init; }
     public LessonPublicationStatus PublicationStatus { get; init; }
     public int LearnerCount { get; init; }
     public int QuestionCount { get; init; }

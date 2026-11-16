@@ -8,7 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import {
   AdminCourseThumb,
-  AdminMetricCard,
   AdminModal,
   AdminPageHeader,
   AdminPagination,
@@ -30,22 +29,19 @@ import {
   Award,
   BookOpenCheck,
   CalendarDays,
-  CircleAlert,
   Clock3,
   Eye,
   Lock,
-  MailCheck,
   KeyRound,
   Pencil,
   Plus,
   Search,
-  ShieldOff,
   Unlock,
   UserCheck,
   Users,
 } from "lucide-react";
 
-type LearnerFilter = "all" | "new" | "inactive" | "locked" | "certified";
+type LearnerFilter = "all" | "new" | "inactive" | "locked" | "completed";
 
 const pageSize = 10;
 
@@ -55,6 +51,7 @@ const emptyCreateForm: CreateAdminUserRequest = {
   email: "",
   fullName: "",
   phoneNumber: "",
+  learnerType: "Citizen",
   role: "Learner",
   province: "",
   group: "",
@@ -67,7 +64,7 @@ const filterLabels: Record<LearnerFilter, string> = {
   new: "Mới đăng ký",
   inactive: "Chưa kích hoạt",
   locked: "Bị khóa",
-  certified: "Có chứng chỉ",
+  completed: "Hoàn thành phần học",
 };
 
 const enrollmentLabels: Record<CourseEnrollmentStatus, string> = {
@@ -114,6 +111,7 @@ function buildUpdatePayload(user: AdminUserRow, overrides: Partial<UpdateAdminUs
     email: user.email,
     fullName: user.fullName,
     phoneNumber: user.phoneNumber,
+    learnerType: user.learnerType ?? "Citizen",
     role: user.role,
     roleId: user.roleId,
     province: user.province,
@@ -133,7 +131,7 @@ function learnerStatus(user: AdminUserRow) {
     return "Chưa kích hoạt";
   }
 
-  return "Đang hoạt động";
+  return "Đã kích hoạt";
 }
 
 function matchesKeyword(user: AdminUserRow, keyword: string) {
@@ -158,6 +156,7 @@ export function UsersPage() {
   const [search, setSearch] = useState("");
   const [province, setProvince] = useState("all");
   const [group, setGroup] = useState("all");
+  const [learnerType, setLearnerType] = useState("all");
   const provinceCatalogQuery = useQuery({
     queryKey: ["public", "provinces"],
     queryFn: getProvinceOptions,
@@ -271,13 +270,14 @@ export function UsersPage() {
       newInactive: newInactive.length,
       inactive: inactive.length,
       locked: learners.filter((item) => item.isLocked).length,
-      certified: learners.filter((item) => item.certificateCount > 0).length,
+      completed: learners.filter((item) => item.completionPercent >= 100).length,
     };
   }, [learners]);
 
   const filteredLearners = useMemo(() => {
     const keyword = search.trim();
     return learners.filter((item) => {
+      if (learnerType !== "all" && (item.role !== "Learner" || (item.learnerType ?? "Citizen") !== learnerType)) return false;
       if (selectedRoleId !== "all" && item.roleId !== selectedRoleId) {
         return false;
       }
@@ -298,20 +298,20 @@ export function UsersPage() {
         return item.isLocked;
       }
 
-      if (filter === "certified") {
-        return item.certificateCount > 0;
+      if (filter === "completed") {
+        return item.completionPercent >= 100;
       }
 
       return true;
     });
-  }, [filter, learners, search, selectedRoleId]);
+  }, [filter, learners, search, selectedRoleId, learnerType]);
 
   const totalPages = Math.max(1, Math.ceil(filteredLearners.length / pageSize));
   const pagedLearners = filteredLearners.slice((page - 1) * pageSize, page * pageSize);
 
   useEffect(() => {
     setPage(1);
-  }, [filter, group, province, search, selectedRoleId]);
+  }, [filter, group, province, search, selectedRoleId, learnerType]);
 
   useEffect(() => {
     if (page > totalPages) {
@@ -330,9 +330,9 @@ export function UsersPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="admin-users-compact space-y-2">
       <AdminPageHeader
-        breadcrumbs={["Quản trị", "Người dùng"]}
+        breadcrumbs={[]}
         title="Quản lý người dùng"
         actions={
           <Button onClick={() => setIsCreateOpen(true)}>
@@ -341,44 +341,18 @@ export function UsersPage() {
           </Button>
         }
       />
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-        <AdminMetricCard icon={<Users className="size-5" />} label="Tổng người dùng" value={stats.total.toString()} />
-        <AdminMetricCard
-          accent="amber"
-          icon={<CircleAlert className="size-5" />}
-          label="Mới chưa kích hoạt"
-          value={stats.newInactive.toString()}
-        />
-        <AdminMetricCard
-          accent="violet"
-          icon={<MailCheck className="size-5" />}
-          label="Chưa kích hoạt"
-          value={stats.inactive.toString()}
-        />
-        <AdminMetricCard
-          accent="amber"
-          icon={<ShieldOff className="size-5" />}
-          label="Bị khóa"
-          value={stats.locked.toString()}
-        />
-        <AdminMetricCard
-          accent="green"
-          icon={<Award className="size-5" />}
-          label="Có chứng chỉ"
-          value={stats.certified.toString()}
-        />
-      </div>
+      <div className="users-summary"><span>Tổng người dùng <strong>{stats.total}</strong></span><span>Mới chưa kích hoạt <strong>{stats.newInactive}</strong></span><span>Chưa kích hoạt <strong>{stats.inactive}</strong></span><span>Bị khóa <strong>{stats.locked}</strong></span><span>Hoàn thành <strong>{stats.completed}</strong></span></div>
 
       <AdminSection
-        title="Danh sách người dùng"
+        title=""
         action={
           <Badge variant="outline" className="rounded-full px-3 py-1">
             {filteredLearners.length} người dùng
           </Badge>
         }
-        contentClassName="space-y-4"
+        contentClassName="space-y-2"
       >
-        <div className="flex flex-wrap gap-2 border-b border-slate-100 pb-4">
+        <div className="flex flex-wrap gap-2">
           <Button
             size="sm"
             type="button"
@@ -400,7 +374,7 @@ export function UsersPage() {
           ))}
         </div>
 
-        <div className="grid gap-3 xl:grid-cols-[minmax(280px,1fr)_220px_220px_220px]">
+        <div className="grid gap-3 xl:grid-cols-[minmax(240px,1fr)_repeat(4,minmax(140px,180px))]">
           <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
             <Input
@@ -410,6 +384,11 @@ export function UsersPage() {
               onChange={(event) => setSearch(event.target.value)}
             />
           </div>
+
+          <Select value={learnerType} onValueChange={setLearnerType}>
+            <SelectTrigger aria-label="Lọc loại học viên" className="h-9"><SelectValue /></SelectTrigger>
+            <SelectContent><SelectItem value="all">Tất cả loại học viên</SelectItem><SelectItem value="Citizen">Người dân</SelectItem><SelectItem value="Collaborator">Cộng tác viên</SelectItem></SelectContent>
+          </Select>
 
           <Select value={filter} onValueChange={(value) => setFilter(value as LearnerFilter)}>
             <SelectTrigger className="h-11 rounded-2xl">
@@ -469,10 +448,11 @@ export function UsersPage() {
                   <TableHead>Người dùng</TableHead>
                   <TableHead>Liên hệ</TableHead>
                   <TableHead>Địa bàn</TableHead>
-                  <TableHead>Trạng thái</TableHead>
+                  <TableHead>Trạng thái tài khoản</TableHead>
+                  <TableHead>Loại học viên</TableHead>
                   <TableHead>Vai trò</TableHead>
                   <TableHead>Tiến độ</TableHead>
-                  <TableHead>Chứng chỉ</TableHead>
+                  <TableHead>Kết quả</TableHead>
                   <TableHead>Lần đăng nhập gần nhất</TableHead>
                   <TableHead className="text-right">Thao tác</TableHead>
                 </TableRow>
@@ -505,16 +485,15 @@ export function UsersPage() {
                     </TableCell>
                     <TableCell>
                       <div className="space-y-1 text-sm">
-                        <p className="font-medium text-slate-900">{learner.province || "Chưa có"}</p>
-                        <p className="text-xs text-slate-500">{learner.group || "Chưa phân nhóm"}</p>
+                        <p className="font-medium text-slate-900">{learner.province || "Chưa cập nhật"}</p>
                       </div>
                     </TableCell>
                     <TableCell>
                       <div className="flex flex-col items-start gap-2">
                         <AdminStatusBadge status={learnerStatus(learner)} />
-                        {isNewLearner(learner) ? <Badge variant="outline">Mới đăng ký</Badge> : null}
                       </div>
                     </TableCell>
+                    <TableCell className="whitespace-nowrap">{learner.role === "Learner" ? (learner.learnerType === "Collaborator" ? "Cộng tác viên" : "Người dân") : "Không áp dụng"}</TableCell>
                     <TableCell className="min-w-52">
                       <Select
                         value={learner.roleId}
@@ -548,32 +527,34 @@ export function UsersPage() {
                     <TableCell>
                       {learner.role === "Learner" ? <div className="flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <Award className="size-4 text-emerald-600" />
-                        {learner.certificateCount}
+                        {learner.completionPercent >= 100 ? "Hoàn thành" : "Chưa hoàn thành"}
                       </div> : <span className="text-sm text-slate-400">Không áp dụng</span>}
                     </TableCell>
                     <TableCell>{formatDateTime(learner.lastLogin)}</TableCell>
                     <TableCell>
                       <div className="flex justify-end gap-2">
                         <Button
-                          className="h-9 rounded-2xl"
-                          size="sm"
+                          className="h-8 w-8 p-0"
+                          title="Xem chi tiết"
+                          aria-label={`Xem chi tiết ${learner.fullName}`}
+                          size="icon"
                           type="button"
                           variant="outline"
                           onClick={() => setSelectedLearner(learner)}
                         >
-                          <Eye className="mr-2 size-4" />
-                          Chi tiết
+                          <Eye className="size-4" />
                         </Button>
                         <Button
-                          className="h-9 rounded-2xl"
+                          className="h-8 w-8 p-0"
+                          title={learner.isLocked ? "Mở khóa tài khoản" : "Khóa tài khoản"}
+                          aria-label={`${learner.isLocked ? "Mở khóa" : "Khóa"} tài khoản ${learner.fullName}`}
                           disabled={lockMutation.isPending}
-                          size="sm"
+                          size="icon"
                           type="button"
                           variant={learner.isLocked ? "outline" : "destructive"}
                           onClick={() => toggleLock(learner)}
                         >
-                          {learner.isLocked ? <Unlock className="mr-2 size-4" /> : <Lock className="mr-2 size-4" />}
-                          {learner.isLocked ? "Mở khóa" : "Khóa"}
+                          {learner.isLocked ? <Unlock className="size-4" /> : <Lock className="size-4" />}
                         </Button>
                       </div>
                     </TableCell>
@@ -582,7 +563,7 @@ export function UsersPage() {
 
                 {pagedLearners.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={9}>
+                    <TableCell colSpan={10}>
                       <div className="py-10 text-center text-sm text-slate-500">
                         Không có người dùng phù hợp với bộ lọc hiện tại.
                       </div>
@@ -639,7 +620,7 @@ export function UsersPage() {
       >
         <div className="space-y-4">
           {createError ? <MessageBanner tone="error">{createError}</MessageBanner> : null}
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-3 md:grid-cols-2">
             <CreateField label="Họ và tên" value={createForm.fullName} onChange={(value) => setCreateForm((current) => ({ ...current, fullName: value }))} />
             <CreateField label="Email" type="email" value={createForm.email} onChange={(value) => setCreateForm((current) => ({ ...current, email: value }))} />
             <CreateField label="Số điện thoại" value={createForm.phoneNumber} onChange={(value) => setCreateForm((current) => ({ ...current, phoneNumber: value }))} />
@@ -651,6 +632,7 @@ export function UsersPage() {
               value={createForm.province}
               onChange={(value) => setCreateForm((current) => ({ ...current, province: value }))}
             />
+            <CreateSelectField label="Loại học viên" options={["Citizen", "Collaborator"]} optionLabels={{ Citizen: "Người dân", Collaborator: "Cộng tác viên" }} value={createForm.learnerType ?? "Citizen"} onChange={(value) => setCreateForm((current) => current ? ({ ...current, learnerType: value as "Citizen" | "Collaborator" }) : current)} />
             <CreateField label="Đối tượng" value={createForm.group} onChange={(value) => setCreateForm((current) => ({ ...current, group: value }))} />
           </div>
           <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-200 p-4">
@@ -676,7 +658,7 @@ export function UsersPage() {
         className="max-w-6xl"
         open={Boolean(selectedLearner)}
         title={selectedLearner ? `Chi tiết học viên: ${selectedLearner.fullName}` : "Chi tiết học viên"}
-        description="Thông tin tài khoản, chủ đề đã đăng ký, tiến độ học tập và chứng chỉ đã cấp."
+        description="Thông tin tài khoản, khóa học đã đăng ký, tiến độ và kết quả Phần học 1."
         actions={
           selectedLearner ? (
             <>
@@ -746,13 +728,14 @@ export function UsersPage() {
         {editForm ? (
           <div className="space-y-4">
             {updateError ? <MessageBanner tone="error">{updateError}</MessageBanner> : null}
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-3 md:grid-cols-2">
               <CreateField label="Họ và tên" value={editForm.fullName} onChange={(value) => setEditForm((current) => current ? ({ ...current, fullName: value }) : current)} />
               <CreateField label="Tên đăng nhập" value={editForm.username} onChange={(value) => setEditForm((current) => current ? ({ ...current, username: value }) : current)} />
               <CreateField label="Email" type="email" value={editForm.email} onChange={(value) => setEditForm((current) => current ? ({ ...current, email: value }) : current)} />
               <CreateField label="Số điện thoại" value={editForm.phoneNumber} onChange={(value) => setEditForm((current) => current ? ({ ...current, phoneNumber: value }) : current)} />
               <CreateSelectField label="Tỉnh/Thành phố" options={provinceCatalogQuery.data ?? []} value={editForm.province} onChange={(value) => setEditForm((current) => current ? ({ ...current, province: value }) : current)} />
-              <CreateField label="Đối tượng" value={editForm.group} onChange={(value) => setEditForm((current) => current ? ({ ...current, group: value }) : current)} />
+              <CreateSelectField label="Loại học viên" options={["Citizen", "Collaborator"]} optionLabels={{ Citizen: "Người dân", Collaborator: "Cộng tác viên" }} value={editForm.learnerType ?? "Citizen"} onChange={(value) => setEditForm((current) => current ? ({ ...current, learnerType: value as "Citizen" | "Collaborator" }) : current)} />
+            <CreateField label="Đối tượng" value={editForm.group} onChange={(value) => setEditForm((current) => current ? ({ ...current, group: value }) : current)} />
               <CreateSelectField
                 label="Vai trò"
                 options={roles.map((role) => role.id)}
@@ -865,13 +848,12 @@ function CreateSelectField({
 }
 
 function LearnerDetail({ learner }: { learner: AdminUserRow }) {
-  const issuedCertificates = learner.enrollments.filter((item) => item.certificateIssued);
 
   return (
-    <div className="space-y-6">
-      <div className="grid gap-4 lg:grid-cols-[1fr_1.3fr]">
-        <div className="rounded-3xl border border-slate-200 bg-slate-50/70 p-5">
-          <div className="flex items-start gap-4">
+    <div className="space-y-4">
+      <div className="grid gap-3 lg:grid-cols-[1fr_1.3fr]">
+        <div className="rounded-3xl border border-slate-200 bg-slate-50/70 p-4">
+          <div className="flex items-start gap-3">
             <div className="grid size-16 place-items-center rounded-3xl bg-blue-600 text-xl font-semibold text-white">
               {learner.fullName
                 .split(" ")
@@ -886,15 +868,15 @@ function LearnerDetail({ learner }: { learner: AdminUserRow }) {
               <p className="text-sm text-slate-500">@{learner.username}</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 <AdminStatusBadge status={learnerStatus(learner)} />
-                {isNewLearner(learner) ? <Badge variant="outline">Mới đăng ký</Badge> : null}
               </div>
             </div>
           </div>
 
           <div className="mt-6 grid gap-3 text-sm">
+            <DetailLine label="Loại học viên" value={learner.learnerType === "Collaborator" ? "Cộng tác viên" : "Người dân"} />
             <DetailLine label="Email" value={learner.email} />
             <DetailLine label="Số điện thoại" value={learner.phoneNumber} />
-            <DetailLine label="Tỉnh/Thành phố" value={learner.province || "Chưa có"} />
+            <DetailLine label="Tỉnh/Thành phố" value={learner.province || "Chưa cập nhật"} />
             <DetailLine label="Nhóm học viên" value={learner.group || "Chưa phân nhóm"} />
             <DetailLine label="Ngày đăng ký" value={formatDateTime(learner.createdAt)} />
             <DetailLine label="Lần đăng nhập gần nhất" value={formatDateTime(learner.lastLogin)} />
@@ -905,19 +887,19 @@ function LearnerDetail({ learner }: { learner: AdminUserRow }) {
         <div className="grid gap-3 sm:grid-cols-2">
           <SummaryTile icon={<BookOpenCheck className="size-5" />} label="Chủ đề đã đăng ký" value={learner.enrollments.length} />
           <SummaryTile icon={<UserCheck className="size-5" />} label="Tiến độ trung bình" value={`${learner.completionPercent}%`} />
-          <SummaryTile icon={<Award className="size-5" />} label="Chứng chỉ đã có" value={learner.certificateCount} />
+          <SummaryTile icon={<Award className="size-5" />} label="Kết quả phần học" value={learner.completionPercent >= 100 ? "Hoàn thành" : "Chưa hoàn thành"} />
           <SummaryTile icon={<Clock3 className="size-5" />} label="Thời gian học" value={formatMinutes(learner.studyTimeMinutes)} />
         </div>
       </div>
 
       <div className="rounded-3xl border border-slate-200">
-        <div className="border-b border-slate-100 px-5 py-4">
+        <div className="border-b border-slate-100 px-4 py-4">
           <h3 className="font-semibold text-slate-950">Chủ đề đã đăng ký</h3>
         </div>
         <div className="divide-y divide-slate-100">
           {learner.enrollments.map((enrollment, index) => (
-            <div className="grid gap-4 p-5 lg:grid-cols-[minmax(260px,1fr)_360px]" key={enrollment.courseId}>
-              <div className="flex gap-4">
+            <div className="grid gap-3 p-4 lg:grid-cols-[minmax(260px,1fr)_360px]" key={enrollment.courseId}>
+              <div className="flex gap-3">
                 <AdminCourseThumb title={enrollment.courseTitle} index={index} className="h-16 w-16 rounded-3xl" />
                 <div className="min-w-0 space-y-2">
                   <div className="flex flex-wrap items-center gap-2">
@@ -927,7 +909,6 @@ function LearnerDetail({ learner }: { learner: AdminUserRow }) {
                   <div className="flex flex-wrap gap-2 text-xs text-slate-500">
                     {enrollment.nextLessonId ? <span>Bài tiếp theo: {enrollment.nextLessonId}</span> : null}
                     {enrollment.nextQuizId ? <span>Bài kiểm tra: {enrollment.nextQuizId}</span> : null}
-                    {enrollment.certificateIssued ? <span>Chứng chỉ: {enrollment.certificateId}</span> : null}
                   </div>
                 </div>
               </div>
@@ -946,39 +927,14 @@ function LearnerDetail({ learner }: { learner: AdminUserRow }) {
         </div>
       </div>
 
-      <div className="rounded-3xl border border-slate-200">
-        <div className="border-b border-slate-100 px-5 py-4">
-          <h3 className="font-semibold text-slate-950">Chứng chỉ đã cấp</h3>
-        </div>
-        <div className="grid gap-3 p-5 md:grid-cols-2">
-          {issuedCertificates.map((certificate) => (
-            <div className="rounded-2xl border border-emerald-100 bg-emerald-50/60 p-4" key={certificate.certificateId}>
-              <div className="flex items-start gap-3">
-                <div className="grid size-10 place-items-center rounded-full bg-emerald-100 text-emerald-700">
-                  <Award className="size-5" />
-                </div>
-                <div>
-                  <p className="font-semibold text-slate-950">{certificate.courseTitle}</p>
-                  <p className="mt-1 text-sm text-slate-600">Mã chứng chỉ: {certificate.certificateId}</p>
-                </div>
-              </div>
-            </div>
-          ))}
 
-          {issuedCertificates.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-slate-200 p-5 text-sm text-slate-500">
-              Học viên chưa có chứng chỉ nào.
-            </div>
-          ) : null}
-        </div>
-      </div>
     </div>
   );
 }
 
 function DetailLine({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-start justify-between gap-4 rounded-2xl bg-white px-4 py-3">
+    <div className="flex items-start justify-between gap-3 rounded-2xl bg-white px-4 py-3">
       <span className="text-slate-500">{label}</span>
       <span className="text-right font-medium text-slate-950">{value}</span>
     </div>
@@ -987,7 +943,7 @@ function DetailLine({ label, value }: { label: string; value: string }) {
 
 function SummaryTile({ icon, label, value }: { icon: ReactNode; label: string; value: string | number }) {
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
       <div className="mb-4 grid size-11 place-items-center rounded-full bg-blue-50 text-blue-700">{icon}</div>
       <p className="text-sm text-slate-500">{label}</p>
       <p className="mt-1 text-2xl font-semibold text-slate-950">{value}</p>

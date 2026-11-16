@@ -16,6 +16,7 @@ public sealed class User
     public DateTimeOffset? EmailVerifiedAt { get; set; }
     public bool CreatedByAdmin { get; set; }
     public bool IsLocked { get; set; }
+    public LearnerType LearnerType { get; set; } = LearnerType.Citizen;
     public UserRole Role { get; set; }
     public string? RoleId { get; set; }
     [NotMapped]
@@ -25,6 +26,7 @@ public sealed class User
     [NotMapped]
     public IReadOnlyCollection<string> Permissions { get; set; } = [];
     public string Province { get; set; } = string.Empty;
+    public string Address { get; set; } = string.Empty;
     public string Group { get; set; } = string.Empty;
     public string AvatarUrl { get; set; } = string.Empty;
 

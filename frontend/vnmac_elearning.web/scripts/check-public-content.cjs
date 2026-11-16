@@ -1,0 +1,17 @@
+const fs = require('node:fs');
+const ts = require('typescript');
+const vm = require('node:vm');
+const assert = require('node:assert/strict');
+const path = require('node:path');
+const source = fs.readFileSync(path.join(__dirname, '../src/shared/lib/publicContent.ts'), 'utf8').replace(/^import .*;$/mg, '');
+const context = { exports: {} };
+vm.runInNewContext(ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText, context);
+const { parsePublicContent: parse, defaultPublicContent: defaults } = context.exports;
+for (const value of ['', 'bad', 'null', '[]']) assert.equal(parse(value).sections.length, 4);
+assert.equal(parse('').heroTitle, defaults.heroTitle);
+assert.equal(parse(JSON.stringify({ email: {}, sections: [{ body: 42 }] })).email, null);
+assert.equal(parse(JSON.stringify({ sections: [{ heading: 'Updated' }] })).sections[0].heading, 'Updated');
+assert.equal(parse(JSON.stringify({ sections: [{ body: 42 }] })).sections[0].body, defaults.sections[0].body);
+assert.equal(parse(JSON.stringify({ email: '' })).email, '');
+assert.equal(parse(JSON.stringify({ videoEnabled: false })).videoEnabled, false);
+console.log('Public content fallback and editing checks passed');

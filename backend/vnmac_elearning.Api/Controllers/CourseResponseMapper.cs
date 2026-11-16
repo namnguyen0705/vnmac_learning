@@ -1,4 +1,5 @@
 using vnmac_elearning.Api.Domain;
+using vnmac_elearning.Api.Services;
 
 namespace vnmac_elearning.Api.Controllers;
 
@@ -9,11 +10,17 @@ internal static class CourseResponseMapper
         return courses.Select(Map).ToArray();
     }
 
-    public static object Map(Course course)
+    public static object Map(Course course) => MapCore(course, false);
+
+    // Authoring endpoints need the flow tree; public/learner endpoints never expose it.
+    public static object MapForAdmin(Course course) => MapCore(course, true);
+
+    private static object MapCore(Course course, bool includeFlow)
     {
         var lessonById = course.Sections
+            .Where(section => includeFlow || !section.IsHidden)
             .SelectMany(section => section.Lessons)
-            .Where(lesson => lesson.PublicationStatus != LessonPublicationStatus.Archived)
+            .Where(lesson => includeFlow || LearningFlowPublication.IsVisibleLesson(lesson))
             .ToDictionary(lesson => lesson.Id, StringComparer.Ordinal);
 
         return new
@@ -23,6 +30,7 @@ internal static class CourseResponseMapper
             course.Description,
             course.Status,
             Sections = course.Sections
+                .Where(section => includeFlow || !section.IsHidden)
                 .OrderBy(section => section.Order)
                 .Select(section => new
                 {
@@ -31,10 +39,11 @@ internal static class CourseResponseMapper
                     section.Title,
                     section.Description,
                     section.Order,
+                    section.IsHidden,
                     Lessons = section.Lessons
-                        .Where(lesson => lesson.PublicationStatus != LessonPublicationStatus.Archived)
+                        .Where(lesson => includeFlow || LearningFlowPublication.IsVisibleLesson(lesson))
                         .OrderBy(lesson => lesson.Order)
-                        .Select(MapLesson)
+                        .Select(lesson => MapLesson(lesson, includeFlow))
                         .ToArray(),
                     Quizzes = course.Quizzes
                         .Where(quiz =>
@@ -55,7 +64,7 @@ internal static class CourseResponseMapper
         };
     }
 
-    private static object MapLesson(Lesson lesson)
+    private static object MapLesson(Lesson lesson, bool includeFlow)
     {
         return new
         {
@@ -65,15 +74,17 @@ internal static class CourseResponseMapper
             lesson.Title,
             lesson.Type,
             lesson.Order,
+            Outline = (lesson.Content?.Flow ?? []).Where(step => !step.IsHidden && step.Items.Any(item => !item.IsHidden))
+                .Select((step, index) => new { step.Id, step.Title, Order = index + 1, ItemCount = step.Items.Count(item => !item.IsHidden) })
+                .ToArray(),
             lesson.DurationMinutes,
             lesson.StatusLabel,
             lesson.Topic,
-            lesson.Difficulty,
             lesson.PublicationStatus,
             lesson.ThumbnailUrl,
             lesson.CreatedAt,
             lesson.UpdatedAt,
-            lesson.Content,
+            Content = includeFlow ? lesson.Content : PublicContent(lesson.Content),
             lesson.VideoContent,
             ScormPackage = lesson.ScormPackage is null
                 ? null
@@ -158,6 +169,13 @@ internal static class CourseResponseMapper
         return assessment.QuestionLimit is > 0
             ? Math.Min(assessment.QuestionLimit.Value, assessment.Questions.Count)
             : assessment.Questions.Count;
+    }
+
+    private static LessonContent? PublicContent(LessonContent? content)
+    {
+        var safe = Infrastructure.JsonStorage.Clone(content);
+        if (safe is not null) safe.Flow = [];
+        return safe;
     }
 
     private static object MapQuestion(LessonQuestion question)

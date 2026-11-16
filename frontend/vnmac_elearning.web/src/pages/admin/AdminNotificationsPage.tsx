@@ -131,7 +131,7 @@ export function AdminNotificationsPage() {
   const data = notificationsQuery.data;
 
   return (
-    <div className="grid gap-5">
+    <div className="grid gap-3">
       <AdminPageHeader
         actions={
           <>
@@ -149,7 +149,7 @@ export function AdminNotificationsPage() {
         title="Quản lý thông báo"
       />
 
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <section className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         <AdminMetricCard icon={<Bell className="size-5" />} label="Tổng thông báo" value={(data?.totalItems ?? 0).toString()} />
         <AdminMetricCard accent="amber" icon={<CheckCheck className="size-5" />} label="Chưa đọc" value={(data?.unreadCount ?? 0).toString()} />
         <AdminMetricCard accent="green" icon={<Users className="size-5" />} label="Gửi học viên" value={(data?.learnerAudienceCount ?? 0).toString()} />
@@ -308,9 +308,9 @@ export function AdminNotificationsPage() {
           </>
         }
       >
-        <div className="grid gap-5">
+        <div className="grid gap-3">
           {createMutation.isError ? <MessageBanner tone="error">Không gửi được thông báo. Vui lòng kiểm tra lại nội dung.</MessageBanner> : null}
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-3 md:grid-cols-2">
             <label className="grid gap-2 text-sm font-medium text-slate-700">
               Đối tượng
               <Select

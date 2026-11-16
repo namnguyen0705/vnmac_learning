@@ -1,0 +1,136 @@
+@font-face{font-family:RapportDisplay;src:url('/fonts/playfair-display-600.ttf') format('truetype');font-style:normal;font-weight:600;font-display:swap}
+@font-face{font-family:RapportDisplay;src:url('/fonts/playfair-display-500.ttf') format('truetype');font-style:normal;font-weight:500;font-display:swap}
+.introduction-page>header.public-header{width:100%;height:78px;min-height:78px;padding:0 10%;gap:28px;flex-wrap:nowrap}
+.introduction-page .public-header .public-wordmark{font-size:31px;letter-spacing:.025em}
+.introduction-page .public-header .public-wordmark small{font-size:9px!important;margin-top:6px;letter-spacing:.4em}
+.introduction-page .public-header .public-menu{margin-left:22px;gap:26px;flex-shrink:0}
+.introduction-page .public-header .public-menu a{position:relative;font-size:16px!important;font-weight:500;line-height:1.5;padding:13px 0;border:0;color:#36546e}
+.introduction-page .public-header .public-menu a[aria-current=page]{color:#12569b;font-weight:600}
+.introduction-page .public-header .public-menu a[aria-current=page]:after{content:'';position:absolute;inset:auto 0 5px;height:2px;border-radius:2px;background:#12569b}
+.introduction-page .public-header nav>.intro-primary{font-size:15px!important;font-weight:600;min-height:43px;padding:11px 18px!important;border-radius:14px;gap:10px}
+.introduction-page .public-header .official-partner-marks{gap:22px;margin-left:auto}
+.introduction-page .public-header .partner-vnmac,.introduction-page .public-header .partner-crs{font-size:25px}
+.introduction-page .public-header .partner-vnmac small{font-size:5.5px}
+.introduction-page .public-header .partner-crs small{font-size:6.5px}
+.introduction-page .public-header .official-partner-image{max-width:100px;max-height:45px}
+.public-site-footer{width:100%;border-top:1px solid #dae6ef;background:#fff;padding:25px 0;color:#5b758b}
+.public-site-footer-inner{width:80%;margin:auto;display:flex;align-items:center;gap:28px}
+.public-site-footer .public-wordmark{font-size:25px}
+.public-site-footer .public-wordmark small{font-size:8px;margin-top:6px}
+.public-site-footer p{font-size:12px;line-height:1.7;border-left:1px solid #d4e1ec;padding-left:26px}
+.public-site-footer nav{margin-left:auto;display:flex;gap:25px;font-size:14px;color:#325674}
+.public-site-footer a:hover{color:#12569b}
+.public-interior-page{background:#fff}
+.public-interior-page .public-header{position:relative;background:#fff;border-bottom:1px solid #dae6ef;flex-shrink:0}
+.public-interior-page h1,.public-interior-page .public-auth-title{font-family:RapportDisplay,Georgia,serif!important;font-weight:600!important;letter-spacing:-.04em}
+.public-interior-page .intro-eyebrow{font-size:11px;font-weight:600;letter-spacing:.13em}
+.public-interior-page .intro-primary{border-radius:12px;font-size:14px;min-height:44px;gap:10px}
+.public-interior-page .public-auth-layout{width:80%;max-width:none;grid-template-columns:minmax(0,1fr) minmax(0,560px);gap:6%;padding:48px 0;align-items:center}
+.public-interior-page .public-auth-intro{position:static;top:auto;padding:20px 0 30px}
+.public-interior-page .public-auth-intro h1{font-size:clamp(32px,2.8vw,44px)!important;line-height:1.12!important;color:#102f50;margin-bottom:24px}
+.public-interior-page .public-auth-intro>p:not(.intro-eyebrow){font-size:15px;line-height:1.8;max-width:480px}
+.public-interior-page .public-auth-intro ul{margin:27px 0;gap:17px;font-size:14px}
+.public-interior-page .public-auth-word{font-family:RapportDisplay,Georgia,serif;font-size:52px;margin-top:32px;color:#dce9f4}
+.public-interior-page .public-auth-card{padding:30px 34px;border:1px solid #d9e5f0;border-radius:14px;box-shadow:0 12px 40px #123e6808;background:#fff}
+.public-interior-page .public-auth-title{font-size:27px!important;line-height:1.35!important}
+.public-interior-page .public-auth-card .auth-card-copy{text-align:left}
+.public-interior-page .public-auth-card .auth-submit-button{border-radius:10px}
+.public-interior-page .public-auth-card .auth-input-shell{border-radius:7px}
+.public-interior-page .public-auth-card .auth-card-subtitle{font-size:14px!important}
+.public-interior-page .public-auth-tabs button{font-size:16px}
+.public-interior-page .public-contact-main{width:100%;max-width:none;flex:1;margin:0;padding:0}
+.public-contact-hero{width:100%;background:#edf5fb;border-bottom:1px solid #e1ebf3;padding:40px 0 36px}
+.public-contact-hero-inner{width:80%;margin:auto}
+.public-interior-page .public-contact-hero h1{font-size:44px!important;line-height:1.15!important;color:#102f50;margin-bottom:16px}
+.public-interior-page .public-contact-lead{max-width:700px;font-size:15px;line-height:1.8;margin:0;color:#5c768c}
+.public-contact-grid{width:80%;margin:40px auto 50px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:7%;align-items:start}
+.public-contact-channels>h2,.public-contact-assistance h2{font-family:RapportDisplay,Georgia,serif!important;font-size:27px!important;font-weight:600;line-height:1.4;color:#123e68;margin:0 0 22px;letter-spacing:-.035em}
+.public-interior-page .public-contact-details{max-width:none;border-top:1px solid #d3e0ec}
+.public-interior-page .public-contact-row{padding:22px 0;gap:18px}
+.public-interior-page .public-contact-row h3{font-size:13px!important;line-height:1.5;font-weight:400;color:#6e8598;margin-bottom:7px}
+.public-interior-page .public-contact-row a,.public-interior-page .public-contact-row p{font-size:18px;line-height:1.6;font-weight:500}
+.public-contact-assistance{background:#edf5fb;border:1px solid #dce8f2;border-radius:12px;padding:30px}
+.public-contact-assistance>svg{color:#12569b;margin-bottom:18px}
+.public-contact-assistance>p{font-size:14px;line-height:1.85;color:#5b758b;margin-bottom:22px}
+.public-contact-assistance ul{list-style:none;padding:0;margin:0 0 26px;display:grid;gap:14px;font-size:13px;color:#315976}
+.public-contact-assistance li{display:flex;align-items:center;gap:10px}
+.public-contact-assistance li svg{color:#3977a7;flex-shrink:0}
+.public-interior-page .public-contact-hours{font-size:13px;line-height:1.7;color:#698196;margin-top:20px}
+.public-contact-status{padding:20px 0;color:#698196;font-size:14px;line-height:1.8}
+@media(max-width:1100px) and (min-width:701px){
+.introduction-page>header.public-header{height:auto;min-height:78px;padding:16px 10%;gap:14px 24px;flex-wrap:wrap}
+.introduction-page .public-header .intro-brand>a{order:1}
+.introduction-page .public-header .official-partner-marks{order:2;margin-left:auto}
+.introduction-page .public-header .public-menu{order:3;flex:1;margin-left:0;gap:26px}
+.introduction-page .public-header nav>.intro-primary{order:4}
+.rapport-editorial>header.public-header{position:relative;background:#f7fbfe}
+.rapport-editorial .rapport-hero{padding-top:0}
+.public-interior-page .public-auth-layout{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:5%}
+.public-interior-page .public-auth-card{padding:25px}
+.public-interior-page .public-auth-title{font-size:23px!important}
+.public-interior-page .public-auth-intro h1{font-size:32px!important}
+.public-contact-grid{gap:5%}
+.public-contact-assistance{padding:24px}
+.public-site-footer-inner{flex-wrap:wrap;gap:20px}.public-site-footer nav{margin-left:0}
+}
+@media(max-width:800px){.public-interior-page .public-auth-layout{width:calc(100% - 40px);max-width:560px;grid-template-columns:minmax(0,1fr);gap:26px;padding:28px 0 40px}.public-interior-page .public-auth-intro{padding:0}.public-interior-page .public-auth-intro h1{font-size:31px!important;margin-bottom:16px}.public-interior-page .public-auth-intro>p:not(.intro-eyebrow){font-size:14px}.public-contact-grid{grid-template-columns:minmax(0,1fr);gap:30px}}
+@media(max-width:700px){
+.introduction-page>header.public-header{height:auto;min-height:0;flex-wrap:wrap;padding:18px 20px;gap:16px 20px}
+.introduction-page .public-header .public-wordmark{font-size:24px}
+.introduction-page .public-header .public-wordmark small{font-size:8px!important}
+.introduction-page .public-header .official-partner-marks{gap:14px}
+.introduction-page .public-header .partner-vnmac,.introduction-page .public-header .partner-crs{font-size:20px}
+.introduction-page .public-header .official-partner-image{max-width:65px;max-height:32px}
+.introduction-page .public-header .public-menu{margin-left:0;gap:22px}
+.introduction-page .public-header .public-menu a{font-size:15px!important;padding-block:9px}
+.introduction-page .public-header nav>.intro-primary{font-size:13px!important;padding:10px 12px!important;min-height:40px;border-radius:11px}
+.public-site-footer-inner,.public-contact-hero-inner,.public-contact-grid{width:calc(100% - 40px)}
+.public-site-footer-inner{flex-wrap:wrap;gap:18px}.public-site-footer p{padding-left:18px;font-size:11px}.public-site-footer nav{width:100%;margin-left:0;font-size:13px;gap:20px;flex-wrap:wrap}
+.public-contact-hero{padding:30px 0}.public-interior-page .public-contact-hero h1{font-size:34px!important}.public-interior-page .public-contact-lead{font-size:14px}.public-contact-grid{margin-block:30px 40px}.public-contact-assistance{padding:24px}.public-contact-channels>h2,.public-contact-assistance h2{font-size:25px!important}
+.public-interior-page .public-auth-card{padding:24px}.public-interior-page .public-auth-title{font-size:25px!important}.public-interior-page .public-auth-tabs button{font-size:16px}
+}
+
+/* One shared sky-blue masthead surface across every public page. */
+.introduction-page>header.public-header.public-header-unified{
+  position:relative;
+  background-color:#edf5fb;
+  background-image:linear-gradient(#ffffffb8,#ffffffb8),url('/media/rapport-hero-landscape.png');
+  background-size:cover;
+  background-position:center 8%;
+  border-bottom:1px solid #d7e5f0;
+}
+.introduction-page.rapport-editorial .rapport-hero{padding-top:0;height:calc(min(38.6cqw,432.32px) - 78px)}
+.public-page-banner{
+  width:100%;padding:42px 0 40px;border-bottom:1px solid #d7e5f0;
+  background-color:#edf5fb;
+  background-image:linear-gradient(90deg,#edf5fbfa 0%,#edf5fbef 38%,#edf5fbc9 68%,#edf5fb96 100%),url('/media/rapport-hero-landscape.png');
+  background-size:cover;background-position:center 25%;
+}
+.public-page-banner-inner{width:80%;margin:auto}
+.public-page-banner .intro-eyebrow{font-size:11px!important;font-weight:600;letter-spacing:.13em;margin-bottom:16px}
+.public-interior-page .public-page-banner h1{font-family:RapportDisplay,Georgia,serif!important;font-size:44px!important;line-height:1.2!important;letter-spacing:-.045em;font-weight:600!important;color:#102f50;margin:0 0 16px}
+.public-page-banner-description{font-size:15px!important;line-height:1.8!important;max-width:730px;color:#4f6d86;margin:0}
+.public-account-main{width:100%;flex:1}
+.public-interior-page .public-auth-intro .public-auth-intro-title{font-family:RapportDisplay,Georgia,serif!important;font-size:clamp(32px,2.8vw,44px)!important;line-height:1.12!important;font-weight:600!important;letter-spacing:-.04em;color:#102f50;margin:0 0 24px}
+.public-interior-page .public-auth-layout{margin-block:0}
+@media(max-width:1100px) and (min-width:701px){.introduction-page.rapport-editorial .rapport-hero{height:min(38.6cqw,432.32px)}.public-interior-page .public-page-banner h1{font-size:38px!important}.public-interior-page .public-auth-intro .public-auth-intro-title{font-size:32px!important}}
+@media(max-width:700px){.introduction-page.rapport-editorial .rapport-hero{height:auto;min-height:400px}.public-page-banner{padding:28px 0 30px}.public-page-banner-inner{width:calc(100% - 40px)}.public-interior-page .public-page-banner h1{font-size:32px!important}.public-page-banner-description{font-size:14px!important;line-height:1.7!important}.public-interior-page .public-auth-intro .public-auth-intro-title{font-size:29px!important;margin-bottom:16px}}
+/* The masthead lives outside route content and cannot inherit page-specific scales. */
+html:has(.public-site-shell){scrollbar-gutter:stable}
+.public-site-shell{display:flex;flex-direction:column;min-height:100dvh}
+.public-site-content{display:flex;flex-direction:column;flex:1;min-width:0}
+.public-site-content>.introduction-page{min-height:0;flex:1}
+.public-site-shell>.public-header{flex-shrink:0;font-family:Roboto,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.5}
+.public-site-shell>.public-header .public-wordmark{display:block;font-family:Georgia,"Times New Roman",serif!important;font-size:31px!important;font-weight:700!important;line-height:1!important;letter-spacing:.025em!important}
+.public-site-shell>.public-header .public-wordmark small{display:block;font-family:Arial,sans-serif!important;font-size:9px!important;font-weight:700!important;line-height:1.4!important;letter-spacing:.4em!important;margin-top:6px;text-transform:none}
+.public-site-shell>.public-header .public-menu{margin-left:22px;gap:26px}
+.public-site-shell>.public-header .public-menu a,.public-site-shell>.public-header .public-menu a[aria-current=page]{font-size:16px!important;font-weight:600!important;line-height:1.5!important;letter-spacing:normal!important}
+.public-site-shell>.public-header .official-partner-marks{gap:22px}
+.public-site-shell>.public-header .partner-vnmac{font-family:Roboto,Arial,sans-serif!important;font-size:25px!important;font-weight:900!important;line-height:1!important;letter-spacing:-.04em!important}
+.public-site-shell>.public-header .partner-crs{font-family:Roboto,Arial,sans-serif!important;font-size:25px!important;font-weight:700!important;line-height:1!important;letter-spacing:normal!important}
+.public-site-shell>.public-header .partner-vnmac small,.public-site-shell>.public-header .partner-crs small{font-family:Arial,sans-serif!important;font-size:7px!important;font-weight:600!important;line-height:1.25!important;letter-spacing:.03em!important;text-transform:uppercase!important;margin-top:3px}
+.public-site-shell>.public-header .official-partner-image{width:auto;height:42px;max-width:105px;max-height:42px;object-fit:contain}
+.public-site-shell>.public-header nav>.intro-primary{font-family:Roboto,Arial,sans-serif!important;font-size:15px!important;font-weight:600!important;line-height:1.5!important;letter-spacing:normal!important}
+@media(min-width:701px) and (max-width:1100px){.public-site-shell>.public-header .public-menu{margin-left:0}.public-site-shell>.public-header .official-partner-marks{gap:22px}}
+@media(max-width:700px){.public-site-shell>.public-header .public-wordmark{font-size:24px!important}.public-site-shell>.public-header .public-wordmark small{font-size:8px!important}.public-site-shell>.public-header .public-menu{margin-left:0;gap:22px}.public-site-shell>.public-header .public-menu a{font-size:15px!important}.public-site-shell>.public-header .partner-vnmac,.public-site-shell>.public-header .partner-crs{font-size:20px!important}.public-site-shell>.public-header .partner-vnmac small,.public-site-shell>.public-header .partner-crs small{font-size:5.5px!important}.public-site-shell>.public-header .official-partner-marks{gap:14px}.public-site-shell>.public-header .official-partner-image{height:30px;max-height:30px;max-width:65px}.public-site-shell>.public-header nav>.intro-primary{font-size:13px!important}}
+@media(max-width:700px){.public-site-shell>.public-header .public-menu a,.public-site-shell>.public-header .public-menu a[aria-current=page]{font-size:15px!important}}

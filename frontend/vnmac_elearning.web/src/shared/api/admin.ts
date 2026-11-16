@@ -22,7 +22,6 @@ import type {
   UpdateSectionRequest,
   LearnerAdminRow,
   LessonContent,
-  LessonDifficulty,
   LessonPublicationStatus,
   MediaUploadResponse,
   MediaLibraryItem,
@@ -96,7 +95,6 @@ export function getAdminLessonCatalog(
     search?: string;
     topic?: string;
     status?: LessonPublicationStatus | "all";
-    difficulty?: LessonDifficulty | "all";
     page?: number;
     pageSize?: number;
   } = {},
@@ -110,9 +108,6 @@ export function getAdminLessonCatalog(
   }
   if (filters.status && filters.status !== "all") {
     params.set("status", filters.status);
-  }
-  if (filters.difficulty && filters.difficulty !== "all") {
-    params.set("difficulty", filters.difficulty);
   }
   if (filters.page) {
     params.set("page", String(filters.page));
@@ -156,7 +151,7 @@ export function createLesson(payload: UpsertLessonRequest) {
   });
 }
 
-export async function uploadAdminMedia(file: File, mediaType: "image" | "video" | "poster" | "caption" | "document") {
+export async function uploadAdminMedia(file: File, mediaType: "image" | "video" | "poster" | "caption" | "document" | "audio") {
   const session = useAuthStore.getState().session;
   const formData = new FormData();
   formData.set("file", file);

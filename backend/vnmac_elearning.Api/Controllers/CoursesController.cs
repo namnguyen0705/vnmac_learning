@@ -11,14 +11,14 @@ public sealed class CoursesController(LearningService learningService) : Control
     [HttpGet]
     public ActionResult<object[]> GetPublishedCourses()
     {
-        var courses = learningService.GetPublishedCourses();
+        var courses = learningService.GetAccessibleCourses(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
         return Ok(CourseResponseMapper.MapCollection(courses));
     }
 
     [HttpGet("{courseId}")]
     public ActionResult<object> GetCourseById(string courseId)
     {
-        var course = learningService.GetCourseById(courseId);
+        var course = learningService.GetAccessibleCourse(courseId, User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
         return Ok(CourseResponseMapper.Map(course));
     }
 }

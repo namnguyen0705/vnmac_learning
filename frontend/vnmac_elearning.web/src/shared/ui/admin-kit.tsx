@@ -26,8 +26,8 @@ export function AdminPageHeader({
   actions?: ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
-      <div className="space-y-2">
+    <div className="flex flex-col gap-2 xl:flex-row xl:items-start xl:justify-between">
+      <div className="space-y-1">
         {breadcrumbs?.length ? (
           <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
             {breadcrumbs.map((item, index) => (
@@ -66,14 +66,14 @@ export function AdminSection({
   return (
     <Card className={cn("border-slate-200 bg-white shadow-[0_16px_48px_rgba(15,23,42,0.06)]", className)}>
       {title != "" && (
-      <CardHeader className="flex flex-col gap-3 border-b border-slate-100 px-5 py-4 sm:flex-row sm:items-start sm:justify-between">
+      <CardHeader className="flex flex-col gap-3 border-b border-slate-100 px-4 py-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="space-y-1">
           <CardTitle className="text-[1.20rem]">{title}</CardTitle>
         </div>
           {action}
         </CardHeader>
       )}
-      <CardContent className={cn("px-5 pt-4 pb-5", contentClassName)}>{children}</CardContent>
+      <CardContent className={cn("px-4 pt-3 pb-4", contentClassName)}>{children}</CardContent>
     </Card>
   );
 }
@@ -100,8 +100,8 @@ export function AdminMetricCard({
 
   return (
     <Card className="border-slate-200 bg-white shadow-[0_16px_48px_rgba(15,23,42,0.05)]">
-      <CardContent className="flex items-center gap-3 p-4">
-        <div className={cn("grid size-12 place-items-center rounded-full", accentMap[accent])}>{icon}</div>
+      <CardContent className="flex items-center gap-3 p-3">
+        <div className={cn("grid size-10 shrink-0 place-items-center rounded-full", accentMap[accent])}>{icon}</div>
         <div className="space-y-1">
           <p className="text-[10px] uppercase tracking-[0.14em] text-slate-400">{label}</p>
           <p className="text-[1.55rem] font-semibold leading-none tracking-tight text-slate-950">{value}</p>
@@ -205,7 +205,7 @@ export function AdminDonut({
   } satisfies CSSProperties;
 
   return (
-    <div className={cn("grid place-items-center gap-4", className)}>
+    <div className={cn("grid place-items-center gap-3", className)}>
       <div className="grid size-44 place-items-center rounded-full" style={style}>
         <div className="grid size-30 place-items-center rounded-full bg-white text-center shadow-inner">
           <div>
@@ -286,7 +286,7 @@ export function AdminPagination({
   const pages = getPaginationItems(totalPages, currentPage);
 
   return (
-    <div className="flex flex-col gap-3 border-t border-slate-100 px-5 py-4 md:flex-row md:items-center md:justify-between">
+    <div className="flex flex-col gap-3 border-t border-slate-100 px-4 py-4 md:flex-row md:items-center md:justify-between">
       <p className="text-xs text-slate-500">
         Hiển thị {start}-{end} / {safeTotal}
       </p>
@@ -383,7 +383,7 @@ export function AdminModal({
   }
 
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-4">
       <button
         aria-label="Đóng hội thoại"
         className="absolute inset-0 bg-slate-950/45 backdrop-blur-sm"
@@ -396,7 +396,7 @@ export function AdminModal({
           className,
         )}
       >
-        <div className="flex items-start justify-between gap-4 border-b border-slate-100 px-5 py-4">
+        <div className="flex items-start justify-between gap-3 border-b border-slate-100 px-4 py-4">
           <div className="space-y-1">
             <h2 className="text-[1.15rem] font-semibold tracking-tight text-slate-950">{title}</h2>
             {description ? <p className="max-w-3xl text-sm leading-6 text-slate-500">{description}</p> : null}
@@ -405,9 +405,9 @@ export function AdminModal({
             <X className="size-5" />
           </Button>
         </div>
-        <div className="max-h-[calc(92vh-132px)] overflow-y-auto px-5 py-5">{children}</div>
+        <div className="max-h-[calc(92vh-132px)] overflow-y-auto px-4 py-3">{children}</div>
         {actions ? (
-          <div className="admin-modal-footer flex flex-wrap items-center justify-end gap-2 border-t border-slate-100 px-5 py-3">
+          <div className="admin-modal-footer flex flex-wrap items-center justify-end gap-2 border-t border-slate-100 px-4 py-3">
             {actions}
           </div>
         ) : null}

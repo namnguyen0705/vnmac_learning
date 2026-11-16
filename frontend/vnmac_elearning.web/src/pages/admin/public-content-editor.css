@@ -1,0 +1,14 @@
+.public-editor-copy { overflow-wrap: anywhere; line-height: 1.75; color: #475569; }
+.public-editor-copy p + p { margin-top: 1em; }
+.public-editor-copy h1, .public-editor-copy h2, .public-editor-copy h3 { margin: 1em 0 .5em; font-weight: 700; line-height: 1.3; color: #0f172a; }
+.public-editor-copy h1 { font-size: 1.8em; }
+.public-editor-copy h2 { font-size: 1.5em; }
+.public-editor-copy h3 { font-size: 1.25em; }
+.public-editor-copy ul, .public-editor-copy ol { padding-left: 1.5em; margin: .75em 0; }
+.public-editor-copy ul { list-style: disc; }
+.public-editor-copy ol { list-style: decimal; }
+.public-editor-copy img { max-width: 100%; height: auto; border-radius: 8px; }
+.public-editor-copy a { color: #1d4ed8; text-decoration: underline; }
+.public-editor-copy table { display: block; max-width: 100%; overflow: auto; border-collapse: collapse; }
+.public-editor-copy td, .public-editor-copy th { border: 1px solid #cbd5e1; padding: .5em; }
+.public-editor-copy blockquote { border-left: 3px solid #93c5fd; padding-left: 1em; }

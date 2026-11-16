@@ -1,0 +1,6267 @@
+[
+  {
+    "source": "S1",
+    "paragraphs": [
+      {
+        "number": 1,
+        "text": "Vinafilms Joint Stock Company"
+      },
+      {
+        "number": 2,
+        "text": "Address: No. 12/25 Phan Dinh Phung Street, Ba Dinh Ward, Hanoi, VietnamTel: (+84) 344 235 689 | (+84) 978 000 018Website: https://vinafilms.org; Email: vinafilms@gmail.com"
+      },
+      {
+        "number": 6,
+        "text": "KỊCH BẢN NỘI DUNG BÀI HỌC SỐ 1"
+      },
+      {
+        "number": 7,
+        "text": "Tên bài học: Đặc điểm của BMVN và dấu hiệu nhận biết khu vực có thể có BMVN"
+      },
+      {
+        "number": 8,
+        "text": "1. MỞ ĐẦU BÀI HỌC"
+      },
+      {
+        "number": 9,
+        "text": "Khi người học nhấn nút “BẮT ĐẦU HỌC”:"
+      },
+      {
+        "number": 10,
+        "text": "Text hiển thị: BÀI HỌC SỐ 1 – Đặc điểm của BMVN và dấu hiệu nhận biết khu vực có thể có BMVN."
+      },
+      {
+        "number": 11,
+        "text": "Giọng đọc: “Bài học số 1 – Đặc điểm của BMVN và dấu hiệu nhận biết khu vực có thể có BMVN.”"
+      },
+      {
+        "number": 12,
+        "text": "Lời dẫn của Mascot – chỉ có giọng đọc:"
+      },
+      {
+        "number": 13,
+        "text": "“Hãy xem tình huống sau đây."
+      },
+      {
+        "number": 14,
+        "text": "Sau một trận mưa lớn, trên bờ ruộng xuất hiện một vật kim loại lạ, lộ một phần khỏi mặt đất."
+      },
+      {
+        "number": 15,
+        "text": "Nếu gặp tình huống này, bạn có biết điều gì cần chú ý không?"
+      },
+      {
+        "number": 16,
+        "text": "Đừng vội lại gần. Trước hết, chúng ta hãy cùng tìm hiểu một số đặc điểm của bom mìn, vật nổ và những dấu hiệu cho thấy khu vực có thể có BMVN.”"
+      },
+      {
+        "number": 17,
+        "text": "Lời dẫn của Mascot:"
+      },
+      {
+        "number": 18,
+        "text": "“Trong tình huống vừa rồi, chúng ta chưa thể biết chắc vật đó là gì khi chỉ quan sát bằng mắt thường."
+      },
+      {
+        "number": 19,
+        "text": "Hãy xem video sau đây để làm quen với một số đặc điểm của BMVN và các dấu hiệu cần lưu ý.”"
+      },
+      {
+        "number": 20,
+        "text": "Nội dung tiếp theo: Phát video kiến thức có sẵn, thời lượng 2–3 phút."
+      },
+      {
+        "number": 21,
+        "text": "Quy tắc hiển thị nút:"
+      },
+      {
+        "number": 22,
+        "text": "Khi video đang phát, không hiển thị nút TIẾP THEO."
+      },
+      {
+        "number": 23,
+        "text": "Chỉ sau khi video phát hết, hệ thống mới hiển thị nút TIẾP THEO."
+      },
+      {
+        "number": 24,
+        "text": "Khi người học nhấn nút TIẾP THEO, hệ thống chuyển sang mục 2: Nhận diện BMVN qua hình ảnh."
+      },
+      {
+        "number": 25,
+        "text": "2. NHẬN DIỆN BMVN QUA HÌNH ẢNH"
+      },
+      {
+        "number": 26,
+        "text": "Text tiêu đề: NHẬN DIỆN BMVN QUA HÌNH ẢNH"
+      },
+      {
+        "number": 27,
+        "text": "Hiển thị lần lượt 10 hình ảnh BMVN thực tế, kèm tên từng loại:"
+      },
+      {
+        "number": 28,
+        "text": "Bom bi – dạng “quả cam”."
+      },
+      {
+        "number": 29,
+        "text": "Bom bi – dạng “quả dứa”."
+      },
+      {
+        "number": 30,
+        "text": "Bom bi hình cầu – dạng “quả ổi”."
+      },
+      {
+        "number": 31,
+        "text": "Mìn."
+      },
+      {
+        "number": 32,
+        "text": "Lựu đạn."
+      },
+      {
+        "number": 33,
+        "text": "Đạn M79."
+      },
+      {
+        "number": 34,
+        "text": "Đạn cối."
+      },
+      {
+        "number": 35,
+        "text": "Đạn pháo."
+      },
+      {
+        "number": 36,
+        "text": "Bom hàng không."
+      },
+      {
+        "number": 37,
+        "text": "Bom phát quang."
+      },
+      {
+        "number": 38,
+        "text": "Sau khi xem các hình ảnh, hiển thị thông điệp:"
+      },
+      {
+        "number": 39,
+        "text": "BMVN có nhiều hình dạng, kích thước và màu sắc khác nhau."
+      },
+      {
+        "number": 40,
+        "text": "Lời dẫn của Mascot:"
+      },
+      {
+        "number": 41,
+        "text": "“Các hình ảnh này giúp bạn làm quen với một số dạng BMVN thường gặp. Không nên dựa vào hình dạng bên ngoài để tự khẳng định một vật thể là an toàn.”"
+      },
+      {
+        "number": 42,
+        "text": "Text lưu ý:"
+      },
+      {
+        "number": 43,
+        "text": "Đây chỉ là một số dạng BMVN thường gặp. Không thể dựa vào hình dáng bên ngoài để tự khẳng định một vật thể là an toàn."
+      },
+      {
+        "number": 44,
+        "text": "Quy tắc hiển thị nút:"
+      },
+      {
+        "number": 45,
+        "text": "Hiển thị lần lượt đủ 10 hình ảnh theo thứ tự trong kịch bản."
+      },
+      {
+        "number": 46,
+        "text": "Khi người học chưa xem hết 10 hình ảnh, không hiển thị nút TIẾP THEO."
+      },
+      {
+        "number": 47,
+        "text": "Chỉ sau khi hình ảnh thứ 10 được hiển thị hoàn tất theo thiết kế, hệ thống mới hiển thị nút TIẾP THEO."
+      },
+      {
+        "number": 48,
+        "text": "Khi nhấn nút TIẾP THEO, hệ thống chuyển sang mục 3: Dấu hiệu khu vực có thể có BMVN."
+      },
+      {
+        "number": 49,
+        "text": "3. DẤU HIỆU KHU VỰC CÓ THỂ CÓ BMVN"
+      },
+      {
+        "number": 50,
+        "text": "Lời dẫn của Mascot:"
+      },
+      {
+        "number": 51,
+        "text": "“Bây giờ, hãy quay lại tình huống mở đầu. Ngoài vật kim loại lạ, bạn còn thấy những dấu hiệu nào xung quanh khu vực này cần được lưu ý?”"
+      },
+      {
+        "number": 52,
+        "text": "Dấu hiệu 1: Đất bị xáo trộn"
+      },
+      {
+        "number": 53,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 54,
+        "text": "“Những dấu hiệu bất thường trên mặt đất có thể là dấu hiệu cần đặc biệt lưu ý.”"
+      },
+      {
+        "number": 55,
+        "text": "Text hiển thị: ĐẤT BỊ XÁO TRỘN"
+      },
+      {
+        "number": 56,
+        "text": "Dấu hiệu 2: Sau mưa – sạt lở – xói mòn"
+      },
+      {
+        "number": 57,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 58,
+        "text": "“Sau mưa lớn hoặc sạt lở, đất đá có thể bị dịch chuyển và làm lộ ra những vật thể trước đó bị che khuất.”"
+      },
+      {
+        "number": 59,
+        "text": "Text hiển thị: SAU MƯA – SẠT LỞ – XÓI MÒN"
+      },
+      {
+        "number": 60,
+        "text": "Dấu hiệu 3: Khu vực từng có hoạt động quân sự hoặc đất hoang"
+      },
+      {
+        "number": 61,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 62,
+        "text": "“Những khu vực từng là căn cứ quân sự, đồn bốt cũ, hố bom hoặc những khu đất hoang, nhiều bụi rậm cũng cần được đặc biệt lưu ý.”"
+      },
+      {
+        "number": 63,
+        "text": "Text hiển thị: CĂN CỨ CŨ – ĐỒN BỐT CŨ – HỐ BOM – ĐẤT HOANG"
+      },
+      {
+        "number": 64,
+        "text": "Dấu hiệu 4: Vật lạ không rõ nguồn gốc"
+      },
+      {
+        "number": 65,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 66,
+        "text": "“Nếu phát hiện một vật thể lạ, đặc biệt là vật thể kim loại không rõ nguồn gốc, hãy coi đó là dấu hiệu cần cảnh giác.”"
+      },
+      {
+        "number": 67,
+        "text": "“Không tiếp cận và không chạm vào vật nghi ngờ.”"
+      },
+      {
+        "number": 68,
+        "text": "Text hiển thị:"
+      },
+      {
+        "number": 69,
+        "text": "VẬT LẠ KHÔNG RÕ NGUỒN GỐC"
+      },
+      {
+        "number": 70,
+        "text": "KHÔNG TIẾP CẬN – KHÔNG CHẠM"
+      },
+      {
+        "number": 71,
+        "text": "Củng cố kiến thức"
+      },
+      {
+        "number": 72,
+        "text": "Lời dẫn của Mascot:"
+      },
+      {
+        "number": 73,
+        "text": "“Hãy ghi nhớ: những dấu hiệu bất thường của đất, sự thay đổi địa hình sau mưa, sạt lở, xói mòn và những vật thể lạ không rõ nguồn gốc đều cần được lưu ý."
+      },
+      {
+        "number": 74,
+        "text": "Khi không chắc chắn, không tự kiểm tra, không tiếp cận và không chạm vào vật nghi ngờ.”"
+      },
+      {
+        "number": 75,
+        "text": "Text hiển thị:"
+      },
+      {
+        "number": 76,
+        "text": "KHI KHÔNG CHẮC CHẮN:"
+      },
+      {
+        "number": 77,
+        "text": "KHÔNG TỰ KIỂM TRA – KHÔNG TIẾP CẬN – KHÔNG CHẠM"
+      },
+      {
+        "number": 78,
+        "text": "Nút: BẮT ĐẦU PHẦN THỬ TÀI BẠN"
+      },
+      {
+        "number": 79,
+        "text": "Tương tác: Khi người học nhấn nút BẮT ĐẦU PHẦN THỬ TÀI BẠN, hệ thống chuyển sang mục 4."
+      },
+      {
+        "number": 80,
+        "text": "4. PHẦN THỬ TÀI BẠN"
+      },
+      {
+        "number": 81,
+        "text": "Text tiêu đề:"
+      },
+      {
+        "number": 82,
+        "text": "NẾU GẶP NHỮNG HÌNH ẢNH SAU, BẠN CẦN CẢNH GIÁC Ở MỨC NÀO?"
+      },
+      {
+        "number": 83,
+        "text": "Lời dẫn của Mascot:"
+      },
+      {
+        "number": 84,
+        "text": "“Không phải lúc nào chúng ta cũng có thể xác định chính xác một vật thể chỉ bằng quan sát. Hãy kéo và thả từng hình ảnh vào ô phù hợp với mức độ cần cảnh giác.”"
+      },
+      {
+        "number": 85,
+        "text": "Hướng dẫn trên màn hình:"
+      },
+      {
+        "number": 86,
+        "text": "Hãy kéo và thả hình ảnh vào ô phù hợp."
+      },
+      {
+        "number": 87,
+        "text": "Ba ô lựa chọn:"
+      },
+      {
+        "number": 88,
+        "text": "CÓ NGUY HIỂM"
+      },
+      {
+        "number": 89,
+        "text": "KHÔNG CHẮC"
+      },
+      {
+        "number": 90,
+        "text": "KHÔNG NGUY HIỂM"
+      },
+      {
+        "number": 91,
+        "text": "Nội dung 8 lượt tương tác"
+      },
+      {
+        "number": 92,
+        "text": "Lượt"
+      },
+      {
+        "number": 93,
+        "text": "Hình ảnh"
+      },
+      {
+        "number": 94,
+        "text": "Phương án đúng"
+      },
+      {
+        "number": 95,
+        "text": "Phản hồi khi trả lời đúng"
+      },
+      {
+        "number": 96,
+        "text": "1"
+      },
+      {
+        "number": 97,
+        "text": "Hình lựu đạn"
+      },
+      {
+        "number": 98,
+        "text": "Có nguy hiểm"
+      },
+      {
+        "number": 99,
+        "text": "Chính xác. Đây là loại vật thể cần được nhận biết và tránh tiếp xúc."
+      },
+      {
+        "number": 100,
+        "text": "2"
+      },
+      {
+        "number": 101,
+        "text": "Hình bom bi"
+      },
+      {
+        "number": 102,
+        "text": "Có nguy hiểm"
+      },
+      {
+        "number": 103,
+        "text": "Chính xác. Không tiếp cận hoặc chạm vào vật nghi ngờ là BMVN."
+      },
+      {
+        "number": 104,
+        "text": "3"
+      },
+      {
+        "number": 105,
+        "text": "Đầu đạn/vật thể nghi ngờ"
+      },
+      {
+        "number": 106,
+        "text": "Có nguy hiểm"
+      },
+      {
+        "number": 107,
+        "text": "Đúng. Vật nghi ngờ cần được coi là nguy hiểm."
+      },
+      {
+        "number": 108,
+        "text": "4"
+      },
+      {
+        "number": 109,
+        "text": "Vật kim loại lộ một phần sau mưa"
+      },
+      {
+        "number": 110,
+        "text": "Không chắc"
+      },
+      {
+        "number": 111,
+        "text": "Đúng. Không thể xác định an toàn chỉ bằng quan sát. Khi nghi ngờ, không tiếp cận."
+      },
+      {
+        "number": 112,
+        "text": "5"
+      },
+      {
+        "number": 113,
+        "text": "Đất bị xáo trộn"
+      },
+      {
+        "number": 114,
+        "text": "Không chắc"
+      },
+      {
+        "number": 115,
+        "text": "Đúng. Đây là dấu hiệu cần lưu ý, nhưng không thể chỉ từ dấu hiệu này kết luận có BMVN."
+      },
+      {
+        "number": 116,
+        "text": "6"
+      },
+      {
+        "number": 117,
+        "text": "Vật thể lạ không rõ nguồn gốc"
+      },
+      {
+        "number": 118,
+        "text": "Không chắc"
+      },
+      {
+        "number": 119,
+        "text": "Đúng. Không tự kiểm tra để xác định."
+      },
+      {
+        "number": 120,
+        "text": "7"
+      },
+      {
+        "number": 121,
+        "text": "Vật dụng dân dụng rõ ràng"
+      },
+      {
+        "number": 122,
+        "text": "Không nguy hiểm"
+      },
+      {
+        "number": 123,
+        "text": "Đúng. Hình ảnh cho thấy vật dụng thông thường, không phải vật nghi BMVN."
+      },
+      {
+        "number": 124,
+        "text": "8"
+      },
+      {
+        "number": 125,
+        "text": "Hình biển cảnh báo BMVN"
+      },
+      {
+        "number": 126,
+        "text": "Có nguy hiểm"
+      },
+      {
+        "number": 127,
+        "text": "Chính xác. Biển báo cho biết khu vực có nguy cơ và cần tuân thủ cảnh báo."
+      },
+      {
+        "number": 128,
+        "text": "Phản hồi khi trả lời sai"
+      },
+      {
+        "number": 129,
+        "text": "“Chưa chính xác."
+      },
+      {
+        "number": 130,
+        "text": "Không thể khẳng định một vật lạ là an toàn chỉ bằng hình dáng bên ngoài. Hãy xem lại và lựa chọn lại.”"
+      },
+      {
+        "number": 131,
+        "text": "Quy tắc tương tác:"
+      },
+      {
+        "number": 132,
+        "text": "Khi người học kéo hình ảnh vào ô chưa chính xác, hệ thống hiển thị phản hồi trên."
+      },
+      {
+        "number": 133,
+        "text": "Người học được phép thực hiện lại lượt tương tác đó."
+      },
+      {
+        "number": 134,
+        "text": "Khi lựa chọn đúng, hệ thống hiển thị phản hồi tương ứng trong bảng và cho phép chuyển sang lượt tiếp theo."
+      },
+      {
+        "number": 135,
+        "text": "Tiếp tục cho đến khi hoàn thành đủ 8 lượt."
+      },
+      {
+        "number": 136,
+        "text": "Khi hoàn thành 8 lượt"
+      },
+      {
+        "number": 137,
+        "text": "Text hiển thị: HOÀN THÀNH!"
+      },
+      {
+        "number": 138,
+        "text": "“Bạn đã hoàn thành bài học nhận diện BMVN và dấu hiệu khu vực có thể có BMVN.”"
+      },
+      {
+        "number": 139,
+        "text": "Quay lại tình huống mở đầu"
+      },
+      {
+        "number": 140,
+        "text": "Hiển thị lại tình huống bờ ruộng sau mưa."
+      },
+      {
+        "number": 141,
+        "text": "Lời dẫn của Mascot:"
+      },
+      {
+        "number": 142,
+        "text": "“Bây giờ, hãy quay lại tình huống lúc đầu. Bạn nhìn thấy một vật kim loại lạ lộ một phần sau mưa. Bạn nên nghĩ và làm gì?”"
+      },
+      {
+        "number": 143,
+        "text": "Câu hỏi: Bạn nên xử lý tình huống này như thế nào?"
+      },
+      {
+        "number": 144,
+        "text": "A. Vật này không giống các hình đã học nên có thể an toàn."
+      },
+      {
+        "number": 145,
+        "text": "B. Chưa thể xác định chỉ bằng quan sát, cần coi đây là tình huống cần cảnh giác và không tiếp cận."
+      },
+      {
+        "number": 146,
+        "text": "C. Lại gần hơn để xem rõ hình dạng."
+      },
+      {
+        "number": 147,
+        "text": "Đáp án đúng: B."
+      },
+      {
+        "number": 148,
+        "text": "Phản hồi:"
+      },
+      {
+        "number": 149,
+        "text": "“Chính xác. Khi không chắc chắn, không tự kiểm tra, không tiếp cận và không chạm vào vật nghi ngờ.”"
+      },
+      {
+        "number": 150,
+        "text": "Nút: LÀM BÀI KIỂM TRA"
+      },
+      {
+        "number": 151,
+        "text": "Tương tác: Khi người học nhấn nút LÀM BÀI KIỂM TRA, hệ thống chuyển sang mục 5."
+      },
+      {
+        "number": 152,
+        "text": "5. BÀI KIỂM TRA"
+      },
+      {
+        "number": 153,
+        "text": "Text tiêu đề: BÀI KIỂM TRA"
+      },
+      {
+        "number": 154,
+        "text": "Bài kiểm tra gồm 5 câu hỏi. Mỗi lần chỉ hiển thị một câu. Người học phải đạt 100% mới được chuyển sang bài tiếp theo. Không giới hạn số lần làm lại; thứ tự câu hỏi thay đổi ở mỗi lần làm lại."
+      },
+      {
+        "number": 155,
+        "text": "Câu 1 – Chọn nhiều đáp án"
+      },
+      {
+        "number": 156,
+        "text": "Câu hỏi: Bom mìn và vật nổ gồm các loại nào sau đây?"
+      },
+      {
+        "number": 157,
+        "text": "A. Lựu đạn."
+      },
+      {
+        "number": 158,
+        "text": "B. Bom bi, đạn pháo."
+      },
+      {
+        "number": 159,
+        "text": "C. Thanh sắt rỉ sét."
+      },
+      {
+        "number": 160,
+        "text": "Đáp án đúng: A và B."
+      },
+      {
+        "number": 161,
+        "text": "Trả lời đúng: “Chính xác!”"
+      },
+      {
+        "number": 162,
+        "text": "Trả lời sai: “Chưa chính xác. Hãy xem lại các loại vật thể được đề cập trong bài học.”"
+      },
+      {
+        "number": 163,
+        "text": "Câu 2 – Chọn một đáp án"
+      },
+      {
+        "number": 164,
+        "text": "Câu hỏi: Những khu vực nào sau đây có thể có bom mìn và vật nổ?"
+      },
+      {
+        "number": 165,
+        "text": "A. Khu căn cứ quân sự cũ, đồn bốt cũ."
+      },
+      {
+        "number": 166,
+        "text": "B. Hố bom, bãi đất hoang có bụi rậm."
+      },
+      {
+        "number": 167,
+        "text": "C. Cả 2 đáp án trên."
+      },
+      {
+        "number": 168,
+        "text": "Đáp án đúng: C."
+      },
+      {
+        "number": 169,
+        "text": "Câu 3 – Chọn một đáp án"
+      },
+      {
+        "number": 170,
+        "text": "Câu hỏi: Sau mưa lớn, bạn thấy một vật kim loại lộ một phần trên bờ ruộng. Bạn không nhận ra vật đó thuộc loại nào. Bạn nên làm gì?"
+      },
+      {
+        "number": 171,
+        "text": "A. Lại gần để xem rõ hơn."
+      },
+      {
+        "number": 172,
+        "text": "B. Dùng que gạt đất để kiểm tra."
+      },
+      {
+        "number": 173,
+        "text": "C. Không tiếp cận và coi đây là tình huống cần cảnh giác."
+      },
+      {
+        "number": 174,
+        "text": "Đáp án đúng: C."
+      },
+      {
+        "number": 175,
+        "text": "Câu 4 – Chọn một đáp án"
+      },
+      {
+        "number": 176,
+        "text": "Câu hỏi: Bom mìn, vật nổ nằm sâu dưới ao, hồ, sông, suối một thời gian dài có nguy hiểm hay không?"
+      },
+      {
+        "number": 177,
+        "text": "A. Không nguy hiểm vì chúng sẽ không phát nổ."
+      },
+      {
+        "number": 178,
+        "text": "B. Vẫn còn nguy hiểm vì tính nhạy nổ của chúng có thể không giảm theo thời gian."
+      },
+      {
+        "number": 179,
+        "text": "C. Tính nhạy nổ của bom mìn, vật nổ bị giảm sau 20 năm."
+      },
+      {
+        "number": 180,
+        "text": "Đáp án đúng: B."
+      },
+      {
+        "number": 181,
+        "text": "Câu 5 – Chọn hình ảnh"
+      },
+      {
+        "number": 182,
+        "text": "Câu hỏi: Đâu là biển báo khu vực nguy hiểm có BMVN?"
+      },
+      {
+        "number": 183,
+        "text": "A. Biển cảnh báo BMVN."
+      },
+      {
+        "number": 184,
+        "text": "B. Biển báo giao thông."
+      },
+      {
+        "number": 185,
+        "text": "C. Biển cảnh báo chống đuối nước."
+      },
+      {
+        "number": 186,
+        "text": "Đáp án đúng: A."
+      },
+      {
+        "number": 187,
+        "text": "Quy tắc phản hồi và làm lại bài kiểm tra"
+      },
+      {
+        "number": 188,
+        "text": "Trong quá trình làm bài:"
+      },
+      {
+        "number": 189,
+        "text": "Mỗi lần chỉ hiển thị một câu hỏi."
+      },
+      {
+        "number": 190,
+        "text": "Sau khi người học chọn đáp án, hệ thống thông báo kết quả đúng hoặc chưa chính xác."
+      },
+      {
+        "number": 191,
+        "text": "Nếu trả lời sai, hiển thị phản hồi tương ứng của câu hỏi đó. Người học vẫn được tiếp tục sang câu tiếp theo, không yêu cầu làm lại ngay tại câu đang trả lời."
+      },
+      {
+        "number": 192,
+        "text": "Sau khi trả lời câu 5, hệ thống tổng hợp kết quả của cả 5 câu."
+      },
+      {
+        "number": 193,
+        "text": "Trường hợp chưa trả lời đúng cả 5 câu:"
+      },
+      {
+        "number": 194,
+        "text": "Hiển thị thông báo:"
+      },
+      {
+        "number": 195,
+        "text": "“Bạn chưa trả lời đúng tất cả các câu hỏi. Hãy xem lại những nội dung cần ghi nhớ và làm lại toàn bộ bài kiểm tra gồm 5 câu.”"
+      },
+      {
+        "number": 196,
+        "text": "Nút: LÀM LẠI BÀI KIỂM TRA"
+      },
+      {
+        "number": 197,
+        "text": "Khi người học nhấn nút này:"
+      },
+      {
+        "number": 198,
+        "text": "Hệ thống bắt đầu lại bài kiểm tra từ câu đầu tiên của lượt làm lại."
+      },
+      {
+        "number": 199,
+        "text": "Người học phải trả lời lại toàn bộ 5 câu, không chỉ làm lại câu đã sai."
+      },
+      {
+        "number": 200,
+        "text": "Thứ tự câu hỏi thay đổi ở mỗi lần làm lại theo yêu cầu của kịch bản."
+      },
+      {
+        "number": 201,
+        "text": "Tiếp tục quy trình phản hồi sau từng câu và tổng hợp kết quả sau câu cuối cùng."
+      },
+      {
+        "number": 202,
+        "text": "Không giới hạn số lần làm lại."
+      },
+      {
+        "number": 203,
+        "text": "Trường hợp trả lời đúng cả 5 câu:"
+      },
+      {
+        "number": 204,
+        "text": "Hệ thống ghi nhận kết quả 5/5 câu đúng và chuyển sang màn hình hoàn thành Bài học số 1."
+      },
+      {
+        "number": 205,
+        "text": "MÀN HÌNH HOÀN THÀNH BÀI HỌC"
+      },
+      {
+        "number": 206,
+        "text": "Sau khi người học trả lời đúng cả 5 câu:"
+      },
+      {
+        "number": 207,
+        "text": "Text hiển thị:"
+      },
+      {
+        "number": 208,
+        "text": "CHÚC MỪNG BẠN ĐÃ HOÀN THÀNH BÀI HỌC SỐ 1"
+      },
+      {
+        "number": 209,
+        "text": "Bạn đã nắm được những kiến thức cơ bản về:"
+      },
+      {
+        "number": 210,
+        "text": "Một số đặc điểm và hình ảnh BMVN thường gặp."
+      },
+      {
+        "number": 211,
+        "text": "Các khu vực có thể có BMVN."
+      },
+      {
+        "number": 212,
+        "text": "Một số dấu hiệu cần lưu ý."
+      },
+      {
+        "number": 213,
+        "text": "Cách nhận biết và ứng xử thận trọng trước vật nghi ngờ."
+      },
+      {
+        "number": 214,
+        "text": "Nút: QUAY LẠI - TIẾP TỤC → BÀI HỌC SỐ 2"
+      },
+      {
+        "number": 215,
+        "text": "Tương tác: Chỉ hiển thị nút TIẾP TỤC → BÀI HỌC SỐ 2 sau khi người học trả lời đúng cả 5 câu. Khi nhấn nút, hệ thống chuyển sang Bài học số 2."
+      },
+      {
+        "number": 217,
+        "text": "QUY ƯỚC ĐIỀU HƯỚNG VÀ TƯƠNG TÁC"
+      },
+      {
+        "number": 218,
+        "text": "STT"
+      },
+      {
+        "number": 219,
+        "text": "Nút/chức năng"
+      },
+      {
+        "number": 220,
+        "text": "Thời điểm hiển thị"
+      },
+      {
+        "number": 221,
+        "text": "Hành động"
+      },
+      {
+        "number": 222,
+        "text": "1"
+      },
+      {
+        "number": 223,
+        "text": "BẮT ĐẦU HỌC"
+      },
+      {
+        "number": 224,
+        "text": "Màn hình bắt đầu Bài học số 1"
+      },
+      {
+        "number": 225,
+        "text": "Bắt đầu bài học"
+      },
+      {
+        "number": 226,
+        "text": "2"
+      },
+      {
+        "number": 227,
+        "text": "TIẾP THEO"
+      },
+      {
+        "number": 228,
+        "text": "Sau khi video kiến thức phát hết"
+      },
+      {
+        "number": 229,
+        "text": "Chuyển sang mục 2"
+      },
+      {
+        "number": 230,
+        "text": "3"
+      },
+      {
+        "number": 231,
+        "text": "TIẾP THEO"
+      },
+      {
+        "number": 232,
+        "text": "Sau khi xem hết 10 hình ảnh BMVN"
+      },
+      {
+        "number": 233,
+        "text": "Chuyển sang mục 3"
+      },
+      {
+        "number": 234,
+        "text": "4"
+      },
+      {
+        "number": 235,
+        "text": "BẮT ĐẦU PHẦN THỬ TÀI BẠN"
+      },
+      {
+        "number": 236,
+        "text": "Sau phần củng cố kiến thức ở mục 3"
+      },
+      {
+        "number": 237,
+        "text": "Chuyển sang phần thử tài"
+      },
+      {
+        "number": 238,
+        "text": "5"
+      },
+      {
+        "number": 239,
+        "text": "Thực hiện lại lượt tương tác"
+      },
+      {
+        "number": 240,
+        "text": "Khi người học trả lời sai ở một lượt thử tài"
+      },
+      {
+        "number": 241,
+        "text": "Cho phép thực hiện lại lượt đó"
+      },
+      {
+        "number": 242,
+        "text": "6"
+      },
+      {
+        "number": 243,
+        "text": "LÀM BÀI KIỂM TRA"
+      },
+      {
+        "number": 244,
+        "text": "Sau câu hỏi tình huống cuối phần thử tài"
+      },
+      {
+        "number": 245,
+        "text": "Chuyển sang bài kiểm tra 5 câu"
+      },
+      {
+        "number": 246,
+        "text": "7"
+      },
+      {
+        "number": 247,
+        "text": "LÀM LẠI BÀI KIỂM TRA"
+      },
+      {
+        "number": 248,
+        "text": "Sau khi hoàn thành 5 câu nhưng chưa đạt 5/5"
+      },
+      {
+        "number": 249,
+        "text": "Làm lại toàn bộ 5 câu"
+      },
+      {
+        "number": 250,
+        "text": "8"
+      },
+      {
+        "number": 251,
+        "text": "TIẾP TỤC → BÀI HỌC SỐ 2"
+      },
+      {
+        "number": 252,
+        "text": "Sau khi đạt 5/5 câu đúng"
+      },
+      {
+        "number": 253,
+        "text": "Chuyển sang Bài học số 2"
+      },
+      {
+        "number": 254,
+        "text": "Yêu cầu bắt buộc đối với đội ngũ thiết kế và lập trình:"
+      },
+      {
+        "number": 255,
+        "text": "Video kiến thức phải phát hết mới hiển thị nút TIẾP THEO."
+      },
+      {
+        "number": 256,
+        "text": "Phải xem hết 10 hình ảnh BMVN mới hiển thị nút TIẾP THEO."
+      },
+      {
+        "number": 257,
+        "text": "Trong phần thử tài, khi trả lời sai, người học được thực hiện lại lượt tương tác đó."
+      },
+      {
+        "number": 258,
+        "text": "Trong bài kiểm tra, trả lời sai một câu vẫn được làm tiếp câu sau."
+      },
+      {
+        "number": 259,
+        "text": "Chỉ tổng hợp kết quả sau khi người học hoàn thành cả 5 câu."
+      },
+      {
+        "number": 260,
+        "text": "Nếu chưa đạt 5/5 câu đúng, yêu cầu làm lại toàn bộ bài kiểm tra."
+      },
+      {
+        "number": 261,
+        "text": "Chỉ cho phép chuyển sang Bài học số 2 khi người học trả lời đúng cả 5 câu."
+      },
+      {
+        "number": 282,
+        "text": "KỊCH BẢN SẢN XUẤT – BÀI HỌC SỐ 1"
+      },
+      {
+        "number": 283,
+        "text": "Đặc điểm của BMVN và dấu hiệu nhận biết khu vực có thể có BMVN"
+      },
+      {
+        "number": 284,
+        "text": "ID"
+      },
+      {
+        "number": 285,
+        "text": "Nguồn nội dung"
+      },
+      {
+        "number": 286,
+        "text": "Tài sản"
+      },
+      {
+        "number": 287,
+        "text": "Text"
+      },
+      {
+        "number": 288,
+        "text": "Âm thanh"
+      },
+      {
+        "number": 289,
+        "text": "Tương tác"
+      },
+      {
+        "number": 290,
+        "text": "Thông báo kết quả"
+      },
+      {
+        "number": 291,
+        "text": "Trạng thái giao diện"
+      },
+      {
+        "number": 292,
+        "text": "Điều kiện chuyển tiếp"
+      },
+      {
+        "number": 293,
+        "text": "Yêu cầu lập trình"
+      },
+      {
+        "number": 294,
+        "text": "Tài sản bàn giao"
+      },
+      {
+        "number": 295,
+        "text": "1"
+      },
+      {
+        "number": 296,
+        "text": "Mở đầu bài học"
+      },
+      {
+        "number": 297,
+        "text": "Màn hình tiêu đề; logo/nhận diện khóa học theo bộ nhận diện đã có"
+      },
+      {
+        "number": 298,
+        "text": "BÀI HỌC SỐ 1 – Đặc điểm của BMVN và dấu hiệu nhận biết khu vực có thể có BMVN"
+      },
+      {
+        "number": 299,
+        "text": "Giọng đọc: “Bài học số 1 – Đặc điểm của BMVN và dấu hiệu nhận biết khu vực có thể có BMVN.”"
+      },
+      {
+        "number": 300,
+        "text": "Người học nhấn BẮT ĐẦU HỌC"
+      },
+      {
+        "number": 301,
+        "text": "Không"
+      },
+      {
+        "number": 302,
+        "text": "Màn hình mở đầu bài học"
+      },
+      {
+        "number": 303,
+        "text": "Sau khi nhấn BẮT ĐẦU HỌC"
+      },
+      {
+        "number": 304,
+        "text": "Nút bắt đầu kích hoạt bài học và chuyển vào tình huống mở đầu"
+      },
+      {
+        "number": 305,
+        "text": "Màn hình tiêu đề; text; file âm thanh giọng đọc"
+      },
+      {
+        "number": 306,
+        "text": "2"
+      },
+      {
+        "number": 307,
+        "text": "Tình huống mở đầu"
+      },
+      {
+        "number": 308,
+        "text": "Minh họa bờ ruộng sau trận mưa lớn; vật kim loại lạ lộ một phần khỏi mặt đất; Mascot"
+      },
+      {
+        "number": 309,
+        "text": "Không bắt buộc hiển thị text riêng ngoài nội dung tình huống theo thiết kế"
+      },
+      {
+        "number": 310,
+        "text": "Mascot đọc: “Hãy xem tình huống sau đây. Sau một trận mưa lớn, trên bờ ruộng xuất hiện một vật kim loại lạ, lộ một phần khỏi mặt đất. Nếu gặp tình huống này, bạn có biết điều gì cần chú ý không? "
+      },
+      {
+        "number": 311,
+        "text": "Đừng vội lại gần. "
+      },
+      {
+        "number": 312,
+        "text": "Trước hết, chúng ta hãy cùng tìm hiểu một số đặc điểm của bom mìn, vật nổ và những dấu hiệu cho thấy khu vực có thể có BMVN.”"
+      },
+      {
+        "number": 313,
+        "text": "Không"
+      },
+      {
+        "number": 314,
+        "text": "Không"
+      },
+      {
+        "number": 315,
+        "text": "Tình huống bờ ruộng sau mưa; vật thể lạ chỉ lộ một phần"
+      },
+      {
+        "number": 316,
+        "text": "Phát hết lời dẫn thì chuyển sang lời dẫn trước video"
+      },
+      {
+        "number": 317,
+        "text": "Mascot chỉ có giọng đọc theo kịch bản; không tự thêm lời thoại hoặc nội dung"
+      },
+      {
+        "number": 318,
+        "text": "Minh họa tình huống; Mascot; voice-over"
+      },
+      {
+        "number": 319,
+        "text": "3"
+      },
+      {
+        "number": 320,
+        "text": "Dẫn vào video kiến thức"
+      },
+      {
+        "number": 321,
+        "text": "Giữ bối cảnh tình huống hoặc chuyển cảnh theo thiết kế"
+      },
+      {
+        "number": 322,
+        "text": "Không bắt buộc hiển thị text riêng"
+      },
+      {
+        "number": 323,
+        "text": "Mascot đọc: “Trong tình huống vừa rồi, chúng ta chưa thể biết chắc vật đó là gì khi chỉ quan sát bằng mắt thường. "
+      },
+      {
+        "number": 324,
+        "text": "Hãy xem video sau đây để làm quen với một số đặc điểm của BMVN và các dấu hiệu cần lưu ý.”"
+      },
+      {
+        "number": 325,
+        "text": "Không"
+      },
+      {
+        "number": 326,
+        "text": "Không"
+      },
+      {
+        "number": 327,
+        "text": "Màn hình chuẩn bị phát video kiến thức"
+      },
+      {
+        "number": 328,
+        "text": "Sau lời dẫn, tự động phát video kiến thức có sẵn"
+      },
+      {
+        "number": 329,
+        "text": "Không hiển thị nút TIẾP THEO khi video đang phát"
+      },
+      {
+        "number": 330,
+        "text": "File giọng đọc; cảnh chuyển tiếp"
+      },
+      {
+        "number": 331,
+        "text": "4"
+      },
+      {
+        "number": 332,
+        "text": "Video kiến thức có sẵn"
+      },
+      {
+        "number": 333,
+        "text": "Video kiến thức hiện có"
+      },
+      {
+        "number": 334,
+        "text": "Theo nội dung video có sẵn"
+      },
+      {
+        "number": 335,
+        "text": "Âm thanh gốc của video"
+      },
+      {
+        "number": 336,
+        "text": "Người học xem video"
+      },
+      {
+        "number": 337,
+        "text": "Không"
+      },
+      {
+        "number": 338,
+        "text": "Video phát toàn màn hình hoặc theo thiết kế giao diện"
+      },
+      {
+        "number": 339,
+        "text": "Chỉ chuyển tiếp khi video phát hết và người học nhấn TIẾP THEO"
+      },
+      {
+        "number": 340,
+        "text": "Bắt buộc ẩn nút TIẾP THEO trong thời gian video phát; chỉ hiển thị sau khi video kết thúc; không cho bỏ qua bằng cách tua đến cuối nếu hệ thống có thể kiểm soát"
+      },
+      {
+        "number": 341,
+        "text": "Video nguồn; bản tích hợp vào khóa học"
+      },
+      {
+        "number": 342,
+        "text": "5"
+      },
+      {
+        "number": 343,
+        "text": "Chuyển sang mục nhận diện hình ảnh"
+      },
+      {
+        "number": 344,
+        "text": "Nút TIẾP THEO"
+      },
+      {
+        "number": 345,
+        "text": "TIẾP THEO"
+      },
+      {
+        "number": 346,
+        "text": "Không"
+      },
+      {
+        "number": 347,
+        "text": "Nhấn TIẾP THEO"
+      },
+      {
+        "number": 348,
+        "text": "Không"
+      },
+      {
+        "number": 349,
+        "text": "Mở mục 2: NHẬN DIỆN BMVN QUA HÌNH ẢNH"
+      },
+      {
+        "number": 350,
+        "text": "Video đã phát hết và người học nhấn nút"
+      },
+      {
+        "number": 351,
+        "text": "Nút chỉ xuất hiện sau khi video kết thúc"
+      },
+      {
+        "number": 352,
+        "text": "Nút điều hướng; cấu hình sự kiện"
+      },
+      {
+        "number": 353,
+        "text": "6"
+      },
+      {
+        "number": 354,
+        "text": "Nhận diện BMVN qua hình ảnh"
+      },
+      {
+        "number": 355,
+        "text": "Bộ 10 hình ảnh BMVN thực tế"
+      },
+      {
+        "number": 356,
+        "text": "NHẬN DIỆN BMVN QUA HÌNH ẢNH"
+      },
+      {
+        "number": 357,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 358,
+        "text": "Tự động hiển thị lần lượt 10 hình ảnh kèm tên từng loại"
+      },
+      {
+        "number": 359,
+        "text": "Không"
+      },
+      {
+        "number": 360,
+        "text": "Màn hình tiêu đề và vùng hiển thị hình ảnh"
+      },
+      {
+        "number": 361,
+        "text": "Hiển thị đủ 10 hình ảnh theo đúng thứ tự"
+      },
+      {
+        "number": 362,
+        "text": "Không cho chuyển tiếp trước khi hình ảnh thứ 10 hiển thị hoàn tất"
+      },
+      {
+        "number": 363,
+        "text": "Màn hình mục 2; bộ hình ảnh; hiệu ứng hiển thị"
+      },
+      {
+        "number": 364,
+        "text": "7"
+      },
+      {
+        "number": 365,
+        "text": "Danh sách hình ảnh mục 2"
+      },
+      {
+        "number": 366,
+        "text": "Hình ảnh BMVN số 1"
+      },
+      {
+        "number": 367,
+        "text": "Bom bi – dạng “quả cam”"
+      },
+      {
+        "number": 368,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 369,
+        "text": "Người học xem hình ảnh; hệ thống lần lượt trình chiếu"
+      },
+      {
+        "number": 370,
+        "text": "Không"
+      },
+      {
+        "number": 371,
+        "text": "Mỗi lượt hiển thị một hình ảnh kèm tên loại"
+      },
+      {
+        "number": 372,
+        "text": "Chuyển hình tiếp theo theo trình tự thiết kế; sau hình 10 mới hiện TIẾP THEO"
+      },
+      {
+        "number": 373,
+        "text": "Đảm bảo đủ 10 hình, đúng thứ tự và ghi nhận hoàn tất lượt xem"
+      },
+      {
+        "number": 374,
+        "text": "10 hình ảnh; nhãn tên từng loại; hiệu ứng"
+      },
+      {
+        "number": 375,
+        "text": "8"
+      },
+      {
+        "number": 376,
+        "text": "Danh sách hình ảnh mục 2"
+      },
+      {
+        "number": 377,
+        "text": "Hình ảnh BMVN số 2"
+      },
+      {
+        "number": 378,
+        "text": "Bom bi – dạng “quả dứa”"
+      },
+      {
+        "number": 379,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 380,
+        "text": "Người học xem hình ảnh; hệ thống lần lượt trình chiếu"
+      },
+      {
+        "number": 381,
+        "text": "Không"
+      },
+      {
+        "number": 382,
+        "text": "Mỗi lượt hiển thị một hình ảnh kèm tên loại"
+      },
+      {
+        "number": 383,
+        "text": "Chuyển hình tiếp theo theo trình tự thiết kế; sau hình 10 mới hiện TIẾP THEO"
+      },
+      {
+        "number": 384,
+        "text": "Đảm bảo đủ 10 hình, đúng thứ tự và ghi nhận hoàn tất lượt xem"
+      },
+      {
+        "number": 385,
+        "text": "10 hình ảnh; nhãn tên từng loại; hiệu ứng"
+      },
+      {
+        "number": 386,
+        "text": "9"
+      },
+      {
+        "number": 387,
+        "text": "Danh sách hình ảnh mục 2"
+      },
+      {
+        "number": 388,
+        "text": "Hình ảnh BMVN số 3"
+      },
+      {
+        "number": 389,
+        "text": "Bom bi hình cầu – dạng “quả ổi”"
+      },
+      {
+        "number": 390,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 391,
+        "text": "Người học xem hình ảnh; hệ thống lần lượt trình chiếu"
+      },
+      {
+        "number": 392,
+        "text": "Không"
+      },
+      {
+        "number": 393,
+        "text": "Mỗi lượt hiển thị một hình ảnh kèm tên loại"
+      },
+      {
+        "number": 394,
+        "text": "Chuyển hình tiếp theo theo trình tự thiết kế; sau hình 10 mới hiện TIẾP THEO"
+      },
+      {
+        "number": 395,
+        "text": "Đảm bảo đủ 10 hình, đúng thứ tự và ghi nhận hoàn tất lượt xem"
+      },
+      {
+        "number": 396,
+        "text": "10 hình ảnh; nhãn tên từng loại; hiệu ứng"
+      },
+      {
+        "number": 397,
+        "text": "10"
+      },
+      {
+        "number": 398,
+        "text": "Danh sách hình ảnh mục 2"
+      },
+      {
+        "number": 399,
+        "text": "Hình ảnh BMVN số 4"
+      },
+      {
+        "number": 400,
+        "text": "Mìn"
+      },
+      {
+        "number": 401,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 402,
+        "text": "Người học xem hình ảnh; hệ thống lần lượt trình chiếu"
+      },
+      {
+        "number": 403,
+        "text": "Không"
+      },
+      {
+        "number": 404,
+        "text": "Mỗi lượt hiển thị một hình ảnh kèm tên loại"
+      },
+      {
+        "number": 405,
+        "text": "Chuyển hình tiếp theo theo trình tự thiết kế; sau hình 10 mới hiện TIẾP THEO"
+      },
+      {
+        "number": 406,
+        "text": "Đảm bảo đủ 10 hình, đúng thứ tự và ghi nhận hoàn tất lượt xem"
+      },
+      {
+        "number": 407,
+        "text": "10 hình ảnh; nhãn tên từng loại; hiệu ứng"
+      },
+      {
+        "number": 408,
+        "text": "11"
+      },
+      {
+        "number": 409,
+        "text": "Danh sách hình ảnh mục 2"
+      },
+      {
+        "number": 410,
+        "text": "Hình ảnh BMVN số 5"
+      },
+      {
+        "number": 411,
+        "text": "Lựu đạn"
+      },
+      {
+        "number": 412,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 413,
+        "text": "Người học xem hình ảnh; hệ thống lần lượt trình chiếu"
+      },
+      {
+        "number": 414,
+        "text": "Không"
+      },
+      {
+        "number": 415,
+        "text": "Mỗi lượt hiển thị một hình ảnh kèm tên loại"
+      },
+      {
+        "number": 416,
+        "text": "Chuyển hình tiếp theo theo trình tự thiết kế; sau hình 10 mới hiện TIẾP THEO"
+      },
+      {
+        "number": 417,
+        "text": "Đảm bảo đủ 10 hình, đúng thứ tự và ghi nhận hoàn tất lượt xem"
+      },
+      {
+        "number": 418,
+        "text": "10 hình ảnh; nhãn tên từng loại; hiệu ứng"
+      },
+      {
+        "number": 419,
+        "text": "12"
+      },
+      {
+        "number": 420,
+        "text": "Danh sách hình ảnh mục 2"
+      },
+      {
+        "number": 421,
+        "text": "Hình ảnh BMVN số 6"
+      },
+      {
+        "number": 422,
+        "text": "Đạn M79"
+      },
+      {
+        "number": 423,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 424,
+        "text": "Người học xem hình ảnh; hệ thống lần lượt trình chiếu"
+      },
+      {
+        "number": 425,
+        "text": "Không"
+      },
+      {
+        "number": 426,
+        "text": "Mỗi lượt hiển thị một hình ảnh kèm tên loại"
+      },
+      {
+        "number": 427,
+        "text": "Chuyển hình tiếp theo theo trình tự thiết kế; sau hình 10 mới hiện TIẾP THEO"
+      },
+      {
+        "number": 428,
+        "text": "Đảm bảo đủ 10 hình, đúng thứ tự và ghi nhận hoàn tất lượt xem"
+      },
+      {
+        "number": 429,
+        "text": "10 hình ảnh; nhãn tên từng loại; hiệu ứng"
+      },
+      {
+        "number": 430,
+        "text": "13"
+      },
+      {
+        "number": 431,
+        "text": "Danh sách hình ảnh mục 2"
+      },
+      {
+        "number": 432,
+        "text": "Hình ảnh BMVN số 7"
+      },
+      {
+        "number": 433,
+        "text": "Đạn cối"
+      },
+      {
+        "number": 434,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 435,
+        "text": "Người học xem hình ảnh; hệ thống lần lượt trình chiếu"
+      },
+      {
+        "number": 436,
+        "text": "Không"
+      },
+      {
+        "number": 437,
+        "text": "Mỗi lượt hiển thị một hình ảnh kèm tên loại"
+      },
+      {
+        "number": 438,
+        "text": "Chuyển hình tiếp theo theo trình tự thiết kế; sau hình 10 mới hiện TIẾP THEO"
+      },
+      {
+        "number": 439,
+        "text": "Đảm bảo đủ 10 hình, đúng thứ tự và ghi nhận hoàn tất lượt xem"
+      },
+      {
+        "number": 440,
+        "text": "10 hình ảnh; nhãn tên từng loại; hiệu ứng"
+      },
+      {
+        "number": 441,
+        "text": "14"
+      },
+      {
+        "number": 442,
+        "text": "Danh sách hình ảnh mục 2"
+      },
+      {
+        "number": 443,
+        "text": "Hình ảnh BMVN số 8"
+      },
+      {
+        "number": 444,
+        "text": "Đạn pháo"
+      },
+      {
+        "number": 445,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 446,
+        "text": "Người học xem hình ảnh; hệ thống lần lượt trình chiếu"
+      },
+      {
+        "number": 447,
+        "text": "Không"
+      },
+      {
+        "number": 448,
+        "text": "Mỗi lượt hiển thị một hình ảnh kèm tên loại"
+      },
+      {
+        "number": 449,
+        "text": "Chuyển hình tiếp theo theo trình tự thiết kế; sau hình 10 mới hiện TIẾP THEO"
+      },
+      {
+        "number": 450,
+        "text": "Đảm bảo đủ 10 hình, đúng thứ tự và ghi nhận hoàn tất lượt xem"
+      },
+      {
+        "number": 451,
+        "text": "10 hình ảnh; nhãn tên từng loại; hiệu ứng"
+      },
+      {
+        "number": 452,
+        "text": "15"
+      },
+      {
+        "number": 453,
+        "text": "Danh sách hình ảnh mục 2"
+      },
+      {
+        "number": 454,
+        "text": "Hình ảnh BMVN số 9"
+      },
+      {
+        "number": 455,
+        "text": "Bom hàng không"
+      },
+      {
+        "number": 456,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 457,
+        "text": "Người học xem hình ảnh; hệ thống lần lượt trình chiếu"
+      },
+      {
+        "number": 458,
+        "text": "Không"
+      },
+      {
+        "number": 459,
+        "text": "Mỗi lượt hiển thị một hình ảnh kèm tên loại"
+      },
+      {
+        "number": 460,
+        "text": "Chuyển hình tiếp theo theo trình tự thiết kế; sau hình 10 mới hiện TIẾP THEO"
+      },
+      {
+        "number": 461,
+        "text": "Đảm bảo đủ 10 hình, đúng thứ tự và ghi nhận hoàn tất lượt xem"
+      },
+      {
+        "number": 462,
+        "text": "10 hình ảnh; nhãn tên từng loại; hiệu ứng"
+      },
+      {
+        "number": 463,
+        "text": "16"
+      },
+      {
+        "number": 464,
+        "text": "Danh sách hình ảnh mục 2"
+      },
+      {
+        "number": 465,
+        "text": "Hình ảnh BMVN số 10"
+      },
+      {
+        "number": 466,
+        "text": "Bom phát quang"
+      },
+      {
+        "number": 467,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 468,
+        "text": "Người học xem hình ảnh; hệ thống lần lượt trình chiếu"
+      },
+      {
+        "number": 469,
+        "text": "Không"
+      },
+      {
+        "number": 470,
+        "text": "Mỗi lượt hiển thị một hình ảnh kèm tên loại"
+      },
+      {
+        "number": 471,
+        "text": "Chuyển hình tiếp theo theo trình tự thiết kế; sau hình 10 mới hiện TIẾP THEO"
+      },
+      {
+        "number": 472,
+        "text": "Đảm bảo đủ 10 hình, đúng thứ tự và ghi nhận hoàn tất lượt xem"
+      },
+      {
+        "number": 473,
+        "text": "10 hình ảnh; nhãn tên từng loại; hiệu ứng"
+      },
+      {
+        "number": 474,
+        "text": "17"
+      },
+      {
+        "number": 475,
+        "text": "Thông điệp sau bộ hình ảnh"
+      },
+      {
+        "number": 476,
+        "text": "Nền/khung thông điệp"
+      },
+      {
+        "number": 477,
+        "text": "BMVN có nhiều hình dạng, kích thước và màu sắc khác nhau."
+      },
+      {
+        "number": 478,
+        "text": "Mascot đọc: “Các hình ảnh này giúp bạn làm quen với một số dạng BMVN thường gặp. Không nên dựa vào hình dạng bên ngoài để tự khẳng định một vật thể là an toàn.”"
+      },
+      {
+        "number": 479,
+        "text": "Không"
+      },
+      {
+        "number": 480,
+        "text": "Không"
+      },
+      {
+        "number": 481,
+        "text": "Hiển thị thông điệp và lời dẫn Mascot"
+      },
+      {
+        "number": 482,
+        "text": "Sau khi bộ 10 hình ảnh đã được xem hết"
+      },
+      {
+        "number": 483,
+        "text": "Text lưu ý phải hiển thị đầy đủ"
+      },
+      {
+        "number": 484,
+        "text": "Text; giọng đọc; đồ họa thông điệp"
+      },
+      {
+        "number": 485,
+        "text": "18"
+      },
+      {
+        "number": 486,
+        "text": "Text lưu ý sau bộ hình ảnh"
+      },
+      {
+        "number": 487,
+        "text": "Khung cảnh báo/nhấn mạnh"
+      },
+      {
+        "number": 488,
+        "text": "Đây chỉ là một số dạng BMVN thường gặp. Không thể dựa vào hình dáng bên ngoài để tự khẳng định một vật thể là an toàn."
+      },
+      {
+        "number": 489,
+        "text": "Có thể dùng cùng lời dẫn Mascot ở ID 17; không tự thêm lời mới"
+      },
+      {
+        "number": 490,
+        "text": "Không"
+      },
+      {
+        "number": 491,
+        "text": "Không"
+      },
+      {
+        "number": 492,
+        "text": "Thông điệp lưu ý nổi bật"
+      },
+      {
+        "number": 493,
+        "text": "Sau phần trình chiếu 10 hình ảnh"
+      },
+      {
+        "number": 494,
+        "text": "Giữ nguyên nội dung text theo kịch bản"
+      },
+      {
+        "number": 495,
+        "text": "Đồ họa text cảnh báo"
+      },
+      {
+        "number": 496,
+        "text": "19"
+      },
+      {
+        "number": 497,
+        "text": "Chuyển sang mục dấu hiệu"
+      },
+      {
+        "number": 498,
+        "text": "Nút TIẾP THEO"
+      },
+      {
+        "number": 499,
+        "text": "TIẾP THEO"
+      },
+      {
+        "number": 500,
+        "text": "Không"
+      },
+      {
+        "number": 501,
+        "text": "Nhấn nút"
+      },
+      {
+        "number": 502,
+        "text": "Không"
+      },
+      {
+        "number": 503,
+        "text": "Mở mục 3: DẤU HIỆU KHU VỰC CÓ THỂ CÓ BMVN"
+      },
+      {
+        "number": 504,
+        "text": "Chỉ khi hình ảnh thứ 10 đã hiển thị hoàn tất"
+      },
+      {
+        "number": 505,
+        "text": "Ẩn nút trước khi xem hết bộ hình ảnh"
+      },
+      {
+        "number": 506,
+        "text": "Nút điều hướng"
+      },
+      {
+        "number": 507,
+        "text": "20"
+      },
+      {
+        "number": 508,
+        "text": "Dẫn vào mục dấu hiệu"
+      },
+      {
+        "number": 509,
+        "text": "Quay lại bối cảnh bờ ruộng sau mưa; Mascot"
+      },
+      {
+        "number": 510,
+        "text": "Không bắt buộc hiển thị text riêng"
+      },
+      {
+        "number": 511,
+        "text": "Mascot đọc: “Bây giờ, hãy quay lại tình huống mở đầu. Ngoài vật kim loại lạ, bạn còn thấy những dấu hiệu nào xung quanh khu vực này cần được lưu ý?”"
+      },
+      {
+        "number": 512,
+        "text": "Không"
+      },
+      {
+        "number": 513,
+        "text": "Không"
+      },
+      {
+        "number": 514,
+        "text": "Tái hiện bối cảnh mở đầu"
+      },
+      {
+        "number": 515,
+        "text": "Sau lời dẫn, lần lượt trình bày 4 dấu hiệu"
+      },
+      {
+        "number": 516,
+        "text": "Không thêm dấu hiệu ngoài nội dung kịch bản"
+      },
+      {
+        "number": 517,
+        "text": "Minh họa bối cảnh; Mascot; voice-over"
+      },
+      {
+        "number": 518,
+        "text": "21"
+      },
+      {
+        "number": 519,
+        "text": "Dấu hiệu 1"
+      },
+      {
+        "number": 520,
+        "text": "Minh họa mặt đất có dấu hiệu bị xáo trộn"
+      },
+      {
+        "number": 521,
+        "text": "ĐẤT BỊ XÁO TRỘN"
+      },
+      {
+        "number": 522,
+        "text": "Lời bình: “Những dấu hiệu bất thường trên mặt đất có thể là dấu hiệu cần đặc biệt lưu ý.”"
+      },
+      {
+        "number": 523,
+        "text": "Không"
+      },
+      {
+        "number": 524,
+        "text": "Không"
+      },
+      {
+        "number": 525,
+        "text": "Hiển thị minh họa và nhãn dấu hiệu"
+      },
+      {
+        "number": 526,
+        "text": "Sau khi lời bình kết thúc, chuyển dấu hiệu tiếp theo"
+      },
+      {
+        "number": 527,
+        "text": "Giữ nguyên lời bình và text"
+      },
+      {
+        "number": 528,
+        "text": "Minh họa; text; voice-over"
+      },
+      {
+        "number": 529,
+        "text": "22"
+      },
+      {
+        "number": 530,
+        "text": "Dấu hiệu 2"
+      },
+      {
+        "number": 531,
+        "text": "Minh họa sau mưa, sạt lở hoặc xói mòn làm đất đá dịch chuyển"
+      },
+      {
+        "number": 532,
+        "text": "SAU MƯA – SẠT LỞ – XÓI MÒN"
+      },
+      {
+        "number": 533,
+        "text": "Lời bình: “Sau mưa lớn hoặc sạt lở, đất đá có thể bị dịch chuyển và làm lộ ra những vật thể trước đó bị che khuất.”"
+      },
+      {
+        "number": 534,
+        "text": "Không"
+      },
+      {
+        "number": 535,
+        "text": "Không"
+      },
+      {
+        "number": 536,
+        "text": "Hiển thị minh họa và nhãn dấu hiệu"
+      },
+      {
+        "number": 537,
+        "text": "Sau khi lời bình kết thúc, chuyển dấu hiệu tiếp theo"
+      },
+      {
+        "number": 538,
+        "text": "Không thể hiện hành động tiếp cận hoặc chạm vật thể nghi ngờ"
+      },
+      {
+        "number": 539,
+        "text": "Minh họa; text; voice-over"
+      },
+      {
+        "number": 540,
+        "text": "23"
+      },
+      {
+        "number": 541,
+        "text": "Dấu hiệu 3"
+      },
+      {
+        "number": 542,
+        "text": "Minh họa căn cứ quân sự cũ/đồn bốt cũ/hố bom/đất hoang có bụi rậm"
+      },
+      {
+        "number": 543,
+        "text": "CĂN CỨ CŨ – ĐỒN BỐT CŨ – HỐ BOM – ĐẤT HOANG"
+      },
+      {
+        "number": 544,
+        "text": "Lời bình: “Những khu vực từng là căn cứ quân sự, đồn bốt cũ, hố bom hoặc những khu đất hoang, nhiều bụi rậm cũng cần được đặc biệt lưu ý.”"
+      },
+      {
+        "number": 545,
+        "text": "Không"
+      },
+      {
+        "number": 546,
+        "text": "Không"
+      },
+      {
+        "number": 547,
+        "text": "Hiển thị minh họa và nhãn dấu hiệu"
+      },
+      {
+        "number": 548,
+        "text": "Sau khi lời bình kết thúc, chuyển dấu hiệu tiếp theo"
+      },
+      {
+        "number": 549,
+        "text": "Bám sát các địa điểm được nêu trong kịch bản"
+      },
+      {
+        "number": 550,
+        "text": "Bộ minh họa; text; voice-over"
+      },
+      {
+        "number": 551,
+        "text": "24"
+      },
+      {
+        "number": 552,
+        "text": "Dấu hiệu 4"
+      },
+      {
+        "number": 553,
+        "text": "Minh họa vật thể kim loại lạ/không rõ nguồn gốc; không có người tiếp xúc"
+      },
+      {
+        "number": 554,
+        "text": "VẬT LẠ KHÔNG RÕ NGUỒN GỐCKHÔNG TIẾP CẬN – KHÔNG CHẠM"
+      },
+      {
+        "number": 555,
+        "text": "Lời bình: “Nếu phát hiện một vật thể lạ, đặc biệt là vật thể kim loại không rõ nguồn gốc, hãy coi đó là dấu hiệu cần cảnh giác. Không tiếp cận và không chạm vào vật nghi ngờ.”"
+      },
+      {
+        "number": 556,
+        "text": "Không"
+      },
+      {
+        "number": 557,
+        "text": "Không"
+      },
+      {
+        "number": 558,
+        "text": "Hiển thị nhãn dấu hiệu và cảnh báo hành động"
+      },
+      {
+        "number": 559,
+        "text": "Sau lời bình, chuyển sang củng cố kiến thức"
+      },
+      {
+        "number": 560,
+        "text": "Cảnh minh họa không được khuyến khích người học lại gần hoặc kiểm tra vật thể"
+      },
+      {
+        "number": 561,
+        "text": "Minh họa; text cảnh báo; voice-over"
+      },
+      {
+        "number": 562,
+        "text": "25"
+      },
+      {
+        "number": 563,
+        "text": "Củng cố kiến thức"
+      },
+      {
+        "number": 564,
+        "text": "Tổng hợp hình ảnh các dấu hiệu đã trình bày; Mascot"
+      },
+      {
+        "number": 565,
+        "text": "KHI KHÔNG CHẮC CHẮN:KHÔNG TỰ KIỂM TRA – KHÔNG TIẾP CẬN – KHÔNG CHẠM"
+      },
+      {
+        "number": 566,
+        "text": "Mascot đọc: “Hãy ghi nhớ: những dấu hiệu bất thường của đất, sự thay đổi địa hình sau mưa, sạt lở, xói mòn và những vật thể lạ không rõ nguồn gốc đều cần được lưu ý. Khi không chắc chắn, không tự kiểm tra, không tiếp cận và không chạm vào vật nghi ngờ.”"
+      },
+      {
+        "number": 567,
+        "text": "Nhấn BẮT ĐẦU PHẦN THỬ TÀI BẠN"
+      },
+      {
+        "number": 568,
+        "text": "Không"
+      },
+      {
+        "number": 569,
+        "text": "Màn hình tổng kết dấu hiệu; nút bắt đầu phần thử tài"
+      },
+      {
+        "number": 570,
+        "text": "Người học nhấn nút"
+      },
+      {
+        "number": 571,
+        "text": "Nút chuyển sang mục 4; giữ nguyên tên nút trong kịch bản"
+      },
+      {
+        "number": 572,
+        "text": "Đồ họa tổng hợp; Mascot; text; nút"
+      },
+      {
+        "number": 573,
+        "text": "26"
+      },
+      {
+        "number": 574,
+        "text": "Mở đầu phần thử tài"
+      },
+      {
+        "number": 575,
+        "text": "Giao diện kéo-thả; các ô phân loại"
+      },
+      {
+        "number": 576,
+        "text": "NẾU GẶP NHỮNG HÌNH ẢNH SAU, BẠN CẦN CẢNH GIÁC Ở MỨC NÀO?Hướng dẫn: Hãy kéo và thả hình ảnh vào ô phù hợp.Các ô: CÓ NGUY HIỂM / KHÔNG CHẮC / KHÔNG NGUY HIỂM"
+      },
+      {
+        "number": 577,
+        "text": "Mascot đọc: “Không phải lúc nào chúng ta cũng có thể xác định chính xác một vật thể chỉ bằng quan sát. Hãy kéo và thả từng hình ảnh vào ô phù hợp với mức độ cần cảnh giác.”"
+      },
+      {
+        "number": 578,
+        "text": "Kéo và thả từng hình ảnh vào một trong ba ô"
+      },
+      {
+        "number": 579,
+        "text": "Thông báo đúng/sai theo từng lượt"
+      },
+      {
+        "number": 580,
+        "text": "Giao diện tương tác; hiển thị từng hình ảnh và ba ô lựa chọn"
+      },
+      {
+        "number": 581,
+        "text": "Thực hiện đủ 8 lượt; mỗi lượt đúng mới được chuyển lượt kế tiếp"
+      },
+      {
+        "number": 582,
+        "text": "Khi kéo vào ô sai, hiển thị phản hồi sai và cho phép làm lại đúng lượt đó"
+      },
+      {
+        "number": 583,
+        "text": "Giao diện kéo-thả; 8 hình ảnh; ba ô; phản hồi"
+      },
+      {
+        "number": 584,
+        "text": "27"
+      },
+      {
+        "number": 585,
+        "text": "Phần thử tài – lượt tương tác"
+      },
+      {
+        "number": 586,
+        "text": "Hình lựu đạn"
+      },
+      {
+        "number": 587,
+        "text": "Hình ảnh: Hình lựu đạnÔ lựa chọn đúng: Có nguy hiểm"
+      },
+      {
+        "number": 588,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 589,
+        "text": "Kéo-thả hình ảnh vào ô phù hợp"
+      },
+      {
+        "number": 590,
+        "text": "Chính xác. Đây là loại vật thể cần được nhận biết và tránh tiếp xúc."
+      },
+      {
+        "number": 591,
+        "text": "Giao diện phản hồi sau khi thả hình ảnh"
+      },
+      {
+        "number": 592,
+        "text": "Đúng: mở lượt kế tiếp; sai: làm lại lượt hiện tại"
+      },
+      {
+        "number": 593,
+        "text": "Không cho qua lượt nếu chưa trả lời đúng; không làm lại từ đầu phần thử tài khi sai một lượt"
+      },
+      {
+        "number": 594,
+        "text": "Tài sản hình ảnh; cấu hình đáp án; phản hồi đúng"
+      },
+      {
+        "number": 595,
+        "text": "28"
+      },
+      {
+        "number": 596,
+        "text": "Phần thử tài – lượt tương tác"
+      },
+      {
+        "number": 597,
+        "text": "Hình bom bi"
+      },
+      {
+        "number": 598,
+        "text": "Hình ảnh: Hình bom biÔ lựa chọn đúng: Có nguy hiểm"
+      },
+      {
+        "number": 599,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 600,
+        "text": "Kéo-thả hình ảnh vào ô phù hợp"
+      },
+      {
+        "number": 601,
+        "text": "Chính xác. Không tiếp cận hoặc chạm vào vật nghi ngờ là BMVN."
+      },
+      {
+        "number": 602,
+        "text": "Giao diện phản hồi sau khi thả hình ảnh"
+      },
+      {
+        "number": 603,
+        "text": "Đúng: mở lượt kế tiếp; sai: làm lại lượt hiện tại"
+      },
+      {
+        "number": 604,
+        "text": "Không cho qua lượt nếu chưa trả lời đúng; không làm lại từ đầu phần thử tài khi sai một lượt"
+      },
+      {
+        "number": 605,
+        "text": "Tài sản hình ảnh; cấu hình đáp án; phản hồi đúng"
+      },
+      {
+        "number": 606,
+        "text": "29"
+      },
+      {
+        "number": 607,
+        "text": "Phần thử tài – lượt tương tác"
+      },
+      {
+        "number": 608,
+        "text": "Đầu đạn/vật thể nghi ngờ"
+      },
+      {
+        "number": 609,
+        "text": "Hình ảnh: Đầu đạn/vật thể nghi ngờÔ lựa chọn đúng: Có nguy hiểm"
+      },
+      {
+        "number": 610,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 611,
+        "text": "Kéo-thả hình ảnh vào ô phù hợp"
+      },
+      {
+        "number": 612,
+        "text": "Đúng. Vật nghi ngờ cần được coi là nguy hiểm."
+      },
+      {
+        "number": 613,
+        "text": "Giao diện phản hồi sau khi thả hình ảnh"
+      },
+      {
+        "number": 614,
+        "text": "Đúng: mở lượt kế tiếp; sai: làm lại lượt hiện tại"
+      },
+      {
+        "number": 615,
+        "text": "Không cho qua lượt nếu chưa trả lời đúng; không làm lại từ đầu phần thử tài khi sai một lượt"
+      },
+      {
+        "number": 616,
+        "text": "Tài sản hình ảnh; cấu hình đáp án; phản hồi đúng"
+      },
+      {
+        "number": 617,
+        "text": "30"
+      },
+      {
+        "number": 618,
+        "text": "Phần thử tài – lượt tương tác"
+      },
+      {
+        "number": 619,
+        "text": "Vật kim loại lộ một phần sau mưa"
+      },
+      {
+        "number": 620,
+        "text": "Hình ảnh: Vật kim loại lộ một phần sau mưaÔ lựa chọn đúng: Không chắc"
+      },
+      {
+        "number": 621,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 622,
+        "text": "Kéo-thả hình ảnh vào ô phù hợp"
+      },
+      {
+        "number": 623,
+        "text": "Đúng. Không thể xác định an toàn chỉ bằng quan sát. Khi nghi ngờ, không tiếp cận."
+      },
+      {
+        "number": 624,
+        "text": "Giao diện phản hồi sau khi thả hình ảnh"
+      },
+      {
+        "number": 625,
+        "text": "Đúng: mở lượt kế tiếp; sai: làm lại lượt hiện tại"
+      },
+      {
+        "number": 626,
+        "text": "Không cho qua lượt nếu chưa trả lời đúng; không làm lại từ đầu phần thử tài khi sai một lượt"
+      },
+      {
+        "number": 627,
+        "text": "Tài sản hình ảnh; cấu hình đáp án; phản hồi đúng"
+      },
+      {
+        "number": 628,
+        "text": "31"
+      },
+      {
+        "number": 629,
+        "text": "Phần thử tài – lượt tương tác"
+      },
+      {
+        "number": 630,
+        "text": "Đất bị xáo trộn"
+      },
+      {
+        "number": 631,
+        "text": "Hình ảnh: Đất bị xáo trộnÔ lựa chọn đúng: Không chắc"
+      },
+      {
+        "number": 632,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 633,
+        "text": "Kéo-thả hình ảnh vào ô phù hợp"
+      },
+      {
+        "number": 634,
+        "text": "Đúng. Đây là dấu hiệu cần lưu ý, nhưng không thể chỉ từ dấu hiệu này kết luận có BMVN."
+      },
+      {
+        "number": 635,
+        "text": "Giao diện phản hồi sau khi thả hình ảnh"
+      },
+      {
+        "number": 636,
+        "text": "Đúng: mở lượt kế tiếp; sai: làm lại lượt hiện tại"
+      },
+      {
+        "number": 637,
+        "text": "Không cho qua lượt nếu chưa trả lời đúng; không làm lại từ đầu phần thử tài khi sai một lượt"
+      },
+      {
+        "number": 638,
+        "text": "Tài sản hình ảnh; cấu hình đáp án; phản hồi đúng"
+      },
+      {
+        "number": 639,
+        "text": "32"
+      },
+      {
+        "number": 640,
+        "text": "Phần thử tài – lượt tương tác"
+      },
+      {
+        "number": 641,
+        "text": "Vật thể lạ không rõ nguồn gốc"
+      },
+      {
+        "number": 642,
+        "text": "Hình ảnh: Vật thể lạ không rõ nguồn gốcÔ lựa chọn đúng: Không chắc"
+      },
+      {
+        "number": 643,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 644,
+        "text": "Kéo-thả hình ảnh vào ô phù hợp"
+      },
+      {
+        "number": 645,
+        "text": "Đúng. Không tự kiểm tra để xác định."
+      },
+      {
+        "number": 646,
+        "text": "Giao diện phản hồi sau khi thả hình ảnh"
+      },
+      {
+        "number": 647,
+        "text": "Đúng: mở lượt kế tiếp; sai: làm lại lượt hiện tại"
+      },
+      {
+        "number": 648,
+        "text": "Không cho qua lượt nếu chưa trả lời đúng; không làm lại từ đầu phần thử tài khi sai một lượt"
+      },
+      {
+        "number": 649,
+        "text": "Tài sản hình ảnh; cấu hình đáp án; phản hồi đúng"
+      },
+      {
+        "number": 650,
+        "text": "33"
+      },
+      {
+        "number": 651,
+        "text": "Phần thử tài – lượt tương tác"
+      },
+      {
+        "number": 652,
+        "text": "Vật dụng dân dụng rõ ràng"
+      },
+      {
+        "number": 653,
+        "text": "Hình ảnh: Vật dụng dân dụng rõ ràngÔ lựa chọn đúng: Không nguy hiểm"
+      },
+      {
+        "number": 654,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 655,
+        "text": "Kéo-thả hình ảnh vào ô phù hợp"
+      },
+      {
+        "number": 656,
+        "text": "Đúng. Hình ảnh cho thấy vật dụng thông thường, không phải vật nghi BMVN."
+      },
+      {
+        "number": 657,
+        "text": "Giao diện phản hồi sau khi thả hình ảnh"
+      },
+      {
+        "number": 658,
+        "text": "Đúng: mở lượt kế tiếp; sai: làm lại lượt hiện tại"
+      },
+      {
+        "number": 659,
+        "text": "Không cho qua lượt nếu chưa trả lời đúng; không làm lại từ đầu phần thử tài khi sai một lượt"
+      },
+      {
+        "number": 660,
+        "text": "Tài sản hình ảnh; cấu hình đáp án; phản hồi đúng"
+      },
+      {
+        "number": 661,
+        "text": "34"
+      },
+      {
+        "number": 662,
+        "text": "Phần thử tài – lượt tương tác"
+      },
+      {
+        "number": 663,
+        "text": "Hình biển cảnh báo BMVN"
+      },
+      {
+        "number": 664,
+        "text": "Hình ảnh: Hình biển cảnh báo BMVNÔ lựa chọn đúng: Có nguy hiểm"
+      },
+      {
+        "number": 665,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 666,
+        "text": "Kéo-thả hình ảnh vào ô phù hợp"
+      },
+      {
+        "number": 667,
+        "text": "Chính xác. Biển báo cho biết khu vực có nguy cơ và cần tuân thủ cảnh báo."
+      },
+      {
+        "number": 668,
+        "text": "Giao diện phản hồi sau khi thả hình ảnh"
+      },
+      {
+        "number": 669,
+        "text": "Đúng: mở lượt kế tiếp; sai: làm lại lượt hiện tại"
+      },
+      {
+        "number": 670,
+        "text": "Không cho qua lượt nếu chưa trả lời đúng; không làm lại từ đầu phần thử tài khi sai một lượt"
+      },
+      {
+        "number": 671,
+        "text": "Tài sản hình ảnh; cấu hình đáp án; phản hồi đúng"
+      },
+      {
+        "number": 672,
+        "text": "35"
+      },
+      {
+        "number": 673,
+        "text": "Phản hồi sai phần thử tài"
+      },
+      {
+        "number": 674,
+        "text": "Khung phản hồi"
+      },
+      {
+        "number": 675,
+        "text": "Chưa chính xác.Không thể khẳng định một vật lạ là an toàn chỉ bằng hình dáng bên ngoài. Hãy xem lại và lựa chọn lại."
+      },
+      {
+        "number": 676,
+        "text": "Giọng đọc nếu thiết kế có đọc phản hồi; nội dung bắt buộc là text nêu bên trái"
+      },
+      {
+        "number": 677,
+        "text": "Người học thực hiện lại lượt tương tác đang sai"
+      },
+      {
+        "number": 678,
+        "text": "Hiển thị phản hồi sai"
+      },
+      {
+        "number": 679,
+        "text": "Giữ nguyên hình ảnh và ba ô của lượt hiện tại"
+      },
+      {
+        "number": 680,
+        "text": "Chỉ khi chọn đúng mới sang lượt tiếp theo"
+      },
+      {
+        "number": 681,
+        "text": "Cho phép thử lại đúng lượt; không chuyển lượt khi đáp án sai"
+      },
+      {
+        "number": 682,
+        "text": "Text phản hồi; logic kiểm tra đáp án"
+      },
+      {
+        "number": 683,
+        "text": "36"
+      },
+      {
+        "number": 684,
+        "text": "Hoàn thành phần thử tài"
+      },
+      {
+        "number": 685,
+        "text": "Màn hình hoàn thành"
+      },
+      {
+        "number": 686,
+        "text": "HOÀN THÀNH!Bạn đã hoàn thành bài học nhận diện BMVN và dấu hiệu khu vực có thể có BMVN."
+      },
+      {
+        "number": 687,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 688,
+        "text": "Tự động hiển thị khi hoàn thành đủ 8 lượt"
+      },
+      {
+        "number": 689,
+        "text": "Thông báo hoàn thành"
+      },
+      {
+        "number": 690,
+        "text": "Màn hình hoàn thành phần thử tài"
+      },
+      {
+        "number": 691,
+        "text": "Sau khi cả 8 lượt đều được trả lời đúng"
+      },
+      {
+        "number": 692,
+        "text": "Ghi nhận hoàn tất 8 lượt"
+      },
+      {
+        "number": 693,
+        "text": "Màn hình hoàn thành; text"
+      },
+      {
+        "number": 694,
+        "text": "37"
+      },
+      {
+        "number": 695,
+        "text": "Quay lại tình huống mở đầu"
+      },
+      {
+        "number": 696,
+        "text": "Hiển thị lại bờ ruộng sau mưa và vật kim loại lạ"
+      },
+      {
+        "number": 697,
+        "text": "Câu hỏi: Bạn nên xử lý tình huống này như thế nào?A. Vật này không giống các hình đã học nên có thể an toàn.B. Chưa thể xác định chỉ bằng quan sát, cần coi đây là tình huống cần cảnh giác và không tiếp cận.C. Lại gần hơn để xem rõ hình dạng."
+      },
+      {
+        "number": 698,
+        "text": "Mascot đọc: “Bây giờ, hãy quay lại tình huống lúc đầu. Bạn nhìn thấy một vật kim loại lạ lộ một phần sau mưa. Bạn nên nghĩ và làm gì?”"
+      },
+      {
+        "number": 699,
+        "text": "Chọn một đáp án A/B/C"
+      },
+      {
+        "number": 700,
+        "text": "Đáp án đúng: B. Phản hồi: “Chính xác. Khi không chắc chắn, không tự kiểm tra, không tiếp cận và không chạm vào vật nghi ngờ.”"
+      },
+      {
+        "number": 701,
+        "text": "Màn hình câu hỏi tình huống"
+      },
+      {
+        "number": 702,
+        "text": "Chọn đúng B thì hiển thị phản hồi và nút LÀM BÀI KIỂM TRA"
+      },
+      {
+        "number": 703,
+        "text": "Đáp án đúng theo kịch bản là B; cấu hình phản hồi tương ứng"
+      },
+      {
+        "number": 704,
+        "text": "Hình nền tình huống; câu hỏi; đáp án; phản hồi; nút"
+      },
+      {
+        "number": 705,
+        "text": "38"
+      },
+      {
+        "number": 706,
+        "text": "Chuyển sang bài kiểm tra"
+      },
+      {
+        "number": 707,
+        "text": "Nút LÀM BÀI KIỂM TRA"
+      },
+      {
+        "number": 708,
+        "text": "LÀM BÀI KIỂM TRA"
+      },
+      {
+        "number": 709,
+        "text": "Không"
+      },
+      {
+        "number": 710,
+        "text": "Nhấn nút"
+      },
+      {
+        "number": 711,
+        "text": "Không"
+      },
+      {
+        "number": 712,
+        "text": "Mở mục 5: BÀI KIỂM TRA"
+      },
+      {
+        "number": 713,
+        "text": "Sau câu hỏi tình huống cuối phần thử tài"
+      },
+      {
+        "number": 714,
+        "text": "Nút chuyển đến bài kiểm tra 5 câu"
+      },
+      {
+        "number": 715,
+        "text": "Nút điều hướng"
+      },
+      {
+        "number": 716,
+        "text": "39"
+      },
+      {
+        "number": 717,
+        "text": "Mở bài kiểm tra"
+      },
+      {
+        "number": 718,
+        "text": "Giao diện bài kiểm tra"
+      },
+      {
+        "number": 719,
+        "text": "BÀI KIỂM TRAGồm 5 câu hỏi. Mỗi lần chỉ hiển thị một câu. Phải đạt 100% mới được chuyển sang bài tiếp theo."
+      },
+      {
+        "number": 720,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 721,
+        "text": "Người học trả lời từng câu"
+      },
+      {
+        "number": 722,
+        "text": "Thông báo đúng/sai sau mỗi câu"
+      },
+      {
+        "number": 723,
+        "text": "Mỗi màn hình chỉ có một câu hỏi"
+      },
+      {
+        "number": 724,
+        "text": "Sau khi chọn đáp án, ghi nhận kết quả rồi cho làm câu tiếp theo"
+      },
+      {
+        "number": 725,
+        "text": "Không giới hạn số lần làm lại; thứ tự câu hỏi thay đổi mỗi lượt làm lại; không bắt làm lại ngay tại câu sai"
+      },
+      {
+        "number": 726,
+        "text": "Giao diện bài kiểm tra; logic xáo trộn câu"
+      },
+      {
+        "number": 727,
+        "text": "40"
+      },
+      {
+        "number": 728,
+        "text": "Bài kiểm tra"
+      },
+      {
+        "number": 729,
+        "text": "Câu 1 – Chọn nhiều đáp án"
+      },
+      {
+        "number": 730,
+        "text": "Bom mìn và vật nổ gồm các loại nào sau đây?A. Lựu đạn.B. Bom bi, đạn pháo.C. Thanh sắt rỉ sét."
+      },
+      {
+        "number": 731,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 732,
+        "text": "Chọn đáp án; riêng câu 1 cho phép chọn nhiều, câu 5 chọn hình ảnh"
+      },
+      {
+        "number": 733,
+        "text": "Đáp án đúng: A và BTrả lời đúng: “Chính xác!”Trả lời sai: “Chưa chính xác. Hãy xem lại các loại vật thể được đề cập trong bài học.”"
+      },
+      {
+        "number": 734,
+        "text": "Hiển thị một câu mỗi màn hình"
+      },
+      {
+        "number": 735,
+        "text": "Sau khi trả lời, lưu đáp án và chuyển sang câu tiếp theo; chỉ tổng hợp sau câu 5"
+      },
+      {
+        "number": 736,
+        "text": "Câu trả lời sai không chặn câu tiếp theo; giữ trạng thái tiến trình; xáo trộn thứ tự câu hỏi ở mỗi lần làm lại"
+      },
+      {
+        "number": 737,
+        "text": "Giao diện từng câu; hình ảnh câu 5; đáp án và phản hồi"
+      },
+      {
+        "number": 738,
+        "text": "41"
+      },
+      {
+        "number": 739,
+        "text": "Bài kiểm tra"
+      },
+      {
+        "number": 740,
+        "text": "Câu 2 – Chọn một đáp án"
+      },
+      {
+        "number": 741,
+        "text": "Những khu vực nào sau đây có thể có bom mìn và vật nổ?A. Khu căn cứ quân sự cũ, đồn bốt cũ.B. Hố bom, bãi đất hoang có bụi rậm.C. Cả 2 đáp án trên."
+      },
+      {
+        "number": 742,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 743,
+        "text": "Chọn đáp án; riêng câu 1 cho phép chọn nhiều, câu 5 chọn hình ảnh"
+      },
+      {
+        "number": 744,
+        "text": "Đáp án đúng: CTheo quy tắc chung: thông báo kết quả đúng hoặc chưa chính xác sau khi chọn đáp án."
+      },
+      {
+        "number": 745,
+        "text": "Hiển thị một câu mỗi màn hình"
+      },
+      {
+        "number": 746,
+        "text": "Sau khi trả lời, lưu đáp án và chuyển sang câu tiếp theo; chỉ tổng hợp sau câu 5"
+      },
+      {
+        "number": 747,
+        "text": "Câu trả lời sai không chặn câu tiếp theo; giữ trạng thái tiến trình; xáo trộn thứ tự câu hỏi ở mỗi lần làm lại"
+      },
+      {
+        "number": 748,
+        "text": "Giao diện từng câu; hình ảnh câu 5; đáp án và phản hồi"
+      },
+      {
+        "number": 749,
+        "text": "42"
+      },
+      {
+        "number": 750,
+        "text": "Bài kiểm tra"
+      },
+      {
+        "number": 751,
+        "text": "Câu 3 – Chọn một đáp án"
+      },
+      {
+        "number": 752,
+        "text": "Sau mưa lớn, bạn thấy một vật kim loại lộ một phần trên bờ ruộng. Bạn không nhận ra vật đó thuộc loại nào. Bạn nên làm gì?A. Lại gần để xem rõ hơn.B. Dùng que gạt đất để kiểm tra.C. Không tiếp cận và coi đây là tình huống cần cảnh giác."
+      },
+      {
+        "number": 753,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 754,
+        "text": "Chọn đáp án; riêng câu 1 cho phép chọn nhiều, câu 5 chọn hình ảnh"
+      },
+      {
+        "number": 755,
+        "text": "Đáp án đúng: CTheo quy tắc chung: thông báo kết quả đúng hoặc chưa chính xác sau khi chọn đáp án."
+      },
+      {
+        "number": 756,
+        "text": "Hiển thị một câu mỗi màn hình"
+      },
+      {
+        "number": 757,
+        "text": "Sau khi trả lời, lưu đáp án và chuyển sang câu tiếp theo; chỉ tổng hợp sau câu 5"
+      },
+      {
+        "number": 758,
+        "text": "Câu trả lời sai không chặn câu tiếp theo; giữ trạng thái tiến trình; xáo trộn thứ tự câu hỏi ở mỗi lần làm lại"
+      },
+      {
+        "number": 759,
+        "text": "Giao diện từng câu; hình ảnh câu 5; đáp án và phản hồi"
+      },
+      {
+        "number": 760,
+        "text": "43"
+      },
+      {
+        "number": 761,
+        "text": "Bài kiểm tra"
+      },
+      {
+        "number": 762,
+        "text": "Câu 4 – Chọn một đáp án"
+      },
+      {
+        "number": 763,
+        "text": "Bom mìn, vật nổ nằm sâu dưới ao, hồ, sông, suối một thời gian dài có nguy hiểm hay không?A. Không nguy hiểm vì chúng sẽ không phát nổ.B. Vẫn còn nguy hiểm vì tính nhạy nổ của chúng có thể không giảm theo thời gian.C. Tính nhạy nổ của bom mìn, vật nổ bị giảm sau 20 năm."
+      },
+      {
+        "number": 764,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 765,
+        "text": "Chọn đáp án; riêng câu 1 cho phép chọn nhiều, câu 5 chọn hình ảnh"
+      },
+      {
+        "number": 766,
+        "text": "Đáp án đúng: BTheo quy tắc chung: thông báo kết quả đúng hoặc chưa chính xác sau khi chọn đáp án."
+      },
+      {
+        "number": 767,
+        "text": "Hiển thị một câu mỗi màn hình"
+      },
+      {
+        "number": 768,
+        "text": "Sau khi trả lời, lưu đáp án và chuyển sang câu tiếp theo; chỉ tổng hợp sau câu 5"
+      },
+      {
+        "number": 769,
+        "text": "Câu trả lời sai không chặn câu tiếp theo; giữ trạng thái tiến trình; xáo trộn thứ tự câu hỏi ở mỗi lần làm lại"
+      },
+      {
+        "number": 770,
+        "text": "Giao diện từng câu; hình ảnh câu 5; đáp án và phản hồi"
+      },
+      {
+        "number": 771,
+        "text": "44"
+      },
+      {
+        "number": 772,
+        "text": "Bài kiểm tra"
+      },
+      {
+        "number": 773,
+        "text": "Câu 5 – Chọn hình ảnh"
+      },
+      {
+        "number": 774,
+        "text": "Đâu là biển báo khu vực nguy hiểm có BMVN?A. Biển cảnh báo BMVN.B. Biển báo giao thông.C. Biển cảnh báo chống đuối nước."
+      },
+      {
+        "number": 775,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 776,
+        "text": "Chọn đáp án; riêng câu 1 cho phép chọn nhiều, câu 5 chọn hình ảnh"
+      },
+      {
+        "number": 777,
+        "text": "Đáp án đúng: ATheo quy tắc chung: thông báo kết quả đúng hoặc chưa chính xác sau khi chọn đáp án."
+      },
+      {
+        "number": 778,
+        "text": "Hiển thị một câu mỗi màn hình"
+      },
+      {
+        "number": 779,
+        "text": "Sau khi trả lời, lưu đáp án và chuyển sang câu tiếp theo; chỉ tổng hợp sau câu 5"
+      },
+      {
+        "number": 780,
+        "text": "Câu trả lời sai không chặn câu tiếp theo; giữ trạng thái tiến trình; xáo trộn thứ tự câu hỏi ở mỗi lần làm lại"
+      },
+      {
+        "number": 781,
+        "text": "Giao diện từng câu; hình ảnh câu 5; đáp án và phản hồi"
+      },
+      {
+        "number": 782,
+        "text": "45"
+      },
+      {
+        "number": 783,
+        "text": "Tổng hợp kết quả bài kiểm tra"
+      },
+      {
+        "number": 784,
+        "text": "Màn hình kết quả"
+      },
+      {
+        "number": 785,
+        "text": "Nếu chưa đạt: “Bạn chưa trả lời đúng tất cả các câu hỏi. Hãy xem lại những nội dung cần ghi nhớ và làm lại toàn bộ bài kiểm tra gồm 5 câu.”Nút: LÀM LẠI BÀI KIỂM TRA"
+      },
+      {
+        "number": 786,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 787,
+        "text": "Hệ thống tổng hợp sau khi người học trả lời câu 5"
+      },
+      {
+        "number": 788,
+        "text": "Nếu chưa đúng cả 5 câu, hiển thị thông báo chưa đạt"
+      },
+      {
+        "number": 789,
+        "text": "Màn hình kết quả tổng hợp"
+      },
+      {
+        "number": 790,
+        "text": "Chọn LÀM LẠI BÀI KIỂM TRA để bắt đầu lại từ câu đầu tiên"
+      },
+      {
+        "number": 791,
+        "text": "Bắt buộc làm lại toàn bộ 5 câu; không chỉ làm lại câu sai; không giới hạn số lần; đổi thứ tự câu hỏi mỗi lượt"
+      },
+      {
+        "number": 792,
+        "text": "Màn hình kết quả; nút làm lại; logic xáo trộn"
+      },
+      {
+        "number": 793,
+        "text": "46"
+      },
+      {
+        "number": 794,
+        "text": "Kết quả đạt yêu cầu"
+      },
+      {
+        "number": 795,
+        "text": "Màn hình hoàn thành Bài học số 1"
+      },
+      {
+        "number": 796,
+        "text": "CHÚC MỪNG BẠN ĐÃ HOÀN THÀNH BÀI HỌC SỐ 1Bạn đã nắm được những kiến thức cơ bản về:• Một số đặc điểm và hình ảnh BMVN thường gặp.• Các khu vực có thể có BMVN.• Một số dấu hiệu cần lưu ý.• Cách nhận biết và ứng xử thận trọng trước vật nghi ngờ."
+      },
+      {
+        "number": 797,
+        "text": "Không bắt buộc"
+      },
+      {
+        "number": 798,
+        "text": "Hệ thống ghi nhận kết quả 5/5 câu đúng"
+      },
+      {
+        "number": 799,
+        "text": "Ghi nhận kết quả 5/5 câu đúng"
+      },
+      {
+        "number": 800,
+        "text": "Màn hình hoàn thành bài học"
+      },
+      {
+        "number": 801,
+        "text": "Chỉ hiển thị khi trả lời đúng cả 5 câu"
+      },
+      {
+        "number": 802,
+        "text": "Không cho chuyển bài nếu chưa đạt 5/5"
+      },
+      {
+        "number": 803,
+        "text": "Màn hình hoàn thành; text tổng kết"
+      },
+      {
+        "number": 804,
+        "text": "47"
+      },
+      {
+        "number": 805,
+        "text": "Điều hướng sang Bài học số 2"
+      },
+      {
+        "number": 806,
+        "text": "Nút TIẾP TỤC → BÀI HỌC SỐ 2"
+      },
+      {
+        "number": 807,
+        "text": "TIẾP TỤC → BÀI HỌC SỐ 2"
+      },
+      {
+        "number": 808,
+        "text": "Không"
+      },
+      {
+        "number": 809,
+        "text": "Nhấn nút"
+      },
+      {
+        "number": 810,
+        "text": "Không"
+      },
+      {
+        "number": 811,
+        "text": "Chuyển sang Bài học số 2"
+      },
+      {
+        "number": 812,
+        "text": "Chỉ sau khi người học trả lời đúng cả 5 câu"
+      },
+      {
+        "number": 813,
+        "text": "Khóa nút hoặc không hiển thị trước khi đạt 5/5"
+      },
+      {
+        "number": 814,
+        "text": "Nút điều hướng; cấu hình chuyển bài"
+      },
+      {
+        "number": 816,
+        "text": "YÊU CẦU LẬP TRÌNH BẮT BUỘC"
+      },
+      {
+        "number": 817,
+        "text": "Video kiến thức phải phát hết mới hiển thị nút TIẾP THEO."
+      },
+      {
+        "number": 818,
+        "text": "Phải xem hết 10 hình ảnh BMVN mới hiển thị nút TIẾP THEO."
+      },
+      {
+        "number": 819,
+        "text": "Trong phần thử tài, khi trả lời sai, người học được thực hiện lại lượt tương tác đó."
+      },
+      {
+        "number": 820,
+        "text": "Trong bài kiểm tra, trả lời sai một câu vẫn được làm tiếp câu sau."
+      },
+      {
+        "number": 821,
+        "text": "Chỉ tổng hợp kết quả sau khi người học hoàn thành cả 5 câu."
+      },
+      {
+        "number": 822,
+        "text": "Nếu chưa đạt 5/5 câu đúng, yêu cầu làm lại toàn bộ bài kiểm tra."
+      },
+      {
+        "number": 823,
+        "text": "Chỉ cho phép chuyển sang Bài học số 2 khi người học trả lời đúng cả 5 câu."
+      }
+    ]
+  },
+  {
+    "source": "S2",
+    "paragraphs": [
+      {
+        "number": 1,
+        "text": "Vinafilms Joint Stock Company"
+      },
+      {
+        "number": 2,
+        "text": "Address: No. 12/25 Phan Dinh Phung Street, Ba Dinh Ward, Hanoi, VietnamTel: (+84) 344 235 689 | (+84) 978 000 018Website: https://vinafilms.org; Email: vinafilms@gmail.com"
+      },
+      {
+        "number": 6,
+        "text": "KỊCH BẢN NỘI DUNG BÀI HỌC SỐ 2"
+      },
+      {
+        "number": 7,
+        "text": "Tên bài học: Những việc làm nguy hiểm và hậu quả của tai nạn BMVN"
+      },
+      {
+        "number": 8,
+        "text": "1. MỞ ĐẦU BÀI HỌC"
+      },
+      {
+        "number": 9,
+        "text": "Màn hình mở đầu"
+      },
+      {
+        "number": 10,
+        "text": "Text hiển thị:"
+      },
+      {
+        "number": 11,
+        "text": "BÀI HỌC SỐ 2 – NHỮNG VIỆC LÀM NGUY HIỂM VÀ HẬU QUẢ CỦA TAI NẠN BMVN"
+      },
+      {
+        "number": 12,
+        "text": "Nút: BẮT ĐẦU BÀI HỌC"
+      },
+      {
+        "number": 13,
+        "text": "Tình huống dẫn dắt"
+      },
+      {
+        "number": 14,
+        "text": "Sau khi người học nhấn nút BẮT ĐẦU BÀI HỌC, Mascot dẫn dắt vào tình huống:"
+      },
+      {
+        "number": 15,
+        "text": "“Các bạn hãy tưởng tượng mình đang chuẩn bị đi vào rừng, lên rẫy hoặc đi qua một khe suối. "
+      },
+      {
+        "number": 16,
+        "text": "Trên đường đi, có thể chúng ta sẽ gặp những vật lạ, khu đất chưa rõ mức độ an toàn hoặc những tình huống cần phải lựa chọn cách xử lý."
+      },
+      {
+        "number": 17,
+        "text": "Vậy những việc làm nào có thể dẫn tới tai nạn BMVN? "
+      },
+      {
+        "number": 18,
+        "text": "Và chúng ta cần làm gì để tránh những tình huống nguy hiểm đó?"
+      },
+      {
+        "number": 19,
+        "text": "Hãy cùng tìm hiểu qua video sau đây.”"
+      },
+      {
+        "number": 20,
+        "text": "Phần 1. Video clip 2–3 phút"
+      },
+      {
+        "number": 21,
+        "text": "Nội dung: Sử dụng video có sẵn."
+      },
+      {
+        "number": 22,
+        "text": "Kết thúc Video Mascot dẫn dắt vào:"
+      },
+      {
+        "number": 23,
+        "text": "Qua video vừa rồi, các bạn đã thấy những việc làm có thể dẫn đến tai nạn bom mìn, vật nổ. "
+      },
+      {
+        "number": 24,
+        "text": "Vậy trong thực tế, chúng ta có thể gặp những tình huống nguy hiểm nào khi đi vào khu vực rừng, rẫy, khe suối? "
+      },
+      {
+        "number": 25,
+        "text": "Hãy cùng quan sát các hình ảnh minh họa sau đây để nhận biết những hành động nguy hiểm và chủ động phòng tránh tai nạn bom mìn, vật nổ nhé."
+      },
+      {
+        "number": 26,
+        "text": "(các hình ảnh minh họa lần lượt xuất hiện)"
+      },
+      {
+        "number": 27,
+        "text": "Nhặt vật lạ."
+      },
+      {
+        "number": 28,
+        "text": "Đào đất."
+      },
+      {
+        "number": 29,
+        "text": "Chặt cây."
+      },
+      {
+        "number": 30,
+        "text": "Khai thác gỗ."
+      },
+      {
+        "number": 31,
+        "text": "Làm rẫy, đốt rẫy."
+      },
+      {
+        "number": 32,
+        "text": "Đi bộ vào khu vực mới sạt lở."
+      },
+      {
+        "number": 33,
+        "text": "Quy tắc tương tác:"
+      },
+      {
+        "number": 34,
+        "text": "Hiển thị thanh tiến trình video."
+      },
+      {
+        "number": 35,
+        "text": "Có chức năng phát/tạm dừng video và bật/tắt âm thanh."
+      },
+      {
+        "number": 36,
+        "text": "Trong khi video đang phát, không hiển thị nút chuyển sang nội dung tiếp theo."
+      },
+      {
+        "number": 37,
+        "text": "Chỉ sau khi video phát hết, và hiển thị xong các hình ảnh minh họa thì hệ thống mới hiển thị nút TIẾP TỤC."
+      },
+      {
+        "number": 38,
+        "text": "Khi người học nhấn TIẾP TỤC, hệ thống chuyển sang Phần 2."
+      },
+      {
+        "number": 39,
+        "text": "2. NHẬN BIẾT NHỮNG VIỆC LÀM NGUY HIỂM"
+      },
+      {
+        "number": 40,
+        "text": "Lời dẫn của Mascot"
+      },
+      {
+        "number": 41,
+        "text": "“Trong những tình huống vừa xem, có những việc làm tưởng như bình thường nhưng có thể khiến chúng ta gặp nguy hiểm."
+      },
+      {
+        "number": 42,
+        "text": "Bây giờ, hãy cùng nhận biết những việc làm nguy hiểm thông qua các hình ảnh và câu mô tả nhé. "
+      },
+      {
+        "number": 43,
+        "text": "Hiển thị hình lần lượt hình ảnh 10 việc làm và câu mô tả bên dưới hình ảnh"
+      },
+      {
+        "number": 44,
+        "text": "STT"
+      },
+      {
+        "number": 45,
+        "text": "Nội dung hiển thị"
+      },
+      {
+        "number": 46,
+        "text": "Đáp án"
+      },
+      {
+        "number": 47,
+        "text": "1"
+      },
+      {
+        "number": 48,
+        "text": "Không yêu cầu chính quyền địa phương cung cấp thông tin nguy cơ bom mìn tại khu đất canh tác."
+      },
+      {
+        "number": 49,
+        "text": "S"
+      },
+      {
+        "number": 50,
+        "text": "2"
+      },
+      {
+        "number": 51,
+        "text": "Không quan sát xung quanh khu đất lạ, đất sau mưa lớn, sạt lở, lũ lớn trước khi canh tác hoặc đào bới."
+      },
+      {
+        "number": 52,
+        "text": "S"
+      },
+      {
+        "number": 53,
+        "text": "3"
+      },
+      {
+        "number": 54,
+        "text": "Canh tác hoặc xây dựng trên những khu đất chưa được làm sạch BMVN hoặc đánh giá là an toàn."
+      },
+      {
+        "number": 55,
+        "text": "S"
+      },
+      {
+        "number": 56,
+        "text": "4"
+      },
+      {
+        "number": 57,
+        "text": "Không đội mũ bảo hiểm khi tham gia giao thông."
+      },
+      {
+        "number": 58,
+        "text": "S"
+      },
+      {
+        "number": 59,
+        "text": "5"
+      },
+      {
+        "number": 60,
+        "text": "Không chăn thả gia súc, gia cầm hoặc chơi đùa ở khu vực cắm biển nguy hiểm."
+      },
+      {
+        "number": 61,
+        "text": "Đ"
+      },
+      {
+        "number": 62,
+        "text": "6"
+      },
+      {
+        "number": 63,
+        "text": "Uống rượu bia khi điều khiển phương tiện giao thông."
+      },
+      {
+        "number": 64,
+        "text": "S"
+      },
+      {
+        "number": 65,
+        "text": "7"
+      },
+      {
+        "number": 66,
+        "text": "Đi vào khu vực có biển báo nguy hiểm, bãi đất hoang, khu căn cứ quân sự, đồn bốt cũ."
+      },
+      {
+        "number": 67,
+        "text": "S"
+      },
+      {
+        "number": 68,
+        "text": "8"
+      },
+      {
+        "number": 69,
+        "text": "Thu mua phế liệu từ BMVN."
+      },
+      {
+        "number": 70,
+        "text": "S"
+      },
+      {
+        "number": 71,
+        "text": "9"
+      },
+      {
+        "number": 72,
+        "text": "Trẻ em chơi, nghịch với BMVN."
+      },
+      {
+        "number": 73,
+        "text": "S"
+      },
+      {
+        "number": 74,
+        "text": "10"
+      },
+      {
+        "number": 75,
+        "text": "Người dân đi lấy mật ong, măng, gỗ trong những khu rừng chưa được rà phá BMVN."
+      },
+      {
+        "number": 76,
+        "text": "S"
+      },
+      {
+        "number": 77,
+        "text": "Quy tắc tương tác:"
+      },
+      {
+        "number": 78,
+        "text": "Hiển thị lần lượt từng hình ảnh và nội dung."
+      },
+      {
+        "number": 79,
+        "text": "Người học xem đủ 10 nội dung mới được chuyển sang Phần 3."
+      },
+      {
+        "number": 80,
+        "text": "Lời dẫn chuyển tiếp của Mascot"
+      },
+      {
+        "number": 81,
+        "text": "“Các bạn vừa tìm hiểu những việc làm có thể dẫn tới tai nạn BMVN."
+      },
+      {
+        "number": 82,
+        "text": "Bây giờ, chúng ta sẽ tiếp tục với những tình huống cụ thể. "
+      },
+      {
+        "number": 83,
+        "text": "Hãy thử đặt mình vào từng tình huống và lựa chọn cách xử lý phù hợp nhé.”"
+      },
+      {
+        "number": 84,
+        "text": "3. PHẦN THỬ TÀI BẠN"
+      },
+      {
+        "number": 85,
+        "text": "Hoạt động 1. Nhận biết những việc làm nguy hiểm"
+      },
+      {
+        "number": 86,
+        "text": "Text tiêu đề:"
+      },
+      {
+        "number": 87,
+        "text": "NHẬN BIẾT NHỮNG VIỆC LÀM NGUY HIỂM"
+      },
+      {
+        "number": 88,
+        "text": "Hướng dẫn trên màn hình:"
+      },
+      {
+        "number": 89,
+        "text": "Quan sát hình ảnh và câu mô tả và lựa chọn:"
+      },
+      {
+        "number": 90,
+        "text": "Đ – ĐÚNG"
+      },
+      {
+        "number": 91,
+        "text": "S – SAI"
+      },
+      {
+        "number": 92,
+        "text": "Nội dung thực hiện:"
+      },
+      {
+        "number": 93,
+        "text": "Hiển thị lần lượt các hình ảnh và câu mô tả tương ứng với 10 việc làm đã trình bày ở Phần 2."
+      },
+      {
+        "number": 94,
+        "text": "Sau mỗi lựa chọn, phát âm thanh tương ứng:"
+      },
+      {
+        "number": 95,
+        "text": "Đúng → tiếng nhạc."
+      },
+      {
+        "number": 96,
+        "text": "Sai → tiếng cảnh báo."
+      },
+      {
+        "number": 97,
+        "text": "Quy tắc tương tác:"
+      },
+      {
+        "number": 98,
+        "text": "Hiển thị lần lượt từng nội dung."
+      },
+      {
+        "number": 99,
+        "text": "Người học lựa chọn Đ hoặc S."
+      },
+      {
+        "number": 100,
+        "text": "Sau mỗi lựa chọn, hệ thống phát âm thanh tương ứng."
+      },
+      {
+        "number": 101,
+        "text": "Ghi nhận kết quả và trạng thái hoàn thành từng lượt."
+      },
+      {
+        "number": 102,
+        "text": "Hoàn thành đủ 10 lượt mới được chuyển sang Hoạt động 2."
+      },
+      {
+        "number": 103,
+        "text": "Lời dẫn chuyển tiếp của Mascot"
+      },
+      {
+        "number": 104,
+        "text": "“Trong thực tế, chúng ta có thể gặp những tình huống bất ngờ khi đi làm rẫy, đi qua bìa rừng hoặc phát hiện vật lạ."
+      },
+      {
+        "number": 105,
+        "text": "Nếu gặp những tình huống sau đây, các bạn sẽ lựa chọn cách xử lý như thế nào?”"
+      },
+      {
+        "number": 106,
+        "text": "Hoạt động 2. Xử lý tình huống"
+      },
+      {
+        "number": 107,
+        "text": "Tình huống 1"
+      },
+      {
+        "number": 108,
+        "text": "Hình ảnh: Minh họa tình huống bạn trẻ đưa cho người lớn một vật lạ nhặt được ở bìa rừng."
+      },
+      {
+        "number": 109,
+        "text": "Câu hỏi:"
+      },
+      {
+        "number": 110,
+        "text": "Bạn làm gì khi trẻ đưa cho bạn một vật lạ nhặt được ở bìa rừng?"
+      },
+      {
+        "number": 111,
+        "text": "A. Tiến đến hỗ trợ hai bạn nhỏ đập mạnh xem đó là vật gì."
+      },
+      {
+        "number": 112,
+        "text": "B. Khuyên bạn nhỏ dừng lại, không được gõ vào vật đó nữa."
+      },
+      {
+        "number": 113,
+        "text": "C. Báo ngay cho chính quyền địa phương biết để xử lý."
+      },
+      {
+        "number": 114,
+        "text": "Hướng dẫn: Người học chọn một đáp án."
+      },
+      {
+        "number": 115,
+        "text": "Tình huống 2"
+      },
+      {
+        "number": 116,
+        "text": "Hình ảnh: Minh họa một vật tròn bằng gang trong rẫy."
+      },
+      {
+        "number": 117,
+        "text": "Câu hỏi:"
+      },
+      {
+        "number": 118,
+        "text": "Gặp vật tròn bằng gang trong rẫy, có nên lại gần để xem rõ hơn không?"
+      },
+      {
+        "number": 119,
+        "text": "A. Có."
+      },
+      {
+        "number": 120,
+        "text": "B. Không."
+      },
+      {
+        "number": 121,
+        "text": "Hướng dẫn: Người học chọn một đáp án."
+      },
+      {
+        "number": 122,
+        "text": "Tình huống 3"
+      },
+      {
+        "number": 123,
+        "text": "Hình ảnh: Minh họa một con trâu đi vào khu vực có biển báo nguy hiểm và người chủ phát hiện sự việc."
+      },
+      {
+        "number": 124,
+        "text": "Câu hỏi:"
+      },
+      {
+        "number": 125,
+        "text": "Khi một người nông dân phát hiện một con trâu của mình đi vào khu vực có biển báo nguy hiểm, họ có nên đi vào khu vực đó để đuổi con trâu ra không?"
+      },
+      {
+        "number": 126,
+        "text": "A. Có."
+      },
+      {
+        "number": 127,
+        "text": "B. Không."
+      },
+      {
+        "number": 128,
+        "text": "Hướng dẫn: Người học chọn một đáp án."
+      },
+      {
+        "number": 129,
+        "text": "Quy tắc tương tác:"
+      },
+      {
+        "number": 130,
+        "text": "Mỗi lần chỉ hiển thị một tình huống."
+      },
+      {
+        "number": 131,
+        "text": "Người học chọn đáp án cho tình huống đang hiển thị."
+      },
+      {
+        "number": 132,
+        "text": "Sau khi trả lời, hệ thống ghi nhận kết quả và chuyển sang tình huống tiếp theo."
+      },
+      {
+        "number": 133,
+        "text": "Hoàn thành đủ 3 tình huống mới được chuyển sang Bài kiểm tra."
+      },
+      {
+        "number": 134,
+        "text": "Lời dẫn chuyển tiếp của Mascot"
+      },
+      {
+        "number": 135,
+        "text": "“Qua các tình huống vừa rồi, các bạn đã có cơ hội suy nghĩ về cách xử lý khi gặp vật lạ hoặc khu vực có biển báo nguy hiểm."
+      },
+      {
+        "number": 136,
+        "text": "Bây giờ, hãy cùng kiểm tra lại những kiến thức đã học nhé.”"
+      },
+      {
+        "number": 137,
+        "text": "Nút: BÀI KIỂM TRA"
+      },
+      {
+        "number": 138,
+        "text": "Khi người học nhấn nút, hệ thống chuyển sang Phần 4."
+      },
+      {
+        "number": 139,
+        "text": "4. BÀI KIỂM TRA"
+      },
+      {
+        "number": 140,
+        "text": "Text tiêu đề: BÀI KIỂM TRA"
+      },
+      {
+        "number": 141,
+        "text": "Bài kiểm tra gồm 5 câu hỏi trắc nghiệm."
+      },
+      {
+        "number": 142,
+        "text": "Quy tắc làm bài:"
+      },
+      {
+        "number": 143,
+        "text": "Mỗi lần chỉ hiển thị 1 câu hỏi."
+      },
+      {
+        "number": 144,
+        "text": "Trả lời xong mới chuyển sang câu tiếp theo."
+      },
+      {
+        "number": 145,
+        "text": "Người học phải trả lời đúng 100%."
+      },
+      {
+        "number": 146,
+        "text": "Không hạn chế số lần làm lại."
+      },
+      {
+        "number": 147,
+        "text": "Mỗi lần làm lại, thứ tự 5 câu hỏi được thay đổi."
+      },
+      {
+        "number": 148,
+        "text": "Câu 1"
+      },
+      {
+        "number": 149,
+        "text": "Câu hỏi: Hành vi nào sau đây nguy hiểm?"
+      },
+      {
+        "number": 150,
+        "text": "A. Để trẻ chơi ở bìa rừng."
+      },
+      {
+        "number": 151,
+        "text": "B. Nhặt vật kim loại lạ."
+      },
+      {
+        "number": 152,
+        "text": "C. Đi theo đường quen thuộc."
+      },
+      {
+        "number": 153,
+        "text": "D. Báo chính quyền."
+      },
+      {
+        "number": 154,
+        "text": "Đáp án đúng: B."
+      },
+      {
+        "number": 155,
+        "text": "Câu 2"
+      },
+      {
+        "number": 156,
+        "text": "Câu hỏi: Người dân thường gặp BMVN ở đâu?"
+      },
+      {
+        "number": 157,
+        "text": "A. Siêu thị."
+      },
+      {
+        "number": 158,
+        "text": "B. Nhà văn hóa."
+      },
+      {
+        "number": 159,
+        "text": "C. Rừng – rẫy – khe suối."
+      },
+      {
+        "number": 160,
+        "text": "D. Trên phố."
+      },
+      {
+        "number": 161,
+        "text": "Đáp án đúng: C."
+      },
+      {
+        "number": 162,
+        "text": "Câu 3"
+      },
+      {
+        "number": 163,
+        "text": "Câu hỏi: Điều gì có thể xảy ra nếu nhặt vật nổ?"
+      },
+      {
+        "number": 164,
+        "text": "A. Không có gì."
+      },
+      {
+        "number": 165,
+        "text": "B. Làm hỏng dụng cụ."
+      },
+      {
+        "number": 166,
+        "text": "C. Nguy cơ phát nổ."
+      },
+      {
+        "number": 167,
+        "text": "D. Vật sạch sẽ hơn."
+      },
+      {
+        "number": 168,
+        "text": "Đáp án đúng: C."
+      },
+      {
+        "number": 169,
+        "text": "Câu 4"
+      },
+      {
+        "number": 170,
+        "text": "Câu hỏi: Khi thấy vật lạ trong rẫy, nên làm gì?"
+      },
+      {
+        "number": 171,
+        "text": "A. Chạm vào."
+      },
+      {
+        "number": 172,
+        "text": "B. Nhặt lên xem."
+      },
+      {
+        "number": 173,
+        "text": "C. Thông báo ngay cho chính quyền địa phương."
+      },
+      {
+        "number": 174,
+        "text": "D. Để trẻ em đến xem."
+      },
+      {
+        "number": 175,
+        "text": "Đáp án đúng: C."
+      },
+      {
+        "number": 176,
+        "text": "Câu 5"
+      },
+      {
+        "number": 177,
+        "text": "Câu hỏi: Hậu quả của tai nạn BMVN?"
+      },
+      {
+        "number": 178,
+        "text": "A. Mất mùa."
+      },
+      {
+        "number": 179,
+        "text": "B. Thương tật và tử vong."
+      },
+      {
+        "number": 180,
+        "text": "C. Trời mưa nhiều."
+      },
+      {
+        "number": 181,
+        "text": "D. Không có tác động."
+      },
+      {
+        "number": 182,
+        "text": "Đáp án đúng: B."
+      },
+      {
+        "number": 183,
+        "text": "Quy tắc phản hồi và làm lại bài kiểm tra"
+      },
+      {
+        "number": 184,
+        "text": "Mỗi lần chỉ hiển thị một câu hỏi."
+      },
+      {
+        "number": 185,
+        "text": "Sau khi người học chọn đáp án, hệ thống hiển thị kết quả."
+      },
+      {
+        "number": 186,
+        "text": "Nếu trả lời sai, hệ thống hiển thị phản hồi tương ứng và vẫn cho phép người học tiếp tục sang câu hỏi tiếp theo."
+      },
+      {
+        "number": 187,
+        "text": "Sau khi hoàn thành cả 5 câu, hệ thống tổng hợp kết quả."
+      },
+      {
+        "number": 188,
+        "text": "Trường hợp chưa đạt 5/5 câu đúng:"
+      },
+      {
+        "number": 189,
+        "text": "Hiển thị thông báo:"
+      },
+      {
+        "number": 190,
+        "text": "“Bạn chưa trả lời đúng tất cả các câu hỏi. Hãy xem lại những nội dung cần ghi nhớ và làm lại toàn bộ bài kiểm tra gồm 5 câu.”"
+      },
+      {
+        "number": 191,
+        "text": "Nút: LÀM LẠI BÀI KIỂM TRA"
+      },
+      {
+        "number": 192,
+        "text": "Khi người học nhấn nút:"
+      },
+      {
+        "number": 193,
+        "text": "Hệ thống bắt đầu lại toàn bộ bài kiểm tra."
+      },
+      {
+        "number": 194,
+        "text": "Người học phải trả lời lại cả 5 câu, không chỉ làm lại câu đã sai."
+      },
+      {
+        "number": 195,
+        "text": "Thứ tự 5 câu hỏi được thay đổi ở mỗi lần làm lại."
+      },
+      {
+        "number": 196,
+        "text": "Không giới hạn số lần làm lại."
+      },
+      {
+        "number": 197,
+        "text": "Chỉ khi trả lời đúng cả 5 câu, người học mới được chuyển sang màn hình hoàn thành bài học."
+      },
+      {
+        "number": 198,
+        "text": "5. HOÀN THÀNH BÀI HỌC"
+      },
+      {
+        "number": 199,
+        "text": "Sau khi người học trả lời đúng cả 5 câu, hệ thống hiển thị màn hình hoàn thành bài học."
+      },
+      {
+        "number": 200,
+        "text": "Hình ảnh: Mascot kết hợp đồ họa 2D."
+      },
+      {
+        "number": 201,
+        "text": "Text hiển thị:"
+      },
+      {
+        "number": 202,
+        "text": "CHÚC MỪNG BẠN ĐÃ HOÀN THÀNH BÀI HỌC SỐ 2"
+      },
+      {
+        "number": 203,
+        "text": "Lời tổng kết khi hoàn thành Bài học số 2"
+      },
+      {
+        "number": 204,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 205,
+        "text": "Chúc mừng các bạn đã hoàn thành Bài học số 2!"
+      },
+      {
+        "number": 206,
+        "text": "Qua bài học này, các bạn đã biết những việc làm nguy hiểm có thể dẫn tới tai nạn bom mìn, vật nổ và những hậu quả nghiêm trọng mà tai nạn có thể gây ra."
+      },
+      {
+        "number": 207,
+        "text": "Hãy luôn ghi nhớ: Không nhặt, không chạm vào bom mìn, vật nổ; tránh xa khu vực nguy hiểm và báo ngay cho chính quyền địa phương khi phát hiện vật nghi là bom mìn, vật nổ."
+      },
+      {
+        "number": 208,
+        "text": "Hãy chủ động phòng tránh để bảo vệ an toàn cho bản thân, gia đình và cộng đồng!"
+      },
+      {
+        "number": 209,
+        "text": "Nội dung hiển thị trên màn hình:"
+      },
+      {
+        "number": 210,
+        "text": "CHÚC MỪNG BẠN ĐÃ HOÀN THÀNH BÀI HỌC SỐ 2"
+      },
+      {
+        "number": 211,
+        "text": "BẠN ĐÃ BIẾT:"
+      },
+      {
+        "number": 212,
+        "text": "Những việc làm nguy hiểm có thể dẫn tới tai nạn bom mìn, vật nổ."
+      },
+      {
+        "number": 213,
+        "text": "Những hậu quả của tai nạn bom mìn, vật nổ."
+      },
+      {
+        "number": 214,
+        "text": "Cách phòng tránh và xử lý khi phát hiện vật nghi là bom mìn, vật nổ."
+      },
+      {
+        "number": 215,
+        "text": "Nút chức năng: QUAY LẠI | TIẾP TỤC → BÀI HỌC SỐ 3"
+      },
+      {
+        "number": 217,
+        "text": "QUY ƯỚC ĐIỀU HƯỚNG VÀ TIẾN ĐỘ HỌC"
+      },
+      {
+        "number": 218,
+        "text": "Tiến độ học hiển thị cố định ở phía trên màn hình."
+      },
+      {
+        "number": 219,
+        "text": "Nút điều hướng thống nhất: QUAY LẠI / TIẾP TỤC."
+      },
+      {
+        "number": 220,
+        "text": "Người học có thể quay lại các phần đã hoàn thành để xem lại."
+      },
+      {
+        "number": 221,
+        "text": "Không được bỏ qua phần chưa hoàn thành."
+      },
+      {
+        "number": 222,
+        "text": "Phần nhận biết: phải hoàn thành đủ 10 lượt."
+      },
+      {
+        "number": 223,
+        "text": "Phần thử tài: phải hoàn thành đủ các tình huống."
+      },
+      {
+        "number": 224,
+        "text": "Bài kiểm tra: phải đạt 100% (5/5 câu)."
+      },
+      {
+        "number": 225,
+        "text": "Có thể làm lại bài kiểm tra không giới hạn."
+      },
+      {
+        "number": 226,
+        "text": "Mỗi lần làm lại bài kiểm tra, thứ tự 5 câu hỏi được đảo."
+      },
+      {
+        "number": 227,
+        "text": "Chỉ mở Bài học số 3 sau khi Bài học số 2 đạt 100%."
+      },
+      {
+        "number": 228,
+        "text": "YÊU CẦU TƯƠNG TÁC ĐỐI VỚI ĐỘI NGŨ SẢN XUẤT"
+      },
+      {
+        "number": 229,
+        "text": "STT"
+      },
+      {
+        "number": 230,
+        "text": "Nội dung"
+      },
+      {
+        "number": 231,
+        "text": "Yêu cầu thực hiện"
+      },
+      {
+        "number": 232,
+        "text": "1"
+      },
+      {
+        "number": 233,
+        "text": "Video kiến thức"
+      },
+      {
+        "number": 234,
+        "text": "Chỉ cho phép chuyển tiếp sau khi video phát hết."
+      },
+      {
+        "number": 235,
+        "text": "2"
+      },
+      {
+        "number": 236,
+        "text": "Nhận biết những việc làm nguy hiểm"
+      },
+      {
+        "number": 237,
+        "text": "Hiển thị đủ 10 nội dung; ghi nhận hoàn thành từng lượt."
+      },
+      {
+        "number": 238,
+        "text": "3"
+      },
+      {
+        "number": 239,
+        "text": "Phần thử tài – Hoạt động 1"
+      },
+      {
+        "number": 240,
+        "text": "Hoàn thành đủ 10 lượt Đ/S mới được chuyển tiếp."
+      },
+      {
+        "number": 241,
+        "text": "4"
+      },
+      {
+        "number": 242,
+        "text": "Phần thử tài – Hoạt động 2"
+      },
+      {
+        "number": 243,
+        "text": "Hiển thị lần lượt 3 tình huống; hoàn thành đủ 3 tình huống mới được chuyển sang bài kiểm tra."
+      },
+      {
+        "number": 244,
+        "text": "5"
+      },
+      {
+        "number": 245,
+        "text": "Bài kiểm tra"
+      },
+      {
+        "number": 246,
+        "text": "Mỗi lần hiển thị một câu; trả lời xong mới chuyển sang câu tiếp theo."
+      },
+      {
+        "number": 247,
+        "text": "6"
+      },
+      {
+        "number": 248,
+        "text": "Phản hồi câu trả lời"
+      },
+      {
+        "number": 249,
+        "text": "Hiển thị kết quả sau mỗi câu; nếu sai vẫn được làm tiếp câu sau."
+      },
+      {
+        "number": 250,
+        "text": "7"
+      },
+      {
+        "number": 251,
+        "text": "Làm lại bài kiểm tra"
+      },
+      {
+        "number": 252,
+        "text": "Nếu chưa đạt 5/5, yêu cầu làm lại toàn bộ 5 câu; không giới hạn số lần."
+      },
+      {
+        "number": 253,
+        "text": "8"
+      },
+      {
+        "number": 254,
+        "text": "Đảo thứ tự câu hỏi"
+      },
+      {
+        "number": 255,
+        "text": "Thay đổi thứ tự 5 câu ở mỗi lần làm lại."
+      },
+      {
+        "number": 256,
+        "text": "9"
+      },
+      {
+        "number": 257,
+        "text": "Hoàn thành bài học"
+      },
+      {
+        "number": 258,
+        "text": "Chỉ ghi nhận hoàn thành khi người học đạt 100%."
+      },
+      {
+        "number": 259,
+        "text": "10"
+      },
+      {
+        "number": 260,
+        "text": "Chuyển bài học"
+      },
+      {
+        "number": 261,
+        "text": "Chỉ mở Bài học số 3 sau khi Bài học số 2 đạt 100%."
+      }
+    ]
+  },
+  {
+    "source": "S3",
+    "paragraphs": [
+      {
+        "number": 2,
+        "text": "Vinafilms Joint Stock Company"
+      },
+      {
+        "number": 3,
+        "text": "Address: No. 12/25 Phan Dinh Phung Street, Ba Dinh Ward, Hanoi, VietnamTel: (+84) 344 235 689 | (+84) 978 000 018Website: https://vinafilms.org; Email: vinafilms@gmail.com"
+      },
+      {
+        "number": 6,
+        "text": "KỊCH BẢN NỘI DUNG BÀI HỌC SỐ 3"
+      },
+      {
+        "number": 7,
+        "text": "LÀM GÌ ĐỂ AN TOÀN KHI GẶP BOM MÌN, VẬT NỔ"
+      },
+      {
+        "number": 8,
+        "text": "PHẦN 1. VIDEO"
+      },
+      {
+        "number": 9,
+        "text": "1. Mở đầu"
+      },
+      {
+        "number": 10,
+        "text": "Text + Lời bình:"
+      },
+      {
+        "number": 11,
+        "text": "“BÀI HỌC SỐ 3 – LÀM GÌ ĐỂ AN TOÀN KHI GẶP BMVN.”"
+      },
+      {
+        "number": 12,
+        "text": "Nút chức năng: BẮT ĐẦU."
+      },
+      {
+        "number": 13,
+        "text": "Hình ảnh Mascots và lời dẫn:"
+      },
+      {
+        "number": 14,
+        "text": "“Trong cuộc sống và lao động hằng ngày, bạn có thể tình cờ gặp bom mìn, vật nổ khi lao động sản xuất hay khi đi qua khu vực rừng, rẫy hoặc khe suối. "
+      },
+      {
+        "number": 15,
+        "text": "Vậy khi gặp những vật này, chúng ta cần làm gì để bảo đảm an toàn cho bản thân và những người xung quanh?"
+      },
+      {
+        "number": 16,
+        "text": "Hãy cùng xem video sau đây để tìm hiểu cách xử lý an toàn khi phát hiện bom mìn, vật nổ nhé!”"
+      },
+      {
+        "number": 17,
+        "text": "2. Video có sẵn"
+      },
+      {
+        "number": 18,
+        "text": "Thời lượng: 2–3 phút."
+      },
+      {
+        "number": 19,
+        "text": "Tương tác: Người học phải xem hết video. Chưa xem hết không xuất hiện nút TIẾP THEO."
+      },
+      {
+        "number": 20,
+        "text": "3. Kết thúc video – Dẫn dắt tình huống"
+      },
+      {
+        "number": 21,
+        "text": "Tương tác: Sau khi xem hết video, xuất hiện nút QUAY LẠI / TIẾP THEO. Nhấn TIẾP THEO để vào phần học tiếp theo."
+      },
+      {
+        "number": 22,
+        "text": "PHẦN 2. 04 BƯỚC AN TOÀN KHI PHÁT HIỆN BMVN"
+      },
+      {
+        "number": 23,
+        "text": "Text + Lời dẫn:"
+      },
+      {
+        "number": 24,
+        "text": "“Các bạn hãy tưởng tượng, trong lúc đi làm rẫy hoặc đi qua khu vực rừng, các bạn bất ngờ phát hiện một vật nghi là bom mìn, vật nổ. "
+      },
+      {
+        "number": 25,
+        "text": "Trong tình huống này, chúng ta cần làm gì để bảo đảm an toàn cho bản thân và những người xung quanh? "
+      },
+      {
+        "number": 26,
+        "text": "Hãy cùng tìm hiểu 4 bước an toàn khi phát hiện bom mìn, vật nổ nhé.”"
+      },
+      {
+        "number": 27,
+        "text": "Bước 1: Dừng lại – Không tiến gần"
+      },
+      {
+        "number": 28,
+        "text": "Hình ảnh – Đồ họa: Mascot đang di chuyển thì dừng lại. Minh họa vật nghi là BMVN ở phía trước."
+      },
+      {
+        "number": 29,
+        "text": "Text trên màn hình:"
+      },
+      {
+        "number": 30,
+        "text": "DỪNG LẠI – KHÔNG TIẾN GẦN"
+      },
+      {
+        "number": 31,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 32,
+        "text": "“Bước 1: Dừng lại – Không tiến gần.”"
+      },
+      {
+        "number": 33,
+        "text": "Bước 2: Đánh dấu khu vực từ xa 1–3m"
+      },
+      {
+        "number": 34,
+        "text": "Hình ảnh – Đồ họa: Minh họa cành cây, đá và khoảng cách từ 1 đến 3m."
+      },
+      {
+        "number": 35,
+        "text": "Text trên màn hình: "
+      },
+      {
+        "number": 36,
+        "text": "ĐÁNH DẤU KHU VỰC TỪ XA 1–3M "
+      },
+      {
+        "number": 37,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 38,
+        "text": "“Bước 2: Đánh dấu khu vực từ xa 1–3m."
+      },
+      {
+        "number": 39,
+        "text": "Dùng vật sẵn có như cành cây, đá…"
+      },
+      {
+        "number": 40,
+        "text": "Tuyệt đối không đi vào khu vực để đánh dấu gần vật nổ.”"
+      },
+      {
+        "number": 41,
+        "text": "Bước 3: Rời đi theo đúng đường đã đến"
+      },
+      {
+        "number": 42,
+        "text": "Hình ảnh – Đồ họa: Minh họa Mascot quay lại theo đúng đường đã đi."
+      },
+      {
+        "number": 43,
+        "text": "Text trên màn hình: "
+      },
+      {
+        "number": 44,
+        "text": "RỜI ĐI THEO ĐÚNG ĐƯỜNG ĐÃ ĐẾN"
+      },
+      {
+        "number": 45,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 46,
+        "text": "“Bước 3: Rời đi theo đúng đường đã đến.”"
+      },
+      {
+        "number": 47,
+        "text": "Bước 4: Báo ngay cho chính quyền hoặc số điện thoại đường dây nóng"
+      },
+      {
+        "number": 48,
+        "text": "Hình ảnh – Đồ họa: Minh họa Mascot báo tin, có biểu tượng điện thoại hoặc chính quyền."
+      },
+      {
+        "number": 49,
+        "text": "Text trên màn hình: "
+      },
+      {
+        "number": 50,
+        "text": "BÁO NGAY CHO CHÍNH QUYỀN HOẶC SỐ ĐIỆN THOẠI ĐƯỜNG DÂY NÓNG"
+      },
+      {
+        "number": 51,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 52,
+        "text": "“Bước 4: Báo ngay cho chính quyền hoặc số điện thoại đường dây nóng.”"
+      },
+      {
+        "number": 53,
+        "text": "6. Củng cố 4 bước"
+      },
+      {
+        "number": 54,
+        "text": "Hình ảnh – Đồ họa: Hiển thị lại 4 bước theo thứ tự từ 1 đến 4."
+      },
+      {
+        "number": 55,
+        "text": "Tình huống dẫn dắt:"
+      },
+      {
+        "number": 56,
+        "text": "“Quay lại tình huống vừa rồi, khi phát hiện vật nghi là bom mìn, vật nổ trên đường đi làm rẫy, các bạn cần nhớ và thực hiện đúng 4 bước an toàn.”"
+      },
+      {
+        "number": 57,
+        "text": "Text trên màn hình:"
+      },
+      {
+        "number": 58,
+        "text": "Dừng lại – Không đến gần."
+      },
+      {
+        "number": 59,
+        "text": "Đánh dấu khu vực từ xa 1 đến 3m."
+      },
+      {
+        "number": 60,
+        "text": "Rời đi theo đúng đường đã đến."
+      },
+      {
+        "number": 61,
+        "text": "Báo ngay cho chính quyền hoặc số điện thoại đường dây nóng."
+      },
+      {
+        "number": 62,
+        "text": "Tương tác: Xem hết nội dung để xuất hiện QUAY LẠI / TIẾP THEO."
+      },
+      {
+        "number": 63,
+        "text": "PHẦN 3. THỰC HÀNH 04 BƯỚC AN TOÀN"
+      },
+      {
+        "number": 64,
+        "text": "Hoạt động tương tác 01: Sắp xếp 04 bước an toàn"
+      },
+      {
+        "number": 65,
+        "text": "1. Hướng dẫn"
+      },
+      {
+        "number": 66,
+        "text": "Lời bình + Mascots"
+      },
+      {
+        "number": 67,
+        "text": "“Trong phần trước, các bạn đã tìm hiểu 4 bước cần thực hiện khi phát hiện bom mìn, vật nổ. "
+      },
+      {
+        "number": 68,
+        "text": "Vậy các bạn đã nhớ đúng thứ tự các bước chưa? "
+      },
+      {
+        "number": 69,
+        "text": "Hãy cùng Mít tơ An Toàn tham gia phần thực hành sau đây để kiểm tra và ghi nhớ cách thực hiện 4 bước an toàn nhé!”"
+      },
+      {
+        "number": 70,
+        "text": "Hình ảnh – Đồ họa:"
+      },
+      {
+        "number": 71,
+        "text": "Hiển thị 4 hình minh họa được xáo trộn."
+      },
+      {
+        "number": 72,
+        "text": "Có 4 vị trí tương ứng với Bước 1 đến Bước 4."
+      },
+      {
+        "number": 73,
+        "text": "2. Thực hiện"
+      },
+      {
+        "number": 74,
+        "text": "Hiển thị 4 hình mô tả 4 bước an toàn đã học."
+      },
+      {
+        "number": 75,
+        "text": "Yêu cầu: Người học kéo – thả từng hình vào vị trí phù hợp."
+      },
+      {
+        "number": 76,
+        "text": "3. Phản hồi đúng"
+      },
+      {
+        "number": 77,
+        "text": "Hiển thị dấu ✓ màu xanh."
+      },
+      {
+        "number": 78,
+        "text": "Phát âm thanh phản hồi đúng."
+      },
+      {
+        "number": 79,
+        "text": "4. Phản hồi sai"
+      },
+      {
+        "number": 80,
+        "text": "Hiển thị dấu X."
+      },
+      {
+        "number": 81,
+        "text": "Hình được đưa lại vị trí ban đầu để người học thực hiện lại."
+      },
+      {
+        "number": 82,
+        "text": "5. Hoàn thành"
+      },
+      {
+        "number": 83,
+        "text": "Hiển thị trạng thái hoàn thành hoạt động."
+      },
+      {
+        "number": 84,
+        "text": "Điều kiện chuyển tiếp: Chỉ sau khi sắp xếp đúng đủ 4 bước mới xuất hiện TIẾP THEO."
+      },
+      {
+        "number": 85,
+        "text": "Hoạt động tương tác 02: Phân loại NÊN LÀM / KHÔNG NÊN LÀM"
+      },
+      {
+        "number": 86,
+        "text": "Tình huống dẫn dắt:"
+      },
+      {
+        "number": 87,
+        "text": "“Trong quá trình đi làm rẫy, canh tác hoặc đi qua những khu vực có thể có bom mìn, vật nổ, các bạn cần biết việc nào nên làm và việc nào không nên làm để bảo đảm an toàn."
+      },
+      {
+        "number": 88,
+        "text": "Hãi phân loại hai nhóm NÊN LÀM và KHÔNG NÊN LÀM sau đây nhé”"
+      },
+      {
+        "number": 89,
+        "text": "Yêu cầu: Người học phân loại 7 nội dung vào hai nhóm NÊN LÀM và KHÔNG NÊN LÀM."
+      },
+      {
+        "number": 90,
+        "text": "Nội dung 1"
+      },
+      {
+        "number": 91,
+        "text": "Trước khi canh tác tại khu đất lạ, yêu cầu chính quyền địa phương cung cấp thông tin nguy cơ bom mìn tại khu đất đó."
+      },
+      {
+        "number": 92,
+        "text": "Đáp án: Nên làm."
+      },
+      {
+        "number": 93,
+        "text": "Nội dung 2"
+      },
+      {
+        "number": 94,
+        "text": "Quan sát xung quanh khu đất lạ, đất sau mưa lớn, sạt lở, lũ lớn trước khi canh tác hoặc đào bới."
+      },
+      {
+        "number": 95,
+        "text": "Đáp án: Nên làm."
+      },
+      {
+        "number": 96,
+        "text": "Nội dung 3"
+      },
+      {
+        "number": 97,
+        "text": "Canh tác hoặc xây dựng trên những khu đất chưa được làm sạch BMVN hoặc đánh giá là an toàn."
+      },
+      {
+        "number": 98,
+        "text": "Đáp án: Không nên làm."
+      },
+      {
+        "number": 99,
+        "text": "Nội dung 4"
+      },
+      {
+        "number": 100,
+        "text": "Chăn thả gia súc, gia cầm hoặc chơi đùa ở khu vực cắm biển nguy hiểm."
+      },
+      {
+        "number": 101,
+        "text": "Đáp án: Không nên làm."
+      },
+      {
+        "number": 102,
+        "text": "Nội dung 5"
+      },
+      {
+        "number": 103,
+        "text": "Buôn bán phế liệu là bom mìn cũ."
+      },
+      {
+        "number": 104,
+        "text": "Đáp án: Không nên làm."
+      },
+      {
+        "number": 105,
+        "text": "Nội dung 6"
+      },
+      {
+        "number": 106,
+        "text": "Tác động trực tiếp vào bom mìn vật nổ."
+      },
+      {
+        "number": 107,
+        "text": "Đáp án: Không nên làm."
+      },
+      {
+        "number": 108,
+        "text": "Nội dung 7"
+      },
+      {
+        "number": 109,
+        "text": "Khi gặp phải bom mìn, tránh xa, không động chạm, không di chuyển, báo cáo chính quyền địa phương."
+      },
+      {
+        "number": 110,
+        "text": "Đáp án: Nên làm."
+      },
+      {
+        "number": 111,
+        "text": "Cách thiết kế:"
+      },
+      {
+        "number": 112,
+        "text": "3 cột gồm: Nội dung cần phân loại – NÊN LÀM – KHÔNG NÊN LÀM."
+      },
+      {
+        "number": 113,
+        "text": "Phản hồi:"
+      },
+      {
+        "number": 114,
+        "text": "Đúng: Hiển thị dấu ✓ màu xanh và phát âm thanh."
+      },
+      {
+        "number": 115,
+        "text": "Sai: Hiển thị dấu X, nội dung trở lại vị trí ban đầu để người học làm lại."
+      },
+      {
+        "number": 116,
+        "text": "Điều kiện chuyển tiếp: Phải phân loại đúng cả 7 nội dung mới xuất hiện TIẾP THEO."
+      },
+      {
+        "number": 117,
+        "text": "PHẦN 4. BÀI KIỂM TRA"
+      },
+      {
+        "number": 118,
+        "text": "Tình huống dẫn dắt:"
+      },
+      {
+        "number": 119,
+        "text": "“Các bạn đã tìm hiểu 4 bước an toàn khi phát hiện bom mìn, vật nổ và những việc nên làm, không nên làm. Hãy cùng kiểm tra lại kiến thức qua 5 câu hỏi sau nhé.”"
+      },
+      {
+        "number": 120,
+        "text": "Quy định:"
+      },
+      {
+        "number": 121,
+        "text": "Gồm 5 câu hỏi."
+      },
+      {
+        "number": 122,
+        "text": "Mỗi lần chỉ hiển thị 1 câu."
+      },
+      {
+        "number": 123,
+        "text": "Người học phải trả lời xong câu hiện tại mới chuyển sang câu tiếp theo."
+      },
+      {
+        "number": 124,
+        "text": "Phải đạt 100% mới được chuyển sang phần tiếp theo."
+      },
+      {
+        "number": 125,
+        "text": "Không giới hạn số lần làm lại."
+      },
+      {
+        "number": 126,
+        "text": "Mỗi lần làm lại, thứ tự câu hỏi thay đổi."
+      },
+      {
+        "number": 127,
+        "text": "Câu 1. Bước đầu tiên khi gặp vật nghi là bom mìn, vật nổ (BMVN) là gì?"
+      },
+      {
+        "number": 128,
+        "text": "A. Tiến lại gần để quan sát vật đó."
+      },
+      {
+        "number": 129,
+        "text": "B. Dừng lại – Không tiến gần."
+      },
+      {
+        "number": 130,
+        "text": "C. Dùng cành cây để kiểm tra vật đó."
+      },
+      {
+        "number": 131,
+        "text": "D. Nhờ người khác đến xem cùng."
+      },
+      {
+        "number": 132,
+        "text": "Đáp án đúng: B"
+      },
+      {
+        "number": 133,
+        "text": "Câu 2. Khi đánh dấu khu vực có vật nghi là bom mìn, vật nổ, cần làm gì?"
+      },
+      {
+        "number": 134,
+        "text": "A. Tiến sát vật nổ để đặt dấu hiệu cảnh báo."
+      },
+      {
+        "number": 135,
+        "text": "B. Dùng tay di chuyển vật nổ ra chỗ khác rồi đánh dấu."
+      },
+      {
+        "number": 136,
+        "text": "C. Đánh dấu từ xa."
+      },
+      {
+        "number": 137,
+        "text": "D. Đứng cạnh vật nổ để hướng dẫn người khác tránh xa."
+      },
+      {
+        "number": 138,
+        "text": "Đáp án đúng: C"
+      },
+      {
+        "number": 139,
+        "text": "Câu 3. Tại sao phải rời đi theo đúng đường đã đi khi phát hiện vật nghi là bom mìn, vật nổ?"
+      },
+      {
+        "number": 140,
+        "text": "A. Để tránh đi vào khu vực chưa được kiểm tra."
+      },
+      {
+        "number": 141,
+        "text": "B. Để tìm một con đường ngắn hơn."
+      },
+      {
+        "number": 142,
+        "text": "C. Để đi vòng quanh quan sát vật đó."
+      },
+      {
+        "number": 143,
+        "text": "D. Để đến gần vật đó từ hướng khác."
+      },
+      {
+        "number": 144,
+        "text": "Đáp án đúng: A"
+      },
+      {
+        "number": 145,
+        "text": "Câu 4. Khi phát hiện vật nghi là bom mìn, vật nổ, cần báo cho ai?"
+      },
+      {
+        "number": 146,
+        "text": "A. Người thu mua phế liệu."
+      },
+      {
+        "number": 147,
+        "text": "B. Người đi đường gần nhất để họ đến kiểm tra."
+      },
+      {
+        "number": 148,
+        "text": "C. Chính quyền địa phương hoặc đường dây nóng."
+      },
+      {
+        "number": 149,
+        "text": "D. Người quen để cùng đến xem vật đó."
+      },
+      {
+        "number": 150,
+        "text": "Đáp án đúng: C"
+      },
+      {
+        "number": 151,
+        "text": "Câu 5. Hành vi nào sau đây là sai khi gặp vật nghi là bom mìn, vật nổ?"
+      },
+      {
+        "number": 152,
+        "text": "A. Dừng lại, không tiến gần."
+      },
+      {
+        "number": 153,
+        "text": "B. Đi lại gần để nhìn rõ hơn."
+      },
+      {
+        "number": 154,
+        "text": "C. Rời đi theo đúng đường đã đến."
+      },
+      {
+        "number": 155,
+        "text": "D. Báo ngay cho chính quyền địa phương hoặc đường dây nóng."
+      },
+      {
+        "number": 156,
+        "text": "Đáp án đúng: B"
+      },
+      {
+        "number": 157,
+        "text": "Lưu ý khi lập trình: Mỗi câu hiển thị một lần, người học chọn một đáp án. Sau khi trả lời, hệ thống ghi nhận kết quả và chuyển sang câu tiếp theo. Hoàn thành cả 5 câu với kết quả đúng 100% mới được chuyển sang phần tiếp theo; nếu chưa đạt, người học thực hiện lại cả bộ câu hỏi."
+      },
+      {
+        "number": 158,
+        "text": "PHẦN 5. HOÀN THÀNH BÀI HỌC"
+      },
+      {
+        "number": 159,
+        "text": "Màn hình: Chúc mừng."
+      },
+      {
+        "number": 160,
+        "text": "Hình ảnh – Đồ họa: Mascot xuất hiện ở trung tâm hoặc bên phải màn hình. Các biểu tượng lần lượt xuất hiện để thể hiện nội dung đã hoàn thành."
+      },
+      {
+        "number": 161,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 162,
+        "text": "“Chúc mừng bạn đã hoàn thành Bài học số 3."
+      },
+      {
+        "number": 163,
+        "text": "Qua bài học này, bạn đã biết:”"
+      },
+      {
+        "number": 164,
+        "text": "Text trên màn hình:"
+      },
+      {
+        "number": 165,
+        "text": "BẠN ĐÃ BIẾT:"
+      },
+      {
+        "number": 166,
+        "text": "✓ 04 bước an toàn khi phát hiện bom mìn, vật nổ:"
+      },
+      {
+        "number": 167,
+        "text": "Dừng lại – Không đến gần."
+      },
+      {
+        "number": 168,
+        "text": "Đánh dấu khu vực từ xa 1 đến 3m."
+      },
+      {
+        "number": 169,
+        "text": "Rời đi theo đúng đường đã đến."
+      },
+      {
+        "number": 170,
+        "text": "Báo ngay cho chính quyền hoặc số điện thoại đường dây nóng."
+      },
+      {
+        "number": 171,
+        "text": "✓ Nhận biết các việc nên làm và không nên làm trong lao động, sản xuất."
+      },
+      {
+        "number": 172,
+        "text": "✓ Thực hiện đúng các việc nên làm và không nên làm khi gặp bom mìn, vật nổ."
+      },
+      {
+        "number": 173,
+        "text": "Thanh tiến trình: Hiển thị 100%."
+      },
+      {
+        "number": 174,
+        "text": "Nút chức năng: QUAY LẠI | TIẾP THEO."
+      },
+      {
+        "number": 175,
+        "text": "Điều kiện hiển thị: Chỉ hiển thị màn hình này khi người học đã hoàn thành toàn bộ nội dung bắt buộc và đạt 100% bài kiểm tra."
+      },
+      {
+        "number": 176,
+        "text": "YÊU CẦU ĐIỀU HƯỚNG VÀ TIẾN ĐỘ HỌC"
+      },
+      {
+        "number": 177,
+        "text": "Thanh tiến trình hiển thị cố định phía trên màn hình, cho biết người học đang ở đâu trong bài và mức độ đã hoàn thành."
+      },
+      {
+        "number": 178,
+        "text": "Các trạng thái được thể hiện theo từng phần: Đang học → Hoàn thành."
+      },
+      {
+        "number": 179,
+        "text": "Người học được quay lại các phần đã hoàn thành để xem lại."
+      },
+      {
+        "number": 180,
+        "text": "Không được bỏ qua nội dung chưa hoàn thành."
+      },
+      {
+        "number": 181,
+        "text": "Quy tắc bắt buộc:"
+      },
+      {
+        "number": 182,
+        "text": "Chưa xem hoàn chỉnh: Không có TIẾP THEO."
+      },
+      {
+        "number": 183,
+        "text": "Chưa làm hoàn chỉnh: Không có TIẾP THEO."
+      },
+      {
+        "number": 184,
+        "text": "Chưa đạt điều kiện bài kiểm tra: Không có TIẾP THEO."
+      },
+      {
+        "number": 185,
+        "text": "Chỉ khi hoàn thành đủ điều kiện của màn hình hiện tại, TIẾP THEO mới xuất hiện."
+      }
+    ]
+  },
+  {
+    "source": "S4",
+    "paragraphs": [
+      {
+        "number": 1,
+        "text": "Vinafilms Joint Stock Company"
+      },
+      {
+        "number": 2,
+        "text": "Address: No. 12/25 Phan Dinh Phung Street, Ba Dinh Ward, Hanoi, VietnamTel: (+84) 344 235 689 | (+84) 978 000 018Website: https://vinafilms.org; Email: vinafilms@gmail.com"
+      },
+      {
+        "number": 5,
+        "text": "KỊCH BẢN NỘI DUNG BÀI HỌC SỐ 4"
+      },
+      {
+        "number": 6,
+        "text": "ĐÁNH DẤU NƠI NGUY HIỂM VÀ BÁO TIN"
+      },
+      {
+        "number": 7,
+        "text": "PHẦN 1. VIDEO BÀI HỌC"
+      },
+      {
+        "number": 8,
+        "text": "1. Màn hình mở đầu"
+      },
+      {
+        "number": 9,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 10,
+        "text": "“Bài học số 4 – Đánh dấu nơi nguy hiểm và báo tin.”"
+      },
+      {
+        "number": 11,
+        "text": "Nội dung hiển thị:"
+      },
+      {
+        "number": 12,
+        "text": "BÀI HỌC SỐ 4"
+      },
+      {
+        "number": 13,
+        "text": "ĐÁNH DẤU NƠI NGUY HIỂM VÀ BÁO TIN"
+      },
+      {
+        "number": 14,
+        "text": "Nút: BẮT ĐẦU"
+      },
+      {
+        "number": 15,
+        "text": "2. Lời dẫn vào video"
+      },
+      {
+        "number": 16,
+        "text": "Trong quá trình đi làm rẫy, cuốc đất hoặc di chuyển qua những khu vực từng xảy ra chiến tranh, các bạn có thể bất ngờ phát hiện những vật lạ nghi là bom mìn, vật nổ."
+      },
+      {
+        "number": 17,
+        "text": "Vậy khi gặp tình huống này, chúng ta cần làm gì để bảo đảm an toàn cho bản thân và những người xung quanh?"
+      },
+      {
+        "number": 18,
+        "text": "Hãy cùng theo dõi hai tình huống sau đây để tìm hiểu cách xử lý đúng nhé!"
+      },
+      {
+        "number": 19,
+        "text": "Tình huống 1: Khi đi làm rẫy gặp vật lạ – làm thế nào cho đúng?"
+      },
+      {
+        "number": 20,
+        "text": "Trên đường đi làm rẫy, chú Ba bất ngờ phát hiện một vật lạ nằm gần lối đi. Nhận thấy vật này có dấu hiệu bất thường, chú dừng lại, không đến gần và không chạm vào vật."
+      },
+      {
+        "number": 21,
+        "text": "Sau đó, chú Ba sử dụng những vật dụng có sẵn như cành cây hoặc hòn đá để đánh dấu khu vực nguy hiểm. Việc đánh dấu được thực hiện từ xa, cách vị trí có vật lạ khoảng 1 đến 3 mét, tuyệt đối không tiến lại gần vật để đánh dấu."
+      },
+      {
+        "number": 22,
+        "text": "Tiếp theo, chú Ba rời khỏi khu vực theo đúng con đường chú đã đi vào. Sau khi ra khỏi khu vực nguy hiểm, chú Ba sử dụng điện thoại báo tin cho chính quyền địa phương hoặc số điện thoại đường dây nóng."
+      },
+      {
+        "number": 23,
+        "text": "So sánh"
+      },
+      {
+        "number": 24,
+        "text": "Chia màn hình làm hai:"
+      },
+      {
+        "number": 25,
+        "text": "CÁCH LÀM CHƯA ĐÚNG: chú Ba tiến gần vật."
+      },
+      {
+        "number": 26,
+        "text": "CÁCH LÀM ĐÚNG: chú Ba dừng lại, không tiến gần."
+      },
+      {
+        "number": 27,
+        "text": "Hiển thị:"
+      },
+      {
+        "number": 28,
+        "text": "Bên chưa đúng: X."
+      },
+      {
+        "number": 29,
+        "text": "Bên đúng: ✓."
+      },
+      {
+        "number": 30,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 31,
+        "text": "“Khi gặp vật lạ, hãy dừng lại, không đến gần và thực hiện đúng các bước an toàn.”"
+      },
+      {
+        "number": 33,
+        "text": "Như vậy, khi phát hiện vật lạ nghi là bom mìn, vật nổ, bạn cần ghi nhớ bốn bước: Phát hiện – Đánh dấu – Rời đi – Báo tin."
+      },
+      {
+        "number": 34,
+        "text": "Qua tình huống của chú Ba, các bạn đã biết cách xử lý khi phát hiện vật lạ trên đường đi làm rẫy. Nhưng nếu đang lao động hay cuốc đất mà bất ngờ gặp một vật kim loại thì sao? "
+      },
+      {
+        "number": 35,
+        "text": "Hãy cùng theo dõi tình huống tiếp theo nhé!"
+      },
+      {
+        "number": 36,
+        "text": "Tình huống 2: Cuốc đất gặp vật lạ – làm thế nào cho đúng?"
+      },
+      {
+        "number": 37,
+        "text": "Trong lúc cuốc đất, anh Nam nghe thấy tiếng kim loại va chạm. Khi phát hiện một vật kim loại lộ ra dưới đất, anh Nam tiến lại gần để quan sát."
+      },
+      {
+        "number": 38,
+        "text": "Đây là cách xử lý chưa đúng. Việc tiến lại gần hoặc tác động trực tiếp vào vật lạ có thể gây nguy hiểm."
+      },
+      {
+        "number": 39,
+        "text": "Khi gặp tình huống tương tự, các bạn không được tiếp tục cuốc đất, đào bới, chạm vào hoặc di chuyển vật lạ. Hãy dừng lại, giữ khoảng cách an toàn và thực hiện đúng các bước xử lý."
+      },
+      {
+        "number": 40,
+        "text": "Trước hết, đánh dấu khu vực nguy hiểm từ xa. Sau đó, rời đi theo đúng con đường đã đi vào và báo tin cho chính quyền địa phương hoặc số điện thoại đường dây nóng."
+      },
+      {
+        "number": 41,
+        "text": "Dù phát hiện vật lạ khi đi làm rẫy hay trong lúc cuốc đất, các bạn đều cần bình tĩnh, không tự ý kiểm tra và không tìm cách xử lý vật lạ."
+      },
+      {
+        "number": 42,
+        "text": "Các bạn hãy ghi nhớ bốn điều quan trọng sau đây:"
+      },
+      {
+        "number": 43,
+        "text": "Sử dụng lại các hình ảnh vừa rồi để nhấn mạnh"
+      },
+      {
+        "number": 44,
+        "text": "Thứ nhất, chọn nơi phù hợp để đánh dấu khu vực nguy hiểm."
+      },
+      {
+        "number": 45,
+        "text": "Thứ hai, đánh dấu từ xa, không đến gần vật lạ."
+      },
+      {
+        "number": 46,
+        "text": "Thứ ba, rời khỏi khu vực theo đúng con đường đã đi vào."
+      },
+      {
+        "number": 47,
+        "text": "Thứ tư, báo tin cho chính quyền địa phương hoặc số điện thoại đường dây nóng."
+      },
+      {
+        "number": 48,
+        "text": "Hãy ghi nhớ và thực hiện đúng các bước: Phát hiện – Đánh dấu – Rời đi – Báo tin."
+      },
+      {
+        "number": 49,
+        "text": "Mỗi hành động đúng sẽ góp phần bảo vệ an toàn cho bản thân và những người xung quanh."
+      },
+      {
+        "number": 50,
+        "text": "Kết thúc video"
+      },
+      {
+        "number": 51,
+        "text": "Nút: QUAY LẠI | TIẾP THEO"
+      },
+      {
+        "number": 52,
+        "text": "Điều kiện: Nút TIẾP THEO chỉ xuất hiện sau khi người học xem hết video tình huống."
+      },
+      {
+        "number": 53,
+        "text": "PHẦN 2. NHỮNG ĐIỀU CẦN NHỚ"
+      },
+      {
+        "number": 54,
+        "text": "1. Lời dẫn vào phần học"
+      },
+      {
+        "number": 55,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 56,
+        "text": "Qua hai tình huống vừa rồi, các bạn đã thấy cách xử lý khi gặp vật lạ trong lúc đi lên rẫy hoặc cuốc đất. Vậy cần ghi nhớ những điều gì để đánh dấu nơi nguy hiểm và báo tin đúng cách?"
+      },
+      {
+        "number": 57,
+        "text": "Hãy cùng Mít tơ An Toàn tìm hiểu 4 điều cần nhớ nhé!"
+      },
+      {
+        "number": 58,
+        "text": "2. Điều 1 – Chọn nơi phù hợp để đánh dấu"
+      },
+      {
+        "number": 59,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 60,
+        "text": "“Chọn nơi phù hợp để đánh dấu.”"
+      },
+      {
+        "number": 61,
+        "text": "Hình ảnh/đồ họa: Làm nổi bật vị trí cần chọn."
+      },
+      {
+        "number": 62,
+        "text": "3. Điều 2 – Cách đánh dấu"
+      },
+      {
+        "number": 63,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 64,
+        "text": "“Cách đánh dấu đúng.”"
+      },
+      {
+        "number": 65,
+        "text": "Hình ảnh/đồ họa: Minh họa cách đánh dấu."
+      },
+      {
+        "number": 66,
+        "text": "4. Điều 3 – Đường quay lại"
+      },
+      {
+        "number": 67,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 68,
+        "text": "“Đường quay lại an toàn.”"
+      },
+      {
+        "number": 69,
+        "text": "Hình ảnh/đồ họa: Làm nổi bật lối cũ."
+      },
+      {
+        "number": 70,
+        "text": "5. Điều 4 – Báo tin"
+      },
+      {
+        "number": 71,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 72,
+        "text": "“Khi gặp trường hợp này, cần báo cho chính quyền địa phương hoặc số điện thoại đường dây nóng.”"
+      },
+      {
+        "number": 73,
+        "text": "Hình ảnh/đồ họa: Minh họa việc báo tin cho chính quyền địa phương."
+      },
+      {
+        "number": 74,
+        "text": "6. Màn hình tổng hợp"
+      },
+      {
+        "number": 75,
+        "text": "Nội dung hiển thị:"
+      },
+      {
+        "number": 76,
+        "text": "CHỌN NƠI PHÙ HỢP ĐỂ ĐÁNH DẤU"
+      },
+      {
+        "number": 77,
+        "text": "CÁCH ĐÁNH DẤU ĐÚNG"
+      },
+      {
+        "number": 78,
+        "text": "ĐƯỜNG QUAY LẠI AN TOÀN"
+      },
+      {
+        "number": 79,
+        "text": "BÁO CHO CHÍNH QUYỀN ĐỊA PHƯƠNG HOẶC SỐ ĐIỆN THOẠI ĐƯỜNG DÂY NÓNG"
+      },
+      {
+        "number": 80,
+        "text": "Tương tác: Sau khi người học xem hết nội dung, hiển thị nút QUAY LẠI | TIẾP THEO."
+      },
+      {
+        "number": 81,
+        "text": "PHẦN 3. THỰC HÀNH"
+      },
+      {
+        "number": 82,
+        "text": "1. Lời dẫn vào phần thực hành"
+      },
+      {
+        "number": 83,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 84,
+        "text": "Phần trước, các bạn đã biết những điều cần nhớ khi đánh dấu nơi nguy hiểm và báo tin. Bây giờ, hãy cùng thực hành qua ba câu hỏi để kiểm tra xem mình đã biết cách chọn nơi đánh dấu, chọn đường quay lại an toàn và báo tin đúng người chưa nhé!"
+      },
+      {
+        "number": 85,
+        "text": "Sau mỗi câu hỏi, các bạn hãy quan sát kỹ hình minh họa và lựa chọn câu trả lời phù hợp. Nếu lựa chọn chưa đúng, các bạn có thể thực hiện lại. Hãy hoàn thành cả ba câu hỏi để củng cố những kiến thức đã học nhé!"
+      },
+      {
+        "number": 86,
+        "text": "2. Câu 1 – Chọn nơi đánh dấu"
+      },
+      {
+        "number": 87,
+        "text": "Mục đích: Giúp người học nhận biết vị trí phù hợp để đánh dấu khu vực nguy hiểm khi phát hiện vật lạ nghi là bom mìn, vật nổ."
+      },
+      {
+        "number": 88,
+        "text": "Hướng dẫn hiển thị trên màn hình:"
+      },
+      {
+        "number": 89,
+        "text": "“Hãy nhìn hình và chọn chỗ phù hợp để đánh dấu.”"
+      },
+      {
+        "number": 90,
+        "text": "Nội dung hình minh họa:"
+      },
+      {
+        "number": 91,
+        "text": "Hiển thị một tình huống người đi làm rẫy phát hiện vật lạ nghi là bom mìn, vật nổ. Trên hình có bốn vị trí được đánh số 1, 2, 3 và 4 để người học lựa chọn."
+      },
+      {
+        "number": 92,
+        "text": "Hình minh họa cần thể hiện rõ vị trí vật lạ và các vị trí có thể lựa chọn. Trong đó, một vị trí là đáp án đúng theo nguyên tắc đánh dấu từ xa, không phải tiến lại gần vật lạ. Ba vị trí còn lại là các phương án chưa phù hợp."
+      },
+      {
+        "number": 93,
+        "text": "Cách tương tác:"
+      },
+      {
+        "number": 94,
+        "text": "Người học nhấn hoặc click trực tiếp vào một trong bốn vị trí được đánh số trên hình."
+      },
+      {
+        "number": 95,
+        "text": "Sau khi lựa chọn, hệ thống hiển thị phản hồi ngay tại vị trí người học đã chọn."
+      },
+      {
+        "number": 96,
+        "text": "Nếu chọn đúng, hiển thị dấu ✓, phát âm thanh báo hiệu đúng và làm nổi bật vị trí được lựa chọn."
+      },
+      {
+        "number": 97,
+        "text": "Nếu chọn chưa đúng, hiển thị dấu X, phát âm thanh cảnh báo và thông báo: “Chưa chính xác. Các bạn hãy quan sát kỹ hình và chọn lại nhé!”"
+      },
+      {
+        "number": 98,
+        "text": "Khi chọn chưa đúng, người học được tiếp tục lựa chọn các vị trí còn lại hoặc thử lại cho đến khi có đáp án đúng."
+      },
+      {
+        "number": 99,
+        "text": "Khi người học chưa chọn đúng, nút TIẾP THEO chưa xuất hiện."
+      },
+      {
+        "number": 100,
+        "text": "Sau khi chọn đúng, nút TIẾP THEO xuất hiện để chuyển sang câu hỏi tiếp theo."
+      },
+      {
+        "number": 101,
+        "text": "Lời giải thích sau khi chọn đúng:"
+      },
+      {
+        "number": 102,
+        "text": "“Chính xác! Khi đánh dấu khu vực nguy hiểm, các bạn cần giữ khoảng cách an toàn, không tiến lại gần vật lạ. Hãy lựa chọn vị trí phù hợp để cảnh báo người khác tránh xa khu vực nguy hiểm.”"
+      },
+      {
+        "number": 103,
+        "text": "3. Câu 2 – Chọn đường quay lại"
+      },
+      {
+        "number": 104,
+        "text": "Lời dẫn chuyển tiếp – lời bình:"
+      },
+      {
+        "number": 105,
+        "text": "Các bạn đã thực hành cách chọn nơi đánh dấu. Sau khi đánh dấu khu vực nguy hiểm, các bạn cần rời đi theo đúng con đường đã đi vào. Hãy quan sát hình và chọn đường quay lại an toàn nhé!"
+      },
+      {
+        "number": 106,
+        "text": "Hướng dẫn hiển thị trên màn hình:"
+      },
+      {
+        "number": 107,
+        "text": "“Hãy chọn đường quay lại an toàn.”"
+      },
+      {
+        "number": 108,
+        "text": "Nội dung hình minh họa:"
+      },
+      {
+        "number": 109,
+        "text": "Hiển thị hình ảnh khu vực người đi làm rẫy phát hiện vật lạ, với điểm xuất phát, vị trí phát hiện vật lạ và nhiều đường hoặc lối đi có thể lựa chọn."
+      },
+      {
+        "number": 110,
+        "text": "Các đường đi được thể hiện rõ ràng, phân biệt bằng màu sắc hoặc ký hiệu để người học dễ quan sát. Trong đó, đáp án đúng là đường ban đầu, tức lối cũ mà người đó đã đi vào khu vực."
+      },
+      {
+        "number": 111,
+        "text": "Cách tương tác:"
+      },
+      {
+        "number": 112,
+        "text": "Người học nhấn hoặc click vào đường đi mà mình cho là an toàn."
+      },
+      {
+        "number": 113,
+        "text": "Hệ thống hiển thị phản hồi ngay sau khi lựa chọn."
+      },
+      {
+        "number": 114,
+        "text": "Nếu chọn đúng đường ban đầu, hiển thị dấu ✓, phát âm thanh báo hiệu đúng và làm nổi bật tuyến đường đã chọn."
+      },
+      {
+        "number": 115,
+        "text": "Nếu chọn chưa đúng, hiển thị dấu X, phát âm thanh cảnh báo và thông báo: “Chưa chính xác. Các bạn hãy quan sát lại đường đã đi vào khu vực nhé!”"
+      },
+      {
+        "number": 116,
+        "text": "Người học được lựa chọn lại cho đến khi tìm được đáp án đúng."
+      },
+      {
+        "number": 117,
+        "text": "Khi chưa chọn đúng, nút TIẾP THEO chưa xuất hiện."
+      },
+      {
+        "number": 118,
+        "text": "Chỉ sau khi chọn đúng đường quay lại, nút TIẾP THEO mới xuất hiện."
+      },
+      {
+        "number": 119,
+        "text": "Lời giải thích sau khi chọn đúng:"
+      },
+      {
+        "number": 120,
+        "text": "“Chính xác! Khi rời khỏi khu vực có vật lạ nghi là bom mìn, vật nổ, các bạn cần quay lại theo đúng con đường đã đi vào. Không tự ý đi theo lối khác để tránh tiến sâu hơn vào khu vực chưa được xác định an toàn.”"
+      },
+      {
+        "number": 121,
+        "text": "4. Câu 3 – Báo cho ai?"
+      },
+      {
+        "number": 122,
+        "text": "Lời dẫn chuyển tiếp – lời bình:"
+      },
+      {
+        "number": 123,
+        "text": "Các bạn đã thực hành cách chọn nơi đánh dấu và đường quay lại an toàn. Sau khi rời khỏi khu vực nguy hiểm, chúng ta cần báo tin cho ai để cơ quan có trách nhiệm tiếp nhận và xử lý? Hãy chọn câu trả lời đúng nhé!"
+      },
+      {
+        "number": 124,
+        "text": "Câu hỏi hiển thị trên màn hình:"
+      },
+      {
+        "number": 125,
+        "text": "“Khi gặp trường hợp này, cần báo cho ai?”"
+      },
+      {
+        "number": 126,
+        "text": "Các phương án lựa chọn:"
+      },
+      {
+        "number": 127,
+        "text": "A. Người thu mua phế liệu."
+      },
+      {
+        "number": 128,
+        "text": "B. Người đi đường gần nhất để họ đến kiểm tra."
+      },
+      {
+        "number": 129,
+        "text": "C. Chính quyền địa phương hoặc số điện thoại đường dây nóng."
+      },
+      {
+        "number": 130,
+        "text": "D. Người quen để cùng đến xem vật đó."
+      },
+      {
+        "number": 131,
+        "text": "Đáp án đúng: C. Chính quyền địa phương hoặc số điện thoại đường dây nóng."
+      },
+      {
+        "number": 132,
+        "text": "Cách tương tác:"
+      },
+      {
+        "number": 133,
+        "text": "Người học nhấn hoặc click vào một trong bốn phương án."
+      },
+      {
+        "number": 134,
+        "text": "Hệ thống hiển thị phản hồi ngay sau khi người học lựa chọn."
+      },
+      {
+        "number": 135,
+        "text": "Nếu chọn đáp án C, hiển thị dấu ✓, phát âm thanh báo hiệu đúng và làm nổi bật phương án chính xác."
+      },
+      {
+        "number": 136,
+        "text": "Nếu chọn đáp án A, B hoặc D, hiển thị dấu X, phát âm thanh cảnh báo và thông báo: “Chưa chính xác. Các bạn hãy chọn đúng nơi tiếp nhận thông tin về vật lạ nhé!”"
+      },
+      {
+        "number": 137,
+        "text": "Người học được phép lựa chọn lại cho đến khi trả lời đúng."
+      },
+      {
+        "number": 138,
+        "text": "Khi chưa chọn đúng, nút TIẾP THEO chưa xuất hiện."
+      },
+      {
+        "number": 139,
+        "text": "Sau khi chọn đúng, nút TIẾP THEO xuất hiện để chuyển sang phần hoàn thành bài học."
+      },
+      {
+        "number": 140,
+        "text": "Lời giải thích sau khi chọn đúng:"
+      },
+      {
+        "number": 141,
+        "text": "“Chính xác! Sau khi rời khỏi khu vực nguy hiểm, các bạn cần báo tin cho chính quyền địa phương hoặc số điện thoại đường dây nóng. Không tự ý quay lại khu vực để kiểm tra, xử lý hoặc đưa người khác đến xem vật lạ."
+      },
+      {
+        "number": 142,
+        "text": "Hãy ghi nhớ: Phát hiện vật lạ, đánh dấu khu vực nguy hiểm từ xa, rời đi theo đúng đường đã đến và báo tin cho cơ quan có trách nhiệm.”"
+      },
+      {
+        "number": 143,
+        "text": "5. Kết thúc phần thực hành"
+      },
+      {
+        "number": 144,
+        "text": "Sau khi người học trả lời đúng cả ba câu hỏi, hệ thống ghi nhận hoàn thành phần thực hành và cho phép chuyển sang màn hình hoàn thành Bài học số 4."
+      },
+      {
+        "number": 145,
+        "text": "Nguyên tắc điều hướng:"
+      },
+      {
+        "number": 146,
+        "text": "Người học phải trả lời đúng từng câu hỏi mới được chuyển sang câu tiếp theo."
+      },
+      {
+        "number": 147,
+        "text": "Nếu trả lời chưa đúng, hệ thống thông báo và cho phép lựa chọn lại."
+      },
+      {
+        "number": 148,
+        "text": "Không giới hạn số lần thử lại."
+      },
+      {
+        "number": 149,
+        "text": "Chỉ hiển thị nút TIẾP THEO sau khi người học trả lời đúng câu hỏi hiện tại."
+      },
+      {
+        "number": 150,
+        "text": "Chỉ ghi nhận hoàn thành phần thực hành khi cả ba câu hỏi đều được trả lời đúng."
+      },
+      {
+        "number": 151,
+        "text": "PHẦN 4. HOÀN THÀNH BÀI HỌC"
+      },
+      {
+        "number": 152,
+        "text": "1. Lời tổng kết"
+      },
+      {
+        "number": 153,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 154,
+        "text": "“Chúc mừng bạn đã hoàn thành Bài học số 4."
+      },
+      {
+        "number": 155,
+        "text": "Qua bài học này, bạn đã biết:”"
+      },
+      {
+        "number": 156,
+        "text": "2. Nội dung hiển thị"
+      },
+      {
+        "number": 157,
+        "text": "CHÚC MỪNG BẠN ĐÃ HOÀN THÀNH BÀI HỌC SỐ 4"
+      },
+      {
+        "number": 158,
+        "text": "BẠN ĐÃ BIẾT:"
+      },
+      {
+        "number": 159,
+        "text": "✓ Chọn nơi phù hợp để đánh dấu."
+      },
+      {
+        "number": 160,
+        "text": "✓ Cách đánh dấu đúng."
+      },
+      {
+        "number": 161,
+        "text": "✓ Đường quay lại an toàn."
+      },
+      {
+        "number": 162,
+        "text": "✓ Báo cho chính quyền địa phương hoặc số điện thoại đường dây nóng."
+      },
+      {
+        "number": 163,
+        "text": "Hình ảnh/animation:"
+      },
+      {
+        "number": 164,
+        "text": "Mascot xuất hiện."
+      },
+      {
+        "number": 165,
+        "text": "4 dấu ✓ sáng lần lượt."
+      },
+      {
+        "number": 166,
+        "text": "Thanh tiến trình đạt 100%."
+      },
+      {
+        "number": 167,
+        "text": "Nút: QUAY LẠI | TIẾP THEO"
+      },
+      {
+        "number": 168,
+        "text": "Điều kiện: Chỉ xuất hiện sau khi người học hoàn thành đầy đủ bài học và đạt 100% phần đánh giá."
+      },
+      {
+        "number": 170,
+        "text": "ĐIỀU HƯỚNG VÀ TIẾN ĐỘ"
+      },
+      {
+        "number": 171,
+        "text": "Thanh tiến trình cố định phía trên:"
+      },
+      {
+        "number": 172,
+        "text": "BÀI HỌC SỐ 4 | XX%"
+      },
+      {
+        "number": 173,
+        "text": "Chưa xem hết → không có TIẾP THEO."
+      },
+      {
+        "number": 174,
+        "text": "Chưa trả lời đúng → không có TIẾP THEO."
+      },
+      {
+        "number": 175,
+        "text": "Chưa hoàn thành → không có TIẾP THEO."
+      },
+      {
+        "number": 176,
+        "text": "Hoàn thành điều kiện → TIẾP THEO xuất hiện."
+      },
+      {
+        "number": 177,
+        "text": "Có thể quay lại nội dung đã hoàn thành."
+      },
+      {
+        "number": 178,
+        "text": "Không được bỏ qua nội dung chưa hoàn thành."
+      }
+    ]
+  },
+  {
+    "source": "S5",
+    "paragraphs": [
+      {
+        "number": 1,
+        "text": "Vinafilms Joint Stock Company"
+      },
+      {
+        "number": 2,
+        "text": "Address: No. 12/25 Phan Dinh Phung Street, Ba Dinh Ward, Hanoi, VietnamTel: (+84) 344 235 689 | (+84) 978 000 018Website: https://vinafilms.org; Email: vinafilms@gmail.com"
+      },
+      {
+        "number": 6,
+        "text": "BÀI KIỂM TRA CUỐI PHẦN HỌC SỐ 1"
+      },
+      {
+        "number": 7,
+        "text": "I. MỞ ĐẦU"
+      },
+      {
+        "number": 8,
+        "text": "Màn hình giới thiệu"
+      },
+      {
+        "number": 9,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 10,
+        "text": "Các bạn đã hoàn thành Phần học số 1, với những kiến thức về đặc điểm của bom mìn, vật nổ; cách nhận biết khu vực có thể có bom mìn, vật nổ; những hành vi cần tránh và cách xử lý khi phát hiện vật lạ nghi là bom mìn, vật nổ."
+      },
+      {
+        "number": 11,
+        "text": "Bây giờ, hãy cùng làm bài kiểm tra để xem mình đã nhớ được những gì đã học nhé!"
+      },
+      {
+        "number": 12,
+        "text": "Bài kiểm tra gồm 12 câu hỏi. Các bạn cần trả lời đúng 100% số câu hỏi để hoàn thành bài kiểm tra và chuyển sang phần học tiếp theo."
+      },
+      {
+        "number": 13,
+        "text": "Với những câu hỏi có thể chọn nhiều đáp án, các bạn hãy đọc kỹ yêu cầu và lựa chọn đầy đủ các phương án chính xác."
+      },
+      {
+        "number": 14,
+        "text": "Chúc các bạn hoàn thành tốt bài kiểm tra!"
+      },
+      {
+        "number": 15,
+        "text": "Text trên màn hình:"
+      },
+      {
+        "number": 16,
+        "text": "BÀI KIỂM TRA CUỐI PHẦN 1"
+      },
+      {
+        "number": 17,
+        "text": "Gồm 12 câu hỏi"
+      },
+      {
+        "number": 18,
+        "text": "Mỗi lần chỉ có 1 câu hỏi."
+      },
+      {
+        "number": 19,
+        "text": "Bạn cần trả lời đúng 100% để hoàn thành bài kiểm tra."
+      },
+      {
+        "number": 20,
+        "text": "Hướng dẫn:"
+      },
+      {
+        "number": 21,
+        "text": "Với những câu có thể chọn nhiều đáp án, hệ thống hiển thị:"
+      },
+      {
+        "number": 22,
+        "text": "Có thể chọn nhiều đáp án."
+      },
+      {
+        "number": 23,
+        "text": "Nút: BẮT ĐẦU"
+      },
+      {
+        "number": 24,
+        "text": "Thanh tiến trình: 0/12 câu"
+      },
+      {
+        "number": 25,
+        "text": "II. CÂU HỎI"
+      },
+      {
+        "number": 26,
+        "text": "CÂU 1"
+      },
+      {
+        "number": 27,
+        "text": "Dạng: Chọn một đáp án"
+      },
+      {
+        "number": 28,
+        "text": "Dấu hiệu nào cho thấy khu vực có thể có bom mìn, vật nổ?"
+      },
+      {
+        "number": 29,
+        "text": "A. Khu vực có cắm biển báo bom mìn hoặc đã có thông tin cảnh báo từ người khác"
+      },
+      {
+        "number": 30,
+        "text": "B. Khu vực có dấu hiệu của vụ nổ do bom mìn: đất đá tung lên, không giữ như địa hình lúc đầu, cây cối bị tàn phá"
+      },
+      {
+        "number": 31,
+        "text": "C. Một phần của bom mìn/vật nổ trên mặt đất"
+      },
+      {
+        "number": 32,
+        "text": "D. Cả ba phương án trên"
+      },
+      {
+        "number": 33,
+        "text": "Đáp án đúng: D"
+      },
+      {
+        "number": 34,
+        "text": "Phản hồi đúng:"
+      },
+      {
+        "number": 35,
+        "text": "Chính xác!"
+      },
+      {
+        "number": 36,
+        "text": "Phản hồi sai:"
+      },
+      {
+        "number": 37,
+        "text": "Chưa chính xác."
+      },
+      {
+        "number": 38,
+        "text": "Hãy chọn lại."
+      },
+      {
+        "number": 39,
+        "text": "CÂU 2"
+      },
+      {
+        "number": 40,
+        "text": "Dạng: Chọn một đáp án"
+      },
+      {
+        "number": 41,
+        "text": "Bom mìn, vật nổ nằm lâu dưới ao, hồ, sông, suối có còn nguy hiểm không?"
+      },
+      {
+        "number": 42,
+        "text": "A. Không nguy hiểm vì chúng sẽ không phát nổ"
+      },
+      {
+        "number": 43,
+        "text": "B. Tính nhạy nổ của bom mìn vật nổ sẽ bị giảm sau khi ở dưới nước một thời gian dài"
+      },
+      {
+        "number": 44,
+        "text": "C. Bom mìn vật nổ ở dưới nước một thời gian dài đã bị gỉ sét nên không còn nguy hiểm"
+      },
+      {
+        "number": 45,
+        "text": "D. Vẫn còn nguy hiểm vì tính nhạy nổ của chúng có thể không giảm theo thời gian"
+      },
+      {
+        "number": 46,
+        "text": "Đáp án đúng: D"
+      },
+      {
+        "number": 47,
+        "text": "CÂU 3"
+      },
+      {
+        "number": 48,
+        "text": "Dạng: Chọn nhiều đáp án"
+      },
+      {
+        "number": 49,
+        "text": "Bom mìn, vật nổ có những đặc điểm gì?"
+      },
+      {
+        "number": 50,
+        "text": "A. Bom mìn, vật nổ được làm từ nhiều chất liệu khác nhau (sắt, thép, gang, đồng, nhôm, nhựa, gỗ, vv…)"
+      },
+      {
+        "number": 51,
+        "text": "B. Bom mìn, vật nổ có hình dạng và kích thước khác nhau (dài, ngắn, tròn, dẹt, hình quả dứa, quả ổi, to, nhỏ, vv…)"
+      },
+      {
+        "number": 52,
+        "text": "C. Bom mìn, vật nổ có nhiều màu sắc khác nhau"
+      },
+      {
+        "number": 53,
+        "text": "D. Bom mìn vật nổ thường chỉ có hình tròn, được làm bằng sắt"
+      },
+      {
+        "number": 54,
+        "text": "Đáp án đúng: A, B, C"
+      },
+      {
+        "number": 55,
+        "text": "CÂU 4"
+      },
+      {
+        "number": 56,
+        "text": "Dạng: Chọn nhiều đáp án"
+      },
+      {
+        "number": 57,
+        "text": "Khi thấy vật nghi là bom mìn, vật nổ, bạn nên làm gì?"
+      },
+      {
+        "number": 58,
+        "text": "A. Dừng lại, không được tiến lại gần"
+      },
+      {
+        "number": 59,
+        "text": "B. Quan sát từ xa và dùng vật dụng tại chỗ đánh dấu khu vực nguy hiểm"
+      },
+      {
+        "number": 60,
+        "text": "C. Gọi điện thoại vào số đường dây nóng hoặc gọi chính quyền địa phương để báo cáo"
+      },
+      {
+        "number": 61,
+        "text": "D. Dừng lại, không làm gì cả"
+      },
+      {
+        "number": 62,
+        "text": "Đáp án đúng: A, B, C"
+      },
+      {
+        "number": 63,
+        "text": "CÂU 5"
+      },
+      {
+        "number": 64,
+        "text": "Dạng: Chọn một đáp án"
+      },
+      {
+        "number": 65,
+        "text": "Việc làm nào không an toàn?"
+      },
+      {
+        "number": 66,
+        "text": "A. Nhặt vật kim loại"
+      },
+      {
+        "number": 67,
+        "text": "B. Dừng công việc lại nếu tìm thấy BMVN"
+      },
+      {
+        "number": 68,
+        "text": "C. Đánh dấu từ xa nếu tìm thấy BMVN"
+      },
+      {
+        "number": 69,
+        "text": "D. Báo cáo chính quyền địa phương nếu tìm thấy BMVN"
+      },
+      {
+        "number": 70,
+        "text": "Đáp án đúng: A"
+      },
+      {
+        "number": 71,
+        "text": "CÂU 6"
+      },
+      {
+        "number": 72,
+        "text": "Dạng: Chọn một đáp án"
+      },
+      {
+        "number": 73,
+        "text": "Điều nào sau đây không phải là dấu hiệu nguy hiểm?"
+      },
+      {
+        "number": 74,
+        "text": "A. Đất xáo trộn"
+      },
+      {
+        "number": 75,
+        "text": "B. Sạt lở"
+      },
+      {
+        "number": 76,
+        "text": "C. Vật kim loại mới"
+      },
+      {
+        "number": 77,
+        "text": "D. Đường mòn đông người đi"
+      },
+      {
+        "number": 78,
+        "text": "Đáp án đúng: D"
+      },
+      {
+        "number": 79,
+        "text": "CÂU 7"
+      },
+      {
+        "number": 80,
+        "text": "Dạng: Chọn nhiều đáp án"
+      },
+      {
+        "number": 81,
+        "text": "Chúng ta cần làm gì để hạn chế tai nạn bom mìn, vật nổ?"
+      },
+      {
+        "number": 82,
+        "text": "A. Không chơi đùa, chăn thả gia súc, gia cầm tại những nơi có biển báo nguy hiểm"
+      },
+      {
+        "number": 83,
+        "text": "B. Không rà tìm, buôn bán phế liệu chiến tranh"
+      },
+      {
+        "number": 84,
+        "text": "C. Không đốt nóng, cưa, đục, ném, đá các vật giống bom mìn, vật nổ"
+      },
+      {
+        "number": 85,
+        "text": "D. Thấy vật hình tròn gỉ sét nhặt mang về bán sắt vụn"
+      },
+      {
+        "number": 86,
+        "text": "Đáp án đúng: A, B, C"
+      },
+      {
+        "number": 87,
+        "text": "CÂU 8"
+      },
+      {
+        "number": 88,
+        "text": "Dạng: Chọn một đáp án"
+      },
+      {
+        "number": 89,
+        "text": "Tai nạn bom mìn, vật nổ có thể gây ra những hậu quả gì?"
+      },
+      {
+        "number": 90,
+        "text": "A. Khiến nạn nhân tử vong hoặc bị thương"
+      },
+      {
+        "number": 91,
+        "text": "B. Khiến nạn nhân bị khuyết tật suốt đời, làm giảm chất lượng cuộc sống"
+      },
+      {
+        "number": 92,
+        "text": "C. Ảnh hưởng tiêu cực tới tâm lý nạn nhân"
+      },
+      {
+        "number": 93,
+        "text": "D. Tất cả các đáp án trên"
+      },
+      {
+        "number": 94,
+        "text": "Đáp án đúng: D"
+      },
+      {
+        "number": 95,
+        "text": "CÂU 9"
+      },
+      {
+        "number": 96,
+        "text": "Dạng: Chọn một đáp án"
+      },
+      {
+        "number": 97,
+        "text": "Tai nạn bom mìn có thể gây ra những thiệt hại gì về kinh tế?"
+      },
+      {
+        "number": 98,
+        "text": "A. Cây trồng, vật nuôi, nhà cửa, tài sản bị phá hủy"
+      },
+      {
+        "number": 99,
+        "text": "B. Người lao động bị tai nạn bom mìn mất đi khả năng lao động tạo thu nhập"
+      },
+      {
+        "number": 100,
+        "text": "C. Người dân không thể canh tác trên mảnh đất xảy ra tai nạn bom mìn do lo lắng còn bom mìn sót lại"
+      },
+      {
+        "number": 101,
+        "text": "D. Tất cả các đáp án trên"
+      },
+      {
+        "number": 102,
+        "text": "Đáp án đúng: D"
+      },
+      {
+        "number": 103,
+        "text": "CÂU 10"
+      },
+      {
+        "number": 104,
+        "text": "Dạng: Chọn nhiều đáp án"
+      },
+      {
+        "number": 105,
+        "text": "Nếu phát hiện mình đang ở trong khu vực có bom mìn, bạn sẽ làm gì?"
+      },
+      {
+        "number": 106,
+        "text": "A. Bằng mọi cách chạy thật nhanh thoát ra khỏi khu vực đó"
+      },
+      {
+        "number": 107,
+        "text": "B. Dừng công việc lại ngay lập tức và kêu cứu nhờ người giúp đỡ"
+      },
+      {
+        "number": 108,
+        "text": "C. Từ từ quay lại theo dấu chân cũ/lối cũ và báo cáo cho chính quyền địa phương hoặc gọi điện vào số đường dây nóng"
+      },
+      {
+        "number": 109,
+        "text": "D. Tìm kiếm xung quanh khu vực đó xem có sắt vụn để lấy mang về bán"
+      },
+      {
+        "number": 110,
+        "text": "Đáp án đúng: B, C"
+      },
+      {
+        "number": 111,
+        "text": "CÂU 11"
+      },
+      {
+        "number": 112,
+        "text": "Dạng: Chọn nhiều đáp án"
+      },
+      {
+        "number": 113,
+        "text": "Nếu thấy hai bạn nhỏ đang dùng vật cứng gõ vào một vật hình tròn giống quả lựu đạn cũ, bạn sẽ làm gì?"
+      },
+      {
+        "number": 114,
+        "text": "A. Không quan tâm, vì vật gỉ sét không còn nguy hiểm"
+      },
+      {
+        "number": 115,
+        "text": "B. Tiến đến hỗ trợ hai bạn nhỏ đập mạnh xem đó là vật gì"
+      },
+      {
+        "number": 116,
+        "text": "C. Khuyên hai bạn đó dừng lại, không được gõ vào vật đó nữa"
+      },
+      {
+        "number": 117,
+        "text": "D. Báo ngay cho chính quyền địa phương biết để xử lý"
+      },
+      {
+        "number": 118,
+        "text": "Đáp án đúng: C, D"
+      },
+      {
+        "number": 119,
+        "text": "CÂU 12"
+      },
+      {
+        "number": 120,
+        "text": "Dạng: Chọn một đáp án"
+      },
+      {
+        "number": 121,
+        "text": "Khi phát hiện bom mìn, vật nổ, ai được phép tháo gỡ?"
+      },
+      {
+        "number": 122,
+        "text": "A. Bất kỳ ai nếu phát hiện bom mìn, vật nổ đều được phép tháo gỡ"
+      },
+      {
+        "number": 123,
+        "text": "B. Chỉ những tổ chức, cá nhân được Chính phủ, Bộ Quốc phòng, cơ quan có thẩm quyền cho phép mới được tháo gỡ bom mìn, vật nổ"
+      },
+      {
+        "number": 124,
+        "text": "C. Chỉ có người lớn mới được phép tháo gỡ"
+      },
+      {
+        "number": 125,
+        "text": "D. Chỉ có trưởng thôn mới được phép tháo gỡ"
+      },
+      {
+        "number": 126,
+        "text": "Đáp án đúng: B"
+      },
+      {
+        "number": 127,
+        "text": "III. MÀN HÌNH KẾT QUẢ"
+      },
+      {
+        "number": 128,
+        "text": "Trường hợp đạt 100%"
+      },
+      {
+        "number": 129,
+        "text": "Lời bình:"
+      },
+      {
+        "number": 130,
+        "text": "Chúc mừng các bạn đã hoàn thành bài kiểm tra cuối Phần học!"
+      },
+      {
+        "number": 131,
+        "text": "Các bạn đã trả lời đúng 12 trên 12 câu hỏi, đạt 100% và hoàn thành Phần học."
+      },
+      {
+        "number": 132,
+        "text": "Qua phần học này, các bạn đã củng cố kiến thức về bom mìn, vật nổ, cách nhận biết dấu hiệu nguy hiểm, những hành vi cần tránh và cách xử lý an toàn khi phát hiện vật lạ nghi là bom mìn, vật nổ."
+      },
+      {
+        "number": 133,
+        "text": "Hãy ghi nhớ và vận dụng những kiến thức đã học vào thực tế để bảo vệ an toàn cho bản thân và những người xung quanh."
+      },
+      {
+        "number": 134,
+        "text": "Text:"
+      },
+      {
+        "number": 135,
+        "text": "🎉 CHÚC MỪNG BẠN!"
+      },
+      {
+        "number": 136,
+        "text": "BẠN ĐÃ HOÀN THÀNH BÀI KIỂM TRA CUỐI PHẦN HỌC"
+      },
+      {
+        "number": 137,
+        "text": "12/12 câu đúng – 100%"
+      },
+      {
+        "number": 138,
+        "text": "HOÀN THÀNH"
+      },
+      {
+        "number": 139,
+        "text": "Hình ảnh / Animation:"
+      },
+      {
+        "number": 140,
+        "text": "Mascot xuất hiện."
+      },
+      {
+        "number": 141,
+        "text": "12 dấu ✓ xuất hiện lần lượt."
+      },
+      {
+        "number": 142,
+        "text": "Hiển thị kết quả 12/12 – 100%."
+      },
+      {
+        "number": 143,
+        "text": "Thanh tiến trình đạt 100%."
+      },
+      {
+        "number": 144,
+        "text": "Nút: QUAY LẠI | TIẾP THEO"
+      },
+      {
+        "number": 145,
+        "text": "Trường hợp chưa đạt 100%"
+      },
+      {
+        "number": 146,
+        "text": "Text:"
+      },
+      {
+        "number": 147,
+        "text": "CHƯA HOÀN THÀNH"
+      },
+      {
+        "number": 148,
+        "text": "Bạn chưa trả lời đúng 100% số câu hỏi."
+      },
+      {
+        "number": 149,
+        "text": "Hãy làm lại bài kiểm tra để hoàn thành Phần học nhé."
+      },
+      {
+        "number": 150,
+        "text": "Nút: LÀM LẠI"
+      },
+      {
+        "number": 151,
+        "text": "Không hiển thị TIẾP THEO."
+      },
+      {
+        "number": 152,
+        "text": "Người học được làm lại không giới hạn."
+      }
+    ]
+  }
+]

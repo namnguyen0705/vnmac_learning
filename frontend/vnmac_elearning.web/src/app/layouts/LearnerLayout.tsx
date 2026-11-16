@@ -1,4 +1,4 @@
-import { Link, NavLink, Navigate, Outlet } from "react-router-dom";
+import { Link, NavLink, Navigate, Outlet, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { NotificationBell } from "@/shared/ui/NotificationBell";
 import {
@@ -11,7 +11,7 @@ import {
   LogOut,
   UserRound,
 } from "lucide-react";
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { useAuth } from "../auth";
 import { OfficialLogo, OfficialPartnerMarks } from "@/shared/ui/learner-ui";
 import { resolveBrandAsset, useBrandingSettings } from "@/shared/ui/branding";
@@ -19,9 +19,9 @@ import { resolveBrandAsset, useBrandingSettings } from "@/shared/ui/branding";
 const learnerLinks = [
   { to: "/app/dashboard", label: "Trang chủ", icon: Home },
   { to: "/app/courses", label: "Bài học", icon: BookOpen },
-  { to: "/app/certificate", label: "Kết quả", icon: BarChart3 },
+  { to: "/app/results", label: "Kết quả", icon: BarChart3 },
   { to: "/app/library", label: "Tài liệu", icon: FileText },
-  { to: "/app/profile", label: "Hồ sơ", icon: UserRound, mobileOnly: true },
+  { to: "/app/profile", label: "Hồ sơ cá nhân", icon: UserRound, mobileOnly: false },
 ];
 
 function getInitials(fullName: string) {
@@ -35,8 +35,23 @@ function getInitials(fullName: string) {
 
 export function LearnerLayout() {
   const { session, logout } = useAuth();
+  const location = useLocation();
   const branding = useBrandingSettings();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const shellRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    const scroll = scrollRef.current;
+    if (!scroll) return;
+    // Match the header/footer to the actual content width, including the space
+    // occupied by a non-overlay Windows scrollbar.
+    const align = () => shellRef.current?.style.setProperty("--learner-scrollbar-width", `${Math.max(0, scroll.offsetWidth - scroll.clientWidth)}px`);
+    align();
+    const observer = new ResizeObserver(align);
+    observer.observe(scroll);
+    if (scroll.firstElementChild) observer.observe(scroll.firstElementChild);
+    return () => observer.disconnect();
+  }, [location.pathname, session?.user.id]);
 
   if (!session) {
     return <Navigate replace to="/login" />;
@@ -45,7 +60,7 @@ export function LearnerLayout() {
   const user = session.user;
 
   return (
-    <div className="learner-app-shell min-h-screen bg-[#f7faff] text-slate-950">
+    <div ref={shellRef} className="learner-app-shell min-h-screen bg-[#f7faff] text-slate-950">
       <header
         className="learner-official-header"
         style={{
@@ -57,7 +72,7 @@ export function LearnerLayout() {
           backgroundSize: "cover",
         }}
       >
-        <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8">
+        <div className="learner-header-inner mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8">
           <div className="learner-brand-row">
             <Link className="min-w-0" to="/app/dashboard">
               <OfficialLogo />
@@ -65,7 +80,12 @@ export function LearnerLayout() {
             <OfficialPartnerMarks />
           </div>
 
-          <div className="learner-greeting-row">
+          <div
+            className={cn(
+              "learner-greeting-row",
+              location.pathname !== "/app/dashboard" && "learner-greeting-row-mobile-hidden",
+            )}
+          >
             <p className="min-w-0 text-sm text-[#19467f]">
               Xin chào <strong>{user.fullName}</strong>
               {user.group ? <span>, {user.group}</span> : null}
@@ -131,13 +151,14 @@ export function LearnerLayout() {
         </div>
       </header>
 
-      <div className="learner-content-scroll">
+      <div ref={scrollRef} className="learner-content-scroll">
         <main className="learner-main-shell mx-auto flex w-full max-w-[1440px] flex-col gap-5 px-4 py-4 sm:px-6 lg:px-8">
           <Outlet />
         </main>
       </div>
 
       <footer className="learner-bottom-nav">
+        <div className="learner-footer-inner">
         <nav className="learner-bottom-nav-inner" aria-label="Điều hướng học viên">
           {learnerLinks.map((item) => {
             const Icon = item.icon;
@@ -153,7 +174,8 @@ export function LearnerLayout() {
             );
           })}
         </nav>
-        <p className="learner-copyright">© 2026 RAPPOT Project. All rights reserved.</p>
+        <p className="learner-copyright">© 2026 RAPPORT Project. All rights reserved.</p>
+        </div>
       </footer>
     </div>
   );

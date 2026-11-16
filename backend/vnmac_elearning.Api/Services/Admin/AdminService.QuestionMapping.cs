@@ -29,28 +29,7 @@ public sealed partial class AdminService
 
     private static LessonAssessmentRequest GetAssessmentDefaults(LessonType type, LessonAssessmentRequest? request)
     {
-        if (request is not null)
-        {
-            return request;
-        }
-
-        return type == LessonType.Quiz
-            ? new LessonAssessmentRequest
-            {
-                Intro = "Quiz lesson",
-                RetryHint = "Retry until you reach the required score.",
-                PassScore = 100,
-                RandomizeQuestionOrder = true,
-                RandomizeOptionOrder = true
-            }
-            : new LessonAssessmentRequest
-            {
-                Intro = "Interactive lesson",
-                RetryHint = "Retry until every answer is correct.",
-                PassScore = 100,
-                RandomizeQuestionOrder = false,
-                RandomizeOptionOrder = false
-            };
+        return request ?? throw new ServiceException(ServiceErrors.AdminAssessmentRequired);
     }
 
     private static ScormPackage CreateScormPackage(string lessonId, ScormPackageRequest? request)

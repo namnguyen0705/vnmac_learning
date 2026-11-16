@@ -27,7 +27,7 @@ export function SystemLogsPage() {
   const actions = useMemo(() => query.data?.actions ?? [], [query.data?.actions]);
 
   return (
-    <div className="grid gap-5">
+    <div className="grid gap-3">
       <AdminPageHeader
         breadcrumbs={["Trang chủ", "Cài đặt hệ thống", "Nhật ký hệ thống"]}
         title="Nhật ký hệ thống"

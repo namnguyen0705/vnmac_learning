@@ -1,0 +1,28 @@
+/* Character-first introduction: chrome appears only on interaction. */
+.intro-dialog.mascot-player{width:min(560px,calc(100dvh - 64px),calc(100% - 32px));max-height:calc(100dvh - 32px);padding:0;border:0;border-radius:12px;background:transparent;color:#fff;box-shadow:none;overflow:hidden;outline:none}
+.mascot-player::backdrop{background:#061b35b0;backdrop-filter:blur(5px)}
+.mascot-player-stage{position:relative;width:100%;aspect-ratio:1;overflow:hidden;background:transparent}
+.intro-dialog.mascot-player video{display:block;width:100%;height:100%;max-height:none;aspect-ratio:1;object-fit:contain;background:transparent}
+.mascot-player-close{position:absolute;z-index:3;top:12px;right:12px;display:grid;place-items:center;width:38px;height:38px;border:1px solid #ffffff4d;border-radius:50%;background:#0a223bbf;color:white;cursor:pointer;opacity:0;pointer-events:none}
+.mascot-player-close:hover:enabled{background:#123e68}
+.intro-dialog.mascot-player .mascot-player-close:disabled{opacity:0;cursor:not-allowed}
+.mascot-player-controls{position:absolute;z-index:2;inset:auto 0 0;padding:30px 18px 14px;background:linear-gradient(transparent,#071e38d9);opacity:0;pointer-events:none}
+.mascot-player-timeline{position:relative;height:16px;display:flex;align-items:center;margin-bottom:8px}
+.mascot-player-timeline>div{height:3px;width:100%;border-radius:20px;background:#ffffff4d;overflow:hidden}
+.mascot-player-timeline>div>span{display:block;height:100%;background:#73baff;border-radius:20px}
+.mascot-player-timeline input{position:absolute;inset:0;width:100%;height:16px;opacity:0;cursor:pointer}
+.mascot-player-timeline:focus-within{outline:2px solid #75baff;outline-offset:3px;border-radius:4px}
+.mascot-player-toolbar{display:flex;align-items:center;gap:12px}
+.mascot-player-toolbar button{display:grid;place-items:center;width:36px;height:36px;flex-shrink:0;border:0;border-radius:50%;color:#fff;background:transparent;cursor:pointer}
+.mascot-player-toolbar button:hover{background:#ffffff24}
+.mascot-player-toolbar .mascot-player-play{background:#ffffff26}
+.mascot-player-time{font-size:12px;color:#fff;font-variant-numeric:tabular-nums;white-space:nowrap}
+.mascot-player-time>span{color:#ffffffa8}
+.mascot-player-restart{margin-left:auto}
+.mascot-player.is-touch-controls .mascot-player-controls,.mascot-player.is-touch-controls .mascot-player-close:not(:disabled),.mascot-player:has(button:focus-visible,input:focus-visible) .mascot-player-controls,.mascot-player:has(button:focus-visible,input:focus-visible) .mascot-player-close:not(:disabled){opacity:1;pointer-events:auto}
+@media(hover:hover){.mascot-player:hover .mascot-player-controls,.mascot-player:hover .mascot-player-close:not(:disabled){opacity:1;pointer-events:auto}}
+.mascot-player button:focus-visible{outline:3px solid #75baff;outline-offset:3px}
+.mascot-player-error{position:absolute;z-index:4;inset:auto 12px 12px;margin:0;padding:12px 14px;background:#fff3ed;border:1px solid #f0d4c3;border-radius:6px;color:#a45536;font-size:13px}
+.mascot-player-error button{text-decoration:underline}
+@media(prefers-reduced-motion:no-preference){.mascot-player-controls,.mascot-player-close{transition:opacity .18s ease}}
+@media(max-width:700px){.intro-dialog.mascot-player{width:min(calc(100% - 24px),calc(100dvh - 48px));border-radius:10px}.mascot-player-controls{padding:24px 12px 12px}.mascot-player-toolbar{gap:8px}.mascot-player-time{font-size:11px}.mascot-player-close{width:34px;height:34px;top:10px;right:10px}}

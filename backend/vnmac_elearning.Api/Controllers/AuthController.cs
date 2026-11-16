@@ -52,9 +52,9 @@ public sealed class AuthController(AuthService authService, TrainingDbContext db
     [EnableRateLimiting("login")]
     [HttpPost("login")]
     [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
-    public ActionResult<LoginResponse> Login([FromBody] LoginRequest request)
+    public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginRequest request)
     {
-        return Ok(authService.Login(request));
+        return Ok(await authService.LoginAsync(request));
     }
 
     [HttpPost("refresh")]

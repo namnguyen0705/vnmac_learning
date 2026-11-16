@@ -33,6 +33,7 @@ public sealed partial class LearningService
             .Where(item => item.Id == session.LessonId)
             .Select(item => item.CourseId)
             .SingleOrDefault() ?? string.Empty);
+        course = ScopeCourse(session.UserId, course);
         var orderedLessons = GetOrderedLessons(course);
         var lesson = GetLessonInternal(session.LessonId, orderedLessons);
         if (lesson.Type != LessonType.Scorm || lesson.ScormPackage is null)

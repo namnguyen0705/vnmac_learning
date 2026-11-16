@@ -76,7 +76,7 @@ export function RolesPage() {
   }
 
   return (
-    <div className="grid gap-5">
+    <div className="grid gap-3">
       <AdminPageHeader
         breadcrumbs={["Trang chủ", "Quản lý người dùng", "Quản lý vai trò"]}
         title="Quản lý vai trò"
@@ -97,9 +97,9 @@ export function RolesPage() {
         <MessageBanner tone="error">Không tải được dữ liệu vai trò.</MessageBanner>
       ) : null}
 
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <section className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         {roles.map((role) => (
-          <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm" key={role.id}>
+          <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm" key={role.id}>
             <div className="flex items-start justify-between gap-3">
               <div className="grid size-11 place-items-center rounded-2xl bg-blue-50 text-blue-700">
                 <ShieldCheck className="size-5" />
@@ -162,9 +162,9 @@ export function RolesPage() {
           </>
         }
       >
-        <div className="space-y-5">
+        <div className="space-y-3">
           {saveMutation.isError ? <MessageBanner tone="error">Không thể lưu vai trò.</MessageBanner> : null}
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-3 md:grid-cols-2">
             <label className="grid gap-2 text-sm font-medium">Tên vai trò<Input value={form.name} onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))} /></label>
             <label className="grid gap-2 text-sm font-medium">Mã vai trò<Input disabled={editingRole?.isSystem} value={form.code} onChange={(event) => setForm((current) => ({ ...current, code: event.target.value }))} /></label>
           </div>

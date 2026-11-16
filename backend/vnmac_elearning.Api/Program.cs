@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
@@ -38,6 +39,9 @@ public class Program
 
         builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
         builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection(EmailOptions.SectionName));
+        builder.Services.Configure<CaptchaOptions>(builder.Configuration.GetSection(CaptchaOptions.SectionName));
+        builder.Services.Configure<SupportInfoOptions>(builder.Configuration.GetSection(SupportInfoOptions.SectionName));
+        builder.Services.AddHttpClient<CaptchaVerifier>();
         builder.Services.Configure<FormOptions>(options =>
         {
             options.MultipartBodyLengthLimit = 2L * 1024 * 1024 * 1024;
@@ -101,6 +105,21 @@ public class Program
             });
         builder.Services.AddAuthorization();
 
+        var allowedOrigins = builder.Configuration
+            .GetSection("Cors:AllowedOrigins")
+            .Get<string[]>() ?? [];
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("Frontend", policy =>
+            {
+                policy
+                    .WithOrigins(allowedOrigins)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
+        });
+
         builder.Services.AddRateLimiter(options =>
         {
             options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
@@ -130,11 +149,23 @@ public class Program
 
         var app = builder.Build();
 
+        if (args.Contains("--inspect-database"))
+        {
+            PartOneDatabase.RunAsync(app.Services, args, app.Environment.ContentRootPath).GetAwaiter().GetResult();
+            return;
+        }
+
         using (var migrationScope = app.Services.CreateScope())
         {
             migrationScope.ServiceProvider
                 .GetRequiredService<TrainingDbContext>()
                 .Database.Migrate();
+        }
+
+        if (args.Contains("--reset-part1") || args.Contains("--apply-part1-content"))
+        {
+            PartOneDatabase.RunAsync(app.Services, args, app.Environment.ContentRootPath).GetAwaiter().GetResult();
+            return;
         }
 
         app.UseExceptionHandler(errorApp =>
@@ -177,7 +208,10 @@ public class Program
 
         app.UseSwagger();
         app.UseSwaggerUI();
-        app.UseStaticFiles();
+        var mediaContentTypes = new FileExtensionContentTypeProvider();
+        mediaContentTypes.Mappings[".vtt"] = "text/vtt; charset=utf-8";
+        app.UseCors("Frontend");
+        app.UseStaticFiles(new StaticFileOptions { ContentTypeProvider = mediaContentTypes });
         app.UseRateLimiter();
         app.UseAuthentication();
         app.UseMiddleware<AdminPermissionMiddleware>();
@@ -213,3 +247,6 @@ public class Program
         app.Run();
     }
 }
+
+
+

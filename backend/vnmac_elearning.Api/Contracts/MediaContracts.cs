@@ -1,5 +1,16 @@
 namespace vnmac_elearning.Api.Contracts;
 
+public sealed class UploadMediaForm
+{
+    public IFormFile File { get; init; } = null!;
+    public string MediaType { get; init; } = string.Empty;
+}
+
+public sealed class ImportScormPackageForm
+{
+    public IFormFile File { get; init; } = null!;
+}
+
 public sealed class MediaUploadResponse
 {
     public required string FileName { get; init; }

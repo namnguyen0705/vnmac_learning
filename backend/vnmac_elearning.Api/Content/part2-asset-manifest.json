@@ -1,0 +1,1719 @@
+[
+  {
+    "lessonId": "p2-introduction",
+    "stepId": "intro",
+    "itemId": "p2-intro-video",
+    "title": "Giới thiệu Phần học số 2",
+    "needs": [
+      "audio",
+      "video"
+    ],
+    "source": "[[\"TT\", \"Thời gian\", \"Lời bình\", \"Hình ảnh / Cỡ cảnh / Chuyển động\", \"Chữ trên màn hình\", \"Ghi chú biên tập / Hậu kỳ\"], [\"1\", \"00:00–00:05\\n5 giây\", \"Chào mừng các bạn đến với Phần học số 2.\", \"Mascot toàn thân, đứng bên trái, nhìn người xem, vẫy tay chào rồi hạ tay tự nhiên. Nền mang nhận diện khóa học. Tiêu đề xuất hiện bên phải.\", \"PHẦN HỌC SỐ 2\", \"Mở nhạc nền nhẹ. Giữ trọn đầu và chân nhân vật. Tiêu đề xuất hiện theo lời đọc.\"], [\"2\", \"00:05–00:15\\n10 giây\", \"Ở phần học trước, các bạn đã tìm hiểu những kiến thức và cách phòng tránh tai nạn bom mìn, vật nổ.\", \"Chuyển sang Mascot bán thân, bên trái. Xoay nhẹ người, đưa tay giới thiệu cụm hình bên phải: nhận biết vật nghi bom mìn, vật nổ; không chạm vào; báo tin. Các hình xuất hiện lần lượt.\", \"KIẾN THỨC VÀ CÁCH PHÒNG TRÁNH TAI NẠN BOM MÌN, VẬT NỔ\", \"Tái sử dụng hình đã duyệt của Phần học số 1. Không minh họa người chạm hoặc tiến gần vật nghi ngờ.\"], [\"3\", \"00:15–00:25\\n10 giây\", \"Trong phần học này, các bạn sẽ học cách chia sẻ những kiến thức đó với cộng đồng qua ba bài học:\", \"Mascot bán thân, giữ bên trái. Cụm hình cảnh trước chuyển thành hình buổi trao đổi tại cộng đồng. Ba thẻ mang số 1, 2, 3 xuất hiện bên phải. Mascot đưa tay giới thiệu, ánh mắt hướng theo các thẻ rồi trở lại người xem.\", \"CHIA SẺ KIẾN THỨC VỚI CỘNG ĐỒNG\\n\\n3 BÀI HỌC\", \"Ba thẻ dùng chung kiểu thiết kế. Chưa đưa toàn bộ tên bài dài lên cùng lúc. Giữ vị trí Mascot ổn định từ cảnh 2.\"], [\"4\", \"00:25–00:31\\n6 giây\", \"Bài 1 — Thông điệp truyền thông hiệu quả.\", \"Không xuất hiện Mascot. Thẻ Bài 1 phóng lớn, chiếm vùng chính. Minh họa lời nhắc được rút gọn thành các dòng ngắn; biểu tượng nghe, nhớ và thực hiện lần lượt xuất hiện.\", \"BÀI 1\\nTHÔNG ĐIỆP TRUYỀN THÔNG HIỆU QUẢ\", \"Giọng đọc ngoài hình. Giữ đủ thời gian đọc tiêu đề. Không thêm câu thông điệp mới.\"], [\"5\", \"00:31–00:38\\n7 giây\", \"Bài 2 — Hiểu người nghe để viết thông điệp phù hợp.\", \"Không xuất hiện Mascot. Thẻ Bài 1 thu về, thẻ Bài 2 phóng lớn. Hiện hình người làm ruộng, người làm xây dựng, cha mẹ và trẻ em.\", \"BÀI 2\\nHIỂU NGƯỜI NGHE ĐỂ VIẾT THÔNG ĐIỆP PHÙ HỢP\", \"Giọng đọc ngoài hình. Các nhóm người có hình dáng, trang phục và công việc dễ phân biệt. Không thêm lời thoại phụ.\"], [\"6\", \"00:38–00:44\\n6 giây\", \"Bài 3 — Cùng thảo luận nhóm để viết thông điệp.\", \"Không xuất hiện Mascot. Thẻ Bài 3 phóng lớn. Minh họa nhóm người lớn ngồi trao đổi; một người ghi lời nhắc lên giấy khổ lớn, những người khác cùng góp ý.\", \"BÀI 3\\nCÙNG THẢO LUẬN NHÓM ĐỂ VIẾT THÔNG ĐIỆP\", \"Giọng đọc ngoài hình. Chuyển động nhẹ: chỉ giấy, gật đầu, ghi chép. Dùng cùng cách chuyển thẻ như cảnh 4–5.\"], [\"7\", \"00:44–00:55\\n11 giây\", \"Tiếp đó, các bạn sẽ tìm hiểu cách tổ chức một buổi truyền thông cho cộng đồng,\", \"Ba thẻ thu nhỏ rồi chuyển sang cảnh nhà sinh hoạt cộng đồng. Mascot toàn thân, tỷ lệ nhỏ, đứng bên trái, chiếm khoảng một phần tư chiều rộng khung hình. Đưa tay giới thiệu người hướng dẫn, tranh ảnh và người tham gia ở giữa, bên phải.\", \"TỔ CHỨC MỘT BUỔI TRUYỀN THÔNG CHO CỘNG ĐỒNG\", \"Không ghi “Bài 4”. Mascot không che người hướng dẫn hoặc tranh minh họa. Tiêu đề đặt ở vùng trống phía trên.\"], [\"8\", \"00:55–01:05\\n10 giây\", \"từ mở đầu, trình bày nội dung, mời mọi người cùng trao đổi đến kết thúc.\", \"Không xuất hiện Mascot. Toàn khung thể hiện lần lượt bốn hoạt động: chào người tham gia; giới thiệu tranh; mời phát biểu; nhắc lại nội dung khi kết thúc. Mỗi hoạt động được làm nổi bật theo lời đọc.\", \"MỞ ĐẦU → TRÌNH BÀY → CÙNG TRAO ĐỔI → KẾT THÚC\", \"Giọng đọc ngoài hình. Không cho cả bốn hình chuyển động đồng thời. Người xem cần nhận ra rõ thứ tự hoạt động.\"], [\"9\", \"01:05–01:17\\n12 giây\", \"Các nội dung này giúp các bạn biết cách viết lời nhắc ngắn gọn, dễ hiểu, dễ nhớ,\", \"Mascot bán thân, bên trái. Bên phải là trang giấy có nhiều dòng chữ; các dòng phụ mờ đi, còn lại vài dòng ngắn. Mascot đưa tay giới thiệu, ba từ khóa xuất hiện lần lượt.\", \"NGẮN GỌN\\nDỄ HIỂU\\nDỄ NHỚ\", \"Chữ trên trang giấy chỉ mang tính minh họa, không tạo thành nội dung mới. Đồng bộ ba từ khóa với lời bình.\"], [\"10\", \"01:17–01:24\\n7 giây\", \"phù hợp với người nghe và nói rõ việc cần làm.\", \"Mascot bán thân, giữ vị trí cảnh 9. Trang giấy chuyển thành hình lời nhắc gắn với các nhóm người nghe. Mascot đưa tay giới thiệu, sau đó hướng sang biểu tượng danh sách việc cần làm có dấu kiểm.\", \"PHÙ HỢP VỚI NGƯỜI NGHE\\n\\nRÕ VIỆC CẦN LÀM\", \"Nối liền lời và hình với cảnh 9. Không dựng như một bài học mới.\"], [\"11\", \"01:24–01:35\\n11 giây\", \"Trong quá trình học, các bạn sẽ được thực hành và làm bài kiểm tra để ôn lại kiến thức.\", \"Không xuất hiện Mascot. Toàn khung dành cho mô phỏng giao diện học: chọn câu trả lời, nối hai mục phù hợp; sau đó chuyển sang biểu tượng bài kiểm tra và dấu hoàn thành.\", \"THỰC HÀNH\\nKIỂM TRA\\nÔN LẠI KIẾN THỨC\", \"Giọng đọc ngoài hình. Đây là hình mô phỏng, không phải tương tác thật. Không đưa câu hỏi mới hoặc điểm số giả định.\"], [\"12\", \"01:35–01:42\\n7 giây\", \"Cuối cùng là bài kiểm tra cuối khóa.\", \"Mascot bán thân, bên trái. Nhìn người xem rồi đưa tay giới thiệu thẻ bài kiểm tra xuất hiện bên phải.\", \"BÀI KIỂM TRA CUỐI KHÓA\", \"Thẻ này cần phân biệt rõ với phần kiểm tra trong quá trình học. Không bổ sung số câu, thời gian hoặc mức điểm vào clip.\"], [\"13\", \"01:42–01:50\\n8 giây\", \"Khi hoàn thành đầy đủ các nội dung và đạt yêu cầu,\", \"Không xuất hiện Mascot. Danh sách nội dung học được đánh dấu hoàn thành lần lượt. Tiếp đó xuất hiện biểu tượng kết quả đạt yêu cầu.\", \"HOÀN THÀNH ĐẦY ĐỦ NỘI DUNG\\n\\nĐẠT YÊU CẦU\", \"Giọng đọc ngoài hình. Thể hiện đủ hai điều kiện trước khi xuất hiện chứng chỉ.\"], [\"14\", \"01:50–02:00\\n10 giây\", \"các bạn sẽ đủ điều kiện nhận chứng chỉ hoàn thành khóa học.\", \"Mascot bán thân, bên trái, mỉm cười, mở bàn tay giới thiệu hình chứng chỉ bên phải. Chứng chỉ xuất hiện cùng dấu kiểm xác nhận và hiệu ứng sáng nhẹ.\", \"ĐỦ ĐIỀU KIỆN NHẬN CHỨNG CHỈ HOÀN THÀNH KHÓA HỌC\", \"Không để tay hoặc người Mascot che chứng chỉ. Dùng mẫu đã duyệt; nếu chưa có, dùng biểu tượng chứng chỉ, không tự thêm chữ ký, con dấu hoặc danh hiệu.\"], [\"15\", \"02:00–02:05\\n5 giây\", \"Nào, chúng ta cùng bắt đầu nhé!\", \"Chuyển sang cận Mascot, từ ngực trở lên, ở giữa khung hình. Nhìn thẳng người xem, mỉm cười và gật đầu nhẹ khi nói câu kết.\", \"CHÚNG TA CÙNG BẮT ĐẦU NHÉ!\", \"Chữ đặt phía dưới, không che mặt. Nhạc nâng nhẹ. Kết động tác tự nhiên, không dừng cứng.\"], [\"16\", \"02:05–02:15\\n10 giây\", \"Không có lời đọc.\", \"Chuyển về Mascot toàn thân, bên trái. Một tay mở hướng về tiêu đề bên phải. Giữ chuyển động chờ nhẹ: chớp mắt, nhịp thở. Nền mang nhận diện khóa học.\", \"PHẦN HỌC SỐ 2\", \"Giữ khung kết để chuyển sang giao diện học. Nhạc kết và giảm dần. Không dựng nút bấm giả trong video.\"]]"
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "m01",
+    "itemId": "p2-l1-m01",
+    "title": "Thông điệp truyền thông hiệu quả",
+    "needs": [],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 8–18.\n“Chào mừng bạn đến với bài học Thông điệp truyền thông hiệu quả.\nTrong bài này, chúng ta sẽ tìm hiểu thông điệp là gì và cách viết thông điệp ngắn gọn, dễ hiểu, dễ nhớ, giúp người nghe biết mình cần làm gì.\nBạn hãy nhấn nút BẮT ĐẦU để cùng học nhé!”\nText hiển thị:\nBÀI HỌC SỐ 1\nTHÔNG ĐIỆP TRUYỀN THÔNG HIỆU QUẢ\nPHẦN 1. NÓI THẾ NÀO ĐỂ BÀ CON DỄ HIỂU\nNút: BẮT ĐẦU\nBạn đang chuẩn bị nói chuyện với bà con về cách phòng tránh tai nạn bom mìn.\nVậy phải nói thế nào để bà con dễ hiểu, dễ nhớ và biết phải làm gì?\nChúng ta cùng thử nhé!”\nBảng sản xuất:\n01 — M01\nGiới thiệu bài học\nLời chào — MT: “Chào mừng bạn đến với bài học Thông điệp truyền thông hiệu quả.\nTrong bài này, chúng ta sẽ tìm hiểu thông điệp là gì và cách viết thông điệp ngắn gọn, dễ hiểu, dễ nhớ, giúp người nghe biết mình cần làm gì.\nCác bạn hãy nhấn nút BẮT ĐẦU để cùng học nhé!”\n\nSau khi nhấn BẮT ĐẦU — MT: “Bạn đang chuẩn bị nói chuyện với bà con về cách phòng tránh tai nạn bom mìn.\nVậy phải nói thế nào để bà con dễ hiểu, dễ nhớ và biết phải làm gì?\nChúng ta cùng thử nhé!”\nTrạng thái chào:\n“BÀI HỌC SỐ 1”.\n“Thông điệp truyền thông hiệu quả”.\nMascot chào mừng bằng hai tay, thân người chuyển động nhẹ.\nNút “NGHE GIỚI THIỆU”; “BẮT ĐẦU”.\n\nSau khi bắt đầu:\n“PHẦN 1”.\n“Nói thế nào để bà con dễ hiểu”.\nHình buổi nói chuyện tại nhà sinh hoạt cộng đồng: một người trình bày và một nhóm người lớn lắng nghe; không có lời thoại phụ.\nNút “HỌC TIẾP”.\nTrạng thái chào: Mascot toàn thân bên trái khoảng 30% vùng nội dung; tên bài và nút bên phải.\nSau khi bắt đầu: bỏ Mascot, thay bằng hình sinh hoạt cộng đồng dưới tiêu đề.\nTrạng thái chào: tên bài → Mascot bán thân trong khung cao khoảng 160–180 px → nút.\nSau khi bắt đầu: tiêu đề → hình minh họa gọn → nội dung/lời đọc → nút.\nKhông bắt buộc nghe hết lời chào mới được nhấn “BẮT ĐẦU”.\nNhấn “NGHE GIỚI THIỆU” mới phát lời chào.\nNhấn “BẮT ĐẦU” dừng lời chào, hiện nội dung dẫn vào bài và phát lời dẫn nếu âm thanh được bật.\n“HỌC TIẾP” → M02."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "m01",
+    "itemId": "p2-l1-situation",
+    "title": "Nói thế nào để bà con dễ hiểu",
+    "needs": [],
+    "source": ""
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "m02",
+    "itemId": "p2-l1-m02",
+    "title": "Hãy nghe thử câu thứ nhất",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 19–30.\n“Bạn hãy nghe câu này.”\nText và lời đọc:\n“Bà con cần tìm hiểu thêm về bom mìn và chủ động phòng tránh để giữ an toàn cho bản thân, gia đình và những người xung quanh.”\n“Bạn hãy cho biết, câu này đã nói rõ bà con phải làm gì khi thấy vật nghi là bom mìn chưa?”\nHai lựa chọn:\nA. ĐÃ NÓI RÕ.\nB. CHƯA NÓI RÕ.\nNếu chọn A\n“Câu này đã nhắc bà con cần phòng tránh. Nhưng khi thấy vật nghi là bom mìn, vật nổ bà con vẫn chưa được chỉ rõ phải làm gì.”\nNếu chọn B\n“Đúng rồi. Câu này nhắc bà con cần phòng tránh, nhưng chưa nói rõ phải làm gì.”\n(Đây là câu hỏi mở đầu, không tính điểm. Sau phản hồi, hiển thị nút HỌC TIẾP.)\nBảng sản xuất:\n02 — M02\nNghe thử câu thứ nhất\nMT: “Bạn hãy nghe câu này.”\nĐọc nguyên văn câu ví dụ.\nN: Đọc câu hỏi và A/B.\n\nPhản hồi A — MT: “Câu này đã nhắc bà con cần phòng tránh. Nhưng khi thấy vật nghi là bom mìn, vật nổ bà con vẫn chưa được chỉ rõ phải làm gì.”\nPhản hồi B — MT: “Đúng rồi. Câu này nhắc bà con cần phòng tránh, nhưng chưa nói rõ phải làm gì.”\nCâu ví dụ: “Bà con cần tìm hiểu thêm về bom mìn và chủ động phòng tránh để giữ an toàn cho bản thân, gia đình và những người xung quanh.”\nCâu hỏi: “Bạn hãy cho biết, câu này đã nói rõ bà con phải làm gì khi thấy vật nghi là bom mìn chưa?”\nA. “Đã nói rõ.”\nB. “Chưa nói rõ.”\n\nSau khi nộp: Hiện nguyên văn phản hồi tương ứng tại cột lời đọc; đánh dấu B bằng ✓ và nhãn “Câu trả lời phù hợp”.\nNút: “TRẢ LỜI”; sau phản hồi có “HỌC TIẾP”.\nKhông có Mascot hoặc hình trang trí.\nCâu ví dụ trong thẻ rộng phía trên; câu hỏi, A/B và phản hồi xếp dọc bên dưới.\nCùng thứ tự PC, một cột. Giữ đủ câu dài, cho phép cuộn.\nChọn A/B rồi nhấn “TRẢ LỜI”. Phản hồi xuất hiện tại chỗ; giữ câu ví dụ để đối chiếu.\nKhông tính điểm, không bắt chọn lại.\n“HỌC TIẾP” → M03.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "m03",
+    "itemId": "p2-l1-m03",
+    "title": "Hãy nghe thử câu tiếp theo",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 31–44.\n“Bây giờ, bạn nghe một cách nói khác nhé.”\nText và lời đọc:\n“Thấy vật nghi là bom mìn, vật nổ: không chạm vào, báo chính quyền.”\n(Câu được chia thành ba dòng, làm nổi bật theo lời đọc)\nText:\nTHẤY VẬT NGHI BOM MÌN, VẬT NỔ\nKHÔNG CHẠM VÀO\nBÁO CHÍNH QUYỀN\n“Câu này nói rõ việc cần làm: không chạm vào và báo chính quyền.\nTrong buổi nói chuyện, có một nội dung bạn muốn bà con nhớ và làm theo. Điều đó gọi là thông điệp.”\nText chốt:\nTHÔNG ĐIỆP\nĐiều muốn người nghe nhớ và làm theo.\nNút: HỌC TIẾP.\n\nPHẦN 2. GIÚP NGƯỜI NGHE BIẾT PHẢI LÀM GÌ\nBảng sản xuất:\n03 — M03\nNghe cách nói khác\nMT: “Bây giờ, bạn nghe một cách nói khác nhé.”\n“Thấy vật nghi là bom mìn, vật nổ: không chạm vào, báo chính quyền.”\n“Câu này nói rõ việc cần làm: không chạm vào và báo chính quyền.\nTrong buổi nói chuyện, có một nội dung bạn muốn bà con nhớ và làm theo. Điều đó gọi là thông điệp.”\nKhối ví dụ:\n“Thấy vật nghi bom mìn, vật nổ”.\n“Không chạm vào”.\n“Báo chính quyền”.\nBiểu tượng bàn tay có dấu cấm cạnh ý không chạm; biểu tượng báo tin cạnh ý báo chính quyền.\n\nKhối định nghĩa bên dưới:\n“THÔNG ĐIỆP”.\n“Điều muốn người nghe nhớ và làm theo.”\nNút: “HỌC TIẾP”.\nKhối ví dụ trên, khối định nghĩa dưới. Không có Mascot.\nCác vế và định nghĩa xếp dọc. Biểu tượng nhỏ trước chữ; không tạo thêm cột hình.\nHiện đủ nội dung ngay trên màn; làm nổi bật từng phần theo lời đọc.\nKhông có nút riêng để mở định nghĩa.\n“HỌC TIẾP” → M04."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "m04",
+    "itemId": "p2-l1-m04",
+    "title": "Cần làm gì",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 45–51.\n“Khi nghe bạn nói, bà con cần biết mình phải làm gì.\nVí dụ: Thấy vật nghi bom mìn, không chạm vào và báo chính quyền.”\nText:\nCẦN LÀM GÌ?\nKhông chạm vào.\nBáo chính quyền.\nNút: HỌC TIẾP.\nBảng sản xuất:\n04 — M04\nCần làm gì\nMT: “Khi nghe bạn nói, bà con cần biết mình phải làm gì.\nVí dụ: Thấy vật nghi bom mìn, không chạm vào và báo chính quyền.”\nNhãn: “PHẦN 2”.\n“Giúp người nghe biết phải làm gì”.\nTiêu đề: “Cần làm gì?”\nHai thẻ: “Không chạm vào.”; “Báo chính quyền.”\nHình: Bàn tay có dấu cấm; biểu tượng báo tin.\nNút: “HỌC TIẾP”.\nHai thẻ có thể đặt cạnh nhau nếu đủ rộng; tiêu đề ở trên.\nHai thẻ xếp dọc, biểu tượng nhỏ cạnh chữ.\nLàm nổi bật theo lời đọc. Không mô tả người chạm hoặc tiến đến vật nổ.\n“HỌC TIẾP” → M05."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "m05",
+    "itemId": "p2-l1-m05",
+    "title": "Vì sao cần làm như vậy",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 52–58.\n“Bà con cũng cần hiểu vì sao phải làm như vậy.\nVì chạm vào vật nghi bom mìn, vật nổ có thể gây tai nạn.”\nText:\nVÌ SAO CẦN LÀM NHƯ VẬY?\nĐể tránh tai nạn do bom mìn, vật nổ gây ra.\nNút: HỌC TIẾP.\nBảng sản xuất:\n05 — M05\nVì sao cần làm\nMT: “Bà con cũng cần hiểu vì sao phải làm như vậy.\nVì chạm vào vật nghi bom mìn, vật nổ có thể gây tai nạn.”\nTiêu đề: “Vì sao cần làm như vậy?”\nCâu chính: “Để tránh tai nạn do bom mìn, vật nổ gây ra.”\nHình: Biểu tượng cảnh báo và chiếc khiên. Không dùng hình tai nạn, thương tích hoặc vụ nổ.\nNút: “HỌC TIẾP”.\nCâu chính ở giữa, biểu tượng nhỏ phía trên.\nMột cột; câu chính chiếm toàn chiều ngang vùng đọc.\nKhông thêm câu hỏi hoặc hoạt động.\n“HỌC TIẾP” → M06."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "m06",
+    "itemId": "p2-l1-m06",
+    "title": "Làm như thế nào",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 59–70.\n“Bà con cần biết làm như thế nào.\nVí dụ, nói ‘báo tin’ thì cần chỉ rõ báo cho ai. Trong câu vừa nghe, chúng ta đã nói rõ: báo cho chính quyền địa phương.”\nText:\nLÀM NHƯ THẾ NÀO?\nBáo tin cho chính quyền địa phương.\nLời chốt:\n“Không cần đưa tất cả lời giải thích vào một câu dài. Bạn nói câu chính thật gọn, rồi giải thích thêm bằng lời và hình ảnh.”\nTrên màn hình xuất hiện lần lượt:\nCẦN LÀM GÌ?\nVÌ SAO CẦN LÀM?\nLÀM NHƯ THẾ NÀO?\nNút: HỌC TIẾP.\nPHẦN 3. NĂM ĐIỀU GIÚP BẠN NÓI DỄ HIỂU VÀ DỄ NHỚ\nBảng sản xuất:\n06 — M06\nLàm như thế nào\nMT: “Bà con cần biết làm như thế nào.\nVí dụ, nói ‘báo tin’ thì cần chỉ rõ báo cho ai. Trong câu vừa nghe, chúng ta đã nói rõ: báo cho chính quyền địa phương.”\n\nLời chốt: “Không cần đưa tất cả lời giải thích vào một câu dài. Bạn nói câu chính thật gọn, rồi giải thích thêm bằng lời và hình ảnh.”\nTiêu đề: “Làm như thế nào?”\nCâu chính: “Báo tin cho chính quyền địa phương.”\nHình: Điện thoại liên hệ với biểu tượng trụ sở; dưới trụ sở ghi “Chính quyền địa phương”. Không có số điện thoại.\n\nBa thẻ tổng hợp bên dưới:\n“Cần làm gì?”\n“Vì sao cần làm?”\n“Làm như thế nào?”\nNút: “HỌC TIẾP”.\nVí dụ và hình ở trên; ba thẻ tổng hợp phía dưới, có thể đặt ngang nếu đủ chỗ.\nVí dụ → hình gọn → ba thẻ xếp dọc → nút. Không có Mascot.\nVí dụ và phần tổng hợp cùng một màn. Không yêu cầu bấm để mở ba thẻ.\n“HỌC TIẾP” → M07."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "m07",
+    "itemId": "p2-l1-m07",
+    "title": "Nói ngắn nhưng đủ ý",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 71–84.\n“Bạn muốn nhắc bà con không chạm vào vật nghi là bom mìn, vật nổ. Câu nào ngắn hơn mà vẫn đủ ý?”\nHai lựa chọn:\nA. “Khi phát hiện một vật lạ nghi là bom mìn, vật nổ, bà con cần nhớ rằng mình không được chạm vào vật đó.”\nB. “Không chạm vào vật lạ nghi là bom mìn, vật nổ.”\nĐáp án phù hợp: B.\nNếu chọn A\n“Câu này đúng ý nhưng còn dài. Có thể nói ngắn hơn: ‘Không chạm vào vật lạ nghi bom mìn, vật nổ.’”\nNếu chọn B\n“Đúng rồi. Câu ngắn hơn nhưng vẫn nói đủ điều cần nhắc.”\n“Điều thứ nhất: Nói ngắn nhưng đủ ý. Bỏ những từ không cần thiết.”\nText:\nNGẮN GỌN\nNói ngắn nhưng đủ ý.\nNút: HỌC TIẾP.\nBảng sản xuất:\n07 — M07\nNói ngắn nhưng đủ ý\nN: Đọc nguyên văn câu hỏi và A/B.\n\nPhản hồi A — MT: “Câu này đúng ý nhưng còn dài. Có thể nói ngắn hơn: ‘Không chạm vào vật lạ nghi bom mìn, vật nổ.’”\nPhản hồi B — MT: “Đúng rồi. Câu ngắn hơn nhưng vẫn nói đủ điều cần nhắc.”\n\nChốt chung — MT: “Điều thứ nhất: Nói ngắn nhưng đủ ý. Bỏ những từ không cần thiết.”\nNhãn: “PHẦN 3”.\n“Năm điều giúp bạn nói dễ hiểu và dễ nhớ”.\nCâu hỏi: “Bạn muốn nhắc bà con không chạm vào vật nghi là bom mìn, vật nổ. Câu nào ngắn hơn mà vẫn đủ ý?”\nA. “Khi phát hiện một vật lạ nghi là bom mìn, vật nổ, bà con cần nhớ rằng mình không được chạm vào vật đó.”\nB. “Không chạm vào vật lạ nghi là bom mìn, vật nổ.”\n\nSau khi nộp: Hiện nguyên văn phản hồi đúng nhánh; đánh dấu B là “Câu trả lời phù hợp”.\nThẻ chốt: “NGẮN GỌN”; “Nói ngắn nhưng đủ ý.”\nNút: “TRẢ LỜI”; “HỌC TIẾP”.\nCâu hỏi, hai thẻ đáp án, phản hồi và chốt xếp dọc.\nMột cột; không rút gọn phương án A. Không có Mascot, không có hình trang trí.\nChọn và nộp một lần. Phản hồi và thẻ chốt hiện tại chỗ.\nKhông tính điểm, không bắt chọn lại.\n“HỌC TIẾP” → M08.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "m08",
+    "itemId": "p2-l1-m08",
+    "title": "Hãy thử xem câu đã ngắn chưa",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 85–93.\n“Hãy thử đọc câu chính trong khoảng năm giây. Người nghe đã hiểu điều bạn muốn nhắc chưa?\nBạn có thể lấy khoảng 12 đến 14 từ làm mốc để viết cho gọn. Nhưng không được bỏ mất ý quan trọng chỉ để câu ngắn hơn.”\nText:\nĐỌC THỬ TRONG KHOẢNG 5 GIÂY\nĐã hiểu ý chính chưa?\nDòng nhắc:\nKhoảng 12–14 từ là mốc tham khảo, không phải quy định bắt buộc.\nNút: HỌC TIẾP.\nBảng sản xuất:\n08 — M08\nThử xem câu đã ngắn chưa\nMT: “Hãy thử đọc câu chính trong khoảng năm giây. Người nghe đã hiểu điều bạn muốn nhắc chưa?\nBạn có thể lấy khoảng 12 đến 14 từ làm mốc để viết cho gọn. Nhưng không được bỏ mất ý quan trọng chỉ để câu ngắn hơn.”\nTiêu đề: “Đọc thử trong khoảng 5 giây”.\nCâu hỏi: “Đã hiểu ý chính chưa?”\nDòng nhắc: “Khoảng 12–14 từ là mốc tham khảo, không phải quy định bắt buộc.”\nHình: Biểu tượng đồng hồ tĩnh.\nNút: “HỌC TIẾP”.\nCâu hỏi và dòng nhắc ở giữa; biểu tượng nhỏ.\nMột cột; dòng nhắc giữ cỡ chữ nội dung, không làm thành chú thích nhỏ.\nKhông đếm ngược, không ghi âm, không chấm tốc độ đọc.\n“HỌC TIẾP” → M09."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "m09",
+    "itemId": "p2-l1-m09",
+    "title": "Nói rõ một ý chính",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 94–106.\n“Bạn muốn nhắc bà con không chạm vào vật nghi là bom mìn, vật nổ. Câu nào nói rõ điều này?”\nA. “Bà con hãy chú ý giữ an toàn.”\nB. “Không chạm vào vật lạ nghi là bom mìn, vật nổ.”\nĐáp án phù hợp: B.\nNếu chọn A\n“Giữ an toàn là điều cần thiết. Nhưng câu này chưa nói rõ phải làm gì. Hãy nói thẳng việc muốn nhắc.”\nNếu chọn B\n“Đúng rồi. Người nghe biết ngay việc cần làm.”\n“Điều thứ hai: Nói rõ một ý chính, không vòng vo.”\nText:\nRÕ RÀNG\nMột ý chính, nói thẳng điều cần nhắc.\nNút: HỌC TIẾP.\nBảng sản xuất:\n09 — M09\nNói rõ một ý chính\nN: Đọc câu hỏi và A/B.\n\nPhản hồi A — MT: “Giữ an toàn là điều cần thiết. Nhưng câu này chưa nói rõ phải làm gì. Hãy nói thẳng việc muốn nhắc.”\nPhản hồi B — MT: “Đúng rồi. Người nghe biết ngay việc cần làm.”\n\nChốt chung — MT: “Điều thứ hai: Nói rõ một ý chính, không vòng vo.”\nCâu hỏi: “Bạn muốn nhắc bà con không chạm vào vật nghi là bom mìn, vật nổ. Câu nào nói rõ điều này?”\nA. “Bà con hãy chú ý giữ an toàn.”\nB. “Không chạm vào vật lạ nghi là bom mìn, vật nổ.”\n\nSau khi nộp: Hiện nguyên văn phản hồi tương ứng; đánh dấu B là “Câu trả lời phù hợp”.\nThẻ chốt: “RÕ RÀNG”; “Một ý chính, nói thẳng điều cần nhắc.”\nNút: “TRẢ LỜI”; “HỌC TIẾP”.\nToàn bộ một cột trong vùng đọc trung tâm.\nCâu hỏi → A → B → phản hồi → chốt → nút.\nKhông tính điểm, không bắt chọn lại.\n“HỌC TIẾP” → M10.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "m10",
+    "itemId": "p2-l1-m10",
+    "title": "Dùng từ bà con thường nói",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 107–119.\n“Bạn hãy nghe và thử nhắc lại câu này.”\nLời đọc, ngắt thành ba vế:\n“Thấy vật nghi là bom mìn, vật nổ — không chạm vào — báo chính quyền.”\nText hiển thị theo từng vế.\nNút: NGHE LẠI.\nLời hướng dẫn:\n“Bạn có thể nói lại một lần. Không cần ghi âm.”\n“Điều thứ ba: Dùng từ quen thuộc để bà con dễ nhớ, dễ nhắc lại.\nCó thể nói thành những vế ngắn, có nhịp. Không cần cố làm cho có vần nếu khiến câu khó hiểu hoặc sai ý.”\nText:\nDỄ NHỚ\nTừ quen thuộc, dễ nhắc lại.\nNút: HỌC TIẾP.\nBảng sản xuất:\n10 — M10\nDùng từ quen thuộc\nMT: “Bạn hãy nghe và thử nhắc lại câu này.”\nĐọc ngắt ba vế: “Thấy vật nghi là bom mìn, vật nổ — không chạm vào — báo chính quyền.”\n“Bạn có thể nói lại một lần. Không cần ghi âm.”\n\nLời chốt: “Điều thứ ba: Dùng từ quen thuộc để bà con dễ nhớ, dễ nhắc lại.\nCó thể nói thành những vế ngắn, có nhịp. Không cần cố làm cho có vần nếu khiến câu khó hiểu hoặc sai ý.”\nCâu mẫu, chia ba vế:\n“Thấy vật nghi là bom mìn, vật nổ”.\n“Không chạm vào”.\n“Báo chính quyền”.\nHướng dẫn: “Bạn có thể nói lại một lần. Không cần ghi âm.”\nNút riêng: “NGHE LẠI CÂU MẪU”.\nThẻ chốt: “DỄ NHỚ”; “Từ quen thuộc, dễ nhắc lại.”\nNút chuyển: “HỌC TIẾP”.\nCâu mẫu ở trên, hướng dẫn và nút nghe lại dưới câu; thẻ chốt cuối màn.\nCùng thứ tự PC; tất cả một cột. Không tách lời chốt sang màn khác.\nNút nghe câu mẫu chỉ phát câu mẫu, không phát lại cả màn.\nKhông yêu cầu quyền micro. Không chấm việc người học có nói lại hay không.\n“HỌC TIẾP” → M11."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "m11",
+    "itemId": "p2-l1-m11",
+    "title": "Nói cho đúng với người nghe",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 120–133.\n“Lần này, bạn nói chuyện với các em nhỏ. Bạn chọn câu nào?”\nA. “Thấy vật lạ nghi là bom mìn, vật nổ: không chạm, báo người lớn.”\nB. “Khi phát hiện vật thể nghi là bom mìn, vật nổ các em cần thông báo đến cơ quan có trách nhiệm để tiếp nhận và giải quyết.”\nĐáp án phù hợp: A.\nNếu chọn A\n“Đúng rồi. Câu dùng từ đơn giản và chỉ rõ việc các em có thể làm.”\nNếu chọn B\n“Câu này có cách nói dài và khó nhớ với các em. Có thể nói đơn giản: ‘Không chạm, báo người lớn.’”\nNói cho phù hợp với người nghe.\n“Cần để ý tiếng nói, cách sống, cách hiểu và thói quen của bà con. Cùng một điều cần nhắc, cách nói với người lớn có thể khác cách nói với trẻ em.”\nText:\nPHÙ HỢP\nNgười nghe hiểu được và làm được.\nNút: HỌC TIẾP.\nBảng sản xuất:\n11 — M11\nNói phù hợp người nghe\nN: Đọc câu hỏi và A/B.\n\nPhản hồi A — MT: “Đúng rồi. Câu dùng từ đơn giản và chỉ rõ việc các em có thể làm.”\nPhản hồi B — MT: “Câu này có cách nói dài và khó nhớ với các em. Có thể nói đơn giản: ‘Không chạm, báo người lớn.’”\n\nChốt chung — MT: “Nói cho phù hợp với người nghe.\nCần để ý tiếng nói, cách sống, cách hiểu và thói quen của bà con. Cùng một điều cần nhắc, cách nói với người lớn có thể khác cách nói với trẻ em.”\nCâu hỏi: “Lần này, bạn nói chuyện với các em nhỏ. Bạn chọn câu nào?”\nA. “Thấy vật lạ nghi là bom mìn, vật nổ: không chạm, báo người lớn.”\nB. “Khi phát hiện vật thể nghi là bom mìn, vật nổ các em cần thông báo đến cơ quan có trách nhiệm để tiếp nhận và giải quyết.”\n\nSau khi nộp: Hiện nguyên văn phản hồi tương ứng; đánh dấu A là “Câu trả lời phù hợp”.\nThẻ chốt: “PHÙ HỢP”; “Người nghe hiểu được và làm được.”\nNút: “TRẢ LỜI”; “HỌC TIẾP”.\nKhông có hình trang trí.\nCâu hỏi, đáp án và phản hồi xếp dọc.\nCùng cấu trúc PC, giữ nguyên toàn bộ phương án B.\nKhông tính điểm, không bắt chọn lại.\n“HỌC TIẾP” → M12.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "m12",
+    "itemId": "p2-l1-m12",
+    "title": "Nói rõ cần làm gì",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 134–150.\n“Bạn nghe câu này nhé: ‘Bom mìn, vật nổ rất nguy hiểm.’\nCâu này đã chỉ rõ bà con cần làm gì chưa?”\nA. ĐÃ CHỈ RÕ.\nB. CHƯA CHỈ RÕ.\nĐáp án phù hợp: B.\nNếu chọn A\n“Câu này cho biết bom mìn, vật nổ nguy hiểm. Nhưng chưa nói phải làm gì khi gặp.”\nNếu chọn B\n“Đúng rồi. Cần nói thêm việc phải làm.”\n“Thấy vật nghi bom mìn: không chạm vào, báo chính quyền.”\nLời chốt:\n“Nói rõ cần làm gì. Người nghe cần biết việc phải làm, không chỉ biết có nguy hiểm.”\nText:\nNÓI RÕ CẦN LÀM GÌ\nVí dụ:\nKHÔNG CHẠM VÀO.\nBÁO CHÍNH QUYỀN.\nNút: HỌC TIẾP.\nBảng sản xuất:\n12 — M12\nNói rõ cần làm gì\nMT: “Bạn nghe câu này nhé: ‘Bom mìn, vật nổ rất nguy hiểm.’”\nN: Đọc câu hỏi và A/B.\n\nPhản hồi A — MT: “Câu này cho biết bom mìn, vật nổ nguy hiểm. Nhưng chưa nói phải làm gì khi gặp.”\nPhản hồi B — MT: “Đúng rồi. Cần nói thêm việc phải làm.”\n\nChung — MT: “Thấy vật nghi bom mìn: không chạm vào, báo chính quyền.”\n“Nói rõ cần làm gì. Người nghe cần biết việc phải làm, không chỉ biết có nguy hiểm.”\nCâu ví dụ: “Bom mìn, vật nổ rất nguy hiểm.”\nCâu hỏi: “Câu này đã chỉ rõ bà con cần làm gì chưa?”\nA. “Đã chỉ rõ.”\nB. “Chưa chỉ rõ.”\n\nSau khi nộp: Hiện nguyên văn phản hồi tương ứng; đánh dấu B là “Câu trả lời phù hợp”.\nCâu sửa: “Thấy vật nghi bom mìn: không chạm vào, báo chính quyền.”\nThẻ chốt: “NÓI RÕ CẦN LÀM GÌ”; “Không chạm vào.”; “Báo chính quyền.”\nNút: “TRẢ LỜI”; “HỌC TIẾP”.\nCâu ví dụ trên, lựa chọn ở giữa, phản hồi và chốt dưới.\nMột cột, không có Mascot. Khi phản hồi xuất hiện, đưa vùng phản hồi vào tầm nhìn.\nKhông tính điểm, không bắt chọn lại.\n“HỌC TIẾP” → M13.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "m13",
+    "itemId": "p2-l1-m13",
+    "title": "Cùng nhớ lại",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 151–165.\n“Bạn vừa cùng Mít tơ An Toàn thử những cách nói khác nhau.\nChúng ta cùng ghi nhớ năm điều sau nhé.”\nText xuất hiện lần lượt theo lời đọc:\nNGẮN GỌN — Nói ngắn nhưng đủ ý.\nRÕ RÀNG — Nói rõ một ý chính.\nDỄ NHỚ — Dùng từ quen thuộc.\nPHÙ HỢP — Vừa với người nghe.\nNÓI RÕ CẦN LÀM GÌ.\n“Câu ngắn thôi chưa đủ. Còn phải dễ hiểu, dễ nhớ, phù hợp với người nghe và nói rõ việc cần làm.”\nNút: CÙNG THỬ NHÉ.\nQuy tắc chung của phần học\nCác câu hỏi ở màn hình 7, 9, 11 và 12 dùng để hướng dẫn, không tính điểm. Sau mỗi lựa chọn, bài học giải thích và chỉ ra câu phù hợp. Người học không phải chọn đi chọn lại để đoán đáp án.\n\nPHẦN 4. BẠN THỬ CHỌN CÁCH NÓI\nBảng sản xuất:\n13 — M13\nCùng nhớ lại\nMT: “Bạn vừa cùng Mít tơ An Toàn thử những cách nói khác nhau.\nChúng ta cùng ghi nhớ năm điều sau nhé.”\nĐọc lần lượt năm điều bên cạnh.\nĐọc tiếp: “Câu ngắn thôi chưa đủ. Còn phải dễ hiểu, dễ nhớ, phù hợp với người nghe và nói rõ việc cần làm.”\nTiêu đề: “Cùng nhớ lại”.\nNăm thẻ:\n“1. NGẮN GỌN — Nói ngắn nhưng đủ ý.”\n“2. RÕ RÀNG — Nói rõ một ý chính.”\n“3. DỄ NHỚ — Dùng từ quen thuộc.”\n“4. PHÙ HỢP — Vừa với người nghe.”\n“5. NÓI RÕ CẦN LÀM GÌ.”\nNút: “CÙNG THỬ NHÉ”.\nKhông có hình Mascot.\nNăm hàng xếp dọc; số thứ tự rõ, từ khóa nổi bật.\nNăm thẻ xếp dọc, cho cuộn. Không dùng thanh trượt ngang, không giấu nội dung trong mục đóng/mở.\nHiện đủ năm điều; làm nổi bật từng điều theo lời đọc. Không phải bấm để mở từng điều.\n“CÙNG THỬ NHÉ” → M14."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "m14",
+    "itemId": "p2-l1-m14",
+    "title": "Chọn câu nhắc bà con",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 166–179.\n“Bạn chuẩn bị nói chuyện với bà con. Bạn muốn nhắc: Thấy vật nghi bom mìn, vật nổ thì không chạm vào và báo chính quyền.\nBạn sẽ chọn câu nào dưới đây?”\nA. “Bà con cần tìm hiểu thêm về bom mìn, vật nổ và chủ động phòng tránh để giữ an toàn cho bản thân, gia đình và những người xung quanh.”\nB. “Bom mìn nguy hiểm.”\nC. “Thấy vật nghi bom mìn, vật nổ: không chạm vào, báo chính quyền.”\nĐáp án đúng: C.\nNếu chọn A\n“Câu này còn dài, chưa nói rõ phải làm gì khi thấy vật nghi bom mìn, vật nổ. Bạn thử chọn lại nhé.”\nNếu chọn B\n“Câu này ngắn, nhưng mới nói có nguy hiểm. Chưa nói việc cần làm. Bạn thử chọn lại nhé.”\nNếu chọn C\n“Đúng rồi. Câu này ngắn, dùng từ quen thuộc và nói rõ việc cần làm.”\n(Chọn đúng mới hiển thị nút TIẾP THEO. Không giới hạn số lần thử).\nBảng sản xuất:\n14 — M14\nChọn câu nhắc bà con\nMT: “Bạn chuẩn bị nói chuyện với bà con. Bạn muốn nhắc: Thấy vật nghi bom mìn, vật nổ thì không chạm vào và báo chính quyền.”\nN: Đọc câu hỏi và A/B/C.\n\nPhản hồi A — MT: “Câu này còn dài, chưa nói rõ phải làm gì khi thấy vật nghi bom mìn, vật nổ. Bạn thử chọn lại nhé.”\nPhản hồi B — MT: “Câu này ngắn, nhưng mới nói có nguy hiểm. Chưa nói việc cần làm. Bạn thử chọn lại nhé.”\nPhản hồi C — MT: “Đúng rồi. Câu này ngắn, dùng từ quen thuộc và nói rõ việc cần làm.”\nNhãn: “PHẦN 4”.\n“Bạn thử chọn cách nói”.\nTình huống chữ: Hiện nguyên văn lời dẫn MT đầu màn.\nCâu hỏi: “Bạn sẽ chọn câu nào dưới đây?”\nA. “Bà con cần tìm hiểu thêm về bom mìn, vật nổ và chủ động phòng tránh để giữ an toàn cho bản thân, gia đình và những người xung quanh.”\nB. “Bom mìn nguy hiểm.”\nC. “Thấy vật nghi bom mìn, vật nổ: không chạm vào, báo chính quyền.”\nPhản hồi: Hiện nguyên văn đúng nhánh tại cột lời đọc.\nNút: “TRẢ LỜI”; “HỌC TIẾP” sau khi đúng.\nTình huống → câu hỏi → A/B/C → phản hồi → nút.\nMột cột, không có Mascot hoặc hình trang trí. Các đáp án hiện đầy đủ.\nĐúng C mới mở “HỌC TIẾP”.\nSai A/B: hiện giải thích, cho chọn lại trực tiếp trên các thẻ; không cần nút “CHỌN LẠI”. Không tiết lộ C khi chọn sai.\nKhông giới hạn lần thử. Đúng → M15.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "m15",
+    "itemId": "p2-l1-m15",
+    "title": "Sửa một câu chưa rõ",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 180–191.\n“Giả sử có một câu như sau: ‘Bà con hãy chú ý phòng tránh tai nạn bom mìn, vật nổ.’\nBạn muốn sửa để bà con biết rõ phải làm gì. Bạn chọn cách nào?”\nA. “Bà con cần chú ý hơn nữa.”\nB. “Thấy vật nghi bom mìn, vật nổ: không chạm vào, báo chính quyền.”\nC. “Bom mìn, vật nổ là chuyện cần được quan tâm.”\nĐáp án đúng: B.\nNếu chọn A hoặc C\n“Câu này vẫn chưa nói rõ việc cần làm. Hãy chọn câu chỉ rõ cách ứng xử khi gặp vật nghi bom mìn, vật nổ.”\nNếu chọn B\n“Đúng rồi. Bạn đã thay lời nhắc chung bằng những việc cụ thể.”\nChọn đúng mới hiển thị nút TIẾP THEO.\nBảng sản xuất:\n15 — M15\nSửa một câu chưa rõ\nMT: “Giả sử có một câu như sau: ‘Bà con hãy chú ý phòng tránh tai nạn bom mìn, vật nổ.’”\nN: Đọc câu hỏi và A/B/C.\n\nPhản hồi A hoặc C — MT: “Câu này vẫn chưa nói rõ việc cần làm. Hãy chọn câu chỉ rõ cách ứng xử khi gặp vật nghi bom mìn, vật nổ.”\nPhản hồi B — MT: “Đúng rồi. Bạn đã thay lời nhắc chung bằng những việc cụ thể.”\nCâu gốc: “Bà con hãy chú ý phòng tránh tai nạn bom mìn, vật nổ.”\nCâu hỏi: “Bạn muốn sửa để bà con biết rõ phải làm gì. Bạn chọn cách nào?”\nA. “Bà con cần chú ý hơn nữa.”\nB. “Thấy vật nghi bom mìn, vật nổ: không chạm vào, báo chính quyền.”\nC. “Bom mìn, vật nổ là chuyện cần được quan tâm.”\nPhản hồi: Hiện nguyên văn đúng nhánh tại cột lời đọc.\nNút: “TRẢ LỜI”; “HỌC TIẾP” sau khi đúng.\nCâu gốc trên, câu hỏi và các phương án phía dưới.\nCùng thứ tự PC, một cột.\nĐúng B mới học tiếp. Sai A/C: chọn lại trực tiếp, không tiết lộ đáp án đúng.\nKhông giới hạn lần thử.\n“HỌC TIẾP” → M16.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "m16",
+    "itemId": "p2-l1-m16",
+    "title": "Người nghe đã hiểu chưa",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 192–205.\n“Bạn đã chọn được câu nhắc. Trước khi dùng trong buổi nói chuyện, hãy đọc thử cho một vài người nghe.\nMuốn biết họ đã hiểu chưa, bạn nên hỏi câu nào?”\nA. “Bác nhớ điều gì? Gặp vật nghi bom mìn, vật nổ bác sẽ làm gì?”\nB. “Bác thấy tôi đọc có hay không?”\nĐáp án đúng: A.\nNếu chọn A\n“Đúng rồi. Câu trả lời sẽ giúp bạn biết người nghe đã nhớ và hiểu chưa.”\nNếu chọn B\n“Đọc hay chưa cho biết người nghe đã hiểu. Hãy hỏi họ nhớ điều gì và sẽ làm gì.”\nLời chốt:\n“Nếu bà con chưa nhớ, chưa hiểu hoặc chưa biết làm theo, bạn cần sửa lại cách nói.”\nNút: LÀM BÀI KIỂM TRA.\n\nBảng sản xuất:\n16 — M16\nNgười nghe đã hiểu chưa\nMT: “Bạn đã chọn được câu nhắc. Trước khi dùng trong buổi nói chuyện, hãy đọc thử cho một vài người nghe.”\nN: Đọc câu hỏi và A/B.\n\nPhản hồi A — MT: “Đúng rồi. Câu trả lời sẽ giúp bạn biết người nghe đã nhớ và hiểu chưa.”\nPhản hồi B — MT: “Đọc hay chưa cho biết người nghe đã hiểu. Hãy hỏi họ nhớ điều gì và sẽ làm gì.”\n\nChốt sau khi đúng — MT: “Nếu bà con chưa nhớ, chưa hiểu hoặc chưa biết làm theo, bạn cần sửa lại cách nói.”\nTình huống chữ: Hiện nguyên văn lời dẫn MT đầu màn.\nCâu hỏi: “Muốn biết họ đã hiểu chưa, bạn nên hỏi câu nào?”\nA. “Bác nhớ điều gì? Gặp vật nghi bom mìn, vật nổ bác sẽ làm gì?”\nB. “Bác thấy tôi đọc có hay không?”\nPhản hồi: Hiện nguyên văn đúng nhánh tại cột lời đọc.\nChốt khi đúng: “Nếu bà con chưa nhớ, chưa hiểu hoặc chưa biết làm theo, bạn cần sửa lại cách nói.”\nNút: “TRẢ LỜI”; “LÀM BÀI KIỂM TRA” sau khi đúng.\nTình huống, câu hỏi và đáp án xếp dọc; lời chốt dưới phản hồi.\nMột cột; nút kiểm tra nằm sau lời chốt, không nổi trên màn.\nĐúng A mới hiện lời chốt và mở bài kiểm tra. Sai B được chọn lại trực tiếp.\nKhông giới hạn lần thử.\n“LÀM BÀI KIỂM TRA” → KT00.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "quiz-intro",
+    "itemId": "p2-l1-quiz-intro",
+    "title": "Bài kiểm tra",
+    "needs": [],
+    "source": ""
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "check",
+    "itemId": "p2-l1-q01",
+    "title": "Thông điệp là gì?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 216–221.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "check",
+    "itemId": "p2-l1-q02",
+    "title": "Cách nói nào làm cho bà con khó hiểu hơn?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 222–227.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "check",
+    "itemId": "p2-l1-q03",
+    "title": "Một thông điệp nên tập trung vào điều gì?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 228–233.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "check",
+    "itemId": "p2-l1-q04",
+    "title": "Câu nào chưa nói rõ bà con cần làm gì khi thấy vật nghi bom mìn, vật nổ?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 234–239.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "check",
+    "itemId": "p2-l1-q05",
+    "title": "Câu “Bom mìn, vật nổ rất nguy hiểm” cần nói thêm điều gì để người nghe biết cách làm?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 240–245.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "check",
+    "itemId": "p2-l1-q06",
+    "title": "Bạn chọn câu nào ngắn và rõ việc cần làm?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 246–251.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "check",
+    "itemId": "p2-l1-q07",
+    "title": "Bạn nói chuyện với trẻ em. Câu nào sau đây dễ hiểu và phù hợp hơn?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 252–257.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "check",
+    "itemId": "p2-l1-q08",
+    "title": "Nối các ý phù hợp",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 258–261.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "check",
+    "itemId": "p2-l1-q09",
+    "title": "Nối câu với ý phù hợp",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 262–265.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "check",
+    "itemId": "p2-l1-q10",
+    "title": "Nối các ý phù hợp",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 1.docx, đoạn 266–270.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-1",
+    "stepId": "complete",
+    "itemId": "p2-l1-complete",
+    "title": "Bạn đã hoàn thành bài học",
+    "needs": [
+      "audio"
+    ],
+    "source": ""
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m01",
+    "itemId": "p2-l2-m01",
+    "title": "Hiểu người nghe để viết thông điệp phù hợp",
+    "needs": [],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 9–20.\nHình ảnh: Mít tơ An Toàn chào người học.\nText:\nBÀI HỌC SỐ 2\nHIỂU NGƯỜI NGHE ĐỂ VIẾT THÔNG ĐIỆP PHÙ HỢP\nLời Mít tơ An Toàn:\n“Chào mừng bạn đến với Bài học số 2.\nTrong bài này, bạn sẽ tìm hiểu người nghe là ai, họ đang nghĩ gì, đang làm gì và vì sao họ chưa làm theo lời khuyên.\nTừ đó, bạn biết cách viết thông điệp phù hợp hơn với từng nhóm người nghe.\nHãy nhấn nút BẮT ĐẦU để cùng học nhé!”\nNút: BẮT ĐẦU.\nĐiều hướng: Kết thúc lời giới thiệu, giữ nguyên màn hình. Chỉ khi người học nhấn BẮT ĐẦU mới chuyển sang Màn hình 2.\nPHẦN 2. BIẾT NGUY HIỂM, VÌ SAO VẪN CHƯA LÀM THEO\nBảng sản xuất:\n01 — M01\nGiới thiệu\nMT: “Chào mừng bạn đến với Bài học số 2.\nTrong bài này, bạn sẽ tìm hiểu người nghe là ai, họ đang nghĩ gì, đang làm gì và vì sao họ chưa làm theo lời khuyên.\nTừ đó, bạn biết cách viết thông điệp phù hợp hơn với từng nhóm người nghe.\nHãy nhấn nút BẮT ĐẦU để cùng học nhé!”\nChữ: “BÀI HỌC SỐ 2”; “Hiểu người nghe để viết thông điệp phù hợp”.\nHình: Mascot chào bằng hai tay, thân người chuyển động nhẹ.\nNút: “NGHE GIỚI THIỆU”; “BẮT ĐẦU”.\nMascot toàn thân bên trái, khoảng 30% vùng nội dung; tên bài và nút bên phải.\nTên bài → Mascot bán thân trong khung cao khoảng 160–180 px → nút.\nNhấn nghe mới phát lời giới thiệu. Không tự vào bài khi hết lời.\nChỉ nhấn “BẮT ĐẦU” mới chuyển M02. Không bắt buộc nghe hết lời chào để bắt đầu."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m02",
+    "itemId": "p2-l2-m02",
+    "title": "Cùng nghe một tình huống",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 21–34.\nLời Mít tơ An Toàn:\n“Một người làm ruộng biết bom mìn, vật nổ có thể gây tai nạn. Nhưng khi được hỏi về việc báo tin, người đó nói:\n‘Tôi biết là nguy hiểm. Nhưng báo tin chắc phiền phức, lại mất thời gian.’\nTheo các bạn, người này chưa muốn báo tin vì điều gì?”\nText: Hiện câu nói trong dấu ngoặc kép, sau đó hiện câu hỏi.\nHai lựa chọn:\nA. Chưa biết bom mìn, vật nổ nguy hiểm.\nB. Ngại phiền phức và mất thời gian khi báo tin.\nĐáp án phù hợp: B.\nNếu chọn A:\n“Người này đã biết bom mìn, vật nổ nguy hiểm. Điều khiến họ ngại báo tin là sợ phiền phức và mất thời gian.”\nNếu chọn B:\n“Đúng rồi. Họ đã biết có thể bị tai nạn, nhưng vẫn ngại báo tin vì sợ phiền phức và mất thời gian.”\nĐiều hướng: Đây là câu hỏi gợi mở, không tính điểm. Sau phản hồi, mở nút HỌC TIẾP, không bắt chọn lại.\nBảng sản xuất:\n02 — M02\nTình huống người làm ruộng\nMT: “Một người làm ruộng biết bom mìn, vật nổ có thể gây tai nạn. Nhưng khi được hỏi về việc báo tin, người đó nói:\n‘Tôi biết là nguy hiểm. Nhưng báo tin chắc phiền phức, lại mất thời gian.’”\nN: Đọc câu hỏi và A/B.\n\nPhản hồi A — MT: “Người này đã biết bom mìn, vật nổ nguy hiểm. Điều khiến họ ngại báo tin là sợ phiền phức và mất thời gian.”\nPhản hồi B — MT: “Đúng rồi. Họ đã biết có thể bị tai nạn, nhưng vẫn ngại báo tin vì sợ phiền phức và mất thời gian.”\nNhãn phần: “Biết nguy hiểm, vì sao vẫn chưa làm theo”.\nHình: Một người làm ruộng đứng ở nơi sinh hoạt hoặc nghỉ ngơi, vẻ mặt phân vân. Không đặt vật nổ cạnh người.\nCâu nói: “Tôi biết là nguy hiểm. Nhưng báo tin chắc phiền phức, lại mất thời gian.”\nCâu hỏi: “Theo các bạn, người này chưa muốn báo tin vì điều gì?”\nA. “Chưa biết bom mìn, vật nổ nguy hiểm.”\nB. “Ngại phiền phức và mất thời gian khi báo tin.”\nPhản hồi: Hiện nguyên văn theo nhánh ở cột lời đọc.\nNút: “TRẢ LỜI”; “HỌC TIẾP”.\nHình nhỏ và câu nói ở vùng trên; câu hỏi, đáp án và phản hồi phía dưới.\nCâu nói đặt trong thẻ riêng, không trong bóng thoại nhỏ. Hình có thể thu gọn trên câu nói; đáp án xếp dọc.\nChọn rồi nộp. Đánh dấu B là “Câu trả lời phù hợp”. Không tính điểm, không bắt chọn lại.\n“HỌC TIẾP” → M03.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m03",
+    "itemId": "p2-l2-m03",
+    "title": "Cần hiểu điều gì đang khiến họ chần chừ",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 35–44.\nLời Mít tơ An Toàn:\n“Nếu chỉ nhắc lại ‘Bom mìn rất nguy hiểm’, chúng ta chưa giải đáp được điều người này đang lo.\nMuốn viết lời nhắc phù hợp, trước hết cần hiểu người nghe. Họ có thể chưa biết cách làm, không có điều kiện để làm hoặc vẫn còn ngại.\nVì vậy, biết một điều chưa có nghĩa là sẽ làm theo ngay.”\nText:\nBIẾT RỒI, VẪN CÓ THỂ CHƯA LÀM THEO\nCần tìm hiểu vì sao.\nNút: HỌC TIẾP.\nPHẦN 3. TÌM HIỂU NGƯỜI NGHE\nBảng sản xuất:\n03 — M03\nHiểu điều khiến họ chần chừ\nMT: “Nếu chỉ nhắc lại ‘Bom mìn rất nguy hiểm’, chúng ta chưa giải đáp được điều người này đang lo.\nMuốn viết lời nhắc phù hợp, trước hết cần hiểu người nghe. Họ có thể chưa biết cách làm, không có điều kiện để làm hoặc vẫn còn ngại.\nVì vậy, biết một điều chưa có nghĩa là sẽ làm theo ngay.”\nTiêu đề: “Biết rồi, vẫn có thể chưa làm theo”.\nCâu chốt: “Cần tìm hiểu vì sao.”\nHình: Tái sử dụng người làm ruộng M02 với vẻ phân vân; không thêm câu nói mới.\nNút: “HỌC TIẾP”.\nHình nhỏ bên trái, câu chốt bên phải.\nƯu tiên chữ; hình nhỏ trên cùng hoặc dưới câu chốt, không tạo cột riêng.\nHiện đủ nội dung chữ tương đương trong bản lời đọc.\nKhông thêm câu hỏi.\n“HỌC TIẾP” → M04."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m04",
+    "itemId": "p2-l2-m04",
+    "title": "Họ là ai",
+    "needs": [
+      "audio",
+      "image"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 45–54.\nLời Mít tơ An Toàn:\n“Trước khi viết thông điệp, hãy tìm hiểu các bạn sẽ nói với ai.\nHọ bao nhiêu tuổi? Làm nghề gì? Thường dùng tiếng nói nào? Có vai trò gì trong gia đình, thôn, bản?\nNhững điều này giúp chúng ta chọn cách nói và ví dụ gần với cuộc sống của họ.”\nHình ảnh: Các hình minh họa người làm ruộng, thanh niên, cha mẹ và trẻ em.\nText:\nHỌ LÀ AI?\nTuổi — Nghề — Tiếng nói — Vai trò.\nNút: HỌC TIẾP.\nBảng sản xuất:\n04 — M04\nHọ là ai\nMT: “Trước khi viết thông điệp, hãy tìm hiểu các bạn sẽ nói với ai.\nHọ bao nhiêu tuổi? Làm nghề gì? Thường dùng tiếng nói nào? Có vai trò gì trong gia đình, thôn, bản?\nNhững điều này giúp chúng ta chọn cách nói và ví dụ gần với cuộc sống của họ.”\nNhãn phần: “Tìm hiểu người nghe”.\nTiêu đề: “Họ là ai?”\nBốn nhãn: “Tuổi”; “Nghề”; “Tiếng nói”; “Vai trò”.\nHình: Người làm ruộng; thanh niên; cha mẹ; trẻ em. Hình gần gũi, không dùng trang phục để suy diễn trình độ hoặc suy nghĩ.\nNút: “HỌC TIẾP”.\nBốn hình trong một dải; bốn nhãn ở khối chữ riêng. Không ghép mỗi nhóm người với một nhãn như đáp án cố định.\nMột dải hình gọn; bốn nhãn xếp dọc bên dưới.\nLàm nổi bật nhãn theo lời đọc.\n“HỌC TIẾP” → M05."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m05",
+    "itemId": "p2-l2-m05",
+    "title": "Họ đã biết những gì",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 55–63.\nLời Mít tơ An Toàn:\n“Tiếp theo, hãy tìm hiểu người nghe đã biết những gì.\nHọ đã biết cách phòng tránh tai nạn bom mìn chưa? Có điều gì họ đang hiểu chưa đúng không?\nVí dụ, có người nghĩ vật đã gỉ sét thì không còn nguy hiểm. Nếu biết họ đang hiểu như vậy, chúng ta mới giải thích đúng điều họ cần biết.”\nText:\nHỌ ĐÃ BIẾT GÌ?\nĐiều gì đã hiểu đúng?\nĐiều gì còn hiểu chưa đúng?\nNút: HỌC TIẾP.\nBảng sản xuất:\n05 — M05\nHọ đã biết gì\nMT: “Tiếp theo, hãy tìm hiểu người nghe đã biết những gì.\nHọ đã biết cách phòng tránh tai nạn bom mìn chưa? Có điều gì họ đang hiểu chưa đúng không?\nVí dụ, có người nghĩ vật đã gỉ sét thì không còn nguy hiểm. Nếu biết họ đang hiểu như vậy, chúng ta mới giải thích đúng điều họ cần biết.”\nTiêu đề: “Họ đã biết gì?”\nHai dòng: “Điều gì đã hiểu đúng?”; “Điều gì còn hiểu chưa đúng?”\nHình: Hai biểu tượng câu hỏi cạnh hai dòng; không minh họa cấu tạo vật nổ.\nNút: “HỌC TIẾP”.\nHai thẻ câu hỏi cạnh nhau hoặc xếp dọc tùy chiều rộng.\nHai thẻ xếp dọc.\nKhông đưa suy nghĩ “vật gỉ sét thì không nguy hiểm” thành khẩu hiệu đứng riêng. Trong bản lời đọc, giữ đủ ngữ cảnh đây là ví dụ về điều cần tìm hiểu.\n“HỌC TIẾP” → M06."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m06",
+    "itemId": "p2-l2-m06",
+    "title": "Họ nghĩ gì, lo gì, mong gì",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 64–73.\nLời Mít tơ An Toàn:\n“Có người nghĩ: ‘Đường này tôi đi quen rồi, chắc không sao.’\nCó người lo: ‘Báo tin có làm phiền cán bộ không?’\nCó người mong: ‘Tôi muốn các con được an toàn.’\nNhững điều người nghe nghĩ, lo và mong có thể ảnh hưởng đến cách họ làm. Hãy nghe họ nói trước khi chọn lời nhắc.”\nText: Lần lượt hiện ba câu nói theo lời đọc.\nSau đó chốt:\nHỌ NGHĨ GÌ?\nHỌ LO GÌ?\nHỌ MONG GÌ?\nNút: HỌC TIẾP.\nBảng sản xuất:\n06 — M06\nHọ nghĩ, lo và mong gì\nMT: “Có người nghĩ: ‘Đường này tôi đi quen rồi, chắc không sao.’\nCó người lo: ‘Báo tin có làm phiền cán bộ không?’\nCó người mong: ‘Tôi muốn các con được an toàn.’\nNhững điều người nghe nghĩ, lo và mong có thể ảnh hưởng đến cách họ làm. Hãy nghe họ nói trước khi chọn lời nhắc.”\nBa thẻ câu nói:\n“Họ nghĩ gì?” — “Đường này tôi đi quen rồi, chắc không sao.”\n“Họ lo gì?” — “Báo tin có làm phiền cán bộ không?”\n“Họ mong gì?” — “Tôi muốn các con được an toàn.”\nMỗi thẻ có nhãn “Câu nói trong tình huống”.\nHình: Biểu tượng suy nghĩ, dấu hỏi và gia đình, mỗi loại gắn đúng thẻ.\nNút: “HỌC TIẾP”.\nBa thẻ có thể đặt ngang nếu chữ đủ lớn; nếu hẹp chuyển dọc.\nBa thẻ xếp dọc; không chạy dạng trình chiếu ngang.\nHiện đủ ba thẻ; làm nổi bật theo lời đọc. Không dùng dấu ✓ hoặc màu “an toàn” cho câu về đường quen.\n“HỌC TIẾP” → M07."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m07",
+    "itemId": "p2-l2-m07",
+    "title": "Họ đang làm gì",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 74–82.\nLời Mít tơ An Toàn:\n“Chúng ta cũng cần biết người nghe đang làm gì trong thực tế.\nVí dụ: Khi thấy vật lạ, họ có bỏ qua không? Có nhặt lên xem không? Có báo tin không?\nĐừng chỉ hỏi họ đã biết gì. Hãy tìm hiểu cả việc họ đang làm.”\nText:\nHỌ ĐANG LÀM GÌ?\nTìm hiểu việc làm thực tế.\nNút: HỌC TIẾP.\nBảng sản xuất:\n07 — M07\nHọ đang làm gì\nMT: “Chúng ta cũng cần biết người nghe đang làm gì trong thực tế.\nVí dụ: Khi thấy vật lạ, họ có bỏ qua không? Có nhặt lên xem không? Có báo tin không?\nĐừng chỉ hỏi họ đã biết gì. Hãy tìm hiểu cả việc họ đang làm.”\nTiêu đề: “Họ đang làm gì?”\nCâu chốt: “Tìm hiểu việc làm thực tế.”\nHình: Một người lắng nghe và ghi chép khi trao đổi với người dân. Không thể hiện người nhặt hoặc cầm vật nghi bom mìn.\nNút: “HỌC TIẾP”.\nCâu chốt nổi bật; hình minh họa dưới chữ.\nMột cột, hình gọn dưới nội dung.\nKhông chuyển các ví dụ thành hình mô phỏng thao tác nguy hiểm.\n“HỌC TIẾP” → M08."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m08",
+    "itemId": "p2-l2-m08",
+    "title": "Điều gì khiến họ chưa làm theo",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 83–93.\nLời Mít tơ An Toàn:\n“Hãy nghe hai câu nói này.\n‘Tôi không biết gọi số nào để báo tin.’\n‘Tôi muốn báo, nhưng sợ phiền phức.’\nMột người chưa biết cách báo. Một người còn ngại báo.\nCùng là chưa báo tin, nhưng lý do khác nhau. Chúng ta cần hiểu đúng lý do để chọn cách giải thích.”\nText:\nCÙNG CHƯA BÁO TIN\nNHƯNG LÝ DO CÓ THỂ KHÁC NHAU\nKhông biết cách báo.\nCòn ngại báo.\nNút: HỌC TIẾP.\nBảng sản xuất:\n08 — M08\nVì sao chưa làm theo\nMT: “Hãy nghe hai câu nói này.\n‘Tôi không biết gọi số nào để báo tin.’\n‘Tôi muốn báo, nhưng sợ phiền phức.’\nMột người chưa biết cách báo. Một người còn ngại báo.\nCùng là chưa báo tin, nhưng lý do khác nhau. Chúng ta cần hiểu đúng lý do để chọn cách giải thích.”\nTiêu đề: “Cùng chưa báo tin nhưng lý do có thể khác nhau”.\nThẻ 1: “Tôi không biết gọi số nào để báo tin.”; nhãn “Không biết cách báo”.\nThẻ 2: “Tôi muốn báo, nhưng sợ phiền phức.”; nhãn “Còn ngại báo”.\nHình: Biểu tượng điện thoại kèm dấu hỏi ở thẻ 1; biểu tượng phân vân ở thẻ 2.\nNút: “HỌC TIẾP”.\nHai thẻ cạnh nhau để so sánh.\nHai thẻ xếp dọc; câu nói và nhãn luôn trong cùng thẻ.\nKhông có câu hỏi hoặc điểm.\n“HỌC TIẾP” → M09."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m09",
+    "itemId": "p2-l2-m09",
+    "title": "Điều gì giúp họ muốn làm theo",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 94–102.\nLời Mít tơ An Toàn:\n“Bên cạnh điều khiến người nghe chần chừ, hãy tìm hiểu điều gì giúp họ muốn làm theo.\nCó người muốn bảo vệ con. Có người muốn giúp hàng xóm. Có người muốn làm gương cho gia đình.\nBiết điều họ quan tâm sẽ giúp chúng ta viết lời nhắc gần gũi hơn.”\nText:\nĐIỀU GÌ GIÚP HỌ MUỐN LÀM THEO?\nAn toàn cho con.\nGiúp hàng xóm.\nLàm gương cho gia đình.\nNút: HỌC TIẾP.\nBảng sản xuất:\n09 — M09\nĐiều giúp muốn làm theo\nMT: “Bên cạnh điều khiến người nghe chần chừ, hãy tìm hiểu điều gì giúp họ muốn làm theo.\nCó người muốn bảo vệ con. Có người muốn giúp hàng xóm. Có người muốn làm gương cho gia đình.\nBiết điều họ quan tâm sẽ giúp chúng ta viết lời nhắc gần gũi hơn.”\nTiêu đề: “Điều gì giúp họ muốn làm theo?”\nBa thẻ: “An toàn cho con.”; “Giúp hàng xóm.”; “Làm gương cho gia đình.”\nHình: Cha/mẹ cùng con; hai người hàng xóm; người lớn và các thành viên gia đình. Không thêm lời thoại.\nNút: “HỌC TIẾP”.\nBa thẻ minh họa có chữ dưới hình.\nBa hàng dọc, hình nhỏ bên cạnh chữ.\nKhông mặc định một động lực đúng cho tất cả mọi người.\n“HỌC TIẾP” → M10."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m10",
+    "itemId": "p2-l2-m10",
+    "title": "Cùng nhớ năm câu hỏi",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 103–115.\nLời Mít tơ An Toàn:\n“Để hiểu người nghe, các bạn hãy nhớ năm câu hỏi.”\nText xuất hiện theo lời đọc:\nHỌ LÀ AI?\nHỌ ĐÃ BIẾT GÌ?\nHỌ NGHĨ GÌ, LO GÌ, MONG GÌ?\nHỌ ĐANG LÀM GÌ?\nĐIỀU GÌ KHIẾN HỌ CHƯA LÀM, HOẶC MUỐN LÀM THEO?\nLời chốt:\n“Không cần đoán thay người nghe. Hãy hỏi, lắng nghe và tìm hiểu việc họ đang làm.”\nNút: HỌC TIẾP.\nPHẦN 4. TỪNG NHÓM NGƯỜI NGHE CÓ THỂ QUAN TÂM KHÁC NHAU\nBảng sản xuất:\n10 — M10\nNăm câu hỏi tìm hiểu\nMT: “Để hiểu người nghe, các bạn hãy nhớ năm câu hỏi.”\nĐọc năm câu hỏi bên cạnh.\nLời chốt: “Không cần đoán thay người nghe. Hãy hỏi, lắng nghe và tìm hiểu việc họ đang làm.”\nTiêu đề: “Cùng nhớ năm câu hỏi”.\n1. “Họ là ai?”\n2. “Họ đã biết gì?”\n3. “Họ nghĩ gì, lo gì, mong gì?”\n4. “Họ đang làm gì?”\n5. “Điều gì khiến họ chưa làm, hoặc muốn làm theo?”\nChốt: “Không cần đoán thay người nghe. Hãy hỏi, lắng nghe và tìm hiểu việc họ đang làm.”\nNút: “HỌC TIẾP”.\nNăm hàng có số thứ tự; lời chốt dưới cùng.\nNăm thẻ dọc, cho cuộn; không có Mascot.\nHiện đủ năm câu; không cần bấm mở từng câu.\n“HỌC TIẾP” → M11."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m11",
+    "itemId": "p2-l2-m11",
+    "title": "Một câu có phù hợp với tất cả mọi người không",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 116–132.\nLời Mít tơ An Toàn:\n“Người làm ruộng có thể lo công việc, mùa vụ và thời gian.\nThanh niên có thể để ý bạn bè nghĩ gì về mình.\nCha mẹ thường quan tâm đến sự an toàn của con.\nTrẻ em cần câu ngắn và hình ảnh dễ hiểu.\nVậy cứ dùng một câu giống nhau cho tất cả mọi người có phù hợp không?”\nHai lựa chọn:\nA. Có, chỉ cần câu viết rõ.\nB. Chưa chắc, cần xem người nghe là ai và họ đang quan tâm điều gì.\nĐáp án phù hợp: B.\nNếu chọn A:\n“Câu rõ là cần thiết. Nhưng mỗi nhóm có thể quan tâm những điều khác nhau, nên vẫn cần chọn cách nói phù hợp.”\nNếu chọn B:\n“Đúng rồi. Hiểu điều từng nhóm quan tâm giúp chúng ta chọn cách nói phù hợp hơn.”\nLời chốt:\n“Đây là những ví dụ để tìm hiểu, không có nghĩa ai trong cùng một nhóm cũng nghĩ giống nhau.”\nĐiều hướng: Không tính điểm. Sau phản hồi và lời chốt, mở HỌC TIẾP.\nBảng sản xuất:\n11 — M11\nMột câu cho mọi người?\nMT: “Người làm ruộng có thể lo công việc, mùa vụ và thời gian.\nThanh niên có thể để ý bạn bè nghĩ gì về mình.\nCha mẹ thường quan tâm đến sự an toàn của con.\nTrẻ em cần câu ngắn và hình ảnh dễ hiểu.”\nN: Đọc câu hỏi và A/B.\n\nA — MT: “Câu rõ là cần thiết. Nhưng mỗi nhóm có thể quan tâm những điều khác nhau, nên vẫn cần chọn cách nói phù hợp.”\nB — MT: “Đúng rồi. Hiểu điều từng nhóm quan tâm giúp chúng ta chọn cách nói phù hợp hơn.”\nChốt chung: “Đây là những ví dụ để tìm hiểu, không có nghĩa ai trong cùng một nhóm cũng nghĩ giống nhau.”\nNhãn phần: “Từng nhóm người nghe có thể quan tâm khác nhau”.\nBốn ví dụ chữ: Hiện nguyên văn bốn câu lời dẫn MT đầu màn, trong khối “Ví dụ để tìm hiểu”.\nCâu hỏi: “Vậy cứ dùng một câu giống nhau cho tất cả mọi người có phù hợp không?”\nA. “Có, chỉ cần câu viết rõ.”\nB. “Chưa chắc, cần xem người nghe là ai và họ đang quan tâm điều gì.”\nPhản hồi: Nguyên văn theo lựa chọn.\nChốt: Nguyên văn câu chốt ở cột lời đọc.\nNút: “TRẢ LỜI”; “HỌC TIẾP”.\nVí dụ trên; câu hỏi, lựa chọn và phản hồi bên dưới. Không thêm hình làm dài màn.\nMột cột, cuộn dọc. Lời chốt không bị giấu trong bản lời đọc.\nChọn rồi nộp. Chỉ ra B là câu phù hợp. Không tính điểm, không bắt chọn lại.\n“HỌC TIẾP” → M12.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m12",
+    "itemId": "p2-l2-m12",
+    "title": "Việc làm chịu ảnh hưởng từ nhiều điều",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 133–149.\nLời Mít tơ An Toàn:\n“Một người làm hay chưa làm theo lời khuyên có thể vì nhiều điều.\nVì công việc đang cần làm.\nVì thói quen hằng ngày.\nVì điều họ tin là đúng.\nVì còn khó khăn hoặc ngại ngần.\nVì điều họ muốn bảo vệ, gìn giữ.\nCách nghĩ và việc làm của người xung quanh cũng có thể ảnh hưởng đến họ.”\nText xuất hiện lần lượt:\nCÔNG VIỆC, NHU CẦU\nTHÓI QUEN\nĐIỀU HỌ TIN\nĐIỀU KHIẾN HỌ NGẠI\nĐIỀU HỌ QUAN TÂM\nNGƯỜI XUNG QUANH\nLời chốt:\n“Vì vậy, không nên cho rằng người chưa làm theo chỉ là chưa được nghe giải thích.”\nNút: HỌC TIẾP.\n\nPHẦN 5. BA ĐIỀU CẦN XEM TRƯỚC KHI VIẾT\nGhi chú chuyên môn dành cho người duyệt: Phần này giữ nội dung khung COM-B trong Đề cương, diễn đạt thành ba câu hỏi dễ hiểu. Không yêu cầu người học ghi nhớ tên viết tắt tiếng Anh.\nBảng sản xuất:\n12 — M12\nNhiều điều ảnh hưởng việc làm\nMT: “Một người làm hay chưa làm theo lời khuyên có thể vì nhiều điều.\nVì công việc đang cần làm.\nVì thói quen hằng ngày.\nVì điều họ tin là đúng.\nVì còn khó khăn hoặc ngại ngần.\nVì điều họ muốn bảo vệ, gìn giữ.\nCách nghĩ và việc làm của người xung quanh cũng có thể ảnh hưởng đến họ.”\nChốt: “Vì vậy, không nên cho rằng người chưa làm theo chỉ là chưa được nghe giải thích.”\nTiêu đề: “Việc làm chịu ảnh hưởng từ nhiều điều”.\nSáu nhãn: “Công việc, nhu cầu”; “Thói quen”; “Điều họ tin”; “Điều khiến họ ngại”; “Điều họ quan tâm”; “Người xung quanh”.\nChốt: Hiện nguyên văn câu chốt.\nNút: “HỌC TIẾP”.\nSáu thẻ bố trí hai cột, ba hàng; thứ tự đọc trái sang phải, trên xuống dưới.\nSáu thẻ dọc, giữ đúng thứ tự; không bố trí sơ đồ vòng tròn chữ nhỏ.\nLàm nổi bật lần lượt theo lời đọc. Không biến các thẻ thành nút tương tác giả.\n“HỌC TIẾP” → M13."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m13",
+    "itemId": "p2-l2-m13",
+    "title": "Họ có biết và có làm được không",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 150–158.\nLời Mít tơ An Toàn:\n“Điều thứ nhất: Người nghe có biết cách làm và có làm được không?\nVí dụ, muốn người dân gọi điện báo tin, cần biết họ đã biết số điện thoại và cách báo chưa.\nNếu chưa biết, lời hướng dẫn cần cho biết số nào, báo cho ai và báo như thế nào.”\nText:\nCÓ BIẾT CÁCH LÀM VÀ LÀM ĐƯỢC KHÔNG?\nVí dụ: Đã biết số điện thoại và cách báo tin chưa?\nNút: HỌC TIẾP.\nBảng sản xuất:\n13 — M13\nBiết cách và làm được\nMT: “Điều thứ nhất: Người nghe có biết cách làm và có làm được không?\nVí dụ, muốn người dân gọi điện báo tin, cần biết họ đã biết số điện thoại và cách báo chưa.\nNếu chưa biết, lời hướng dẫn cần cho biết số nào, báo cho ai và báo như thế nào.”\nNhãn phần: “Ba điều cần xem trước khi viết”.\nTiêu đề: “Có biết cách làm và làm được không?”\nVí dụ: “Đã biết số điện thoại và cách báo tin chưa?”\nHình: Điện thoại với biểu tượng dấu hỏi; không có dãy số.\nNút: “HỌC TIẾP”.\nCâu hỏi chính ở trên; ví dụ và hình nhỏ bên dưới.\nMột cột; hình nhỏ không chiếm chiều cao lớn.\nKhông thêm số liên hệ hoặc nội dung hướng dẫn báo tin ngoài nguồn.\n“HỌC TIẾP” → M14."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m14",
+    "itemId": "p2-l2-m14",
+    "title": "Có điều kiện để làm không",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 159–167.\nLời Mít tơ An Toàn:\n“Điều thứ hai: Người nghe có điều kiện để làm không?\nVí dụ, họ muốn gọi báo tin, nhưng nơi đó có sóng điện thoại không? Có cách liên hệ với nơi nhận tin không?\nKhông phải cứ muốn là có thể làm ngay. Cần hiểu cả những điều thuận lợi và khó khăn xung quanh họ.”\nText:\nCÓ ĐIỀU KIỆN ĐỂ LÀM KHÔNG?\nVí dụ: Có thể liên hệ được với nơi nhận tin không?\nNút: HỌC TIẾP.\nBảng sản xuất:\n14 — M14\nCó điều kiện để làm\nMT: “Điều thứ hai: Người nghe có điều kiện để làm không?\nVí dụ, họ muốn gọi báo tin, nhưng nơi đó có sóng điện thoại không? Có cách liên hệ với nơi nhận tin không?\nKhông phải cứ muốn là có thể làm ngay. Cần hiểu cả những điều thuận lợi và khó khăn xung quanh họ.”\nTiêu đề: “Có điều kiện để làm không?”\nVí dụ: “Có thể liên hệ được với nơi nhận tin không?”\nHình: Điện thoại có dấu mất sóng và biểu tượng nơi nhận tin; không dựng cuộc gọi kết nối thành công trong tình huống chưa có điều kiện.\nNút: “HỌC TIẾP”.\nCâu chính và ví dụ ở trên, hình phía dưới.\nMột cột, cho cuộn khi mở lời đọc.\nKhông ngụ ý chỉ cần có điện thoại là luôn báo được.\n“HỌC TIẾP” → M15."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m15",
+    "itemId": "p2-l2-m15",
+    "title": "Họ có muốn làm không",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 168–177.\nLời Mít tơ An Toàn:\n“Điều thứ ba: Người nghe có muốn làm không?\nCó người biết cách báo tin và có điện thoại, nhưng vẫn ngại phiền phức.\nCó người muốn báo vì lo cho con và những người xung quanh.\nKhi hiểu điều họ ngại và điều họ quan tâm, chúng ta sẽ biết cần giải thích thêm ở đâu.”\nText:\nCÓ MUỐN LÀM KHÔNG?\nCòn ngại điều gì?\nQuan tâm điều gì?\nNút: HỌC TIẾP.\nBảng sản xuất:\n15 — M15\nCó muốn làm\nMT: “Điều thứ ba: Người nghe có muốn làm không?\nCó người biết cách báo tin và có điện thoại, nhưng vẫn ngại phiền phức.\nCó người muốn báo vì lo cho con và những người xung quanh.\nKhi hiểu điều họ ngại và điều họ quan tâm, chúng ta sẽ biết cần giải thích thêm ở đâu.”\nTiêu đề: “Có muốn làm không?”\nHai thẻ: “Còn ngại điều gì?”; “Quan tâm điều gì?”\nHình: Biểu tượng phân vân và gia đình; không thêm nhân vật dẫn.\nNút: “HỌC TIẾP”.\nHai thẻ cạnh nhau.\nHai thẻ xếp dọc.\nKhông có câu hỏi chấm điểm.\n“HỌC TIẾP” → M16."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m16",
+    "itemId": "p2-l2-m16",
+    "title": "Chọn đúng điều cần giải thích",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 178–190.\nLời Mít tơ An Toàn:\n“Một người nói: ‘Tôi muốn báo tin, nhưng không biết gọi số nào.’\nLúc này, các bạn cần giúp họ điều gì trước?”\nHai lựa chọn:\nA. Cho biết số điện thoại đã được xác nhận và hướng dẫn cách báo tin.\nB. Chỉ nhắc lại rằng bom mìn rất nguy hiểm.\nĐáp án phù hợp: A.\nNếu chọn A:\n“Đúng rồi. Người này muốn báo nhưng chưa biết cách liên hệ. Cần giúp họ biết số và cách báo tin.”\nNếu chọn B:\n“Nhắc có nguy hiểm chưa giải quyết được điều họ đang thiếu. Họ cần biết số điện thoại và cách báo tin.”\nĐiều hướng: Không tính điểm. Sau phản hồi, mở HỌC TIẾP.\nPHẦN 6. CHỌN MỘT VIỆC CỤ THỂ VÀ VIẾT CHO ĐÚNG NGƯỜI NGHE\nBảng sản xuất:\n16 — M16\nChọn điều cần giải thích\nMT: “Một người nói: ‘Tôi muốn báo tin, nhưng không biết gọi số nào.’”\nN: Đọc câu hỏi và A/B.\n\nA — MT: “Đúng rồi. Người này muốn báo nhưng chưa biết cách liên hệ. Cần giúp họ biết số và cách báo tin.”\nB — MT: “Nhắc có nguy hiểm chưa giải quyết được điều họ đang thiếu. Họ cần biết số điện thoại và cách báo tin.”\nCâu nói: “Tôi muốn báo tin, nhưng không biết gọi số nào.”\nCâu hỏi: “Lúc này, các bạn cần giúp họ điều gì trước?”\nA. “Cho biết số điện thoại đã được xác nhận và hướng dẫn cách báo tin.”\nB. “Chỉ nhắc lại rằng bom mìn rất nguy hiểm.”\nPhản hồi: Nguyên văn đúng nhánh.\nNút: “TRẢ LỜI”; “HỌC TIẾP”.\nCâu nói trên, câu hỏi và lựa chọn dưới.\nMột cột; không có hình trang trí.\nNộp xong chỉ ra A là câu phù hợp. Không tính điểm, không bắt chọn lại.\n“HỌC TIẾP” → M17.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m17",
+    "itemId": "p2-l2-m17",
+    "title": "Muốn người nghe làm việc gì",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 191–205.\nLời Mít tơ An Toàn:\n“Trước khi viết, hãy chọn rõ việc các bạn muốn người nghe làm.\nVí dụ:\nKhông chạm vào vật lạ nghi bom mìn, vật nổ.\nGọi điện báo tin khi thấy vật nghi bom mìn, vật nổ.\nVới trẻ em, báo người lớn khi thấy vật lạ nghi bom mìn, vật nổ.\nViệc cần làm phải rõ để có thể biết người nghe đã làm theo hay chưa.”\nText xuất hiện lần lượt:\nKHÔNG CHẠM VÀO VẬT LẠ NGHI BOM MÌN, VẬT NỔ.\nGỌI ĐIỆN BÁO TIN.\nTRẺ EM BÁO NGƯỜI LỚN.\nLời chốt:\n“Không chỉ nói ‘cần hiểu biết hơn’. Hãy nói rõ việc muốn người nghe thực hiện.”\nNút: HỌC TIẾP.\nBảng sản xuất:\n17 — M17\nChọn việc cụ thể\nMT: “Trước khi viết, hãy chọn rõ việc các bạn muốn người nghe làm.\nVí dụ:\nKhông chạm vào vật lạ nghi bom mìn, vật nổ.\nGọi điện báo tin khi thấy vật nghi bom mìn, vật nổ.\nVới trẻ em, báo người lớn khi thấy vật lạ nghi bom mìn, vật nổ.\nViệc cần làm phải rõ để có thể biết người nghe đã làm theo hay chưa.”\nChốt: “Không chỉ nói ‘cần hiểu biết hơn’. Hãy nói rõ việc muốn người nghe thực hiện.”\nNhãn phần: “Chọn một việc cụ thể và viết cho đúng người nghe”.\nTiêu đề: “Muốn người nghe làm việc gì?”\nBa thẻ ví dụ:\n“Không chạm vào vật lạ nghi bom mìn, vật nổ.”\n“Gọi điện báo tin.”\n“Trẻ em báo người lớn.”\nHình: Bàn tay có dấu cấm; điện thoại báo tin; trẻ nói với người lớn.\nChốt: Nguyên văn câu chốt.\nNút: “HỌC TIẾP”.\nBa ví dụ thành danh sách hoặc ba thẻ; gắn nhãn “Ví dụ”, không vẽ thành chuỗi bước.\nBa thẻ dọc, mỗi thẻ một biểu tượng nhỏ.\nKhông đánh số ba ví dụ thành quy trình an toàn bắt buộc; đây là các ví dụ việc cụ thể cần lựa chọn.\n“HỌC TIẾP” → M18."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m18",
+    "itemId": "p2-l2-m18",
+    "title": "Viết đúng điều người nghe còn vướng",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 206–217.\nLời Mít tơ An Toàn:\n“Nếu người nghe chưa biết số điện thoại, cần hướng dẫn số và cách báo tin.\nNếu người nghe sợ làm phiền, cần giải thích rằng báo tin giúp bảo vệ gia đình và những người xung quanh.\nNếu người nghe nghĩ đường quen thì luôn an toàn, cần nhắc: Không vì đã đi quen mà bỏ qua vật lạ nghi là bom mìn, vật nổ.”\nText theo từng ví dụ:\nCHƯA BIẾT SỐ → HƯỚNG DẪN SỐ VÀ CÁCH BÁO.\nNGẠI LÀM PHIỀN → GIẢI THÍCH ÍCH LỢI CỦA VIỆC BÁO TIN.\nCHỦ QUAN VÌ QUEN ĐƯỜNG → NHẮC KHÔNG BỎ QUA VẬT LẠ.\nLời chốt:\n“Hiểu đúng điều người nghe còn vướng thì lời nhắc mới giúp ích cho họ.”\nNút: HỌC TIẾP.\nBảng sản xuất:\n18 — M18\nViết đúng điều còn vướng\nMT: “Nếu người nghe chưa biết số điện thoại, cần hướng dẫn số và cách báo tin.\nNếu người nghe sợ làm phiền, cần giải thích rằng báo tin giúp bảo vệ gia đình và những người xung quanh.\nNếu người nghe nghĩ đường quen thì luôn an toàn, cần nhắc: Không vì đã đi quen mà bỏ qua vật lạ nghi là bom mìn, vật nổ.”\nChốt: “Hiểu đúng điều người nghe còn vướng thì lời nhắc mới giúp ích cho họ.”\nTiêu đề: “Viết đúng điều người nghe còn vướng”.\nBa cặp:\n“Chưa biết số” → “Hướng dẫn số và cách báo.”\n“Ngại làm phiền” → “Giải thích ích lợi của việc báo tin.”\n“Chủ quan vì quen đường” → “Nhắc không bỏ qua vật lạ.”\nChốt: Nguyên văn câu chốt.\nNút: “HỌC TIẾP”.\nBa hàng, mỗi hàng có điều còn vướng bên trái và cách viết bên phải.\nMỗi cặp là một thẻ: điều còn vướng ở trên, mũi tên xuống, cách viết bên dưới. Không tách hai vế sang hai màn.\nHiện đủ ba cặp; chỉ làm nổi bật theo lời đọc.\n“HỌC TIẾP” → M19."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m19",
+    "itemId": "p2-l2-m19",
+    "title": "Cùng nhớ cách làm",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 218–228.\nLời Mít tơ An Toàn:\n“Khi viết thông điệp, các bạn thực hiện lần lượt:\nChọn nhóm người sẽ nghe.\nChọn một việc cụ thể muốn họ làm.\nTìm hiểu điều khiến họ chưa làm và điều giúp họ muốn làm.\nSau đó, viết lời nhắc phù hợp.”\nText xuất hiện theo thứ tự:\nCHỌN NGƯỜI NGHE\n↓\nCHỌN VIỆC CẦN LÀM\n↓\nHIỂU ĐIỀU HỌ NGẠI VÀ ĐIỀU HỌ QUAN TÂM\n↓\nVIẾT THÔNG ĐIỆP PHÙ HỢP\nNút: PHẦN THỬ TÀI CỦA BẠN.\nPHẦN 7. PHẦN THỬ TÀI CỦA BẠN\nBảng sản xuất:\n19 — M19\nCùng nhớ cách làm\nMT: “Khi viết thông điệp, các bạn thực hiện lần lượt:\nChọn nhóm người sẽ nghe.\nChọn một việc cụ thể muốn họ làm.\nTìm hiểu điều khiến họ chưa làm và điều giúp họ muốn làm.\nSau đó, viết lời nhắc phù hợp.”\nTiêu đề: “Cùng nhớ cách làm”.\nBốn bước:\n“1. Chọn người nghe”.\n“2. Chọn việc cần làm”.\n“3. Hiểu điều họ ngại và điều họ quan tâm”.\n“4. Viết thông điệp phù hợp”.\nMũi tên chỉ thứ tự từ bước 1 đến bước 4.\nNút: “PHẦN THỬ TÀI CỦA BẠN”.\nBốn bước xếp dọc để giữ rõ câu dài ở bước 3.\nBốn thẻ dọc, mũi tên xuống. Không có Mascot.\nKhông yêu cầu bấm mở từng bước.\nNhấn nút → M20, lượt 1."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m20",
+    "itemId": "p2-l2-m20-1",
+    "title": "Người này cần được giúp điều gì?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m20",
+    "itemId": "p2-l2-m20-2",
+    "title": "Điều gì khiến người này chưa báo?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m20",
+    "itemId": "p2-l2-m20-3",
+    "title": "Đây là điều gì?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m21",
+    "itemId": "p2-l2-m21",
+    "title": "Chọn lời nhắc cho trẻ em",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 264–273.\nLời Mít tơ An Toàn:\n“Bạn muốn nhắc trẻ em không chạm vào vật lạ nghi bom mìn, vật nổ. Cách nào phù hợp hơn?”\nA. Câu ngắn: “Không chạm vào vật lạ nghi bom mìn, vật nổ, báo người lớn”, kèm hình minh họa.\nB. Một đoạn giải thích dài, dùng nhiều từ khó.\nĐáp án: A.\nPhản hồi đúng:\n“Đúng rồi. Câu ngắn, hình dễ hiểu và việc làm phù hợp sẽ giúp các em nhớ hơn.”\nPhản hồi sai:\n“Các em cần cách nói đơn giản và hình dễ hiểu. Các bạn thử chọn lại nhé.”\nĐiều hướng: Chọn đúng mới mở HỌC TIẾP.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "m22",
+    "itemId": "p2-l2-m22",
+    "title": "Chọn lời nhắc theo điều người nghe quan tâm",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 274–286.\nLời Mít tơ An Toàn:\n“Một người mẹ lo các con nhặt vật lạ khi chơi ngoài nhà.\nBạn muốn nhắc người mẹ dặn con không chạm vào vật nghi bom mìn, vật nổ. Câu nào phù hợp hơn?”\nA. “Vì an toàn của con, hãy dặn trẻ: không chạm vào vật lạ nghi bom mìn, vật nổ, báo người lớn.”\nB. “Mọi người cần quan tâm đến việc phòng tránh.”\nĐáp án: A.\nPhản hồi đúng:\n“Đúng rồi. Câu này gắn với điều người mẹ quan tâm và nói rõ việc cần làm.”\nPhản hồi sai:\n“Câu này còn chung chung. Hãy chọn câu gắn với sự an toàn của con và chỉ rõ việc cần làm.”\nLời chốt:\n“Chúng ta không chỉ chọn câu ngắn. Cần chọn câu đúng với người nghe và điều họ đang quan tâm.”\nNút: LÀM BÀI KIỂM TRA.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "quiz-intro",
+    "itemId": "p2-l2-quiz-intro",
+    "title": "Bài kiểm tra",
+    "needs": [],
+    "source": ""
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "check",
+    "itemId": "p2-l2-q01",
+    "title": "Nối các ý phù hợp",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 297–300.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "check",
+    "itemId": "p2-l2-q02",
+    "title": "Xếp câu nói vào nhóm",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 301–314.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "check",
+    "itemId": "p2-l2-q03",
+    "title": "Trước khi viết thông điệp, bạn cần làm gì?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 315–320.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "check",
+    "itemId": "p2-l2-q04",
+    "title": "“Một câu viết rõ là có thể dùng giống nhau cho mọi nhóm người nghe.”",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 321–327.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "check",
+    "itemId": "p2-l2-q05",
+    "title": "Người dân muốn báo tin nhưng chưa biết số điện thoại. Cần hướng dẫn điều gì trước?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 328–333.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "check",
+    "itemId": "p2-l2-q06",
+    "title": "Muốn nhắc trẻ em không chạm vào vật lạ nghi bom mìn, vật nổ, nên dùng hình nào?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 334–339.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "check",
+    "itemId": "p2-l2-q07",
+    "title": "Một người nói: “Đường này tôi đi quen rồi, chắc không sao.”",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 340–346.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "check",
+    "itemId": "p2-l2-q08",
+    "title": "Nối nhóm người nghe với ví dụ phù hợp",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 347–350.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "check",
+    "itemId": "p2-l2-q09",
+    "title": "Xếp câu nói vào nhóm",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 351–364.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "check",
+    "itemId": "p2-l2-q10",
+    "title": "Nối tình huống với cách viết phù hợp",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 2.KB bài học số 2.docx, đoạn 365–368.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-2",
+    "stepId": "complete",
+    "itemId": "p2-l2-complete",
+    "title": "Bạn đã hoàn thành bài học",
+    "needs": [
+      "audio"
+    ],
+    "source": ""
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m01",
+    "itemId": "p2-l3-m01",
+    "title": "Cùng thảo luận nhóm để viết thông điệp",
+    "needs": [],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 9–20.\nHình ảnh: Mít tơ An Toàn chào người học. Phía sau là hình minh họa buổi sinh hoạt cộng đồng.\nText:\nBÀI HỌC SỐ 3\nCÙNG THẢO LUẬN NHÓM ĐỂ VIẾT THÔNG ĐIỆP\nLời Mít tơ An Toàn:\n“Chào mừng bạn đến với Bài học số 3.\nTrong bài này, bạn sẽ tìm hiểu cách chia nhóm, hướng dẫn mọi người cùng trao đổi và viết lời nhắc phòng tránh tai nạn bom mìn, vật nổ phù hợp với từng nghề, từng công việc cụ thể.\nHãy nhấn nút BẮT ĐẦU để cùng học nhé!”\nNút: BẮT ĐẦU.\nĐiều hướng: Kết thúc lời giới thiệu, giữ nguyên màn hình. Chỉ khi người học nhấn BẮT ĐẦU mới chuyển sang nội dung bài học.\n\nPHẦN 2. VÌ SAO NÊN CÙNG NHAU THẢO LUẬN\nBảng sản xuất:\n01 — M01\nGiới thiệu\nMT: “Chào mừng bạn đến với Bài học số 3.\nTrong bài này, bạn sẽ tìm hiểu cách chia nhóm, hướng dẫn mọi người cùng trao đổi và viết lời nhắc phòng tránh tai nạn bom mìn, vật nổ phù hợp với từng nghề.\nHãy nhấn nút BẮT ĐẦU để cùng học nhé!”\nChữ: “BÀI HỌC SỐ 3”; “Cùng thảo luận nhóm để viết thông điệp”.\nHình: Mascot chào bằng hai tay; nền buổi sinh hoạt cộng đồng, người tham gia ngồi quanh bàn, có giấy khổ lớn và bút. Nền giảm chi tiết để không cạnh tranh với tiêu đề.\nNút: “NGHE GIỚI THIỆU”; “BẮT ĐẦU”.\nMascot toàn thân bên trái, khoảng 30% vùng nội dung; tên bài và nút bên phải.\nTên bài → Mascot bán thân trong khung gọn → nút. Nền cộng đồng chỉ là hình phụ, không cần nhìn rõ từng người.\nNhấn nghe mới phát lời giới thiệu. Hết lời giữ nguyên màn.\nChỉ nhấn “BẮT ĐẦU” mới vào M02. Không bắt nghe hết lời chào mới được bắt đầu."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m02",
+    "itemId": "p2-l3-m02",
+    "title": "Một buổi nói chuyện có nhiều người làm nghề khác nhau",
+    "needs": [
+      "audio",
+      "image",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 21–36.\nLời Mít tơ An Toàn:\n“Bạn chuẩn bị tổ chức một buổi nói chuyện về phòng tránh tai nạn bom mìn, vật nổ.\nNgười đến dự có người làm ruộng, người đi rừng, thợ xây hay lái xe.\nCông việc khác nhau nên những tình huống có thể gặp bom mìn, vật nổ cũng khác nhau.\nLàm thế nào để lời nhắc gần với công việc của từng nhóm?”\nHình ảnh: Lần lượt xuất hiện bốn hình minh họa: làm ruộng, đi rừng, xây dựng và lái xe.\nCâu hỏi:\nCác bạn nên làm gì?\nA. Chỉ đọc một bài dài để tất cả cùng nghe.\nB. Chia nhóm để mọi người trao đổi về công việc của mình và cùng viết lời nhắc.\nĐáp án phù hợp: B.\nNếu chọn A:\n“Chỉ nghe một bài dài có thể chưa giúp mọi người nói được những tình huống trong công việc của mình. Chia nhóm sẽ tạo cơ hội để họ cùng trao đổi.”\nNếu chọn B:\n“Đúng rồi. Người cùng nghề có thể chia sẻ những việc thường gặp và cùng chọn lời nhắc phù hợp.”\nĐiều hướng: Câu hỏi gợi mở, không tính điểm. Sau phản hồi, mở HỌC TIẾP.\nBảng sản xuất:\n02 — M02\nNhiều nghề trong một buổi\nMT: “Bạn chuẩn bị tổ chức một buổi nói chuyện về phòng tránh tai nạn bom mìn, vật nổ.\nNgười đến dự có người làm ruộng, người đi rừng, thợ xây hay lái xe.\nCông việc khác nhau nên những tình huống có thể gặp bom mìn, vật nổ cũng khác nhau.\nLàm thế nào để lời nhắc gần với công việc của từng nhóm?”\nN: Đọc câu hỏi và A/B.\n\nA — MT: “Chỉ nghe một bài dài có thể chưa giúp mọi người nói được những tình huống trong công việc của mình. Chia nhóm sẽ tạo cơ hội để họ cùng trao đổi.”\nB — MT: “Đúng rồi. Người cùng nghề có thể chia sẻ những việc thường gặp và cùng chọn lời nhắc phù hợp.”\nNhãn phần: “Vì sao nên cùng nhau thảo luận”.\nHình: Bốn hình nghề: người làm ruộng; người đi rừng; thợ xây; lái xe. Không có vật nổ trong hình nghề.\nNhãn hình: “Làm ruộng”; “Đi rừng”; “Thợ xây”; “Lái xe”.\nCâu hỏi: “Các bạn nên làm gì?”\nA. “Chỉ đọc một bài dài để tất cả cùng nghe.”\nB. “Chia nhóm để mọi người trao đổi về công việc của mình và cùng viết lời nhắc.”\nPhản hồi: Hiện nguyên văn đúng nhánh ở cột lời đọc.\nNút: “TRẢ LỜI”; “HỌC TIẾP”.\nBốn hình nghề thành dải phía trên; câu hỏi, đáp án và phản hồi xếp dọc dưới.\nHình nghề thành bốn hàng nhỏ có nhãn; câu hỏi và đáp án một cột. Không để hình chiếm phần lớn màn.\nChọn rồi nộp; đánh dấu B là “Câu trả lời phù hợp”. Không tính điểm, không bắt chọn lại.\n“HỌC TIẾP” → M03.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m03",
+    "itemId": "p2-l3-m03",
+    "title": "Mỗi nhóm cùng viết lời nhắc cho người cùng nghề",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 37–48.\nLời Mít tơ An Toàn:\n“Khi thảo luận nhóm, mọi người cùng nói về công việc, những việc có thể gây tai nạn và cách phòng tránh.\nSau đó, nhóm cùng viết một lời nhắc ngắn cho những người làm cùng nghề.\nBạn là người hướng dẫn, giúp nhóm tập trung vào việc cần bàn và chọn lời nhắc rõ ràng.”\nText:\nCÙNG KỂ VIỆC THƯỜNG GẶP\nCÙNG CHỌN VIỆC CẦN LÀM\nCÙNG VIẾT LỜI NHẮC\nNút: HỌC TIẾP.\n\nPHẦN 3. CHUẨN BỊ VÀ CHIA NHÓM\nBảng sản xuất:\n03 — M03\nCùng viết lời nhắc theo nghề\nMT: “Khi thảo luận nhóm, mọi người cùng nói về công việc, những việc có thể gây tai nạn và cách phòng tránh.\nSau đó, nhóm cùng viết một lời nhắc ngắn cho những người làm cùng nghề.\nBạn là người hướng dẫn, giúp nhóm tập trung vào việc cần bàn và chọn lời nhắc rõ ràng.”\nBa ý: “Cùng kể việc thường gặp”; “Cùng chọn việc cần làm”; “Cùng viết lời nhắc”.\nHình: Một nhóm người lớn trao đổi quanh bàn; một người ghi chép, người khác góp ý; người hướng dẫn đứng cạnh lắng nghe. Giấy chỉ có nét ghi chép minh họa, không chứa lời nhắc mới.\nNút: “HỌC TIẾP”.\nHình nhóm ở trái; ba ý ở phải.\nBa ý trên, hình nhóm gọn phía dưới.\nLàm nổi bật ba ý theo lời đọc. Không thêm hoạt động viết trực tiếp trên hệ thống.\n“HỌC TIẾP” → M04."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m04",
+    "itemId": "p2-l3-m04",
+    "title": "Chuẩn bị trước khi thảo luận",
+    "needs": [
+      "audio",
+      "image"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 49–57.\nLời Mít tơ An Toàn:\n“Trước buổi thảo luận, bạn cần chuẩn bị tranh, ảnh về bom mìn, vật nổ, những lời nhắc để tham khảo và giấy, bút cho các nhóm.\nTranh, ảnh giúp mọi người dễ hiểu. Giấy và bút giúp nhóm ghi lại những điều đã thống nhất.”\nHình ảnh: Lần lượt xuất hiện tranh treo, tranh lật, bộ ảnh nhận biết bom mìn, vật nổ, giấy khổ lớn và bút dạ.\nText:\nCHUẨN BỊ\nTranh, ảnh.\nLời nhắc tham khảo.\nGiấy khổ lớn, bút dạ.\nNút: HỌC TIẾP.\nBảng sản xuất:\n04 — M04\nChuẩn bị\nMT: “Trước buổi thảo luận, bạn cần chuẩn bị tranh, ảnh về bom mìn, vật nổ, những lời nhắc để tham khảo và giấy, bút cho các nhóm.\nTranh, ảnh giúp mọi người dễ hiểu. Giấy và bút giúp nhóm ghi lại những điều đã thống nhất.”\nNhãn phần: “Chuẩn bị và chia nhóm”.\nTiêu đề: “Chuẩn bị”.\nDanh sách: “Tranh, ảnh.”; “Lời nhắc tham khảo.”; “Giấy khổ lớn, bút dạ.”\nHình tài sản: Một tranh treo; một tập tranh lật; bộ ảnh nhận biết bom mìn, vật nổ từ tư liệu đã duyệt; tờ tham khảo có nhãn “Lời nhắc tham khảo”; giấy khổ lớn và bút dạ.\nKhông tự viết thêm lời nhắc trên tờ tham khảo.\nNút: “HỌC TIẾP”.\nBa nhóm tài sản tương ứng ba mục, hình đặt cạnh chữ.\nBa thẻ dọc, mỗi thẻ có hình nhỏ và nhãn.\nDùng hình chuyên môn đã duyệt; đội thiết kế ghi rõ mã ảnh thực tế trong danh mục bàn giao.\n“HỌC TIẾP” → M05."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m05",
+    "itemId": "p2-l3-m05",
+    "title": "Hỏi xem mọi người làm nghề gì",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 58–66.\nLời Mít tơ An Toàn:\n“Để chia nhóm, trước hết hãy hỏi người tham gia đang làm những công việc gì.\nCó thể hỏi: ‘Các bác, các anh chị thường làm công việc gì? Ai làm ruộng? Ai đi rừng? Ai làm xây dựng? Ai lái xe?’\nNghe câu trả lời rồi mới chia nhóm cho phù hợp.”\nText:\nHỎI TRƯỚC KHI CHIA NHÓM\nMọi người đang làm công việc gì?\nNút: HỌC TIẾP.\nBảng sản xuất:\n05 — M05\nHỏi trước khi chia nhóm\nMT: “Để chia nhóm, trước hết hãy hỏi người tham gia đang làm những công việc gì.\nCó thể hỏi: ‘Các bác, các anh chị thường làm công việc gì? Ai làm ruộng? Ai đi rừng? Ai làm xây dựng? Ai lái xe?’\nNghe câu trả lời rồi mới chia nhóm cho phù hợp.”\nTiêu đề: “Hỏi trước khi chia nhóm”.\nCâu chính: “Mọi người đang làm công việc gì?”\nHình: Người hướng dẫn đặt câu hỏi, một vài người tham gia giơ tay; các nhân vật là người lớn, không có thoại riêng.\nNút: “HỌC TIẾP”.\nCâu hỏi nổi bật trên, hình dưới.\nMột cột; hình gọn dưới câu hỏi.\nKhông yêu cầu người học nhập nghề của mình; đây là hướng dẫn tổ chức thảo luận.\n“HỌC TIẾP” → M06."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m06",
+    "itemId": "p2-l3-m06",
+    "title": "Chia thành ba đến bốn nhóm phù hợp",
+    "needs": [
+      "audio",
+      "image"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 67–76.\nLời Mít tơ An Toàn:\n“Nên chia thành khoảng ba đến bốn nhóm theo những nghề chính của người tham gia.\nVí dụ, nếu buổi đó có đủ người, có thể chia thành nhóm làm ruộng, nhóm đi rừng, nhóm thợ xây và nhóm lái xe.\nCách chia cần dựa vào người thực tế đến dự. Không phải buổi nào cũng chia giống nhau.”\nHình ảnh: Người tham gia được sắp xếp vào bốn nhóm có tên và hình minh họa nghề tương ứng.\nText:\nCHIA KHOẢNG 3–4 NHÓM\nDựa vào công việc của người đến dự.\nNút: HỌC TIẾP.\nBảng sản xuất:\n06 — M06\nChia 3–4 nhóm\nMT: “Nên chia thành khoảng ba đến bốn nhóm theo những nghề chính của người tham gia.\nVí dụ, nếu buổi đó có đủ người, có thể chia thành nhóm làm ruộng, nhóm đi rừng, nhóm thợ xây và nhóm lái xe.\nCách chia cần dựa vào người thực tế đến dự. Không phải buổi nào cũng chia giống nhau.”\nTiêu đề: “Chia khoảng 3–4 nhóm”.\nCâu chốt: “Dựa vào công việc của người đến dự.”\nHình: Bốn cụm bàn thảo luận, có nhãn “Nhóm làm ruộng”; “Nhóm đi rừng”; “Nhóm thợ xây”; “Nhóm lái xe”.\nNhãn chung trên hình: “Ví dụ”.\nNút: “HỌC TIẾP”.\nBốn cụm nhóm trong bố cục 2 × 2, nhãn rõ.\nBốn thẻ nhóm xếp dọc; không thu nhỏ sơ đồ 2 × 2 của PC.\nMinh họa bốn nhóm là ví dụ, không biến thành quy định mọi buổi đều phải đủ bốn nghề.\n“HỌC TIẾP” → M07."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m07",
+    "itemId": "p2-l3-m07",
+    "title": "Chia nhóm để làm gì",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 77–88.\nCâu hỏi:\nVì sao nên chia người tham gia theo nghề?\nA. Để cùng trao đổi và viết lời nhắc sát với công việc.\nB. Để các nhóm thi xem nghề nào quan trọng hơn.\nC. Để người hướng dẫn không phải giải thích.\nĐáp án phù hợp: A.\nNếu chọn A:\n“Đúng rồi. Chia theo nghề giúp mọi người trao đổi những việc gần với công việc của mình.”\nNếu chọn B hoặc C:\n“Mục đích là giúp mọi người cùng trao đổi và viết lời nhắc phù hợp với công việc. Không phải để so sánh nghề hoặc bỏ phần hướng dẫn.”\nĐiều hướng: Không tính điểm. Sau phản hồi, mở HỌC TIẾP.\n\nPHẦN 4. HƯỚNG DẪN NHÓM CÙNG TRAO ĐỔI\nBảng sản xuất:\n07 — M07\nMục đích chia nhóm\nN: Đọc câu hỏi và A/B/C.\n\nA — MT: “Đúng rồi. Chia theo nghề giúp mọi người trao đổi những việc gần với công việc của mình.”\nB hoặc C — MT: “Mục đích là giúp mọi người cùng trao đổi và viết lời nhắc phù hợp với công việc. Không phải để so sánh nghề hoặc bỏ phần hướng dẫn.”\nCâu hỏi: “Vì sao nên chia người tham gia theo nghề?”\nA. “Để cùng trao đổi và viết lời nhắc sát với công việc.”\nB. “Để các nhóm thi xem nghề nào quan trọng hơn.”\nC. “Để người hướng dẫn không phải giải thích.”\nPhản hồi: Hiện nguyên văn đúng nhánh.\nNút: “TRẢ LỜI”; “HỌC TIẾP”.\nKhông có hình trang trí.\nCâu hỏi và ba thẻ dọc trong vùng đọc trung tâm.\nMột cột, thẻ đáp án rộng.\nChọn rồi nộp; chỉ ra A là câu phù hợp. Không tính điểm, không bắt chọn lại.\n“HỌC TIẾP” → M08.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m08",
+    "itemId": "p2-l3-m08",
+    "title": "Bắt đầu từ việc thường gặp",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 89–97.\nLời Mít tơ An Toàn:\n“Sau khi chia nhóm, hãy mời mọi người kể những tình huống có thể gặp bom mìn, vật nổ trong công việc.\nCó thể hỏi: ‘Trong lúc làm việc, mọi người có thể gặp vật lạ ở đâu? Những việc nào có thể khiến mình hoặc người khác bị tai nạn?’\nHãy để người tham gia cùng nói và lắng nghe nhau.”\nText:\nGỢI Ý CHO NHÓM\nCó thể gặp vật lạ ở đâu?\nViệc gì có thể gây tai nạn?\nNút: HỌC TIẾP.\nBảng sản xuất:\n08 — M08\nBắt đầu từ việc thường gặp\nMT: “Sau khi chia nhóm, hãy mời mọi người kể những tình huống có thể gặp bom mìn, vật nổ trong công việc.\nCó thể hỏi: ‘Trong lúc làm việc, mọi người có thể gặp vật lạ ở đâu? Những việc nào có thể khiến mình hoặc người khác bị tai nạn?’\nHãy để người tham gia cùng nói và lắng nghe nhau.”\nNhãn phần: “Hướng dẫn nhóm cùng trao đổi”.\nTiêu đề: “Gợi ý cho nhóm”.\nHai câu: “Có thể gặp vật lạ ở đâu?”; “Việc gì có thể gây tai nạn?”\nHình: Nhóm người lớn cùng trao đổi; một người phát biểu, những người khác chú ý lắng nghe.\nNút: “HỌC TIẾP”.\nHai câu hỏi cạnh hình nhóm.\nHai câu hỏi trên; hình nhỏ phía dưới.\nKhông thêm lời thoại cho nhân vật minh họa.\n“HỌC TIẾP” → M09."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m09",
+    "itemId": "p2-l3-m09",
+    "title": "Ví dụ theo từng công việc",
+    "needs": [
+      "audio",
+      "image"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 98–114.\nLời Mít tơ An Toàn:\n“Nhóm làm ruộng có thể trao đổi về lúc làm đất hoặc đi rẫy.\nNhóm thợ xây có thể nói về lúc đào đất, san nền.\nNhóm đi rừng có thể nói về lúc lấy măng, lấy gỗ hoặc đi qua suối.\nNhóm lái xe có thể nói về lúc đi qua nơi có vật nghi là bom mìn, vật nổ.\nNếu có nhóm trẻ em, có thể trao đổi về việc tò mò, nhặt hoặc chơi với vật lạ.”\nHình ảnh: Hiển thị lần lượt từng nhóm và công việc tương ứng.\nText theo từng hình:\nLÀM RUỘNG — LÀM ĐẤT, ĐI RẪY.\nTHỢ XÂY — ĐÀO ĐẤT, SAN NỀN.\nĐI RỪNG — LẤY MĂNG, LẤY GỖ, ĐI QUA SUỐI.\nLÁI XE — ĐI QUA NƠI CÓ VẬT NGHI BOM MÌN, VẬT NỔ.\nTRẺ EM — TÒ MÒ, NHẶT HOẶC CHƠI VỚI VẬT LẠ.\nLời chốt:\n“Những công việc này không tự nó có nghĩa là sẽ xảy ra tai nạn. Nhóm cần nói rõ tình huống và việc làm nào có thể gây tai nạn.”\nNút: HỌC TIẾP.\nBảng sản xuất:\n09 — M09\nVí dụ theo công việc\nMT: “Nhóm làm ruộng có thể trao đổi về lúc làm đất hoặc đi rẫy.\nNhóm thợ xây có thể nói về lúc đào đất, san nền.\nNhóm đi rừng có thể nói về lúc lấy măng, lấy gỗ hoặc đi qua suối.\nNhóm lái xe có thể nói về lúc đi qua nơi có vật nghi là bom mìn, vật nổ.\nNếu có nhóm trẻ em, có thể trao đổi về việc tò mò, nhặt hoặc chơi với vật lạ.”\n\nChốt: “Những công việc này không tự nó có nghĩa là sẽ xảy ra tai nạn. Nhóm cần nói rõ tình huống và việc làm nào có thể gây tai nạn.”\nNăm thẻ:\n“Làm ruộng — Làm đất, đi rẫy.”\n“Thợ xây — Đào đất, san nền.”\n“Đi rừng — Lấy măng, lấy gỗ, đi qua suối.”\n“Lái xe — Đi qua nơi có vật nghi bom mìn, vật nổ.”\n“Trẻ em — Tò mò, nhặt hoặc chơi với vật lạ.”\nHình: Minh họa bốn nghề trong bối cảnh công việc thông thường; thẻ trẻ em chỉ dùng hình trẻ đang lắng nghe, không dựng cảnh cầm hoặc chơi với vật lạ.\nChốt: Hiện nguyên văn câu chốt.\nNút: “HỌC TIẾP”.\nNăm hàng, hình nhỏ bên trái, chữ bên phải; lời chốt cuối màn.\nNăm thẻ dọc; không dùng trình chiếu tự chạy. Thẻ trẻ em ghi thêm nhãn ngữ cảnh “Nếu có nhóm trẻ em”.\nHiện đủ năm thẻ, làm nổi bật theo lời đọc. Không dùng ký hiệu đánh giá nghề nào nguy hiểm hơn.\n“HỌC TIẾP” → M10."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m10",
+    "itemId": "p2-l3-m10",
+    "title": "Chọn một đến hai việc cần nhắc",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 115–125.\nLời Mít tơ An Toàn:\n“Sau khi nghe các ý kiến, hãy giúp nhóm chọn một đến hai việc cần nhắc để phòng tránh tai nạn.\nVí dụ, nhóm thợ xây chọn: Dừng công việc khi đào đất gặp vật nghi bom mìn, vật nổ; báo cho chính quyền địa phương.\nKhông nên đưa quá nhiều việc vào một lời nhắc.”\nText:\nCHỌN 1–2 VIỆC CẦN NHẮC\nVí dụ với thợ xây:\nDỪNG CÔNG VIỆC.\nBÁO CHÍNH QUYỀN ĐỊA PHƯƠNG.\nNút: HỌC TIẾP.\nBảng sản xuất:\n10 — M10\nChọn việc cần nhắc\nMT: “Sau khi nghe các ý kiến, hãy giúp nhóm chọn một đến hai việc cần nhắc để phòng tránh tai nạn.\nVí dụ, nhóm thợ xây chọn: Dừng công việc khi đào đất gặp vật nghi bom mìn, vật nổ; báo cho chính quyền địa phương.\nKhông nên đưa quá nhiều việc vào một lời nhắc.”\nTiêu đề: “Chọn 1–2 việc cần nhắc”.\nNhãn ví dụ: “Ví dụ với thợ xây”.\nTình huống: “Khi đào đất gặp vật nghi bom mìn, vật nổ”.\nHai ý: “Dừng công việc.”; “Báo chính quyền địa phương.”\nHình: Biểu tượng dừng và báo tin; không dựng cảnh đào tiếp cạnh vật nổ.\nNút: “HỌC TIẾP”.\nTình huống trên; hai thẻ việc cần làm bên dưới.\nTình huống → hai thẻ dọc → nút.\nLuôn giữ tình huống cùng hai việc để tránh câu “Dừng công việc” mất ngữ cảnh.\n“HỌC TIẾP” → M11."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m11",
+    "itemId": "p2-l3-m11",
+    "title": "Cùng viết một câu ngắn",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 126–134.\nLời Mít tơ An Toàn:\n“Tiếp theo, mời nhóm viết lời nhắc dành cho những người cùng nghề.\nCó thể hỏi: ‘Nếu nhắc một người làm cùng nghề phòng tránh tai nạn bom mìn, vật nổ, nhóm mình sẽ nói thế nào?’\nHãy dùng từ quen thuộc và nói rõ việc cần làm.”\nText:\nNHÓM MÌNH SẼ NHẮC NGƯỜI CÙNG NGHỀ THẾ NÀO?\nNgắn gọn.\nDễ hiểu.\nRõ việc cần làm.\nNút: HỌC TIẾP.\nBảng sản xuất:\n11 — M11\nCùng viết câu ngắn\nMT: “Tiếp theo, mời nhóm viết lời nhắc dành cho những người cùng nghề.\nCó thể hỏi: ‘Nếu nhắc một người làm cùng nghề phòng tránh tai nạn bom mìn, vật nổ, nhóm mình sẽ nói thế nào?’\nHãy dùng từ quen thuộc và nói rõ việc cần làm.”\nCâu chính: “Nhóm mình sẽ nhắc người cùng nghề thế nào?”\nBa nhãn: “Ngắn gọn.”; “Dễ hiểu.”; “Rõ việc cần làm.”\nHình: Một người ghi trên giấy khổ lớn, các thành viên cùng góp ý; trên giấy chỉ có nét ghi chép không đọc thành thông điệp mới.\nNút: “HỌC TIẾP”.\nCâu hỏi và ba nhãn cạnh hình nhóm viết.\nCâu hỏi → ba nhãn → hình gọn → nút.\nKhông bổ sung ô nhập câu tự viết hoặc nhiệm vụ mới ngoài nguồn.\n“HỌC TIẾP” → M12."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m12",
+    "itemId": "p2-l3-m12-1",
+    "title": "Nhóm làm ruộng",
+    "needs": [
+      "audio"
+    ],
+    "source": "M12.1 — Làm ruộng\nMT, lời dẫn đầu màn: “Các bạn cùng nghe một số lời nhắc gắn với từng công việc nhé.”\nMT: “Nhóm làm ruộng.”\n“Đi rẫy gặp vật nghi bom mìn, vật nổ: không chạm, báo chính quyền.”\nTiêu đề: “Nghe thử những lời nhắc”.\nNhãn: “Ví dụ 1/4”; “Nhóm làm ruộng”.\nThông điệp: “Đi rẫy gặp vật nghi bom mìn, vật nổ: không chạm, báo chính quyền.”\nHình: Người làm ruộng tại khu vực rẫy; kèm biểu tượng không chạm và báo tin. Không bố trí vật nổ sát người.\nNút: “NGHE LẠI LỜI NHẮC”; “VÍ DỤ TIẾP THEO”.\nHình bên trái, thông điệp bên phải.\nNhãn → hình gọn → toàn bộ thông điệp → nút.\nLời dẫn đầu chỉ phát một lần khi vào M12, vẫn có trong bản chữ.\nNhấn “VÍ DỤ TIẾP THEO” → M12.2."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m12",
+    "itemId": "p2-l3-m12-2",
+    "title": "Nhóm thợ xây",
+    "needs": [
+      "audio"
+    ],
+    "source": "M12.2 — Thợ xây\nMT: “Nhóm thợ xây.”\n“Đào đất gặp vật nghi bom mìn, vật nổ: dừng công việc, báo chính quyền.”\nNhãn: “Ví dụ 2/4”; “Nhóm thợ xây”.\nThông điệp: “Đào đất gặp vật nghi bom mìn, vật nổ: dừng công việc, báo chính quyền.”\nHình: Công trường đất; thợ xây đã dừng thao tác; biểu tượng dừng và báo tin. Không thể hiện tiếp tục đào hoặc di chuyển vật lạ.\nNút: “VÍ DỤ TRƯỚC”; “NGHE LẠI LỜI NHẮC”; “VÍ DỤ TIẾP THEO”.\nCùng bố cục ví dụ 1.\nCùng thứ tự ví dụ 1, không giảm cỡ chữ thông điệp.\nĐược quay lại ví dụ 1.\nNhấn tiếp → M12.3."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m12",
+    "itemId": "p2-l3-m12-3",
+    "title": "Nhóm lái xe",
+    "needs": [
+      "audio"
+    ],
+    "source": "M12.3 — Lái xe\nMT: “Nhóm lái xe.”\n“Thấy vật nghi bom mìn, vật nổ trên đường: không tiến gần, báo chính quyền.”\nNhãn: “Ví dụ 3/4”; “Nhóm lái xe”.\nThông điệp: “Thấy vật nghi bom mìn, vật nổ trên đường: không tiến gần, báo chính quyền.”\nHình: Lái xe và phương tiện trong bối cảnh đường đi, kèm biểu tượng không tiến gần và báo tin. Không dựng xe chạy tới, chạy qua hoặc cán lên vật nghi bom mìn.\nNút: “VÍ DỤ TRƯỚC”; “NGHE LẠI LỜI NHẮC”; “VÍ DỤ TIẾP THEO”.\nHình bên trái, thông điệp bên phải.\nHình gọn trên, thông điệp dưới.\nNhấn tiếp → M12.4. Không thêm số khoảng cách vào hình."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m12",
+    "itemId": "p2-l3-m12-4",
+    "title": "Nhóm đi rừng",
+    "needs": [
+      "audio"
+    ],
+    "source": "M12.4 — Đi rừng và chốt\nMT: “Nhóm đi rừng.”\n“Gặp vật nghi bom mìn, vật nổ trong rừng: không chạm, báo chính quyền.”\n\nLời chốt: “Mỗi lời nhắc cần gần với công việc và nói rõ cách làm. Nhóm có thể dùng cách nói quen thuộc ở địa phương, nhưng phải giữ đúng ý.”\nNhãn: “Ví dụ 4/4”; “Nhóm đi rừng”.\nThông điệp: “Gặp vật nghi bom mìn, vật nổ trong rừng: không chạm, báo chính quyền.”\nHình: Người đi rừng trong bối cảnh rừng; biểu tượng không chạm và báo tin. Không dựng thao tác đụng vào vật lạ.\nChốt: Nguyên văn lời chốt.\nNút: “VÍ DỤ TRƯỚC”; “NGHE LẠI LỜI NHẮC”; “HỌC TIẾP”.\nHình và thông điệp phía trên; lời chốt toàn chiều rộng phía dưới.\nMột cột, lời chốt ngay dưới thông điệp.\nNút nghe lời nhắc chỉ phát câu mẫu; lời chốt có trong điều khiển nghe nội dung chung.\nĐã xem đủ bốn ví dụ mới hoàn thành M12.\n“HỌC TIẾP” → M13."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m13",
+    "itemId": "p2-l3-m13",
+    "title": "Mời từng nhóm chia sẻ",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 153–162.\nLời Mít tơ An Toàn:\n“Khi các nhóm đã viết xong, mời từng nhóm đọc lời nhắc của mình.\nNhững người còn lại cùng nghe và góp ý.\nBạn giúp mọi người xem câu đã ngắn chưa, dễ hiểu chưa, đúng với công việc chưa và đã rõ việc cần làm chưa.”\nText:\nTỪNG NHÓM ĐỌC LỜI NHẮC\nCÙNG NGHE VÀ GÓP Ý\nNgắn chưa?\nDễ hiểu chưa?\nSát công việc chưa?\nRõ việc cần làm chưa?\nNút: HỌC TIẾP.\nBảng sản xuất:\n13 — M13\nMời nhóm chia sẻ\nMT: “Khi các nhóm đã viết xong, mời từng nhóm đọc lời nhắc của mình.\nNhững người còn lại cùng nghe và góp ý.\nBạn giúp mọi người xem câu đã ngắn chưa, dễ hiểu chưa, đúng với công việc chưa và đã rõ việc cần làm chưa.”\nNhãn phần: “Cùng góp ý và thống nhất thông điệp”.\nHai ý: “Từng nhóm đọc lời nhắc”; “Cùng nghe và góp ý”.\nBốn câu hỏi: “Ngắn chưa?”; “Dễ hiểu chưa?”; “Sát công việc chưa?”; “Rõ việc cần làm chưa?”\nHình: Đại diện nhóm đứng cạnh tờ giấy, những người khác lắng nghe; người hướng dẫn điều phối. Nếu cần chữ trên tờ giấy, dùng đúng câu: “Đào đất gặp vật nghi bom mìn, vật nổ: dừng công việc, báo chính quyền.”\nNút: “HỌC TIẾP”.\nHình nhỏ phía trên hoặc bên trái; bốn câu hỏi chiếm vùng đọc chính.\nChữ và bốn câu hỏi xếp dọc; hình gọn, không làm chữ trong tranh thành nội dung bắt buộc phải đọc.\nKhông thêm lời phát biểu của đại diện nhóm.\n“HỌC TIẾP” → M14."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m14",
+    "itemId": "p2-l3-m14",
+    "title": "Giúp nhóm sửa câu còn chung chung",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 163–175.\nLời Mít tơ An Toàn:\n“Nhóm thợ xây viết: ‘Mọi người hãy chú ý giữ an toàn khi làm việc.’\nCâu này chưa nói rõ phải làm gì khi đào đất gặp vật nghi bom mìn, vật nổ.\nCác bạn nên góp ý thế nào?”\nHai lựa chọn:\nA. Mời nhóm bổ sung tình huống và việc cần làm.\nB. Giữ nguyên vì đã có chữ “an toàn”.\nĐáp án phù hợp: A.\nNếu chọn A:\n“Đúng rồi. Có thể gợi ý nhóm nói rõ: ‘Đào đất gặp vật nghi bom mìn, vật nổ: dừng công việc, báo chính quyền.’”\nNếu chọn B:\n“Có chữ ‘an toàn’ nhưng người nghe vẫn chưa biết phải làm gì. Cần giúp nhóm nói rõ tình huống và việc cần làm.”\nĐiều hướng: Không tính điểm. Sau phản hồi, mở HỌC TIẾP.\nBảng sản xuất:\n14 — M14\nSửa câu chung chung\nMT: “Nhóm thợ xây viết: ‘Mọi người hãy chú ý giữ an toàn khi làm việc.’\nCâu này chưa nói rõ phải làm gì khi đào đất gặp vật nghi bom mìn, vật nổ.”\nN: Đọc câu hỏi và A/B.\n\nA — MT: “Đúng rồi. Có thể gợi ý nhóm nói rõ: ‘Đào đất gặp vật nghi bom mìn, vật nổ: dừng công việc, báo chính quyền.’”\nB — MT: “Có chữ ‘an toàn’ nhưng người nghe vẫn chưa biết phải làm gì. Cần giúp nhóm nói rõ tình huống và việc cần làm.”\nCâu gốc: “Mọi người hãy chú ý giữ an toàn khi làm việc.”\nCâu hỏi: “Các bạn nên góp ý thế nào?”\nA. “Mời nhóm bổ sung tình huống và việc cần làm.”\nB. “Giữ nguyên vì đã có chữ ‘an toàn’.”\nPhản hồi: Hiện nguyên văn theo nhánh.\nĐánh dấu A bằng ✓ và nhãn “Câu trả lời phù hợp”.\nNút: “TRẢ LỜI”; “HỌC TIẾP”.\nCâu gốc trong thẻ trên; câu hỏi, đáp án và phản hồi dưới.\nMột cột; phản hồi nằm dưới đáp án, cho cuộn.\nKhông tính điểm, không bắt chọn lại.\nGiữ đúng phản hồi từng nhánh; không tự thêm câu giảng mới.\n“HỌC TIẾP” → M15.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m15",
+    "itemId": "p2-l3-m15",
+    "title": "Thống nhất và nhắc lại",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 176–184.\nLời Mít tơ An Toàn:\n“Sau khi góp ý, người hướng dẫn cùng nhóm thống nhất lời nhắc cuối cùng.\nGhi lại câu đã chọn và đọc lại rõ ràng để mọi người cùng nhớ.\nSau đó, khuyến khích người tham gia chia sẻ lời nhắc với gia đình, bạn bè và những người làm cùng nghề.”\nText:\nTHỐNG NHẤT LỜI NHẮC\nGHI LẠI — ĐỌC LẠI — CHIA SẺ\nNút: HỌC TIẾP.\nBảng sản xuất:\n15 — M15\nThống nhất và nhắc lại\nMT: “Sau khi góp ý, người hướng dẫn cùng nhóm thống nhất lời nhắc cuối cùng.\nGhi lại câu đã chọn và đọc lại rõ ràng để mọi người cùng nhớ.\nSau đó, khuyến khích người tham gia chia sẻ lời nhắc với gia đình, bạn bè và những người làm cùng nghề.”\nTiêu đề: “Thống nhất lời nhắc”.\nBa ý: “Ghi lại”; “Đọc lại”; “Chia sẻ”.\nHình: Bút ghi trên giấy; người đọc lời nhắc cho nhóm; người trao đổi với gia đình/người cùng nghề. Không thêm lời thoại.\nNút: “HỌC TIẾP”.\nBa thẻ hình và chữ có thứ tự trái sang phải.\nBa thẻ xếp dọc theo đúng thứ tự.\nLàm nổi bật theo lời đọc.\n“HỌC TIẾP” → M16."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m16",
+    "itemId": "p2-l3-m16",
+    "title": "Cùng nhớ các bước",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 185–196.\nLời Mít tơ An Toàn:\n“Để hướng dẫn thảo luận nhóm viết thông điệp, bạn hãy ghi nhớ năm bước.”\nText xuất hiện theo lời đọc:\nBƯỚC 1. CHIA NHÓM THEO NGHỀ.\nBƯỚC 2. CÙNG TÌM NHỮNG VIỆC CÓ THỂ GÂY TAI NẠN.\nBƯỚC 3. CHỌN 1–2 VIỆC CẦN NHẮC.\nBƯỚC 4. CÙNG VIẾT VÀ GÓP Ý LỜI NHẮC.\nBƯỚC 5. THỐNG NHẤT VÀ KHUYẾN KHÍCH CHIA SẺ.\nNút: PHẦN THỬ TÀI CỦA BẠN.\n\nPHẦN 6. PHẦN THỬ TÀI CỦA BẠN\nBảng sản xuất:\n16 — M16\nNhớ năm bước\nMT: “Để hướng dẫn thảo luận nhóm viết thông điệp, bạn hãy ghi nhớ năm bước.”\nĐọc đủ năm bước ở cột bên.\nTiêu đề: “Cùng nhớ các bước”.\n“Bước 1. Chia nhóm theo nghề.”\n“Bước 2. Cùng tìm những việc có thể gây tai nạn.”\n“Bước 3. Chọn 1–2 việc cần nhắc.”\n“Bước 4. Cùng viết và góp ý lời nhắc.”\n“Bước 5. Thống nhất và khuyến khích chia sẻ.”\nNút: “PHẦN THỬ TÀI CỦA BẠN”.\nKhông có Mascot.\nNăm hàng dọc, số bước rõ; có đường nối nhẹ thể hiện thứ tự.\nNăm thẻ dọc; không dùng sơ đồ ngang hoặc bắt vuốt để xem.\nHiện đủ năm bước; không yêu cầu bấm mở từng bước.\nNhấn nút → M17."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m17",
+    "itemId": "p2-l3-m17",
+    "title": "Chọn việc làm tiếp theo",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 197–207.\nLời Mít tơ An Toàn:\n“Bạn đã chia người tham gia thành các nhóm nghề. Tiếp theo, nên mời nhóm làm gì?”\nCác lựa chọn:\nA. Kể những tình huống và việc làm có thể gây tai nạn trong công việc của mình.\nB. Chép ngay một câu bất kỳ lên giấy.\nC. Chọn nhóm có chữ viết đẹp nhất.\nĐáp án đúng: A.\nPhản hồi đúng:\n“Đúng rồi. Cần bắt đầu từ những việc nhóm thường gặp để chọn lời nhắc phù hợp.”\nPhản hồi sai:\n“Chưa đúng. Trước khi viết, nhóm cần cùng trao đổi về những việc có thể gặp trong công việc. Các bạn thử chọn lại nhé.”\nĐiều hướng: Chọn đúng mới mở HỌC TIẾP.\nBảng sản xuất:\n17 — M17\nViệc tiếp theo sau chia nhóm\nN: Đọc câu hỏi và A/B/C.\nĐúng — MT: “Đúng rồi. Cần bắt đầu từ những việc nhóm thường gặp để chọn lời nhắc phù hợp.”\nSai — MT: “Chưa đúng. Trước khi viết, nhóm cần cùng trao đổi về những việc có thể gặp trong công việc. Các bạn thử chọn lại nhé.”\nNhãn phần: “Phần thử tài của bạn”.\nCâu hỏi: “Bạn đã chia người tham gia thành các nhóm nghề. Tiếp theo, nên mời nhóm làm gì?”\nA. “Kể những tình huống và việc làm có thể gây tai nạn trong công việc của mình.”\nB. “Chép ngay một câu bất kỳ lên giấy.”\nC. “Chọn nhóm có chữ viết đẹp nhất.”\nPhản hồi: Nguyên văn đúng/sai ở cột lời đọc.\nNút: “TRẢ LỜI”; đúng có “HỌC TIẾP”.\nCâu hỏi và ba thẻ dọc; không có hình gợi ý đáp án.\nMột cột, giữ đủ phương án A.\nĐúng A mới mở học tiếp. Sai B/C được chọn lại trực tiếp, không cần nút “CHỌN LẠI”. Không giới hạn số lần thử.\nĐúng → M18.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m18",
+    "itemId": "p2-l3-m18",
+    "title": "Chọn lời nhắc cho thợ xây",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 208–218.\nLời Mít tơ An Toàn:\n“Nhóm thợ xây muốn nhắc người cùng nghề cách làm khi đào đất gặp vật nghi bom mìn, vật nổ.\nCác bạn chọn lời nhắc nào?”\nA. “Đào đất gặp vật nghi bom mìn, vật nổ: dừng công việc, báo chính quyền.”\nB. “Mọi người hãy chú ý hơn.”\nC. “Cùng quan tâm đến công việc xây dựng.”\nĐáp án đúng: A.\nPhản hồi đúng:\n“Đúng rồi. Câu nhắc sát với công việc đào đất và nói rõ việc cần làm.”\nPhản hồi sai:\n“Câu này chưa chỉ rõ cách làm khi gặp vật nghi bom mìn, vật nổ. Các bạn thử chọn lại nhé.”\nĐiều hướng: Chọn đúng mới mở HỌC TIẾP.\nBảng sản xuất:\n18 — M18\nLời nhắc cho thợ xây\nMT: “Nhóm thợ xây muốn nhắc người cùng nghề cách làm khi đào đất gặp vật nghi bom mìn, vật nổ.”\nN: “Các bạn chọn lời nhắc nào?” rồi đọc A/B/C.\nĐúng — MT: “Đúng rồi. Câu nhắc sát với công việc đào đất và nói rõ việc cần làm.”\nSai — MT: “Câu này chưa chỉ rõ cách làm khi gặp vật nghi bom mìn, vật nổ. Các bạn thử chọn lại nhé.”\nTình huống: “Nhóm thợ xây muốn nhắc người cùng nghề cách làm khi đào đất gặp vật nghi bom mìn, vật nổ.”\nCâu hỏi: “Các bạn chọn lời nhắc nào?”\nA. “Đào đất gặp vật nghi bom mìn, vật nổ: dừng công việc, báo chính quyền.”\nB. “Mọi người hãy chú ý hơn.”\nC. “Cùng quan tâm đến công việc xây dựng.”\nPhản hồi: Nguyên văn đúng/sai.\nNút: “TRẢ LỜI”; đúng có “HỌC TIẾP”.\nTình huống trên; đáp án và phản hồi phía dưới.\nMột cột; không thu nhỏ phương án A để vừa một dòng.\nĐúng A mới hoàn thành. Sai được chọn lại trực tiếp, không chỉ ra A trước khi trả lời đúng.\n“HỌC TIẾP” → M19.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "m19",
+    "itemId": "p2-l3-m19",
+    "title": "Sau khi các nhóm trình bày",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 219–229.\nLời Mít tơ An Toàn:\n“Các nhóm đã đọc lời nhắc của mình. Người hướng dẫn nên làm gì tiếp theo?”\nA. Kết thúc ngay, không cần nhắc lại.\nB. Cùng góp ý, thống nhất lời nhắc và khuyến khích mọi người chia sẻ.\nC. Yêu cầu tất cả các nhóm bỏ câu đã viết.\nĐáp án đúng: B.\nPhản hồi đúng:\n“Đúng rồi. Cần cùng thống nhất lời nhắc để mọi người nhớ và chia sẻ đúng.”\nPhản hồi sai:\n“Các nhóm cần được góp ý và thống nhất lời nhắc trước khi kết thúc. Các bạn thử chọn lại nhé.”\nĐiều hướng: Chọn đúng mới mở LÀM BÀI KIỂM TRA.\n\nBảng sản xuất:\n19 — M19\nSau khi nhóm trình bày\nN: Đọc câu hỏi và A/B/C.\nĐúng — MT: “Đúng rồi. Cần cùng thống nhất lời nhắc để mọi người nhớ và chia sẻ đúng.”\nSai — MT: “Các nhóm cần được góp ý và thống nhất lời nhắc trước khi kết thúc. Các bạn thử chọn lại nhé.”\nCâu hỏi: “Các nhóm đã đọc lời nhắc của mình. Người hướng dẫn nên làm gì tiếp theo?”\nA. “Kết thúc ngay, không cần nhắc lại.”\nB. “Cùng góp ý, thống nhất lời nhắc và khuyến khích mọi người chia sẻ.”\nC. “Yêu cầu tất cả các nhóm bỏ câu đã viết.”\nPhản hồi: Nguyên văn đúng/sai.\nNút: “TRẢ LỜI”; đúng có “LÀM BÀI KIỂM TRA”.\nCâu hỏi và đáp án xếp dọc.\nMột cột; nút kiểm tra nằm sau phản hồi.\nĐúng B mới mở kiểm tra. Sai A/C thử lại tại màn này.\nNhấn nút → KT00.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "quiz-intro",
+    "itemId": "p2-l3-quiz-intro",
+    "title": "Bài kiểm tra",
+    "needs": [],
+    "source": ""
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "check",
+    "itemId": "p2-l3-q01",
+    "title": "Vì sao nên chia người tham gia thành các nhóm nghề?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 241–246.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "check",
+    "itemId": "p2-l3-q02",
+    "title": "Lời nhắc nào phù hợp với người đi rẫy?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 247–252.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "check",
+    "itemId": "p2-l3-q03",
+    "title": "Lời nhắc nào phù hợp với thợ xây?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 253–258.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "check",
+    "itemId": "p2-l3-q04",
+    "title": "Việc chính của mỗi nhóm trong buổi thảo luận là gì?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 259–264.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "check",
+    "itemId": "p2-l3-q05",
+    "title": "Sau khi các nhóm đọc lời nhắc, người hướng dẫn cần làm gì?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 265–270.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "check",
+    "itemId": "p2-l3-q06",
+    "title": "Lời nhắc dành cho người làm ruộng nên có đặc điểm nào?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 271–276.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "check",
+    "itemId": "p2-l3-q07",
+    "title": "Nên chuẩn bị những gì cho buổi thảo luận nhóm?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 277–282.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "check",
+    "itemId": "p2-l3-q08",
+    "title": "Cách mở đầu buổi trao đổi nào giúp mọi người tham gia?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 283–288.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "check",
+    "itemId": "p2-l3-q09",
+    "title": "Sau khi trao đổi những việc có thể gây tai nạn, nhóm nên chọn bao nhiêu việc chính để nhắc?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 289–294.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "check",
+    "itemId": "p2-l3-q10",
+    "title": "Cách làm nào đúng khi hướng dẫn nhóm viết thông điệp?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 3.KB bài học số 3.docx, đoạn 295–300.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-3",
+    "stepId": "complete",
+    "itemId": "p2-l3-complete",
+    "title": "Bạn đã hoàn thành bài học",
+    "needs": [
+      "audio"
+    ],
+    "source": ""
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m01",
+    "itemId": "p2-l4-m01",
+    "title": "Tổ chức một buổi truyền thông cho cộng đồng",
+    "needs": [],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 9–20.\nHình ảnh: Mít tơ An Toàn đứng cạnh hình minh họa một buổi sinh hoạt cộng đồng.\nText:\nTỔ CHỨC MỘT BUỔI TRUYỀN THÔNG CHO CỘNG ĐỒNG\nLời Mít tơ An Toàn:\n“Chào mừng bạn đến với bài học Tổ chức một buổi truyền thông cho cộng đồng.\nTrong bài này, bạn sẽ tìm hiểu cách mở đầu, trình bày nội dung, mời người dân cùng trao đổi và kết thúc buổi nói chuyện về phòng tránh tai nạn bom mìn, vật nổ.\nHãy nhấn nút BẮT ĐẦU để cùng học nhé!”\nNút: BẮT ĐẦU.\nĐiều hướng: Chỉ khi người học nhấn BẮT ĐẦU mới chuyển sang nội dung bài học.\n\nPHẦN 2. MỘT BUỔI TRUYỀN THÔNG GỒM NHỮNG GÌ\nBảng sản xuất:\n01 — M01\nGiới thiệu\nMT: “Chào mừng bạn đến với bài học Tổ chức một buổi truyền thông cho cộng đồng.\nTrong bài này, bạn sẽ tìm hiểu cách mở đầu, trình bày nội dung, mời người dân cùng trao đổi và kết thúc buổi nói chuyện về phòng tránh tai nạn bom mìn, vật nổ.\nHãy nhấn nút BẮT ĐẦU để cùng học nhé!”\nTiêu đề: “Tổ chức một buổi truyền thông cho cộng đồng”.\nHình: Mascot chào bằng hai tay, thân người chuyển động nhẹ. Phía sau là hình buổi sinh hoạt tại nhà cộng đồng: người dân ngồi nghe, có tranh và bảng trình bày. Nền giảm chi tiết.\nNút: “NGHE GIỚI THIỆU”; “BẮT ĐẦU”.\nMascot toàn thân bên trái khoảng 30% vùng nội dung; tên bài và nút bên phải.\nTiêu đề → Mascot bán thân trong khung gọn → nút. Không bố trí chữ trong bóng thoại cạnh nhân vật.\nChưa vào nội dung học khi mở màn. Nhấn nghe để phát lời chào. Chỉ “BẮT ĐẦU” mới chuyển M02. Không tự chuyển sau lời đọc."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m02",
+    "itemId": "p2-l4-m02",
+    "title": "Cùng xem toàn bộ buổi nói chuyện",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 21–28.\nLời Mít tơ An Toàn:\n“Một buổi truyền thông cần có phần mở đầu, các nội dung chính và phần kết thúc.\nChúng ta sẽ lần lượt đi qua từng nội dung. Bạn có thể dùng khung này để chuẩn bị cho buổi nói chuyện tại địa phương.”\nText và hình ảnh: Hiển thị lần lượt các mục theo lời đọc.\nLời chốt:\n“Buổi nói chuyện theo khung này kéo dài khoảng 52 đến 54 phút. Không bắt buộc cố định thời gian”\nNút: HỌC TIẾP.\nBảng sản xuất:\n02 — M02\nToàn bộ buổi truyền thông\nMT: “Một buổi truyền thông cần có phần mở đầu, các nội dung chính và phần kết thúc.\nChúng ta sẽ lần lượt đi qua từng nội dung. Bạn có thể dùng khung này để chuẩn bị cho buổi nói chuyện tại địa phương.”\nMT: Đọc lần lượt nội dung và thời gian trong bảng khung chương trình tại mục 4.\nChốt: “Buổi nói chuyện theo khung này kéo dài khoảng 52 đến 54 phút. Không bắt buộc cố định thời gian.”\nTiêu đề: “Một buổi truyền thông gồm những gì?”\nNhãn: “Thời gian dự kiến trong buổi truyền thông”.\nNội dung: Đầy đủ tám mục và thời gian tại mục 4.\nChốt: “Tổng thời gian dự kiến: 52–54 phút.”; “Không bắt buộc cố định thời gian.”\nChú thích: “Đây là thời gian của buổi truyền thông thực tế, không phải thời lượng màn học.”\nNút: “HỌC TIẾP”.\nBảng ba cột: Trình tự — Nội dung — Thời gian dự kiến. Không dùng hình Mascot.\nChuyển bảng thành tám thẻ dọc. Mỗi thẻ gồm nhãn phần, tên nội dung và thời gian; không thu nhỏ bảng ba cột.\nHiện đủ nội dung, làm nổi bật theo lời đọc. Không đếm ngược, không bắt người học chờ 52–54 phút.\nHoàn thành trình bày → M03."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m03",
+    "itemId": "p2-l4-m03",
+    "title": "Chuẩn bị những gì",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 29–39.\nLời Mít tơ An Toàn:\n“Trước buổi nói chuyện, bạn cần chuẩn bị nội dung, tranh ảnh và những lời nhắc sẽ sử dụng.\nCác thông tin về bom mìn, vật nổ tại địa phương cần có nguồn rõ ràng. Số điện thoại báo tin phải được kiểm tra trước.\nNếu có thảo luận nhóm, cần chuẩn bị thêm giấy khổ lớn và bút dạ.”\nText:\nCHUẨN BỊ TRƯỚC\nNội dung nói chuyện.\nThông tin địa phương có nguồn rõ ràng.\nTranh, ảnh, lời nhắc.\nSố điện thoại báo tin đã xác nhận.\nGiấy và bút cho thảo luận nhóm.\nNút: HỌC TIẾP.\n\nPHẦN 3. MỞ ĐẦU BUỔI TRUYỀN THÔNG\nBảng sản xuất:\n03 — M03\nChuẩn bị\nMT: “Trước buổi nói chuyện, bạn cần chuẩn bị nội dung, tranh ảnh và những lời nhắc sẽ sử dụng.\nCác thông tin về bom mìn, vật nổ tại địa phương cần có nguồn rõ ràng. Số điện thoại báo tin phải được kiểm tra trước.\nNếu có thảo luận nhóm, cần chuẩn bị thêm giấy khổ lớn và bút dạ.”\nTiêu đề: “Chuẩn bị trước”.\nNăm mục:\n“Nội dung nói chuyện.”\n“Thông tin địa phương có nguồn rõ ràng.”\n“Tranh, ảnh, lời nhắc.”\n“Số điện thoại báo tin đã xác nhận.”\n“Giấy và bút cho thảo luận nhóm.”\nHình: Tài liệu; biểu tượng nguồn thông tin; tập tranh; điện thoại; giấy khổ lớn và bút dạ. Điện thoại không có số giả.\nNút: “HỌC TIẾP”.\nNăm hàng, hình nhỏ bên trái và chữ bên phải.\nNăm thẻ dọc. Không biến thành danh sách tích chọn bắt buộc.\nĐây là nội dung hướng dẫn chuẩn bị ngoài thực tế, không yêu cầu học viên tải tài liệu hoặc nhập số điện thoại tại màn này.\n“HỌC TIẾP” → M04."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m04",
+    "itemId": "p2-l4-m04",
+    "title": "Chào hỏi và giới thiệu",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 40–49.\nLời Mít tơ An Toàn:\n“Phần mở đầu bạn dành khoảng năm đến bảy phút.\nTrước hết, bạn chào người tham gia, giới thiệu người tổ chức và nói rõ buổi hôm nay cùng tìm hiểu điều gì.\nCó thể mở đầu như sau:\n‘Xin chào các bác, các anh chị. Hôm nay, chúng ta cùng trao đổi về cách phòng tránh tai nạn bom mìn, vật nổ và những việc cần làm khi thấy vật nghi là bom mìn, vật nổ.’”\nText:\nMỞ ĐẦU — 5–7 PHÚT\nCHÀO HỎI\nGIỚI THIỆU\nNÓI RÕ NỘI DUNG BUỔI TRAO ĐỔI\nNút: HỌC TIẾP.\nBảng sản xuất:\n04 — M04\nChào hỏi, giới thiệu\nMT: “Phần mở đầu bạn dành khoảng năm đến bảy phút.\nTrước hết, bạn chào người tham gia, giới thiệu người tổ chức và nói rõ buổi hôm nay cùng tìm hiểu điều gì.\nCó thể mở đầu như sau:\n‘Xin chào các bác, các anh chị. Hôm nay, chúng ta cùng trao đổi về cách phòng tránh tai nạn bom mìn, vật nổ và những việc cần làm khi thấy vật nghi là bom mìn, vật nổ.’”\nNhãn: “Mở đầu — 5–7 phút”.\nChú thích: “Thời gian dự kiến trong buổi truyền thông”.\nBa ý: “Chào hỏi”; “Giới thiệu”; “Nói rõ nội dung buổi trao đổi”.\nKhối “Lời mở đầu tham khảo”: Hiện nguyên văn câu bắt đầu bằng “Xin chào các bác…” ở cột lời đọc.\nHình: Người hướng dẫn chào nhóm người lớn đang ngồi dự buổi truyền thông.\nNút: “HỌC TIẾP”.\nHình nhỏ một bên, ba ý và câu mẫu bên còn lại.\nNhãn thời gian → ba ý → câu mẫu → hình nhỏ nếu còn phù hợp → nút.\nKhông thêm tên người tổ chức hoặc đơn vị giả định vào câu mẫu.\n“HỌC TIẾP” → M05."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m05",
+    "itemId": "p2-l4-m05",
+    "title": "Mời người dân cùng tham gia",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 50–59.\nLời Mít tơ An Toàn:\n“Sau lời giới thiệu, bạn hãy hỏi một đến hai câu gần gũi để mọi người cùng tham gia.\nVí dụ:\n‘Các bác, các anh chị thường làm công việc gì?’\n‘Mọi người đã từng nghe tin phát hiện bom mìn, vật nổ chưa?’\nBạn mời người tham gia trả lời rồi dẫn vào nội dung chính.”\nText:\nHỎI NGẮN — MỜI TRẢ LỜI — CÙNG TRAO ĐỔI\nNút: HỌC TIẾP.\nBảng sản xuất:\n05 — M05\nMời người dân tham gia\nMT: “Sau lời giới thiệu, bạn hãy hỏi một đến hai câu gần gũi để mọi người cùng tham gia.\nVí dụ:\n‘Các bác, các anh chị thường làm công việc gì?’\n‘Mọi người đã từng nghe tin phát hiện bom mìn, vật nổ chưa?’\nBạn mời người tham gia trả lời rồi dẫn vào nội dung chính.”\nBa ý: “Hỏi ngắn”; “Mời trả lời”; “Cùng trao đổi”.\nHai câu mẫu:\n“Các bác, các anh chị thường làm công việc gì?”\n“Mọi người đã từng nghe tin phát hiện bom mìn, vật nổ chưa?”\nHình: Một người dân giơ tay hoặc đang phát biểu, người hướng dẫn lắng nghe.\nNút: “HỌC TIẾP”.\nCâu mẫu trong hai thẻ, hình nhỏ phía dưới hoặc bên cạnh.\nHai thẻ câu mẫu xếp dọc. Không thêm ô nhập trả lời cho người học.\nHai câu là ví dụ để sử dụng trong buổi truyền thông, không phải câu kiểm tra của màn.\n“HỌC TIẾP” → M06."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m06",
+    "itemId": "p2-l4-m06",
+    "title": "Chọn cách mở đầu",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 60–71.\nCâu hỏi:\nCách nào giúp người tham gia dễ bắt đầu trao đổi hơn?\nA. Đọc ngay một bài dài, không hỏi ai.\nB. Chào hỏi, giới thiệu và đặt câu hỏi gần gũi.\nC. Yêu cầu mọi người chỉ ngồi nghe từ đầu đến cuối.\nĐáp án phù hợp: B.\nPhản hồi đúng:\n“Đúng rồi. Lời chào và câu hỏi gần gũi giúp mọi người biết nội dung buổi nói chuyện và có cơ hội tham gia.”\nPhản hồi sai:\n“Người tham gia cần được chào hỏi, biết mình sẽ cùng tìm hiểu điều gì và có cơ hội trả lời.”\nĐiều hướng: Không tính điểm. Sau phản hồi, mở HỌC TIẾP.\n\nPHẦN 4. TRÌNH BÀY CÁC NỘI DUNG CHÍNH\nBảng sản xuất:\n06 — M06\nChọn cách mở đầu\nN: Đọc câu hỏi và A/B/C.\nĐúng — MT: “Đúng rồi. Lời chào và câu hỏi gần gũi giúp mọi người biết nội dung buổi nói chuyện và có cơ hội tham gia.”\nSai — MT: “Người tham gia cần được chào hỏi, biết mình sẽ cùng tìm hiểu điều gì và có cơ hội trả lời.”\nCâu hỏi: “Cách nào giúp người tham gia dễ bắt đầu trao đổi hơn?”\nA. “Đọc ngay một bài dài, không hỏi ai.”\nB. “Chào hỏi, giới thiệu và đặt câu hỏi gần gũi.”\nC. “Yêu cầu mọi người chỉ ngồi nghe từ đầu đến cuối.”\nPhản hồi: Hiện nguyên văn đúng/sai tại cột lời đọc.\nĐánh dấu B là “Câu trả lời phù hợp”.\nNút: “TRẢ LỜI”; “HỌC TIẾP”.\nMột cột; câu hỏi trên, đáp án và phản hồi dưới.\nMột cột, mỗi đáp án là một thẻ lớn. Không có Mascot.\nChọn rồi nộp. Không tính điểm, không bắt chọn lại. Sau phản hồi mở học tiếp.\n“HỌC TIẾP” → M07.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m07",
+    "itemId": "p2-l4-m07",
+    "title": "Giới thiệu tình hình bom mìn, vật nổ",
+    "needs": [
+      "audio",
+      "image"
+    ],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 72–82.\nLời Mít tơ An Toàn:\n“Nội dung đầu tiên bạn dành khoảng năm phút.\nGiới thiệu ngắn về tình hình bom mìn, vật nổ do chiến tranh để lại và tai nạn bom mìn, vật nổ tại Việt Nam, và địa phương.\nSử dụng thông tin, hình ảnh có nguồn rõ ràng. Có thể nêu trường hợp phát hiện bom mìn, vật nổ gần đây tại địa phương nếu đã được xác nhận.”\nText:\nNỘI DUNG 1 — KHOẢNG 5 PHÚT\nTÌNH HÌNH TẠI VIỆT NAM\nTẠI ĐỊA PHƯƠNG\nChỉ sử dụng thông tin đã được xác nhận.\nHình ảnh: Bản đồ, ảnh và vị trí dành cho thông tin thực tế đã được đơn vị phụ trách duyệt.\nNút: HỌC TIẾP.\nBảng sản xuất:\n07 — M07\nTình hình bom mìn, vật nổ\nMT: “Nội dung đầu tiên bạn dành khoảng năm phút.\nGiới thiệu ngắn về tình hình bom mìn, vật nổ do chiến tranh để lại và tai nạn bom mìn, vật nổ tại Việt Nam và địa phương.\nSử dụng thông tin, hình ảnh có nguồn rõ ràng. Có thể nêu trường hợp phát hiện bom mìn, vật nổ gần đây tại địa phương nếu đã được xác nhận.”\nNhãn: “Nội dung 1 — Khoảng 5 phút”.\nChú thích: “Thời gian dự kiến trong buổi truyền thông”.\nHai mục: “Tình hình tại Việt Nam”; “Tại địa phương”.\nChốt: “Chỉ sử dụng thông tin đã được xác nhận.”\nHình: Bản đồ và ảnh thực tế từ tư liệu đã duyệt; mỗi tư liệu có chú thích nội dung và nguồn tương ứng.\nKhông tự đặt số liệu, địa danh hoặc sự kiện.\nNút: “HỌC TIẾP”.\nHai khối Việt Nam/địa phương; ảnh và chú thích trong đúng khối.\nHai khối xếp dọc; nguồn nằm ngay dưới hình, không thu nhỏ khó đọc.\nNội dung dữ liệu thực tế chỉ xuất hiện khi đã có tài sản duyệt. Trong bản mẫu sản xuất ghi thiếu tài sản ở danh mục nội bộ, không đưa số liệu giả lên giao diện người học.\n“HỌC TIẾP” → M08."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m08",
+    "itemId": "p2-l4-m08",
+    "title": "Giúp người dân nhận biết bom mìn, vật nổ",
+    "needs": [
+      "audio",
+      "image"
+    ],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 83–94.\nLời Mít tơ An Toàn:\n“Nội dung tiếp theo bạn dành khoảng mười phút.\nDùng tranh, ảnh để giới thiệu một số loại bom mìn, vật nổ thường gặp. Nhắc lại rằng chúng có nhiều hình dạng, màu sắc và kích thước khác nhau.\nTiếp đó, giới thiệu những dấu hiệu và nơi có thể còn bom mìn, vật nổ.\nSử dụng nội dung đã học trong Phần học số 1. Không hướng dẫn người dân tự đến gần hoặc tự kiểm tra vật lạ.”\nText:\nNỘI DUNG 2 — KHOẢNG 10 PHÚT\nNHẬN BIẾT BOM MÌN, VẬT NỔ\nNHẬN BIẾT NƠI CÓ THỂ CÒN BOM MÌN, VẬT NỔ\nHình ảnh: Tái sử dụng bộ ảnh nhận biết và dấu hiệu cảnh báo đã được duyệt trong Phần học số 1.\nNút: HỌC TIẾP.\nBảng sản xuất:\n08 — M08\nNhận biết\nMT: “Nội dung tiếp theo bạn dành khoảng mười phút.\nDùng tranh, ảnh để giới thiệu một số loại bom mìn, vật nổ thường gặp. Nhắc lại rằng chúng có nhiều hình dạng, màu sắc và kích thước khác nhau.\nTiếp đó, giới thiệu những dấu hiệu và nơi có thể còn bom mìn, vật nổ.\nSử dụng nội dung đã học trong Phần học số 1. Không hướng dẫn người dân tự đến gần hoặc tự kiểm tra vật lạ.”\nNhãn: “Nội dung 2 — Khoảng 10 phút”.\nChú thích thời gian thực tế.\nHai tiêu đề: “Nhận biết bom mìn, vật nổ”; “Nhận biết nơi có thể còn bom mìn, vật nổ”.\nHình: Bộ ảnh nhận biết và bộ dấu hiệu cảnh báo đã duyệt ở Phần học số 1. Giữ nguyên tên/chú thích chuyên môn đã duyệt, không tự đặt lại.\nNút: “HỌC TIẾP”.\nHai khối nội dung; ảnh đủ lớn, không dàn thành nhiều hình nhỏ.\nHai khối dọc. Ảnh giữ tỷ lệ; cho phép mở lớn nếu cần đọc chi tiết.\nTái sử dụng để minh họa cách tổ chức phần trình bày, không chèn nguyên một bài học dài của Phần 1 làm phát sinh nhiệm vụ mới.\n“HỌC TIẾP” → M09."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m09",
+    "itemId": "p2-l4-m09",
+    "title": "Những việc có thể gây tai nạn",
+    "needs": [
+      "audio",
+      "image"
+    ],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 95–105.\nLời Mít tơ An Toàn:\n“Bạn dành khoảng năm phút để trao đổi về những việc có thể gây tai nạn.\nVí dụ: nhặt vật lạ nghi bom mìn, vật nổ; chơi nghịch, đập hoặc cưa vật đó; đi vào nơi có biển báo nguy hiểm.\nDùng hình ảnh đã học và hỏi người tham gia: ‘Việc nào không nên làm? Vì sao?’”\nText:\nNỘI DUNG 3 — KHOẢNG 5 PHÚT\nNHỮNG VIỆC CÓ THỂ GÂY TAI NẠN\nViệc nào không nên làm?\nVì sao?\nHình ảnh: Tái sử dụng hình minh họa những việc nguy hiểm trong Phần học số 1.\nNút: HỌC TIẾP.\nBảng sản xuất:\n09 — M09\nViệc có thể gây tai nạn\nMT: “Bạn dành khoảng năm phút để trao đổi về những việc có thể gây tai nạn.\nVí dụ: nhặt vật lạ nghi bom mìn, vật nổ; chơi nghịch, đập hoặc cưa vật đó; đi vào nơi có biển báo nguy hiểm.\nDùng hình ảnh đã học và hỏi người tham gia: ‘Việc nào không nên làm? Vì sao?’”\nNhãn: “Nội dung 3 — Khoảng 5 phút”.\nChú thích thời gian thực tế.\nTiêu đề: “Những việc có thể gây tai nạn”.\nHai câu gợi hỏi: “Việc nào không nên làm?”; “Vì sao?”\nHình: Dùng lại minh họa đã duyệt về nhặt vật nghi bom mìn; chơi nghịch/tác động vào vật đó; đi vào khu vực có biển cảnh báo. Mỗi hình có nhãn “Không nên làm”.\nNút: “HỌC TIẾP”.\nHình và câu hỏi trong một vùng đọc; không tự phát mô phỏng hành động.\nCác hình xếp dọc, câu gợi hỏi ở trên hoặc dưới cụm hình.\nĐây là ví dụ câu hỏi người tổ chức dùng tại cộng đồng; không bắt người học trả lời trên màn.\n“HỌC TIẾP” → M10."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m10",
+    "itemId": "p2-l4-m10",
+    "title": "Hậu quả của tai nạn",
+    "needs": [
+      "audio",
+      "image"
+    ],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 106–116.\nLời Mít tơ An Toàn:\n“Tiếp theo, bạn dành khoảng năm phút nói về hậu quả của tai nạn bom mìn, vật nổ.\nTai nạn có thể gây tử vong, bị thương, khuyết tật; ảnh hưởng đến tinh thần, công việc và cuộc sống gia đình.\nTrình bày bằng lời dễ hiểu và hình minh họa phù hợp.”\nText:\nNỘI DUNG 4 — KHOẢNG 5 PHÚT\nẢNH HƯỞNG ĐẾN:\nSức khỏe, tính mạng.\nTinh thần.\nCông việc, thu nhập.\nCuộc sống gia đình.\nHình ảnh: Minh họa hậu quả đã được duyệt, không dùng hình ảnh thương tích gây sợ hãi.\nNút: HỌC TIẾP.\nBảng sản xuất:\n10 — M10\nHậu quả\nMT: “Tiếp theo, bạn dành khoảng năm phút nói về hậu quả của tai nạn bom mìn, vật nổ.\nTai nạn có thể gây tử vong, bị thương, khuyết tật; ảnh hưởng đến tinh thần, công việc và cuộc sống gia đình.\nTrình bày bằng lời dễ hiểu và hình minh họa phù hợp.”\nNhãn: “Nội dung 4 — Khoảng 5 phút”.\nChú thích thời gian thực tế.\nTiêu đề: “Ảnh hưởng đến:”.\nBốn mục: “Sức khỏe, tính mạng.”; “Tinh thần.”; “Công việc, thu nhập.”; “Cuộc sống gia đình.”\nHình: Minh họa hậu quả đã duyệt ở Phần 1, gắn đúng từng mục; không dùng thương tích gây sợ hãi.\nNút: “HỌC TIẾP”.\nBốn thẻ có thể bố trí 2 × 2.\nBốn thẻ dọc, hình nhỏ và chữ rõ.\nKhông bổ sung số liệu thương vong hoặc câu chuyện chưa duyệt.\n“HỌC TIẾP” → M11."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m11",
+    "itemId": "p2-l4-m11",
+    "title": "Những việc cần làm để phòng tránh",
+    "needs": [
+      "audio",
+      "image"
+    ],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 117–129.\nLời Mít tơ An Toàn:\n“Bạn dành khoảng bảy phút để nhắc lại những việc cần làm khi thấy vật nghi là bom mìn, vật nổ.\nSử dụng đúng hướng dẫn đã được duyệt trong Phần học số 1.\nNhấn mạnh: Dừng công việc, không chạm vào, không di chuyển vật đó; không tiến gần và báo cho chính quyền địa phương hoặc đường dây nóng đã được xác nhận.”\nText:\nNỘI DUNG 5 — KHOẢNG 7 PHÚT\nDỪNG CÔNG VIỆC\nKHÔNG CHẠM VÀO — KHÔNG DI CHUYỂN\nKHÔNG TIẾN GẦN\nBÁO CHÍNH QUYỀN HOẶC ĐƯỜNG DÂY NÓNG\nHình ảnh: Tái sử dụng nội dung và hình minh họa cách phòng tránh đã được duyệt.\nNút: HỌC TIẾP.\nBảng sản xuất:\n11 — M11\nViệc cần làm để phòng tránh\nMT: “Bạn dành khoảng bảy phút để nhắc lại những việc cần làm khi thấy vật nghi là bom mìn, vật nổ.\nSử dụng đúng hướng dẫn đã được duyệt trong Phần học số 1.\nNhấn mạnh: Dừng công việc, không chạm vào, không di chuyển vật đó; không tiến gần và báo cho chính quyền địa phương hoặc đường dây nóng đã được xác nhận.”\nNhãn: “Nội dung 5 — Khoảng 7 phút”.\nChú thích thời gian thực tế.\nBốn dòng:\n“Dừng công việc”.\n“Không chạm vào — Không di chuyển”.\n“Không tiến gần”.\n“Báo chính quyền hoặc đường dây nóng”.\nHình: Tái sử dụng hình phòng tránh đã duyệt trong Phần 1; chọn đúng nội dung tương ứng bốn dòng.\nNút: “HỌC TIẾP”.\nBốn hàng, biểu tượng/hình nhỏ cạnh chữ.\nBốn thẻ dọc, không nhét thành sơ đồ ngang.\nKhông bổ sung khoảng cách, thao tác hoặc số điện thoại chưa có trong nguồn duyệt.\n“HỌC TIẾP” → M12."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m12",
+    "itemId": "p2-l4-m12",
+    "title": "Mời người nghe nhắc lại",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 130–145.\nLời Mít tơ An Toàn:\n“Sau khi hướng dẫn, bạn có thể hỏi:\n‘Nếu đang làm việc mà thấy vật nghi bom mìn, vật nổ, các bác, các anh chị sẽ làm gì?’\nNghe câu trả lời rồi nhắc lại những việc cần làm. Nếu có ý chưa đúng, giải thích rõ để mọi người cùng nhớ.”\nCâu hỏi:\nVì sao nên mời người nghe trả lời?\nA. Để biết họ đã hiểu cách làm chưa.\nB. Để chọn người nói hay nhất.\nC. Để thay phần hướng dẫn bằng việc hỏi thật nhiều.\nĐáp án phù hợp: A.\nPhản hồi đúng:\n“Đúng rồi. Câu trả lời giúp bạn biết người nghe đã hiểu chưa và cần giải thích thêm điều gì.”\nPhản hồi sai:\n“Mục đích là xem người nghe đã hiểu cách làm chưa, rồi giải thích thêm nếu cần.”\nĐiều hướng: Không tính điểm. Sau phản hồi, mở HỌC TIẾP.\n\nPHẦN 5. CÙNG XÂY DỰNG THÔNG ĐIỆP\nBảng sản xuất:\n12 — M12\nMời người nghe nhắc lại\nMT: “Sau khi hướng dẫn, bạn có thể hỏi:\n‘Nếu đang làm việc mà thấy vật nghi bom mìn, vật nổ, các bác, các anh chị sẽ làm gì?’\nNghe câu trả lời rồi nhắc lại những việc cần làm. Nếu có ý chưa đúng, giải thích rõ để mọi người cùng nhớ.”\nN: Đọc câu hỏi và A/B/C.\nĐúng — MT: “Đúng rồi. Câu trả lời giúp bạn biết người nghe đã hiểu chưa và cần giải thích thêm điều gì.”\nSai — MT: “Mục đích là xem người nghe đã hiểu cách làm chưa, rồi giải thích thêm nếu cần.”\nKhối “Câu hỏi tham khảo”: “Nếu đang làm việc mà thấy vật nghi bom mìn, vật nổ, các bác, các anh chị sẽ làm gì?”\nCâu hỏi cho người học: “Vì sao nên mời người nghe trả lời?”\nA. “Để biết họ đã hiểu cách làm chưa.”\nB. “Để chọn người nói hay nhất.”\nC. “Để thay phần hướng dẫn bằng việc hỏi thật nhiều.”\nPhản hồi: Nguyên văn đúng/sai.\nĐánh dấu A là “Câu trả lời phù hợp”.\nNút: “TRẢ LỜI”; “HỌC TIẾP”.\nCâu mẫu ở khối trên; câu hỏi tương tác và đáp án dưới.\nMột cột, hai loại câu hỏi có nhãn khác nhau để tránh nhầm.\nKhông tính điểm. Chọn rồi nộp, xem giải thích; không bắt chọn lại.\n“HỌC TIẾP” → M13.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m13",
+    "itemId": "p2-l4-m13",
+    "title": "Chia nhóm theo công việc",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 146–156.\nLời Mít tơ An Toàn:\n“Bạn dành khoảng mười phút để mọi người cùng xây dựng thông điệp.\nHỏi người tham gia làm những công việc gì, rồi chia nhóm phù hợp.\nCó thể có nhóm làm nông, lâm nghiệp; chăn thả vật nuôi; thu gom phế liệu; đi rừng; lái máy xúc, máy ủi; xây dựng; khai thác khoáng sản hoặc làm nghề sông nước.\nKhông cần có đủ tất cả các nhóm. Chia theo người thực tế đến dự.”\nText:\nNỘI DUNG 6 — KHOẢNG 10 PHÚT\nHỎI CÔNG VIỆC\nCHIA NHÓM PHÙ HỢP\nNút: HỌC TIẾP.\nBảng sản xuất:\n13 — M13\nChia nhóm theo công việc\nMT: “Bạn dành khoảng mười phút để mọi người cùng xây dựng thông điệp.\nHỏi người tham gia làm những công việc gì, rồi chia nhóm phù hợp.\nCó thể có nhóm làm nông, lâm nghiệp; chăn thả vật nuôi; thu gom phế liệu; đi rừng; lái máy xúc, máy ủi; xây dựng; khai thác khoáng sản hoặc làm nghề sông nước.\nKhông cần có đủ tất cả các nhóm. Chia theo người thực tế đến dự.”\nNhãn: “Nội dung 6 — Khoảng 10 phút”.\nChú thích: “Thời gian dự kiến cho toàn bộ hoạt động cùng xây dựng thông điệp”.\nHai ý: “Hỏi công việc”; “Chia nhóm phù hợp”.\nHình: Nhóm người lớn trong buổi sinh hoạt, được minh họa thành một số cụm thảo luận; gắn nhãn chung “Ví dụ chia nhóm”. Không biểu diễn thành tám nhóm bắt buộc.\nNút: “HỌC TIẾP”.\nHình nhóm trên hoặc bên trái; hai ý rõ bên cạnh.\nHai ý trên, hình gọn dưới. Danh sách nghề đầy đủ có trong bản lời đọc.\nMốc 10 phút bao gồm cả hoạt động ở M13–M15, không phải mỗi màn 10 phút.\n“HỌC TIẾP” → M14."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m14",
+    "itemId": "p2-l4-m14",
+    "title": "Giao việc rõ cho nhóm",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 157–167.\nLời Mít tơ An Toàn:\n“Bạn mời mỗi nhóm cùng trả lời:\n‘Trong công việc của mình, việc gì có thể dẫn đến tai nạn bom mìn, vật nổ?’\n‘Nhóm muốn nhắc người cùng nghề làm gì để phòng tránh?’\nSau đó, cùng viết một lời nhắc ngắn.\nBạn có thể sử dụng cách hướng dẫn đã học trong Bài 3.”\nText:\nMỖI NHÓM CÙNG:\nKể việc thường gặp.\nChọn việc cần nhắc.\nViết một lời nhắc ngắn.\nNút: HỌC TIẾP.\nBảng sản xuất:\n14 — M14\nGiao việc cho nhóm\nMT: “Bạn mời mỗi nhóm cùng trả lời:\n‘Trong công việc của mình, việc gì có thể dẫn đến tai nạn bom mìn, vật nổ?’\n‘Nhóm muốn nhắc người cùng nghề làm gì để phòng tránh?’\nSau đó, cùng viết một lời nhắc ngắn.\nBạn có thể sử dụng cách hướng dẫn đã học trong Bài 3.”\nTiêu đề: “Mỗi nhóm cùng:”.\nBa việc: “Kể việc thường gặp.”; “Chọn việc cần nhắc.”; “Viết một lời nhắc ngắn.”\nHai câu hỏi tham khảo: Hiện nguyên văn hai câu trong lời đọc.\nHình: Người dân trao đổi quanh bàn; một người ghi trên giấy khổ lớn; không thêm lời nhắc mới trên giấy.\nNút: “HỌC TIẾP”.\nBa việc ở trên; câu hỏi tham khảo và hình dưới.\nBa việc → hai câu hỏi → hình gọn → nút.\nKhông bổ sung ô nhập thông điệp hoặc yêu cầu nộp bài viết mới. Đây là hướng dẫn tổ chức hoạt động thực tế.\n“HỌC TIẾP” → M15."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m15",
+    "itemId": "p2-l4-m15",
+    "title": "Chia sẻ và thống nhất lời nhắc",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 168–180.\nLời Mít tơ An Toàn:\n“Bạn mời các nhóm đọc lời nhắc của mình.\nCùng góp ý xem câu đã dễ hiểu, sát công việc và rõ việc cần làm chưa.\nSau đó, thống nhất lời nhắc cho từng nhóm và khuyến khích mọi người chia sẻ với gia đình, bạn bè, người cùng nghề.”\nText:\nĐỌC LỜI NHẮC\nCÙNG GÓP Ý\nTHỐNG NHẤT\nKHUYẾN KHÍCH CHIA SẺ\nNút: HỌC TIẾP.\n\nPHẦN 6. KẾT THÚC BUỔI TRUYỀN THÔNG\nBảng sản xuất:\n15 — M15\nChia sẻ và thống nhất\nMT: “Bạn mời các nhóm đọc lời nhắc của mình.\nCùng góp ý xem câu đã dễ hiểu, sát công việc và rõ việc cần làm chưa.\nSau đó, thống nhất lời nhắc cho từng nhóm và khuyến khích mọi người chia sẻ với gia đình, bạn bè, người cùng nghề.”\nBốn ý: “Đọc lời nhắc”; “Cùng góp ý”; “Thống nhất”; “Khuyến khích chia sẻ”.\nHình: Đại diện một nhóm trình bày; các nhóm khác lắng nghe, người hướng dẫn điều phối. Giấy trình bày không có chữ mới ngoài nội dung đã duyệt.\nNút: “HỌC TIẾP”.\nHình ở trên; bốn ý xếp theo trình tự bên dưới.\nBốn ý xếp dọc, hình gọn.\nKhông tạo bốn nút mở nội dung riêng. Làm nổi bật theo lời đọc.\n“HỌC TIẾP” → M16."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m16",
+    "itemId": "p2-l4-m16",
+    "title": "Nhắc lại điều quan trọng",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 181–193.\nLời Mít tơ An Toàn:\n“Phần kết thúc bạn dành khoảng năm phút.\nNhắc lại lời nhắc chính của buổi nói chuyện:\n‘Gặp vật lạ nghi bom mìn, vật nổ: dừng công việc, không chạm vào, không di chuyển, không tiến gần. Báo chính quyền địa phương hoặc đường dây nóng.’\nĐọc rõ số điện thoại báo tin đã được xác nhận và chỉ cho người tham gia nơi có thể xem lại số đó.”\nText:\nKẾT THÚC — KHOẢNG 5 PHÚT\nNHẮC LẠI VIỆC CẦN LÀM\nNHẮC LẠI NƠI BÁO TIN\nHIỂN THỊ SỐ ĐIỆN THOẠI ĐÃ XÁC NHẬN\nGhi chú: Không hiển thị hoặc đọc số giả định, số giữ chỗ.\nNút: HỌC TIẾP.\nBảng sản xuất:\n16 — M16\nNhắc lại điều quan trọng\nMT: “Phần kết thúc bạn dành khoảng năm phút.\nNhắc lại lời nhắc chính của buổi nói chuyện:\n‘Gặp vật lạ nghi bom mìn, vật nổ: dừng công việc, không chạm vào, không di chuyển, không tiến gần. Báo chính quyền địa phương hoặc đường dây nóng.’\nĐọc rõ số điện thoại báo tin đã được xác nhận và chỉ cho người tham gia nơi có thể xem lại số đó.”\nNhãn: “Kết thúc — Khoảng 5 phút”.\nChú thích thời gian thực tế.\nBa ý: “Nhắc lại việc cần làm”; “Nhắc lại nơi báo tin”; “Hiển thị số điện thoại đã xác nhận”.\nKhối “Lời nhắc tham khảo”: Hiện nguyên văn câu bắt đầu bằng “Gặp vật lạ nghi bom mìn…” ở cột lời đọc.\nHình: Người hướng dẫn chỉ vào bảng thông tin báo tin. Bảng trong hình không có số giả.\nNút: “HỌC TIẾP”.\nLời nhắc là khối chữ chính; ba ý và hình phụ bên dưới.\nMột cột; lời nhắc tự xuống dòng, không đặt trong ảnh.\nBa ý là hướng dẫn người tổ chức buổi truyền thông. Nếu bản học có hiển thị số cụ thể, phải gắn số đã xác nhận và phạm vi địa phương; không có thì không điền số.\n“HỌC TIẾP” → M17."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m17",
+    "itemId": "p2-l4-m17",
+    "title": "Hỏi lại để cùng nhớ",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 194–205.\nLời Mít tơ An Toàn:\n“Bạn có thể kết hợp năm đến mười câu hỏi ngắn để mọi người nhớ lại nội dung.\nVí dụ:\n‘Thấy vật nghi bom mìn, vật nổ có được nhặt lên không?’\n‘Cần báo tin cho ai?’\nChọn câu hỏi trong những nội dung vừa trao đổi. Sau mỗi câu trả lời, nhắc lại ý đúng.”\nText:\nHỎI NGẮN VỀ NỘI DUNG ĐÃ HỌC\nNGHE TRẢ LỜI\nNHẮC LẠI Ý ĐÚNG\nNút: HỌC TIẾP.\nBảng sản xuất:\n17 — M17\nHỏi lại để cùng nhớ\nMT: “Bạn có thể kết hợp năm đến mười câu hỏi ngắn để mọi người nhớ lại nội dung.\nVí dụ:\n‘Thấy vật nghi bom mìn, vật nổ có được nhặt lên không?’\n‘Cần báo tin cho ai?’\nChọn câu hỏi trong những nội dung vừa trao đổi. Sau mỗi câu trả lời, nhắc lại ý đúng.”\nBa ý: “Hỏi ngắn về nội dung đã học”; “Nghe trả lời”; “Nhắc lại ý đúng”.\nHai câu hỏi tham khảo:\n“Thấy vật nghi bom mìn, vật nổ có được nhặt lên không?”\n“Cần báo tin cho ai?”\nHình: Người tham gia trả lời, người hướng dẫn lắng nghe. Không thêm câu thoại trả lời vào tranh.\nNút: “HỌC TIẾP”.\nCâu hỏi mẫu trong hai thẻ dưới ba ý chính.\nMột cột, không thêm nút trả lời cho hai câu mẫu.\n“5–10 câu hỏi” là gợi ý trong buổi truyền thông, không biến thành bài kiểm tra bổ sung của E-learning.\nM16–M17 cùng thuộc phần kết thúc dự kiến khoảng 5 phút.\n“HỌC TIẾP” → M18."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m18",
+    "itemId": "p2-l4-m18",
+    "title": "Cùng nhớ trình tự",
+    "needs": [
+      "audio"
+    ],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 206–220.\nLời Mít tơ An Toàn:\n“Sau đây, Chúng ta cùng nhớ lại trình tự một buổi truyền thông nhé.”\nText và lời đọc lần lượt:\nMỞ ĐẦU — Chào hỏi, giới thiệu, mời trao đổi.\nTÌNH HÌNH BOM MÌN, VẬT NỔ — Việt Nam và địa phương.\nNHẬN BIẾT — Bom mìn, vật nổ và nơi có thể còn bom mìn, vật nổ.\nNHỮNG VIỆC CÓ THỂ GÂY TAI NẠN.\nHẬU QUẢ CỦA TAI NẠN.\nNHỮNG VIỆC CẦN LÀM ĐỂ PHÒNG TRÁNH.\nCÙNG XÂY DỰNG THÔNG ĐIỆP.\nKẾT THÚC — Nhắc lại việc cần làm và cách báo tin.\nNút: PHẦN THỬ TÀI CỦA BẠN.\n\nPHẦN 7. PHẦN THỬ TÀI CỦA BẠN\nBảng sản xuất:\n18 — M18\nNhớ trình tự\nMT: “Sau đây, chúng ta cùng nhớ lại trình tự một buổi truyền thông nhé.”\nĐọc lần lượt đủ tám mục ở cột bên.\nTiêu đề: “Cùng nhớ trình tự”.\n1. “Mở đầu — Chào hỏi, giới thiệu, mời trao đổi.”\n2. “Tình hình bom mìn, vật nổ — Việt Nam và địa phương.”\n3. “Nhận biết — Bom mìn, vật nổ và nơi có thể còn bom mìn, vật nổ.”\n4. “Những việc có thể gây tai nạn.”\n5. “Hậu quả của tai nạn.”\n6. “Những việc cần làm để phòng tránh.”\n7. “Cùng xây dựng thông điệp.”\n8. “Kết thúc — Nhắc lại việc cần làm và cách báo tin.”\nNút: “PHẦN THỬ TÀI CỦA BẠN”.\nKhông có Mascot.\nTám hàng dọc có số thứ tự. Không ép thành sơ đồ ngang.\nTám thẻ dọc, cho cuộn; không giấu các mục trong trình chiếu tự chạy.\nHiện đủ tám mục, làm nổi bật theo lời đọc. Không yêu cầu bấm mở từng mục.\nNhấn nút → M19."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m19",
+    "itemId": "p2-l4-m19",
+    "title": "Chuẩn bị thông tin địa phương",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 221–230.\nLời Mít tơ An Toàn:\n“Bạn chuẩn bị nói về tình hình bom mìn, vật nổ tại xã. Nên dùng thông tin nào?”\nA. Thông tin, hình ảnh đã được xác nhận và có nguồn rõ ràng.\nB. Một câu chuyện nghe kể nhưng chưa kiểm tra.\nC. Tự ước lượng số liệu cho dễ nhớ.\nĐáp án đúng: A.\nPhản hồi đúng:\n“Đúng rồi. Thông tin cần có nguồn rõ ràng và được xác nhận trước khi sử dụng.”\nPhản hồi sai:\n“Thông tin chưa kiểm tra hoặc số liệu tự ước lượng có thể làm người nghe hiểu sai. Bạn thử chọn lại nhé.”\nĐiều hướng: Chọn đúng mới mở HỌC TIẾP.\nBảng sản xuất:\n19 — M19\nChọn thông tin địa phương\nN: Đọc câu hỏi và A/B/C.\nĐúng — MT: “Đúng rồi. Thông tin cần có nguồn rõ ràng và được xác nhận trước khi sử dụng.”\nSai — MT: “Thông tin chưa kiểm tra hoặc số liệu tự ước lượng có thể làm người nghe hiểu sai. Bạn thử chọn lại nhé.”\nNhãn: “Phần thử tài của bạn”; “Câu 1/3”.\nCâu hỏi: “Bạn chuẩn bị nói về tình hình bom mìn, vật nổ tại xã. Nên dùng thông tin nào?”\nA. “Thông tin, hình ảnh đã được xác nhận và có nguồn rõ ràng.”\nB. “Một câu chuyện nghe kể nhưng chưa kiểm tra.”\nC. “Tự ước lượng số liệu cho dễ nhớ.”\nPhản hồi: Hiện nguyên văn đúng/sai.\nNút: “TRẢ LỜI”; đúng có “HỌC TIẾP”.\nCâu hỏi và ba đáp án dọc, phản hồi ngay dưới.\nMột cột, không có hình gợi ý đáp án.\nĐúng A mới hoàn thành màn. Sai B/C được chọn lại trực tiếp, không cần nút “CHỌN LẠI”. Không giới hạn lần thử.\n“HỌC TIẾP” → M20.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m20",
+    "itemId": "p2-l4-m20",
+    "title": "Mời người dân tham gia",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 231–240.\nLời Mít tơ An Toàn:\n“Trong buổi nói chuyện, người tham gia chỉ ngồi nghe, chưa ai trao đổi. Bạn nên làm gì?”\nA. Đọc nhanh hơn để kết thúc sớm.\nB. Đặt một câu hỏi gần gũi và mời mọi người trả lời.\nC. Bỏ hết phần trao đổi.\nĐáp án đúng: B.\nPhản hồi đúng:\n“Đúng rồi. Câu hỏi gần gũi giúp mọi người có cơ hội cùng tham gia.”\nPhản hồi sai:\n“Hãy tạo cơ hội để người nghe cùng nói. Bạn thử chọn lại nhé.”\nĐiều hướng: Chọn đúng mới mở HỌC TIẾP.\nBảng sản xuất:\n20 — M20\nMời mọi người trao đổi\nN: Đọc câu hỏi và A/B/C.\nĐúng — MT: “Đúng rồi. Câu hỏi gần gũi giúp mọi người có cơ hội cùng tham gia.”\nSai — MT: “Hãy tạo cơ hội để người nghe cùng nói. Bạn thử chọn lại nhé.”\nNhãn: “Câu 2/3”.\nCâu hỏi: “Trong buổi nói chuyện, người tham gia chỉ ngồi nghe, chưa ai trao đổi. Bạn nên làm gì?”\nA. “Đọc nhanh hơn để kết thúc sớm.”\nB. “Đặt một câu hỏi gần gũi và mời mọi người trả lời.”\nC. “Bỏ hết phần trao đổi.”\nPhản hồi: Nguyên văn đúng/sai.\nNút: “TRẢ LỜI”; đúng có “HỌC TIẾP”.\nCùng mẫu M19.\nCùng mẫu M19.\nĐúng B mới chuyển. Sai được thử lại, không xóa trạng thái M19.\n“HỌC TIẾP” → M21.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "m21",
+    "itemId": "p2-l4-m21",
+    "title": "Chọn việc cần làm trước khi kết thúc",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "Nguồn: 4.KB Tổ chức 1 buổi truyền thông cho cộng đồng.docx, đoạn 241–251.\nLời Mít tơ An Toàn:\n“Buổi nói chuyện sắp kết thúc. Bạn cần làm gì?”\nA. Nhắc lại việc cần làm khi gặp vật nghi bom mìn, vật nổ và cách báo tin.\nB. Chuyển sang một chuyện khác chưa nói trong buổi.\nC. Chỉ thông báo đã hết giờ.\nĐáp án đúng: A.\nPhản hồi đúng:\n“Đúng rồi. Cần giúp người tham gia nhớ việc cần làm và biết báo tin cho ai.”\nPhản hồi sai:\n“Trước khi kết thúc, cần nhắc lại những điều quan trọng và cách báo tin. Bạn thử chọn lại nhé.”\nĐiều hướng: Chọn đúng mới mở HỌC TIẾP.\n\nBảng sản xuất:\n21 — M21\nTrước khi kết thúc\nN: Đọc câu hỏi và A/B/C.\nĐúng — MT: “Đúng rồi. Cần giúp người tham gia nhớ việc cần làm và biết báo tin cho ai.”\nSai — MT: “Trước khi kết thúc, cần nhắc lại những điều quan trọng và cách báo tin. Bạn thử chọn lại nhé.”\nNhãn: “Câu 3/3”.\nCâu hỏi: “Buổi nói chuyện sắp kết thúc. Bạn cần làm gì?”\nA. “Nhắc lại việc cần làm khi gặp vật nghi bom mìn, vật nổ và cách báo tin.”\nB. “Chuyển sang một chuyện khác chưa nói trong buổi.”\nC. “Chỉ thông báo đã hết giờ.”\nPhản hồi: Nguyên văn đúng/sai.\nNút: “TRẢ LỜI”; đúng có “HỌC TIẾP”.\nCùng mẫu M19; phương án A tự xuống dòng.\nMột cột, không cắt ngắn phương án A.\nĐúng A mới hoàn thành thử tài. Kiểm tra đủ điều kiện nội dung và ba câu đúng.\n“HỌC TIẾP” → M22.\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-lesson-4",
+    "stepId": "complete",
+    "itemId": "p2-l4-complete",
+    "title": "Bạn đã hoàn thành bài học",
+    "needs": [
+      "audio"
+    ],
+    "source": ""
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "intro",
+    "itemId": "p2-final-welcome",
+    "title": "Bài kiểm tra cuối khóa",
+    "needs": [
+      "audio"
+    ],
+    "source": ""
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "instructions",
+    "itemId": "p2-final-instructions",
+    "title": "15 câu hỏi trong 20 phút",
+    "needs": [
+      "audio"
+    ],
+    "source": ""
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q01",
+    "title": "Dấu hiệu nào cần lưu ý vì khu vực có thể còn bom mìn, vật nổ?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q02",
+    "title": "Sau mưa lớn, các bạn thấy một vật kim loại gỉ sét lộ một phần khỏi đất. Nên nghĩ thế nào?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q03",
+    "title": "Ai được phép tháo gỡ bom mìn, vật nổ?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q04",
+    "title": "Bom mìn, vật nổ nằm dưới nước lâu năm có còn nguy hiểm không?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q05",
+    "title": "Một vật lạ không giống những hình bom mìn, vật nổ đã học. Có thể khẳng định vật đó an toàn không?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q06",
+    "title": "Việc nào có thể dẫn đến tai nạn bom mìn, vật nổ?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q07",
+    "title": "Một em nhỏ nhặt vật lạ giống đầu đạn để mang đi khoe bạn. Việc này thế nào?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q08",
+    "title": "Tai nạn bom mìn, vật nổ có thể gây hậu quả nào?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q09",
+    "title": "Trâu đi vào khu vực có biển cảnh báo bom mìn, vật nổ. Người chủ có nên đi vào đuổi trâu ra không?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q10",
+    "title": "Việc nào không nên làm?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q11",
+    "title": "Việc đầu tiên khi phát hiện vật nghi là bom mìn, vật nổ là gì?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q12",
+    "title": "Đang phát cỏ, các bạn phát hiện vật nghi bom mìn, vật nổ. Nên làm gì trước?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q13",
+    "title": "Khi đánh dấu nơi có vật nghi bom mìn, vật nổ, cần tránh việc nào?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q14",
+    "title": "Sau khi đã rời khỏi nơi nguy hiểm, cần báo tin cho ai?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q15",
+    "title": "Người dân báo phát hiện vật nghi bom mìn, vật nổ. Là người làm truyền thông cộng đồng, các bạn nên làm gì?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q16",
+    "title": "Thông điệp nào nói rõ việc cần làm?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q17",
+    "title": "Một thông điệp hiệu quả cần như thế nào?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q18",
+    "title": "Câu “Bom mìn rất nguy hiểm” còn thiếu điều gì để hướng dẫn người nghe?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q19",
+    "title": "Trước khi viết thông điệp, cần làm gì?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q20",
+    "title": "Một người biết cách báo tin nhưng nói: “Tôi sợ làm phiền cán bộ.” Điều gì khiến họ chưa muốn báo?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q21",
+    "title": "Người dân muốn báo tin nhưng chưa biết số điện thoại. Cần giúp điều gì trước?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q22",
+    "title": "Lời nhắc nào phù hợp khi nói với cha mẹ về việc giữ an toàn cho con?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q23",
+    "title": "Lời nhắc nào phù hợp với người chăn thả vật nuôi?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q24",
+    "title": "Lời nhắc nào phù hợp với thợ xây?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q25",
+    "title": "Người lái máy xúc thấy vật nghi bom mìn, vật nổ trong lúc đào đất. Lời nhắc nào phù hợp?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q26",
+    "title": "Vì sao nên chia người tham gia thảo luận theo nghề?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q27",
+    "title": "Sau khi các nhóm đọc lời nhắc, người hướng dẫn cần làm gì?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q28",
+    "title": "Người tham gia chưa trao đổi trong buổi nói chuyện. Các bạn nên làm gì?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q29",
+    "title": "Khi giới thiệu tình hình bom mìn, vật nổ tại địa phương, nên dùng thông tin nào?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "exam",
+    "itemId": "p2-final-q30",
+    "title": "Mục đích chính của khóa học là gì?",
+    "needs": [
+      "audio",
+      "option-audio",
+      "feedback-audio"
+    ],
+    "source": "\nBàn giao âm thanh câu hỏi, từng lựa chọn và giải thích riêng theo mã nội dung."
+  },
+  {
+    "lessonId": "p2-final-assessment",
+    "stepId": "complete",
+    "itemId": "p2-final-complete",
+    "title": "Bạn đã đạt bài kiểm tra cuối khóa",
+    "needs": [],
+    "source": "Theo yêu cầu người dùng ngày 05/11/2026, dùng mẫu tạm part2-provisional-v1 với họ và tên, địa chỉ. Người học kiểm tra và xác nhận trước khi cấp. Có thể thay mẫu sau."
+  }
+]

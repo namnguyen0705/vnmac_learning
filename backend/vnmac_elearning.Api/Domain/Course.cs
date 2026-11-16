@@ -6,6 +6,8 @@ public sealed class Course
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public CourseStatus Status { get; set; }
+    public bool CertificateEnabled { get; set; }
     public List<CourseSection> Sections { get; set; } = [];
     public List<CourseQuiz> Quizzes { get; set; } = [];
 }
+

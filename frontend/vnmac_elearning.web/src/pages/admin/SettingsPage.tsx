@@ -1,6 +1,7 @@
+import { PublicContentEditor } from "./PublicContentEditor";
 import { useEffect, useState, type ChangeEvent, type ReactNode } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Award, ImageUp, LayoutTemplate, Loader2, Palette, Save } from "lucide-react";
+import { Home, ImageUp, LayoutTemplate, Loader2, Palette, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,6 +10,8 @@ import { resolveBrandAsset } from "@/shared/ui/branding";
 import { AdminPageHeader } from "@/shared/ui/admin-kit";
 import { MessageBanner } from "@/shared/ui/MessageBanner";
 import type { UpdateSystemSettingsRequest } from "@/shared/types/api";
+import { defaultHomeContent, parseHomeContent, type HomeContent } from "@/shared/lib/homeContent";
+import { RichTextEditor } from "@/shared/ui/RichTextEditor";
 
 const emptySettings: UpdateSystemSettingsRequest = {
   siteTitle: "RAPPORT Project",
@@ -26,21 +29,25 @@ const emptySettings: UpdateSystemSettingsRequest = {
   certificateTemplateUrl: "",
   certificateTitle: "CHỨNG NHẬN",
   certificateCourseTitle: "GIÁO DỤC NGUY CƠ BOM MÌN, VẬT NỔ VÀ THAY ĐỔI HÀNH VI XÃ HỘI",
+  publicContentJson: "{}",
+  homeContentJson: JSON.stringify(defaultHomeContent),
 };
 
 type SettingKey = keyof UpdateSystemSettingsRequest;
-type SettingsTab = "identity" | "media" | "certificate";
+type SettingsTab = "identity" | "media" | "home" | "public";
 
 const tabs: { id: SettingsTab; label: string; description: string; icon: typeof Palette }[] = [
+  { id: "public", label: "Trang công khai", description: "Giới thiệu, liên hệ và video mở đầu", icon: Home },
   { id: "identity", label: "Nhận diện", description: "Tên dự án, nội dung và màu sắc", icon: Palette },
   { id: "media", label: "Logo & hình nền", description: "Quản lý toàn bộ tài sản hình ảnh", icon: ImageUp },
-  { id: "certificate", label: "Chứng chỉ", description: "Nội dung và template chứng nhận", icon: Award },
+  { id: "home", label: "Trang chủ", description: "Nội dung các khối dành cho học viên", icon: Home },
 ];
 
 export function SettingsPage() {
   const queryClient = useQueryClient();
   const [form, setForm] = useState<UpdateSystemSettingsRequest>(emptySettings);
   const [activeTab, setActiveTab] = useState<SettingsTab>("identity");
+  const [publicUploading, setPublicUploading] = useState(false);
   const [uploadingKey, setUploadingKey] = useState<SettingKey | null>(null);
 
   const query = useQuery({ queryKey: ["admin", "settings"], queryFn: getSystemSettings });
@@ -52,15 +59,21 @@ export function SettingsPage() {
   }, [query.data]);
 
   const mutation = useMutation({
-    mutationFn: updateSystemSettings,
+    mutationFn: (payload: UpdateSystemSettingsRequest) => updateSystemSettings({ ...payload, homeContentJson: JSON.stringify(parseHomeContent(payload.homeContentJson)) }),
     onSuccess: (data) => {
       queryClient.setQueryData(["admin", "settings"], data);
       queryClient.invalidateQueries({ queryKey: ["system-settings-public"] });
+      queryClient.invalidateQueries({ queryKey: ["support", "info"] });
     },
   });
 
   const setField = (key: SettingKey, value: string) =>
     setForm((current) => ({ ...current, [key]: value }));
+
+  const homeContent = parseHomeContent(form.homeContentJson);
+  const setHomeContent = (next: HomeContent) => setField("homeContentJson", JSON.stringify(next));
+  const setHomeField = <K extends keyof HomeContent>(key: K, value: HomeContent[K]) =>
+    setHomeContent({ ...homeContent, [key]: value });
 
   async function handleUpload(key: SettingKey, event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -76,7 +89,7 @@ export function SettingsPage() {
   }
 
   return (
-    <div className="grid gap-5 pb-24">
+    <div className="grid gap-3 pb-24">
       <AdminPageHeader
         breadcrumbs={["Trang chủ", "Cài đặt hệ thống", "Cài đặt chung"]}
         title="Cài đặt giao diện"
@@ -85,13 +98,13 @@ export function SettingsPage() {
       {mutation.isError ? <MessageBanner tone="error">Không lưu được cài đặt. Vui lòng kiểm tra lại.</MessageBanner> : null}
       {mutation.isSuccess ? <MessageBanner tone="success">Đã cập nhật giao diện hệ thống.</MessageBanner> : null}
 
-      <div className="grid gap-3 lg:grid-cols-3">
+      <div className="grid gap-3 lg:grid-cols-4">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const active = tab.id === activeTab;
           return (
             <button
-              className={`flex items-center gap-4 rounded-2xl border p-4 text-left transition ${
+              className={`flex items-center gap-3 rounded-2xl border p-4 text-left transition ${
                 active
                   ? "border-blue-600 bg-blue-50 shadow-[0_10px_30px_rgba(37,99,235,0.10)]"
                   : "border-slate-200 bg-white hover:border-blue-200"
@@ -112,12 +125,14 @@ export function SettingsPage() {
         })}
       </div>
 
+      {activeTab === "public" && <PublicContentEditor value={form.publicContentJson} onChange={value => setField("publicContentJson", value)} onBusyChange={setPublicUploading} />}
+      {query.isError && <MessageBanner tone="error">Không tải được cài đặt. Vui lòng tải lại trang.</MessageBanner>}
       {activeTab === "identity" ? (
         <SettingsWorkspace
           formPanel={
             <>
               <PanelHeading title="Thông tin hiển thị" description="Các nội dung xuất hiện trên thanh đầu trang và tiêu đề trình duyệt." />
-              <div className="grid gap-5 md:grid-cols-2">
+              <div className="grid gap-3 md:grid-cols-2">
                 <TextField label="Tên hệ thống" value={form.siteTitle} onChange={(value) => setField("siteTitle", value)} />
                 <TextField label="Tên dự án trên header" value={form.headerTitle} onChange={(value) => setField("headerTitle", value)} />
                 <label className="grid gap-2 text-sm font-medium text-slate-700 md:col-span-2">
@@ -167,29 +182,48 @@ export function SettingsPage() {
         />
       ) : null}
 
-      {activeTab === "certificate" ? (
+      {activeTab === "home" ? (
         <SettingsWorkspace
           formPanel={
             <>
-              <PanelHeading title="Nội dung chứng chỉ" description="Thiết lập nội dung chung được in trên chứng nhận của học viên." />
-              <div className="grid gap-5">
-                <TextField label="Tiêu đề chứng chỉ" value={form.certificateTitle} onChange={(value) => setField("certificateTitle", value)} />
-                <TextField label="Tên chủ đề trên chứng chỉ" value={form.certificateCourseTitle} onChange={(value) => setField("certificateCourseTitle", value)} />
-                <AssetField label="Template chứng chỉ" settingKey="certificateTemplateUrl" value={form.certificateTemplateUrl} uploadingKey={uploadingKey} onChange={setField} onUpload={handleUpload} wide />
+              <PanelHeading title="Nội dung trang chủ" description="Mỗi dòng trong ô danh sách sẽ hiển thị thành một ý. Có thể dùng {lessonCount}, {quizCount} và {passScore} trong phần tổng quan." />
+              <div className="grid gap-4">
+                <SettingsGroup title="Khối chào mừng">
+                  <TextField label="Tiêu đề" value={homeContent.welcomeTitle} onChange={(value) => setHomeField("welcomeTitle", value)} />
+                  <HomeRichTextEditor label="Nội dung chào mừng (để trống sẽ dùng mô tả khóa học)" value={homeContent.welcomeBodyHtml} onChange={(value) => setHomeField("welcomeBodyHtml", value)} />
+                </SettingsGroup>
+                <SettingsGroup title="Tổng quan khóa học">
+                  <TextField label="Tiêu đề khối" value={homeContent.overviewTitle} onChange={(value) => setHomeField("overviewTitle", value)} />
+                  <HomeRichTextEditor label="Nội dung khối" value={homeContent.overviewBodyHtml} onChange={(value) => setHomeField("overviewBodyHtml", value)} />
+                </SettingsGroup>
+                <SettingsGroup title="Mục đích khóa học">
+                  <TextField label="Tiêu đề khối" value={homeContent.objectivesTitle} onChange={(value) => setHomeField("objectivesTitle", value)} />
+                  <HomeRichTextEditor label="Nội dung khối" value={homeContent.objectivesBodyHtml} onChange={(value) => setHomeField("objectivesBodyHtml", value)} />
+                </SettingsGroup>
+                <SettingsGroup title="Nhiệm vụ của bạn">
+                  <TextField label="Tiêu đề khối" value={homeContent.tasksTitle} onChange={(value) => setHomeField("tasksTitle", value)} />
+                  <HomeRichTextEditor label="Nội dung khối" value={homeContent.tasksBodyHtml} onChange={(value) => setHomeField("tasksBodyHtml", value)} />
+                  <HomeRichTextEditor label="Thông báo cuối khối" value={homeContent.taskWarningHtml} onChange={(value) => setHomeField("taskWarningHtml", value)} compact />
+                </SettingsGroup>
+                <SettingsGroup title="Sau khi học xong">
+                  <TextField label="Tiêu đề khối" value={homeContent.outcomesTitle} onChange={(value) => setHomeField("outcomesTitle", value)} />
+                  <HomeRichTextEditor label="Nội dung khối" value={homeContent.outcomesBodyHtml} onChange={(value) => setHomeField("outcomesBodyHtml", value)} />
+                </SettingsGroup>
               </div>
             </>
           }
-          previewPanel={<CertificatePreview form={form} />}
-          previewTitle="Xem trước chứng chỉ"
+          previewPanel={<HomeContentPreview content={homeContent} />}
+          previewTitle="Xem trước nội dung trang chủ"
         />
       ) : null}
 
-      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 px-6 py-3 shadow-[0_-8px_30px_rgba(15,23,42,0.08)] backdrop-blur">
-        <div className="ml-auto flex max-w-[calc(100%-190px)] items-center justify-end gap-3">
+
+      <div className="settings-save-bar fixed bottom-0 z-30 border-t border-slate-200 bg-white/95 px-6 py-3 shadow-[0_-8px_30px_rgba(15,23,42,0.08)] backdrop-blur">
+        <div className="flex items-center justify-end gap-3">
           <span className="hidden text-sm text-slate-500 md:block">Các thay đổi chưa được áp dụng cho đến khi bạn lưu.</span>
           <Button
             className="gap-2 bg-blue-700 px-6 text-white hover:bg-blue-800"
-            disabled={mutation.isPending}
+            disabled={mutation.isPending || query.isPending || query.isError || publicUploading || uploadingKey !== null}
             type="button"
             onClick={() => mutation.mutate(form)}
           >
@@ -204,14 +238,14 @@ export function SettingsPage() {
 
 function SettingsWorkspace({ formPanel, previewPanel, previewTitle }: { formPanel: ReactNode; previewPanel: ReactNode; previewTitle: string }) {
   return (
-    <div className="grid items-start gap-5 2xl:grid-cols-[minmax(0,1.05fr)_minmax(520px,0.95fr)]">
-      <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">{formPanel}</section>
+    <div className="grid items-start gap-3 2xl:grid-cols-[minmax(0,1.05fr)_minmax(520px,0.95fr)]">
+      <section className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">{formPanel}</section>
       <section className="overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 shadow-sm 2xl:sticky 2xl:top-4">
-        <div className="flex items-center gap-2 border-b border-slate-200 bg-white px-5 py-4">
+        <div className="flex items-center gap-2 border-b border-slate-200 bg-white px-4 py-4">
           <LayoutTemplate className="size-5 text-blue-700" />
           <h2 className="font-semibold text-slate-950">{previewTitle}</h2>
         </div>
-        <div className="p-5">{previewPanel}</div>
+        <div className="p-4">{previewPanel}</div>
       </section>
     </div>
   );
@@ -230,7 +264,7 @@ function HeaderPreview({ form }: { form: UpdateSystemSettingsRequest }) {
   return (
     <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
       <div
-        className="flex min-h-28 items-center justify-between gap-6 px-6 py-5"
+        className="flex min-h-28 items-center justify-between gap-4 px-6 py-3"
         style={{
           backgroundColor: form.headerBackgroundColor || "#ffffff",
           backgroundImage: form.headerBackgroundImageUrl ? `url(${resolveBrandAsset(form.headerBackgroundImageUrl)})` : undefined,
@@ -263,23 +297,6 @@ function HeaderPreview({ form }: { form: UpdateSystemSettingsRequest }) {
   );
 }
 
-function CertificatePreview({ form }: { form: UpdateSystemSettingsRequest }) {
-  if (form.certificateTemplateUrl) {
-    return <img alt="Template chứng chỉ" className="aspect-[1.414/1] w-full rounded-2xl border border-slate-200 bg-white object-contain shadow-sm" src={resolveBrandAsset(form.certificateTemplateUrl)} />;
-  }
-  return (
-    <div className="relative grid aspect-[1.414/1] place-items-center overflow-hidden rounded-2xl border-[10px] border-double border-blue-900 bg-white p-10 text-center shadow-sm">
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-blue-700">VNMAC E-Learning</p>
-        <h3 className="mt-6 text-3xl font-bold text-blue-950">{form.certificateTitle || "CHỨNG NHẬN"}</h3>
-        <p className="mx-auto mt-5 max-w-lg text-sm leading-6 text-slate-600">{form.certificateCourseTitle}</p>
-        <div className="mx-auto mt-8 h-px w-32 bg-amber-500" />
-        <p className="mt-3 text-xs text-slate-400">Bản xem trước nội dung chứng chỉ</p>
-      </div>
-    </div>
-  );
-}
-
 function PreviewImage({ src, fallback, className }: { src: string; fallback: string; className: string }) {
   return src ? (
     <img alt={fallback} className={`${className} rounded-lg object-contain`} src={resolveBrandAsset(src)} />
@@ -294,6 +311,57 @@ function TextField({ label, value, onChange }: { label: string; value: string; o
       {label}
       <Input className="h-11 rounded-xl" value={value} onChange={(event) => onChange(event.target.value)} />
     </label>
+  );
+}
+
+function SettingsGroup({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <fieldset className="grid gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+      <legend className="px-2 text-sm font-semibold text-blue-900">{title}</legend>
+      {children}
+    </fieldset>
+  );
+}
+
+function HomeRichTextEditor({ label, value, onChange, compact = false }: { label: string; value: string; onChange: (value: string) => void; compact?: boolean }) {
+  return (
+    <div className="grid gap-2 text-sm font-medium text-slate-700">
+      <span>{label}</span>
+      <RichTextEditor
+        height={compact ? 220 : 300}
+        value={value}
+        onChange={onChange}
+        onUploadImage={async (file) => {
+          const media = await uploadAdminMedia(file, "image");
+          return media.url;
+        }}
+      />
+    </div>
+  );
+}
+
+function HomeContentPreview({ content }: { content: HomeContent }) {
+  const cards = [
+    { title: content.overviewTitle, html: content.overviewBodyHtml },
+    { title: content.objectivesTitle, html: content.objectivesBodyHtml },
+    { title: content.tasksTitle, html: content.tasksBodyHtml },
+    { title: content.outcomesTitle, html: content.outcomesBodyHtml },
+  ];
+  return (
+    <div className="rounded-2xl bg-blue-50 p-4">
+      <div className="mb-4 rounded-xl bg-gradient-to-r from-blue-700 to-sky-400 p-4 text-white">
+        <h3 className="text-xl font-bold">{content.welcomeTitle}</h3>
+        {content.welcomeBodyHtml ? <div className="official-home-rich-content mt-2 text-sm text-blue-50" dangerouslySetInnerHTML={{ __html: content.welcomeBodyHtml }} /> : <p className="mt-2 text-sm text-blue-50">Mô tả khóa học sẽ hiển thị tại đây.</p>}
+      </div>
+      <div className="grid gap-3 md:grid-cols-2">
+        {cards.map((card) => (
+          <div className="rounded-xl border border-slate-200 bg-white p-4" key={card.title}>
+            <h4 className="border-b border-slate-100 pb-2 font-semibold text-blue-900">{card.title}</h4>
+            <div className="official-home-rich-content mt-3 text-xs leading-5 text-slate-600" dangerouslySetInnerHTML={{ __html: card.html || "<p>Chưa nhập nội dung.</p>" }} />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -333,3 +401,4 @@ function AssetField({
     </div>
   );
 }
+

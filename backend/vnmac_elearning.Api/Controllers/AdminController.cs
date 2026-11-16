@@ -23,27 +23,26 @@ public sealed class AdminController(
     [HttpGet("courses")]
     public ActionResult<object> GetCourses()
     {
-        return Ok(adminService.GetCourses().Select(CourseResponseMapper.Map).ToArray());
+        return Ok(adminService.GetCourses().Select(CourseResponseMapper.MapForAdmin).ToArray());
     }
 
     [HttpPost("media/upload")]
     [RequestSizeLimit(2L * 1024 * 1024 * 1024)]
     [RequestFormLimits(MultipartBodyLengthLimit = 2L * 1024 * 1024 * 1024)]
     public async Task<ActionResult<MediaUploadResponse>> UploadMedia(
-        [FromForm] IFormFile file,
-        [FromForm] string mediaType,
+        [FromForm] UploadMediaForm request,
         CancellationToken cancellationToken)
     {
         try
         {
-            var result = await mediaStorageService.SaveAsync(file, mediaType, cancellationToken);
+            var result = await mediaStorageService.SaveAsync(request.File, request.MediaType, cancellationToken);
             auditLogService.Track(
                 GetActorUserId(),
                 "media",
                 "upload",
                 "Media",
                 result.FileName,
-                $"Upload {mediaType}: {result.OriginalFileName}",
+                $"Upload {request.MediaType}: {result.OriginalFileName}",
                 new { result.Url, result.ContentType, result.SizeBytes },
                 HttpContext.Connection.RemoteIpAddress?.ToString() ?? string.Empty,
                 Request.Headers.UserAgent.ToString());
@@ -60,12 +59,12 @@ public sealed class AdminController(
     [RequestSizeLimit(512L * 1024 * 1024)]
     [RequestFormLimits(MultipartBodyLengthLimit = 512L * 1024 * 1024)]
     public async Task<ActionResult<ScormPackageRequest>> ImportScormPackage(
-        [FromForm] IFormFile file,
+        [FromForm] ImportScormPackageForm request,
         CancellationToken cancellationToken)
     {
         try
         {
-            var result = await scormPackageImportService.ImportAsync(file, cancellationToken);
+            var result = await scormPackageImportService.ImportAsync(request.File, cancellationToken);
             auditLogService.Track(
                 GetActorUserId(),
                 "scorm",
@@ -264,11 +263,10 @@ public sealed class AdminController(
         [FromQuery] string? search = null,
         [FromQuery] string? topic = null,
         [FromQuery] LessonPublicationStatus? status = null,
-        [FromQuery] LessonDifficulty? difficulty = null,
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 10)
     {
-        return Ok(adminService.GetLessonCatalog(search, topic, status, difficulty, page, pageSize));
+        return Ok(adminService.GetLessonCatalog(search, topic, status, page, pageSize));
     }
 
     [HttpGet("lessons/{lessonId}/content")]

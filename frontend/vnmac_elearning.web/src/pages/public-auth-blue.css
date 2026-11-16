@@ -1,0 +1,114 @@
+.public-site-shell .public-auth-blue {
+  background: #f3f8ff;
+  min-height: 0;
+}
+.public-site-shell .public-auth-blue .public-auth-layout {
+  width: min(calc(100% - 40px), 1120px);
+  margin: clamp(24px, 3vw, 44px) auto;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 44fr) minmax(0, 56fr);
+  gap: 0;
+  align-items: stretch;
+  overflow: hidden;
+  border: 1px solid #dbe6f2;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 12px 32px #163c6410;
+}
+.public-auth-illustration {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  min-width: 0;
+  min-height: 550px;
+  background: url('/media/rapport-login-mascot.png') center / 100% auto no-repeat, linear-gradient(#0648af, #0559cc);
+  color: #fff;
+  text-align: center;
+  padding: 24px 18px;
+}
+.public-auth-project strong { font-size: 19px; font-weight: 700; }
+.public-auth-project p { margin-top: 5px; font-size: 12px; line-height: 1.45; font-weight: 600; text-transform: uppercase; }
+.public-auth-slogan p { font-size: 14px; }
+.public-auth-slogan strong { font-size: 20px; font-weight: 600; }
+.public-auth-slogan span { display: block; width: 112px; height: 2px; margin: 12px auto 0; background: #8cd5ff; }
+.public-site-shell .public-auth-blue .public-auth-card {
+  display: flex;
+  flex-direction: column;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+}
+.public-auth-partners {
+  padding: 16px;
+  border-bottom: 1px solid #f0f5fa;
+}
+.public-auth-partners .official-partner-marks {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  width: min(100%, 340px);
+  margin: auto;
+}
+.public-auth-partners :is(.official-partner-image, .official-flag-image) {
+  display: block;
+  width: clamp(44px, 8vw, 78px);
+  height: 38px;
+  object-fit: contain;
+}
+.public-auth-card-body {
+  margin-block: auto;
+  padding: 28px clamp(22px, 4vw, 62px) 32px;
+}
+.public-site-shell .public-auth-blue .auth-card-copy { text-align: center; margin-bottom: 24px; }
+.public-site-shell .public-auth-blue .public-auth-title {
+  font-family: inherit !important;
+  font-size: clamp(20px, 2vw, 24px) !important;
+  font-weight: 700 !important;
+  text-transform: none;
+  letter-spacing: normal;
+  color: #084c98;
+}
+.public-site-shell .public-auth-blue .auth-card-subtitle { font-size: 15px !important; color: #536780; }
+.public-auth-blue .public-auth-form { gap: 16px; }
+.public-site-shell .public-auth-blue .auth-input-shell {
+  margin-top: 0;
+  height: 52px;
+  border-radius: 10px;
+  border-color: #d7e3ee;
+  padding-inline: 14px;
+  gap: 12px;
+}
+.public-auth-blue .public-auth-field-label { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.public-site-shell .public-auth-blue .auth-input-shell input,
+.public-site-shell .public-auth-blue .auth-input-shell input::placeholder { font-size: 16px; color: #536780; }
+.public-auth-blue .auth-input-shell .auth-input-icon { width: 20px; height: 20px; color: #536780; }
+.public-site-shell .public-auth-blue .auth-forgot-link { margin: 0; font-size: 14px; color: #0759ad; }
+.public-site-shell .public-auth-blue .auth-submit-button { min-height: 50px; border-radius: 10px; background: #075cb9; color: #fff; font-size: 16px !important; font-weight: 600; box-shadow: none; }
+.public-site-shell .public-auth-blue .auth-submit-button:hover { background: #005bbe; }
+.public-site-shell .public-auth-blue .auth-register-copy { display: flex; flex-wrap: wrap; justify-content: center; border: 0; padding: 0; margin-top: 24px; font-size: 14px; }
+.public-auth-blue .auth-register-copy button { font-size: inherit; font-weight: 600; }
+@media (max-width: 800px) {
+  .public-site-shell .public-auth-blue .public-auth-layout { max-width: 560px; grid-template-columns: minmax(0, 1fr); border-radius: 18px; }
+  .public-auth-illustration {
+    min-height: 0;
+    gap: 8px;
+    padding: 16px 12px;
+    background: linear-gradient(#0648af, #0559cc);
+  }
+  .public-auth-illustration::before {
+    content: "";
+    order: 1;
+    align-self: center;
+    width: min(100%, 320px);
+    aspect-ratio: 1.25;
+    background: url('/media/rapport-login-mascot.png') center / contain no-repeat;
+  }
+  .public-auth-slogan { order: 2; }
+  .public-auth-slogan span { display: none; }
+  .public-auth-partners .official-partner-marks { width: 100%; }
+  .public-auth-blue .public-auth-register-form { grid-template-columns: minmax(0, 1fr); }
+}

@@ -16,7 +16,8 @@ public sealed class AuthService(
     NotificationService notificationService,
     AuditLogService auditLogService,
     EmailSender emailSender,
-    RoleService roleService)
+    RoleService roleService,
+    CaptchaVerifier captchaVerifier)
 {
     private static readonly TimeSpan VerificationLifetime = TimeSpan.FromHours(24);
 
@@ -87,6 +88,8 @@ public sealed class AuthService(
 
         ValidatePassword(request.NewPassword);
         user.PasswordHash = passwordService.HashPassword(user, request.NewPassword.Trim());
+        foreach (var token in dbContext.RefreshTokens.Where(x => x.UserId == user.Id && !x.RevokedAt.HasValue))
+            token.RevokedAt = timeProvider.GetUtcNow();
         auditLogService.Track(user.Id, "auth", "change-password", nameof(User), user.Id, "Doi mat khau");
         dbContext.SaveChanges();
     }
@@ -99,7 +102,7 @@ public sealed class AuthService(
         ValidateEmail(request.Email);
         ValidatePassword(request.Password);
 
-        if (!string.Equals(request.CaptchaToken, "demo-pass", StringComparison.Ordinal))
+        if (!await captchaVerifier.VerifyAsync(request.CaptchaToken))
         {
             throw new ServiceException(ServiceErrors.AuthInvalidCaptchaToken);
         }
@@ -238,7 +241,7 @@ public sealed class AuthService(
         };
     }
 
-    public LoginResponse Login(LoginRequest request)
+    public async Task<LoginResponse> LoginAsync(LoginRequest request)
     {
         if (string.IsNullOrWhiteSpace(request.Username))
         {
@@ -250,7 +253,7 @@ public sealed class AuthService(
             throw new ServiceException(ServiceErrors.AuthInvalidPassword);
         }
 
-        if (!string.Equals(request.CaptchaToken, "demo-pass", StringComparison.Ordinal))
+        if (!await captchaVerifier.VerifyAsync(request.CaptchaToken))
         {
             throw new ServiceException(ServiceErrors.AuthInvalidCaptchaToken);
         }

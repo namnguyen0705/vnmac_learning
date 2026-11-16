@@ -8,6 +8,8 @@ export function OfficialLogo({ compact = false, variant = "header" }: { compact?
   const settings = useBrandingSettings();
   const logoUrl = resolveBrandAsset(variant === "login" && settings.loginLogoUrl ? settings.loginLogoUrl : settings.projectLogoUrl);
 
+  if (logoUrl) return <div className={cn("official-logo official-logo--wordmark", compact && "official-logo--compact")}><img className="official-logo-image" src={logoUrl} alt="RAPPORT PROJECT – Dự án giáo dục phòng tránh tai nạn bom mìn vật nổ và thay đổi hành vi xã hội" /></div>;
+
   return (
     <div className="official-logo flex min-w-0 items-center gap-3">
       {logoUrl ? <img alt={settings.headerTitle} className="official-logo-image" src={logoUrl} /> : null}
@@ -42,24 +44,24 @@ export function OfficialPartnerMarks() {
   return (
     <div className="official-partner-marks" aria-label="Đối tác dự án">
       {vnmacLogo ? <img alt="VNMAC" className="official-partner-image official-partner-vnmac-image" src={vnmacLogo} /> : null}
-      <span className={cn("partner-vnmac", vnmacLogo && "hidden")}>
+      {!vnmacLogo && <span className="partner-vnmac">
         VNMAC
         <small>
           Viet Nam National
           <br />
           Mine Action Centre
         </small>
-      </span>
+      </span>}
       {vietnamFlag ? <img alt="Viet Nam" className="official-flag-image" src={vietnamFlag} /> : null}
-      <span className={cn("flag-vietnam", vietnamFlag && "hidden")} aria-label="Việt Nam" />
+      {!vietnamFlag && <span className="flag-vietnam" aria-label="Việt Nam" />}
       {usFlag ? <img alt="United States" className="official-flag-image" src={usFlag} /> : null}
-      <span className={cn("flag-us", usFlag && "hidden")} aria-label="Hoa Kỳ" />
+      {!usFlag && <span className="flag-us" aria-label="Hoa Kỳ" />}
       {crsLogo ? <img alt="CRS" className="official-partner-image official-partner-crs-image" src={crsLogo} /> : null}
-      <span className={cn("partner-crs", crsLogo && "hidden")}>
+      {!crsLogo && <span className="partner-crs">
         <i />
         CRS
         <small>Catholic Relief Services</small>
-      </span>
+      </span>}
     </div>
   );
 }

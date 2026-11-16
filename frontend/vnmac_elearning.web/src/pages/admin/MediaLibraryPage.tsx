@@ -189,7 +189,7 @@ export function MediaLibraryPage() {
   if (query.isError) return <MessageBanner tone="error">Không tải được thư viện tài liệu.</MessageBanner>;
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-3">
       <AdminPageHeader
         breadcrumbs={["Quản trị", "Nội dung", "Tài liệu"]}
         title="Thư viện tài liệu"
@@ -198,7 +198,7 @@ export function MediaLibraryPage() {
       {error ? <MessageBanner tone="error">{error}</MessageBanner> : null}
 
       <AdminSection action={<Badge variant="secondary">{filtered.length} file</Badge>} title="Kho tài liệu">
-        <div className="grid gap-4">
+        <div className="grid gap-3">
           <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_240px]">
             <div className="relative">
               <Search className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
@@ -214,7 +214,7 @@ export function MediaLibraryPage() {
             </Select>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
             {filtered.map((item) => {
               const Icon = getIcon(item);
               return (
@@ -277,7 +277,7 @@ export function MediaLibraryPage() {
         open={formOpen}
         title={editing ? "Cập nhật tài liệu" : "Thêm tài liệu học viên"}
       >
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-3 md:grid-cols-2">
           {!editing ? (
             <div className="md:col-span-2"><Field label="File tài liệu"><Input accept={allowedExtensions} type="file" onChange={(event) => {
               const file = event.target.files?.[0] ?? null;

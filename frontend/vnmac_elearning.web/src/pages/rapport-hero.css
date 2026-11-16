@@ -1,0 +1,35 @@
+/* The header and hero share one continuous photograph, as in the approved reference. */
+.rapport-editorial{position:relative}
+.rapport-editorial .public-header{position:absolute;inset:0 0 auto;z-index:5;height:6.5vw;min-height:64px;padding:0 5.8%;background:#ffffff69;border-bottom:1px solid #ffffff5c;gap:2.6vw}
+.rapport-editorial .public-wordmark{font-size:2.8vw;letter-spacing:.02em;line-height:1}
+.rapport-editorial .public-wordmark small{font-size:.9vw;font-weight:700;letter-spacing:.38em;margin-top:.35vw}
+.rapport-editorial .public-menu{margin-left:3.2vw;gap:2.2vw}
+.rapport-editorial .public-menu a{font-size:1vw}
+.rapport-editorial .public-header nav>.intro-primary{font-size:1vw;min-height:0;padding:1vw 1.5vw;border-radius:1.6vw}
+.rapport-editorial .public-header .official-partner-marks{gap:2.5vw}
+.rapport-editorial .public-header .partner-vnmac{font-size:2.3vw;line-height:1}
+.rapport-editorial .public-header .partner-vnmac small{font-size:.48vw;line-height:1.25}
+.rapport-editorial .public-header .partner-crs{font-size:2.3vw;line-height:1}
+.rapport-editorial .public-header .partner-crs small{font-size:.55vw}
+.rapport-editorial .rapport-hero{height:38.5vw;min-height:0;display:flex;flex-direction:row;align-items:center;padding:6.5vw 0 0;box-sizing:border-box;background:#dceaf3}
+.rapport-editorial .rapport-hero-photo{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto!important;z-index:-2;background-size:cover;background-position:center center;background-repeat:no-repeat}
+.rapport-editorial .rapport-hero-wash{display:block;position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#ffffff35 0%,#ffffff20 38%,transparent 58%)}
+.rapport-editorial .rapport-hero-content{width:100%;max-width:none;margin:0;padding:0 5.8%;position:relative;z-index:1}
+.rapport-editorial .rapport-hero h1{font-family:"Times New Roman",serif!important;font-size:5.6vw!important;line-height:.99!important;letter-spacing:-.045em;font-weight:700!important;max-width:57%;margin:0 0 1.4vw;color:#081e37}
+.rapport-editorial .rapport-hero-content>p{font-size:1.55vw!important;line-height:1.45!important;margin:0 0 2.4vw;max-width:52%;color:#10243b}
+.rapport-editorial .rapport-actions{gap:1.8vw}
+.rapport-editorial .rapport-actions .intro-primary,.rapport-editorial .rapport-watch{min-height:0;font-size:1.15vw;padding:1.25vw 2vw;border-radius:1.5vw;gap:1.2vw;font-weight:600}
+.rapport-editorial .rapport-actions svg{width:1.6vw;height:1.6vw}
+@media(max-width:700px){
+.rapport-editorial .public-header{position:relative;height:auto;min-height:0;padding:16px 20px;background:#fff;gap:16px}
+.rapport-editorial .public-wordmark{font-size:24px}.rapport-editorial .public-wordmark small{font-size:8px;margin-top:5px}
+.rapport-editorial .public-menu{margin-left:0;gap:22px}.rapport-editorial .public-menu a{font-size:12px}
+.rapport-editorial .public-header nav>.intro-primary{font-size:11px;padding:10px 14px;border-radius:14px}
+.rapport-editorial .public-header .official-partner-marks{gap:14px}.rapport-editorial .public-header .partner-vnmac,.rapport-editorial .public-header .partner-crs{font-size:20px}.rapport-editorial .public-header .partner-vnmac small{font-size:5px}.rapport-editorial .public-header .partner-crs small{font-size:6px}
+.rapport-editorial .rapport-hero{height:auto;min-height:440px;display:block;padding:32px 0 220px}
+.rapport-editorial .rapport-hero-photo{background-size:auto 100%;background-position:63% center}
+.rapport-editorial .rapport-hero-wash{background:linear-gradient(180deg,#f1f7fbe8 0%,#f1f7fbc0 40%,transparent 75%)}
+.rapport-editorial .rapport-hero-content{padding:0 20px}.rapport-editorial .rapport-hero h1{font-size:38px!important;line-height:1.05!important;max-width:100%;margin-bottom:16px}.rapport-editorial .rapport-hero-content>p{font-size:15px!important;max-width:100%;margin-bottom:22px}
+.rapport-editorial .rapport-actions{gap:10px}.rapport-editorial .rapport-actions .intro-primary,.rapport-editorial .rapport-watch{font-size:12px;padding:12px 15px;border-radius:12px;gap:8px}.rapport-editorial .rapport-actions svg{width:16px;height:16px}
+}
+@media(min-width:701px){.rapport-editorial .rapport-hero h1{font-size:5.05vw!important;max-width:none;width:max-content;white-space:nowrap;line-height:1.01!important;margin-bottom:1.3vw}.rapport-editorial .rapport-hero-content>p{font-size:1.5vw!important;max-width:none}.rapport-editorial .public-wordmark small{letter-spacing:.4em!important;font-family:Arial,sans-serif!important;font-weight:700;font-size:.85vw!important}.rapport-editorial .rapport-hero-content{transform:translateY(-.5vw)}}

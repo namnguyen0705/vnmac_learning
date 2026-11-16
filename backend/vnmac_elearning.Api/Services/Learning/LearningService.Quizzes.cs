@@ -12,7 +12,7 @@ public sealed partial class LearningService
 {
     public QuizSessionResponse CreateQuizSession(string userId, string quizId)
     {
-        var (course, orderedLessons, visibleLessons, orderedQuizzes, quiz, assessmentLesson) = ResolveQuizContext(quizId);
+        var (course, orderedLessons, visibleLessons, orderedQuizzes, quiz, assessmentLesson) = ResolveQuizContext(quizId, userId);
         EnsureLearnerExists(userId);
 
         if (assessmentLesson.Type != LessonType.Quiz || assessmentLesson.Assessment is null)
@@ -45,7 +45,8 @@ public sealed partial class LearningService
 
     public QuizAttemptResponse SubmitQuizAttempt(string userId, string quizId, QuizAttemptRequest request)
     {
-        var (course, orderedLessons, visibleLessons, orderedQuizzes, quiz, assessmentLesson) = ResolveQuizContext(quizId);
+        var (course, orderedLessons, visibleLessons, orderedQuizzes, quiz, assessmentLesson) = ResolveQuizContext(quizId, userId);
+        RejectLegacyFlowWrite(assessmentLesson);
         EnsureLearnerExists(userId);
 
         if (assessmentLesson.Type != LessonType.Quiz || assessmentLesson.Assessment is null)

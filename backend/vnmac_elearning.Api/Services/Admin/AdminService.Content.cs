@@ -74,6 +74,7 @@ public sealed partial class AdminService
 
     public CourseSection CreateSection(string courseId, CreateSectionRequest request)
     {
+        using var transaction = dbContext.Database.BeginTransaction(System.Data.IsolationLevel.Serializable);
         ValidateText(request.Title, ServiceErrors.AdminSectionTitleRequired);
 
         _ = GetCourseInternal(courseId);
@@ -84,26 +85,43 @@ public sealed partial class AdminService
             CourseId = courseId,
             Title = request.Title.Trim(),
             Description = request.Description.Trim(),
-            Order = request.Order,
+            Order = Math.Max(1, request.Order),
+            IsHidden = request.IsHidden,
             Lessons = []
         };
 
         dbContext.CourseSections.Add(section);
+        ReorderSection(courseId, section, request.Order);
         TrackAdmin("create", nameof(CourseSection), section.Id, $"Tao phan hoc {section.Title}");
         dbContext.SaveChanges();
+        transaction.Commit();
         return section;
     }
 
     public CourseSection UpdateSection(string courseId, string sectionId, UpdateSectionRequest request)
     {
+        using var transaction = dbContext.Database.BeginTransaction(System.Data.IsolationLevel.Serializable);
         ValidateText(request.Title, ServiceErrors.AdminSectionTitleRequired);
         var section = GetSectionInternal(courseId, sectionId);
         section.Title = request.Title.Trim();
         section.Description = request.Description.Trim();
-        section.Order = request.Order;
+        section.IsHidden = request.IsHidden;
+        ReorderSection(courseId, section, request.Order);
         TrackAdmin("update", nameof(CourseSection), section.Id, $"Cap nhat phan hoc {section.Title}");
         dbContext.SaveChanges();
+        transaction.Commit();
         return section;
+    }
+
+    private void ReorderSection(string courseId, CourseSection section, int requestedOrder)
+    {
+        var siblings = dbContext.CourseSections.Where(item => item.CourseId == courseId && item.Id != section.Id)
+            .OrderBy(item => item.Order).ThenBy(item => item.Id).ToList();
+        siblings.Insert(Math.Clamp(requestedOrder - 1, 0, siblings.Count), section);
+        var temporaryOrder = siblings.Max(item => item.Order) + siblings.Count + 1;
+        for (var index = 0; index < siblings.Count; index++) siblings[index].Order = temporaryOrder + index;
+        dbContext.SaveChanges();
+        for (var index = 0; index < siblings.Count; index++) siblings[index].Order = index + 1;
     }
 
     public IReadOnlyCollection<CourseQuiz> GetQuizzes(string? courseId = null, string? sectionId = null)
@@ -123,7 +141,6 @@ public sealed partial class AdminService
         string? search,
         string? topic,
         LessonPublicationStatus? status,
-        LessonDifficulty? difficulty,
         int page,
         int pageSize)
     {
@@ -179,10 +196,6 @@ public sealed partial class AdminService
             filteredRows = filteredRows.Where(item => item.PublicationStatus == status);
         }
 
-        if (difficulty is not null)
-        {
-            filteredRows = filteredRows.Where(item => item.Difficulty == difficulty);
-        }
 
         var filteredArray = filteredRows.ToArray();
         var newSince = timeProvider.GetUtcNow().AddDays(-7);
@@ -221,7 +234,10 @@ public sealed partial class AdminService
         ArgumentNullException.ThrowIfNull(request);
 
         var lesson = GetLessonInternal(lessonId);
+        var previousFlow = dbContext.Lessons.AsNoTracking().Single(x => x.Id == lessonId).Content?.Flow;
         lesson.Content = NormalizeLessonContent(request);
+        RebaseDisplayOnlyFlowChanges(lesson, previousFlow);
+        SynchronizeFlowAssessment(lesson);
         lesson.UpdatedAt = timeProvider.GetUtcNow();
         TrackAdmin("upsert_content", nameof(Lesson), lesson.Id, $"Cap nhat noi dung bai hoc {lesson.Title}");
         dbContext.SaveChanges();
@@ -239,6 +255,7 @@ public sealed partial class AdminService
 
     public Lesson CreateLesson(UpsertLessonRequest request)
     {
+        using var transaction = dbContext.Database.BeginTransaction(System.Data.IsolationLevel.Serializable);
         ValidateText(request.Title, ServiceErrors.AdminLessonTitleRequired);
 
         if (request.Type == LessonType.Quiz)
@@ -261,14 +278,15 @@ public sealed partial class AdminService
             DurationMinutes = request.DurationMinutes,
             StatusLabel = request.StatusLabel.Trim(),
             Topic = NormalizeAdminTopic(request.Topic, section),
-            Difficulty = request.Difficulty,
             PublicationStatus = request.PublicationStatus,
             ThumbnailUrl = NormalizeThumbnailUrl(request.ThumbnailUrl, request.VideoContent),
             CreatedAt = now,
             UpdatedAt = now,
-            Content = request.Content is null ? null : NormalizeLessonContent(request.Content),
+            Content = request.Content is not null ? NormalizeLessonContent(request.Content) : request.Type == LessonType.Interactive ? new LessonContent {
+                Flow = [new LearningFlowStep { Id = "intro", Title = "Mở đầu", Policy = "practice", Items = [new LearningFlowItem { Id = $"item-{Guid.NewGuid():N}", Kind = "text", Title = request.Title.Trim(), ReviewNote = "Nội dung mới — cần biên soạn và duyệt trước khi phát hành." }] }]
+            } : null,
             VideoContent = request.Type == LessonType.Video ? request.VideoContent ?? new VideoContent() : null,
-            Assessment = request.Type is LessonType.Interactive or LessonType.Quiz
+            Assessment = request.Assessment is not null && (request.Type is LessonType.Interactive or LessonType.Quiz)
                 ? CreateAssessment(lessonId, request.Type, request.Assessment)
                 : null,
             ScormPackage = request.Type == LessonType.Scorm
@@ -277,8 +295,11 @@ public sealed partial class AdminService
         };
 
         dbContext.Lessons.Add(lesson);
+        SynchronizeFlowAssessment(lesson);
+        ReorderLesson(lesson, request.Order);
         TrackAdmin("create", nameof(Lesson), lesson.Id, $"Tao bai hoc {lesson.Title}");
         dbContext.SaveChanges();
+        transaction.Commit();
         return GetLessonInternal(lesson.Id);
     }
 
@@ -302,7 +323,6 @@ public sealed partial class AdminService
             DurationMinutes = 1,
             StatusLabel = "__quiz_host__",
             Topic = NormalizeAdminTopic(string.Empty, hostSection),
-            Difficulty = LessonDifficulty.Advanced,
             PublicationStatus = LessonPublicationStatus.Published,
             ThumbnailUrl = string.Empty,
             CreatedAt = timeProvider.GetUtcNow(),
@@ -332,6 +352,7 @@ public sealed partial class AdminService
 
     public Lesson UpdateLesson(string lessonId, UpsertLessonRequest request)
     {
+        using var transaction = dbContext.Database.BeginTransaction(System.Data.IsolationLevel.Serializable);
         ValidateText(request.Title, ServiceErrors.AdminLessonTitleRequired);
 
         if (request.Type == LessonType.Quiz)
@@ -356,7 +377,6 @@ public sealed partial class AdminService
         lesson.DurationMinutes = request.DurationMinutes;
         lesson.StatusLabel = request.StatusLabel.Trim();
         lesson.Topic = NormalizeAdminTopic(request.Topic, section);
-        lesson.Difficulty = request.Difficulty;
         lesson.PublicationStatus = request.PublicationStatus;
         lesson.ThumbnailUrl = NormalizeThumbnailUrl(request.ThumbnailUrl, request.VideoContent);
         lesson.CreatedAt = lesson.CreatedAt == default ? timeProvider.GetUtcNow() : lesson.CreatedAt;
@@ -366,7 +386,7 @@ public sealed partial class AdminService
 
         if (request.Type == LessonType.Video)
         {
-            if (lesson.Assessment is not null)
+            if (lesson.Assessment is not null && lesson.Content?.Flow.Count is not > 0)
             {
                 dbContext.LessonAssessments.Remove(lesson.Assessment);
                 lesson.Assessment = null;
@@ -415,30 +435,58 @@ public sealed partial class AdminService
             }
         }
 
+        ReorderLesson(lesson, request.Order);
         TrackAdmin("update", nameof(Lesson), lesson.Id, $"Cap nhat bai hoc {lesson.Title}");
         dbContext.SaveChanges();
+        transaction.Commit();
         return GetLessonInternal(lessonId);
     }
 
     public Lesson UpdateLessonMetadata(string lessonId, UpdateLessonMetadataRequest request)
     {
+        using var transaction = dbContext.Database.BeginTransaction(System.Data.IsolationLevel.Serializable);
         ValidateText(request.Title, ServiceErrors.AdminLessonTitleRequired);
         var lesson = dbContext.Lessons.SingleOrDefault(item => item.Id == lessonId)
             ?? throw new ServiceException(ServiceErrors.AdminLessonNotFound);
+        var previousSectionId = lesson.SectionId;
         var section = GetSectionInternal(request.CourseId, request.SectionId);
         lesson.CourseId = request.CourseId;
         lesson.SectionId = section.Id;
         lesson.Title = request.Title.Trim();
-        lesson.Order = ResolveAvailableLessonOrder(section, request.Order, lesson.Id);
+        ReorderLesson(lesson, request.Order);
+        if (previousSectionId != lesson.SectionId)
+        {
+            var previousFirst = dbContext.Lessons.Where(item => item.SectionId == previousSectionId && item.Id != lesson.Id).OrderBy(item => item.Order).FirstOrDefault();
+            if (previousFirst is not null) ReorderLesson(previousFirst, 1);
+        }
+        foreach (var quiz in dbContext.CourseQuizzes.Where(item => item.AssessmentLessonId == lesson.Id))
+        {
+            if (quiz.SectionId != lesson.SectionId)
+                quiz.Order = dbContext.CourseQuizzes.Where(item => item.CourseId == lesson.CourseId && item.SectionId == lesson.SectionId && item.Id != quiz.Id).Select(item => item.Order).ToList().DefaultIfEmpty(0).Max() + 1;
+            quiz.CourseId = lesson.CourseId;
+            quiz.SectionId = lesson.SectionId;
+            quiz.Title = lesson.Title;
+        }
         lesson.DurationMinutes = request.DurationMinutes;
         lesson.StatusLabel = request.StatusLabel.Trim();
         lesson.Topic = NormalizeAdminTopic(request.Topic, section);
-        lesson.Difficulty = request.Difficulty;
         lesson.PublicationStatus = request.PublicationStatus;
         lesson.UpdatedAt = timeProvider.GetUtcNow();
         TrackAdmin("update_metadata", nameof(Lesson), lesson.Id, $"Cap nhat thong tin bai hoc {lesson.Title}");
         dbContext.SaveChanges();
+        transaction.Commit();
         return GetLessonInternal(lessonId);
+    }
+
+    private void ReorderLesson(Lesson lesson, int requestedOrder)
+    {
+        var siblings = dbContext.Lessons.Where(item => item.SectionId == lesson.SectionId && item.Id != lesson.Id)
+            .OrderBy(item => item.Order).ThenBy(item => item.Id).ToList();
+        siblings.Insert(Math.Clamp(requestedOrder - 1, 0, siblings.Count), lesson);
+        var temporaryOrder = siblings.Max(item => item.Order) + siblings.Count + 1;
+        for (var index = 0; index < siblings.Count; index++) siblings[index].Order = temporaryOrder + index;
+        dbContext.SaveChanges();
+        for (var index = 0; index < siblings.Count; index++) siblings[index].Order = index + 1;
     }
 
     public CourseQuiz UpdateQuiz(string quizId, UpdateCourseQuizRequest request)
@@ -462,7 +510,6 @@ public sealed partial class AdminService
         assessmentLesson.Type = LessonType.Quiz;
         assessmentLesson.StatusLabel = "__quiz_host__";
         assessmentLesson.Topic = NormalizeAdminTopic(string.Empty, hostSection);
-        assessmentLesson.Difficulty = LessonDifficulty.Advanced;
         assessmentLesson.PublicationStatus = LessonPublicationStatus.Published;
         assessmentLesson.UpdatedAt = timeProvider.GetUtcNow();
         assessmentLesson.DurationMinutes = Math.Max(assessmentLesson.DurationMinutes, 1);
@@ -476,6 +523,14 @@ public sealed partial class AdminService
         else
         {
             ApplyAssessment(assessmentLesson.Assessment, LessonType.Quiz, request.Assessment);
+        }
+
+        if (assessmentLesson.Content?.Flow.Count > 0)
+        {
+            if (request.Assessment?.PassScore != 100 || request.Assessment.RandomizeOptionOrder)
+                throw new ServiceException(new ServiceError("flow.assessment_policy", "Phần 1 yêu cầu điểm đạt 100% và giữ nguyên thứ tự đáp án.", 400));
+            foreach (var step in assessmentLesson.Content.Flow.Where(x => x.Policy == "quiz")) step.ShuffleOnRetry = request.Assessment.RandomizeQuestionOrder;
+            SynchronizeFlowAssessment(assessmentLesson);
         }
 
         TrackAdmin("update", nameof(CourseQuiz), quiz.Id, $"Cap nhat bai kiem tra {quiz.Title}");
@@ -528,6 +583,7 @@ public sealed partial class AdminService
     {
         ValidateQuestionRequest(request);
         var lessonId = ResolveQuestionOwnerLessonId(request.LessonId, request.QuizId);
+        EnsureQuestionNotFlowManaged(lessonId);
 
         var questionId = $"question-{Guid.NewGuid():N}"[..20];
         var question = BuildQuestion(questionId, lessonId, request);
@@ -544,6 +600,8 @@ public sealed partial class AdminService
         var lessonId = ResolveQuestionOwnerLessonId(request.LessonId, request.QuizId);
 
         var question = GetQuestionInternal(questionId);
+        EnsureQuestionNotFlowManaged(question.LessonId);
+        EnsureQuestionNotFlowManaged(lessonId);
         dbContext.LessonQuestionOptions.RemoveRange(question.Options);
         dbContext.LessonQuestionHotspotTargets.RemoveRange(question.HotspotTargets);
         dbContext.LessonQuestionDragItems.RemoveRange(question.DragItems);
@@ -575,6 +633,7 @@ public sealed partial class AdminService
     {
         var question = dbContext.LessonQuestions.SingleOrDefault(item => item.Id == questionId)
             ?? throw new ServiceException(ServiceErrors.AdminQuestionNotFound);
+        EnsureQuestionNotFlowManaged(question.LessonId);
 
         dbContext.InteractionAttemptResults.RemoveRange(dbContext.InteractionAttemptResults.Where(result => result.QuestionId == questionId));
         dbContext.QuizAttemptWrongQuestions.RemoveRange(dbContext.QuizAttemptWrongQuestions.Where(result => result.QuestionId == questionId));

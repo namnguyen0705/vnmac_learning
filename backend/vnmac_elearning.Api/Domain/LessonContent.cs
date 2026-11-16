@@ -2,6 +2,7 @@ namespace vnmac_elearning.Api.Domain;
 
 public sealed class LessonContent
 {
+    public List<LearningFlowStep> Flow { get; set; } = [];
     public string Summary { get; set; } = string.Empty;
     public string CoreMessage { get; set; } = string.Empty;
     public string MainContentType { get; set; } = "Video hoặc slide";

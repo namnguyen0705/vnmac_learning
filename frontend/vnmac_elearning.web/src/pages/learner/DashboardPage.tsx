@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import {
   AlertCircle,
   ArrowRight,
-  Award,
   BookOpen,
   CheckCircle2,
   ClipboardCheck,
@@ -15,14 +14,12 @@ import {
   ShieldCheck,
   Target,
   Trophy,
-  UsersRound,
   type LucideIcon,
 } from "lucide-react";
 import { useAuth } from "../../app/auth";
 import {
   getLearnerCourseCatalog,
   getLearnerCourseProgress,
-  getLearnerDashboard,
   getPublishedCourses,
 } from "../../shared/api/learner";
 import {
@@ -36,7 +33,10 @@ import {
 } from "../../shared/lib/course";
 import { LoadingBlock } from "../../shared/ui/LoadingBlock";
 import { LearnerPanel, LearnerProgressBar } from "../../shared/ui/learner-ui";
+import { LearningCompanion, MascotFigure } from "@/shared/ui/LearningCompanion";
 import { MessageBanner } from "../../shared/ui/MessageBanner";
+import { useBrandingSettings } from "../../shared/ui/branding";
+import { parseHomeContent, renderHomeText } from "../../shared/lib/homeContent";
 import type {
   CourseLesson,
   CourseQuiz,
@@ -44,8 +44,6 @@ import type {
   CourseTreeResponse,
   ProgressSnapshotResponse,
 } from "../../shared/types/api";
-
-const OFFICIAL_COURSE_ID = "course-vnmac-elearning";
 
 type RoadmapStatus = "done" | "active" | "ready" | "locked";
 
@@ -67,30 +65,25 @@ type RoadmapSection = {
 export function DashboardPage() {
   const { session } = useAuth();
   const navigate = useNavigate();
+  const systemSettings = useBrandingSettings();
   const userId = session?.user.id ?? "";
-
-  const dashboardQuery = useQuery({
-    queryKey: ["learner", userId, "dashboard"],
-    queryFn: () => getLearnerDashboard(userId),
-    enabled: Boolean(userId),
-  });
 
   const catalogQuery = useQuery({
     queryKey: ["learner", userId, "catalog"],
     queryFn: () => getLearnerCourseCatalog(userId),
     enabled: Boolean(userId),
-    refetchOnMount: "always",
   });
 
   const publishedCoursesQuery = useQuery({
-    queryKey: ["courses", "published", "official-dashboard"],
+    queryKey: ["courses", "published", userId],
     queryFn: getPublishedCourses,
   });
 
   const officialCourse = useMemo(() => {
     const courses = publishedCoursesQuery.data ?? [];
-    return courses.find((course) => course.id === OFFICIAL_COURSE_ID) ?? courses[0] ?? null;
-  }, [publishedCoursesQuery.data]);
+    const enrolledCourseId = catalogQuery.data?.courses.find((course) => course.isEnrolled)?.courseId;
+    return courses.find((course) => course.id === enrolledCourseId) ?? courses[0] ?? null;
+  }, [catalogQuery.data?.courses, publishedCoursesQuery.data]);
 
   const catalogItem = officialCourse
     ? catalogQuery.data?.courses.find((course) => course.courseId === officialCourse.id)
@@ -100,11 +93,9 @@ export function DashboardPage() {
     queryKey: ["learner", userId, "course-progress", officialCourse?.id],
     queryFn: () => getLearnerCourseProgress(userId, officialCourse?.id ?? ""),
     enabled: Boolean(userId && officialCourse?.id && catalogItem?.isEnrolled),
-    refetchOnMount: "always",
   });
 
   if (
-    dashboardQuery.isLoading ||
     catalogQuery.isLoading ||
     publishedCoursesQuery.isLoading ||
     (catalogItem?.isEnrolled && progressQuery.isLoading)
@@ -113,10 +104,8 @@ export function DashboardPage() {
   }
 
   if (
-    dashboardQuery.isError ||
     catalogQuery.isError ||
     publishedCoursesQuery.isError ||
-    !dashboardQuery.data ||
     !catalogQuery.data
   ) {
     return <MessageBanner tone="error">Không tải được dữ liệu học viên.</MessageBanner>;
@@ -129,6 +118,14 @@ export function DashboardPage() {
   const progress = progressQuery.data;
   const contentLessons = flattenLessons(officialCourse).filter((lesson) => lesson.type !== "Quiz");
   const quizzes = flattenQuizzes(officialCourse);
+  const courseObjectives = Array.from(new Set(contentLessons.flatMap((lesson) => [
+    ...(lesson.content?.objectives ?? []),
+    ...(lesson.videoContent?.objectives ?? []),
+  ]).map((item) => item.trim()).filter(Boolean)));
+  const passScores = quizzes.map((quiz) => quiz.assessment?.passScore).filter((score): score is number => typeof score === "number");
+  const requiredPassScore = passScores.length > 0 ? Math.max(...passScores) : null;
+  const homeContent = parseHomeContent(systemSettings.homeContentJson);
+  const homeVariables = { lessonCount: contentLessons.length, quizCount: quizzes.length, passScore: requiredPassScore };
   const progressPercent = progress?.overallCompletionPercent ?? catalogItem?.enrollment?.overallCompletionPercent ?? 0;
   const roadmapSections = buildRoadmapSections(officialCourse, progress);
 
@@ -136,68 +133,52 @@ export function DashboardPage() {
     <div className="official-learner-home grid gap-4">
       <section className="official-welcome-hero">
         <div className="official-welcome-copy">
-          <h1>Chào mừng bạn!</h1>
-          <p>
-            Khóa học giúp bạn nhận biết nguy cơ bom mìn, thực hành hành vi an toàn và truyền thông hiệu quả
-            trong cộng đồng.
-          </p>
+          <h1>{homeContent.welcomeTitle}</h1>
+          {homeContent.welcomeBodyHtml
+            ? <div className="official-home-rich-content" dangerouslySetInnerHTML={{ __html: homeContent.welcomeBodyHtml }} />
+            : officialCourse.description ? <p>{officialCourse.description}</p> : null}
           <div className="official-hero-badges">
             <HeroBadge icon={ShieldCheck} title="Học dễ hiểu" subtitle="Áp dụng thực tế" />
             <HeroBadge icon={Target} title="Thực hành tương tác" subtitle="Phản hồi tức thì" />
-            <HeroBadge icon={Trophy} title="Đạt 100%" subtitle="Nhận chứng chỉ" />
+            <HeroBadge icon={Trophy} title={requiredPassScore == null ? "Bài kiểm tra" : `Đạt ${requiredPassScore}%`} subtitle="Theo yêu cầu khóa học" />
           </div>
         </div>
 
-        <SafetyHeroIllustration />
+        <div className="home-mascot-scene"><SafetyHeroIllustration /><div className="home-mascot-greeting"><LearningCompanion celebration={progressPercent >= 100} pose={progressPercent >= 100 ? "celebrate" : progressPercent > 0 ? "encourage" : "welcome"}><strong>{progressPercent >= 100 ? "Bạn đã hoàn thành khóa học!" : progressPercent > 0 ? "Mình cùng tiếp tục nhé!" : "Mình sẽ đồng hành cùng bạn!"}</strong><p>{progressPercent >= 100 ? "Bạn có thể ôn lại hoặc xem kết quả học tập." : progressPercent > 0 ? `Bạn đã đi được ${progressPercent}% hành trình. Chọn Tiếp tục học để trở lại bài đang mở.` : "Bắt đầu từ bài đầu tiên, mình sẽ hướng dẫn bạn từng bước."}</p></LearningCompanion></div></div>
       </section>
 
       <section className="official-summary-grid">
-        <InfoCard icon={BookOpen} tone="blue" title="Tổng quan khóa học">
-          <ChecklistItem>{contentLessons.length} bài học + {quizzes.length} bài kiểm tra cuối khóa</ChecklistItem>
-          <ChecklistItem>Học theo trình tự, không bỏ qua bài</ChecklistItem>
-          <ChecklistItem>Phải đạt 100% để hoàn thành khóa học</ChecklistItem>
+        <InfoCard icon={BookOpen} tone="blue" title={homeContent.overviewTitle}>
+          <div className="official-home-rich-content" dangerouslySetInnerHTML={{ __html: renderHomeText(homeContent.overviewBodyHtml, homeVariables) }} />
           <div className="pt-2">
             <LearnerProgressBar label="Tiến độ của bạn" value={progressPercent} />
           </div>
         </InfoCard>
 
-        <InfoCard icon={Target} tone="red" title="Mục đích khóa học">
-          <ChecklistItem>Nhận diện các loại vật nổ nguy hiểm</ChecklistItem>
-          <ChecklistItem>Tránh các hành vi sai, nguy hiểm</ChecklistItem>
-          <ChecklistItem>Thực hiện đúng hành vi an toàn</ChecklistItem>
-          <ChecklistItem>Truyền thông thay đổi hành vi hiệu quả</ChecklistItem>
-          <ChecklistItem>Góp phần bảo vệ bản thân và cộng đồng</ChecklistItem>
+        <InfoCard icon={Target} tone="red" title={homeContent.objectivesTitle}>
+          {homeContent.objectivesBodyHtml
+            ? <div className="official-home-rich-content" dangerouslySetInnerHTML={{ __html: homeContent.objectivesBodyHtml }} />
+            : courseObjectives.length > 0
+            ? courseObjectives.map((objective) => <ChecklistItem key={objective}>{objective}</ChecklistItem>)
+            : <p className="text-sm text-slate-500">Khóa học chưa công bố mục tiêu.</p>}
         </InfoCard>
 
-        <InfoCard icon={ClipboardCheck} tone="blue" title="Nhiệm vụ của bạn">
-          <TaskItem title="Học bài" description="Xem video, đọc nội dung, ghi nhớ kiến thức" />
-          <TaskItem title="Thực hành" description="Tham gia hoạt động tương tác trong bài" />
-          <TaskItem title="Làm quiz" description="Trả lời câu hỏi cuối bài để kiểm tra" />
-          <TaskItem title="Đạt 100%" description="Hoàn thành 100% mỗi bài tiếp theo" />
+        <InfoCard icon={ClipboardCheck} tone="blue" title={homeContent.tasksTitle}>
+          <div className="official-home-rich-content" dangerouslySetInnerHTML={{ __html: homeContent.tasksBodyHtml }} />
           <div className="official-warning-note">
             <AlertCircle className="size-4" />
-            <span>Bạn cần hoàn thành từng bước để đảm bảo an toàn.</span>
+            <div className="official-home-rich-content" dangerouslySetInnerHTML={{ __html: homeContent.taskWarningHtml }} />
           </div>
         </InfoCard>
 
-        <InfoCard icon={Award} tone="green" title="Sau khi học xong">
-          <SuccessItem>Hiểu rõ nguy cơ từ bom mìn, vật nổ</SuccessItem>
-          <SuccessItem>Biết cách xử lý an toàn khi gặp vật lạ</SuccessItem>
-          <SuccessItem>Truyền đạt thông điệp đúng, dễ hiểu</SuccessItem>
-          <SuccessItem>Tự tin hỗ trợ và bảo vệ cộng đồng</SuccessItem>
-          <SuccessItem>Nhận chứng chỉ hoàn thành khóa học</SuccessItem>
-          <div className="official-certificate-mini">
-            <span>Chứng chỉ</span>
-            <strong>Hoàn thành</strong>
-          </div>
+        <InfoCard icon={CheckCircle2} tone="green" title={homeContent.outcomesTitle}>
+          <div className="official-home-rich-content" dangerouslySetInnerHTML={{ __html: homeContent.outcomesBodyHtml }} />
         </InfoCard>
       </section>
 
       <LearnerPanel className="official-start-strip">
         <div className="official-start-brand">
-          <div className="official-start-shield">
-            <ShieldCheck className="size-9" />
-          </div>
+          <MascotFigure pose="guide" />
           <div>
             <p>Học an toàn</p>
             <p>Hành động đúng</p>
@@ -207,10 +188,10 @@ export function DashboardPage() {
         <Button
           className="official-start-button"
           type="button"
-          onClick={() => navigate(catalogItem?.isEnrolled ? "/app/courses" : `/app/courses/${officialCourse.id}`)}
+          onClick={() => navigate(progressPercent >= 100 ? "/app/results" : "/app/courses")}
         >
           <Play className="size-5 fill-current" />
-          Bắt đầu khóa học
+          {progressPercent >= 100 ? "Xem kết quả" : catalogItem?.isEnrolled ? "Tiếp tục học" : "Bắt đầu khóa học"}
           <ArrowRight className="size-5" />
         </Button>
       </LearnerPanel>
@@ -299,32 +280,25 @@ function buildQuizRoadmapItem(
 
   return {
     id: quiz?.id ?? lesson?.id ?? fallbackNumber,
-    number: lesson ? getLessonNumber(lesson, 2) : fallbackNumber,
-    title: trimLessonTitle(quiz?.title ?? lesson?.title ?? "Bài kiểm tra cuối khóa"),
-    href: quiz ? `/app/courses/${courseId}/quizzes/${quiz.id}` : `/app/courses/${courseId}`,
+    number: "KT",
+    title: trimLessonTitle(quiz?.title ?? lesson?.title ?? "Bài kiểm tra cuối phần"),
+    href: quiz ? `/app/courses/${courseId}/quizzes/${quiz.id}` : "/app/courses",
     status,
     type: "quiz",
   };
 }
 
 function getLessonNumber(lesson: CourseLesson, sectionIndex: number) {
-  const match = lesson.title.match(/Bài\s+(\d+(?:\.\d+)?)/i);
+  const match = lesson.title.match(/Bài(?:\s+học)?(?:\s+số)?\s+(\d+(?:\.\d+)?)/i);
   return match?.[1] ?? `${sectionIndex + 1}.${lesson.order}`;
 }
 
 function trimLessonTitle(title: string) {
-  return title.replace(/^Bài\s+\d+(?:\.\d+)?\s*-\s*/i, "").trim();
+  return title.replace(/^Bài(?:\s+học)?(?:\s+số)?\s+\d+(?:\.\d+)?\s*[–-]\s*/i, "").trim();
 }
 
 function getSectionLabel(section: CourseSection, index: number) {
-  const title = section.title.toLowerCase();
-  if (section.id.includes("eore") || title.includes("eore")) {
-    return "PHẦN 1 - EORE";
-  }
-  if (section.id.includes("sbc") || title.includes("sbc")) {
-    return "PHẦN 2 - SBC";
-  }
-  return `PHẦN ${index + 1}`;
+  return section.title || `PHẦN ${index + 1}`;
 }
 
 function isFinalSection(section: CourseSection) {
@@ -349,6 +323,7 @@ function LearningRoadmap({
               {section.items.map((item) => (
                 <button
                   className={`official-roadmap-item ${item.status}`}
+                  aria-current={item.status === "active" ? "step" : undefined}
                   disabled={item.status === "locked"}
                   key={item.id}
                   type="button"
@@ -428,27 +403,6 @@ function ChecklistItem({ children }: { children: ReactNode }) {
     <div className="official-check-row">
       <CheckCircle2 className="size-4" />
       <span>{children}</span>
-    </div>
-  );
-}
-
-function SuccessItem({ children }: { children: ReactNode }) {
-  return (
-    <div className="official-success-row">
-      <CheckCircle2 className="size-4" />
-      <span>{children}</span>
-    </div>
-  );
-}
-
-function TaskItem({ title, description }: { title: string; description: string }) {
-  return (
-    <div className="official-task-row">
-      <UsersRound className="size-4" />
-      <div>
-        <strong>{title}</strong>
-        <span>{description}</span>
-      </div>
     </div>
   );
 }

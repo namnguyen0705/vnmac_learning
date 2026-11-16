@@ -12,7 +12,7 @@ public sealed partial class LearningService
 {
     private IQueryable<Course> CourseGraphQuery()
     {
-        return dbContext.Courses
+        return dbContext.Courses.AsSplitQuery()
             .Include(course => course.Quizzes)
             .Include(course => course.Sections)
                 .ThenInclude(section => section.Lessons)
@@ -69,7 +69,7 @@ public sealed partial class LearningService
         return CourseGraphQuery()
             .Where(course => existingCourseIds.Contains(course.Id))
             .OrderBy(course => course.Title)
-            .ToArray();
+            .ToArray().Select(course => ScopeCourse(userId, course)).ToArray();
     }
 
     private Course GetLearnerCourseInternal(string userId, string courseId)
@@ -80,7 +80,7 @@ public sealed partial class LearningService
             throw new ServiceException(ServiceErrors.LearningCourseNotEnrolled);
         }
 
-        return course;
+        return ScopeCourse(userId, course);
     }
 
     private CourseEnrollment GetOrCreateEnrollmentInternal(string userId, Course course)
@@ -119,9 +119,10 @@ public sealed partial class LearningService
     private static IReadOnlyList<Lesson> GetOrderedLessonsInternal(Course course)
     {
         return course.Sections
+            .Where(section => !section.IsHidden)
             .OrderBy(section => section.Order)
             .SelectMany(section => section.Lessons
-                .Where(lesson => lesson.PublicationStatus != LessonPublicationStatus.Archived)
+                .Where(LearningFlowPublication.IsVisibleLesson)
                 .OrderBy(lesson => lesson.Order))
             .ToArray();
     }
@@ -145,14 +146,15 @@ public sealed partial class LearningService
     private static IReadOnlyList<CourseQuiz> GetOrderedQuizzes(Course course)
     {
         var sectionOrderById = course.Sections.ToDictionary(item => item.Id, item => item.Order, StringComparer.Ordinal);
-        var archivedLessonIds = course.Sections
+        var hiddenLessonIds = course.Sections
             .SelectMany(item => item.Lessons)
-            .Where(item => item.PublicationStatus == LessonPublicationStatus.Archived)
+            .Where(item => !LearningFlowPublication.IsVisibleLesson(item))
             .Select(item => item.Id)
             .ToHashSet(StringComparer.Ordinal);
 
         return course.Quizzes
-            .Where(item => !archivedLessonIds.Contains(item.AssessmentLessonId))
+            .Where(item => item.SectionId is null || course.Sections.Any(section => section.Id == item.SectionId && !section.IsHidden))
+            .Where(item => !hiddenLessonIds.Contains(item.AssessmentLessonId))
             .OrderBy(item => item.SectionId is null ? 1 : 0)
             .ThenBy(item => item.SectionId is null
                 ? int.MaxValue
@@ -182,7 +184,7 @@ public sealed partial class LearningService
         return GetOrderedLessonsInternal(course);
     }
 
-    private (Course Course, IReadOnlyList<Lesson> OrderedLessons, IReadOnlyList<Lesson> VisibleLessons, IReadOnlyList<CourseQuiz> OrderedQuizzes, CourseQuiz Quiz, Lesson AssessmentLesson) ResolveQuizContext(string quizId)
+    private (Course Course, IReadOnlyList<Lesson> OrderedLessons, IReadOnlyList<Lesson> VisibleLessons, IReadOnlyList<CourseQuiz> OrderedQuizzes, CourseQuiz Quiz, Lesson AssessmentLesson) ResolveQuizContext(string quizId, string userId)
     {
         var quizCourseId = dbContext.CourseQuizzes
             .Where(item => item.Id == quizId)
@@ -194,7 +196,7 @@ public sealed partial class LearningService
             throw new ServiceException(ServiceErrors.LearningQuizNotFound);
         }
 
-        var course = GetCourseById(quizCourseId);
+        var course = ScopeCourse(userId, GetCourseById(quizCourseId));
         var orderedLessons = GetOrderedLessons(course);
         var visibleLessons = GetVisibleLessons(course, orderedLessons);
         var orderedQuizzes = GetOrderedQuizzes(course);
@@ -203,7 +205,7 @@ public sealed partial class LearningService
         return (course, orderedLessons, visibleLessons, orderedQuizzes, quiz, assessmentLesson);
     }
 
-    private (Course Course, IReadOnlyList<Lesson> Lessons, Lesson Lesson) ResolveLessonContext(string lessonId)
+    private (Course Course, IReadOnlyList<Lesson> Lessons, Lesson Lesson) ResolveLessonContext(string lessonId, string userId)
     {
         var lessonCourseId = dbContext.Lessons
             .Where(item => item.Id == lessonId)
@@ -215,7 +217,7 @@ public sealed partial class LearningService
             throw new ServiceException(ServiceErrors.LearningLessonNotFound);
         }
 
-        var course = GetCourseById(lessonCourseId);
+        var course = ScopeCourse(userId, GetCourseById(lessonCourseId));
         var orderedLessons = GetOrderedLessons(course);
         var lesson = GetLessonInternal(lessonId, orderedLessons);
         return (course, orderedLessons, lesson);
@@ -270,7 +272,7 @@ public sealed partial class LearningService
         IReadOnlyList<Lesson> lessons;
         if (orderedLessons is null)
         {
-            var (_, resolvedLessons, _) = ResolveLessonContext(lessonId);
+            var (_, resolvedLessons, _) = ResolveLessonContext(lessonId, userId);
             lessons = resolvedLessons;
         }
         else
@@ -407,7 +409,7 @@ public sealed partial class LearningService
                     Description = quiz.Description,
                     Order = quiz.Order,
                     IsUnlocked = IsQuizUnlockedInternal(userId, course, quiz, visibleLessons, orderedLessons, orderedQuizzes),
-                    Passed = result.Score == 100,
+                    Passed = HasPassedQuizInternal(userId, quiz, orderedLessons),
                     Score = result.Score,
                     Attempts = result.Attempts
                 };
@@ -424,8 +426,8 @@ public sealed partial class LearningService
 
         var certificate = dbContext.Certificates.SingleOrDefault(item => item.UserId == userId && item.CourseId == course.Id);
         var enrollment = GetOrCreateEnrollmentInternal(userId, course);
-        var hasCertificate = certificate is not null;
-        if (certificate is not null && enrollment.Status != CourseEnrollmentStatus.Completed)
+        var hasCertificate = certificate is not null && course.CertificateEnabled && HasCurrentCertificate(userId,course);
+        if (hasCertificate && certificate is not null && enrollment.Status != CourseEnrollmentStatus.Completed)
         {
             enrollment.Status = CourseEnrollmentStatus.Completed;
             enrollment.StartedAt ??= certificate.IssuedDate;
@@ -466,6 +468,10 @@ public sealed partial class LearningService
     private bool IsLessonUnlockedInternal(string userId, string lessonId, IReadOnlyList<Lesson> visibleLessons)
     {
         var lesson = GetLessonInternal(lessonId, visibleLessons);
+        var scopedCourse = ScopeCourse(userId, GetCourseById(lesson.CourseId));
+        var sectionOrder = scopedCourse.Sections.Single(s => s.Id == lesson.SectionId).Order;
+        var earlier = scopedCourse.Sections.Where(s => s.Order < sectionOrder).Select(s => s.Id).ToHashSet();
+        if (scopedCourse.Quizzes.Where(q => q.SectionId is not null && earlier.Contains(q.SectionId)).Any(q => !HasPassedQuizInternal(userId, q, GetOrderedLessons(scopedCourse)))) return false;
         var contentLessonIndex = visibleLessons.Select((item, index) => new { item, index })
             .Single(item => item.item.Id == lessonId)
             .index;
@@ -551,7 +557,9 @@ public sealed partial class LearningService
 
     private bool HasPassedQuizInternal(string userId, CourseQuiz quiz, IReadOnlyList<Lesson> orderedLessons)
     {
-        return GetOrCreateQuizResultInternal(userId, quiz.AssessmentLessonId, orderedLessons)?.Score == 100;
+        var result = GetOrCreateQuizResultInternal(userId, quiz.AssessmentLessonId, orderedLessons);
+        var passScore = orderedLessons.FirstOrDefault(lesson => lesson.Id == quiz.AssessmentLessonId)?.Assessment?.PassScore;
+        return result is not null && passScore.HasValue && result.Score >= passScore.Value;
     }
 
     private bool HasCompletedQuizScopeInternal(string userId, CourseQuiz quiz, IReadOnlyList<Lesson> visibleLessons)
@@ -577,6 +585,9 @@ public sealed partial class LearningService
         IReadOnlyList<Lesson> orderedLessons,
         IReadOnlyList<CourseQuiz> orderedQuizzes)
     {
+        var sectionOrder = course.Sections.SingleOrDefault(s => s.Id == quiz.SectionId)?.Order ?? int.MaxValue;
+        var earlier = course.Sections.Where(s => s.Order < sectionOrder).Select(s => s.Id).ToHashSet();
+        if (orderedQuizzes.Where(q => q.Id != quiz.Id && q.SectionId is not null && earlier.Contains(q.SectionId)).Any(q => !HasPassedQuizInternal(userId, q, orderedLessons))) return false;
         if (!HasCompletedQuizScopeInternal(userId, quiz, visibleLessons))
         {
             return false;
@@ -733,6 +744,7 @@ public sealed partial class LearningService
 
     private void EnsureCertificateIssuedInternal(string userId, Course course)
     {
+        course = ScopeCourse(userId, course);
         var orderedLessons = GetOrderedLessons(course);
         var visibleLessons = GetVisibleLessons(course, orderedLessons);
         var orderedQuizzes = GetOrderedQuizzes(course);
@@ -742,7 +754,7 @@ public sealed partial class LearningService
         var enrollment = GetOrCreateEnrollmentInternal(userId, course);
         UpdateEnrollmentStateInternal(userId, visibleLessons, orderedQuizzes, orderedLessons, enrollment);
 
-        if (!allContentCompleted || !allQuizzesPassed)
+        if (!course.CertificateEnabled || UsesManualCertificate(course) || visibleLessons.Count == 0 || !allContentCompleted || !allQuizzesPassed)
         {
             return;
         }

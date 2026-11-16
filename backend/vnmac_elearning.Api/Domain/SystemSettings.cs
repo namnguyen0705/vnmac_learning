@@ -18,6 +18,8 @@ public sealed class SystemSettings
     public string CertificateTemplateUrl { get; set; } = string.Empty;
     public string CertificateTitle { get; set; } = "CHUNG NHAN";
     public string CertificateCourseTitle { get; set; } = "GIAO DUC NGUY CO BOM MIN, VAT NO VA THAY DOI HANH VI XA HOI";
+    public string PublicContentJson { get; set; } = string.Empty;
+    public string HomeContentJson { get; set; } = string.Empty;
     public DateTimeOffset UpdatedAt { get; set; }
     public string UpdatedByUserId { get; set; } = string.Empty;
 }
