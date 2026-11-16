@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 160" role="img" aria-label="Bài học chưa có ảnh">
+  <rect width="240" height="160" fill="#eef2f7"/>
+  <path d="M70 45h100a8 8 0 0 1 8 8v64a8 8 0 0 1-8 8H70a8 8 0 0 1-8-8V53a8 8 0 0 1 8-8Z" fill="#fff" stroke="#cbd5e1" stroke-width="4"/>
+  <path d="M120 49v72M78 66h27M135 66h27M78 82h27M135 82h27" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+</svg>
